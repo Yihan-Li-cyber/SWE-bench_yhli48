@@ -1,8 +1,7 @@
-from __future__ import annotations
-
 import hashlib
 import json
 import platform
+import pdb
 import re
 
 from dataclasses import dataclass
@@ -16,7 +15,6 @@ from swebench.harness.constants import (
     MAP_REPO_TO_INSTALL,
     MAP_REPO_VERSION_TO_SPECS,
     USE_X86,
-    UTF8,
 )
 from swebench.harness.dockerfiles import (
     get_dockerfile_base,
@@ -73,7 +71,7 @@ class TestSpec:
         Note that old images are not automatically deleted, so consider cleaning up old images periodically.
         """
         hash_object = hashlib.sha256()
-        hash_object.update(str(self.env_script_list).encode(UTF8))
+        hash_object.update(str(self.env_script_list).encode("utf-8"))
         hash_value = hash_object.hexdigest()
         val = hash_value[:22]  # 22 characters is still very likely to be unique
         return f"sweb.env.{self.arch}.{val}:latest"
@@ -124,16 +122,16 @@ def make_repo_script_list(specs, repo, repo_directory, base_commit, env_name):
     This is the setup script for the instance image.
     """
     setup_commands = [
-        f"git clone -o origin https://github.com/{repo} {repo_directory}",
+        f"git clone -o origin XXXX{repo} {repo_directory}",
         f"chmod -R 777 {repo_directory}",  # So nonroot user can run tests
         f"cd {repo_directory}",
         f"git reset --hard {base_commit}",
         # Remove the remote so the agent won't see newer commits.
-        "git remote remove origin",
+        f"git remote remove origin",
         # Make sure conda is available for later use
         "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
-        'echo "Current environment: $CONDA_DEFAULT_ENV"',
+        f'echo "Current environment: $CONDA_DEFAULT_ENV"',
     ]
     if repo in MAP_REPO_TO_INSTALL:
         setup_commands.append(MAP_REPO_TO_INSTALL[repo])
@@ -148,34 +146,10 @@ def make_repo_script_list(specs, repo, repo_directory, base_commit, env_name):
     return setup_commands
 
 
-def replace_uninstallable_packages_requirements_txt(requirement_str: str) -> str:
-    """Replaces certain packages in a requirements.txt-like string.
-    For example, some packages have been yanked and we need to replace them with compatible alternatives.
-    """
-    replacements = {
-        # See https://github.com/princeton-nlp/SWE-bench/issues/199
-        # This package was sinced yanked, so we need to force pip
-        # to install it.
-        "types-pkg_resources": "types-pkg-resources==0.1.3",
-    }
-    requirements = [req.strip() for req in requirement_str.split("\n") if req.strip()]
-    requirements_replaced = []
-    for requirement in requirements:
-        if requirement in replacements:
-            print(f"Replaced {requirement!r} with {replacements[requirement]!r} (replace_uninstallable_packages)")
-            requirements_replaced.append(replacements[requirement])
-        else:
-            requirements_replaced.append(requirement)
-    return "\n".join(requirements_replaced) + "\n"
-
-
-def make_env_script_list(instance: SWEbenchInstance, specs: dict, env_name: str) -> list[str]:
+def make_env_script_list(instance, specs, env_name):
     """
     Creates the list of commands to set up the conda environment for testing.
     This is the setup script for the environment image.
-
-    Returns:
-        list[str]: List of commands to set up the conda environment
     """
     HEREDOC_DELIMITER = "EOF_59812759871"
     reqs_commands = [
@@ -189,7 +163,7 @@ def make_env_script_list(instance: SWEbenchInstance, specs: dict, env_name: str)
         reqs_commands.append(cmd)
 
         # Install dependencies
-        reqs = replace_uninstallable_packages_requirements_txt(get_requirements(instance))
+        reqs = get_requirements(instance)
         path_to_reqs = "$HOME/requirements.txt"
         reqs_commands.append(
             f"cat <<'{HEREDOC_DELIMITER}' > {path_to_reqs}\n{reqs}\n{HEREDOC_DELIMITER}"
@@ -255,7 +229,7 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
         ]
     )
     eval_commands = [
-        "source /opt/miniconda3/bin/activate",
+        f"source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
         f"cd {repo_directory}",
     ]
@@ -265,8 +239,8 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
         f"git config --global --add safe.directory {repo_directory}",  # for nonroot user
         f"cd {repo_directory}",
         # This is just informational, so we have a record
-        "git status",
-        "git show",
+        f"git status",
+        f"git show",
         f"git diff {base_commit}",
         "source /opt/miniconda3/bin/activate",
         f"conda activate {env_name}",
@@ -282,6 +256,22 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
     return eval_commands
 
 
+with open("swebench/case.json", 'r') as json_file:
+    new_test_dict = json.load(json_file)
+
+with open('swebench/bench.json', 'r') as json_file:
+    new_bench_dict = json.load(json_file)
+
+with open('swebench/perfect_parser_test_instance_dict_verified.json', 'r') as json_file:
+    instance_dict = json.load(json_file)
+
+with open('swebench/perfect_parser_test_instance_dict.json', 'r') as json_file:
+    instance_dict_lite = json.load(json_file)
+
+for key in instance_dict_lite:
+    instance_dict[key] = instance_dict_lite[key]
+
+
 def make_test_spec(instance: SWEbenchInstance) -> TestSpec:
     if isinstance(instance, TestSpec):
         return instance
@@ -291,7 +281,24 @@ def make_test_spec(instance: SWEbenchInstance) -> TestSpec:
     base_commit = instance["base_commit"]
     problem_statement = instance["problem_statement"]
     hints_text = instance["hints_text"]  # Unused
-    test_patch = instance["test_patch"]
+    # here we should change it to our own test_patch
+    # test_patch = instance["test_patch"] # original one of SWE-bench
+
+    # this is to get the test patch from our new test patch generation results
+    try:
+        # test_patch = new_test_dict[ instance_id ][0] # if list, add index
+        test_patch = new_test_dict[instance_id]  # if list, add index
+    except:
+        # test_patch = instance["test_patch"]
+        test_patch = "Do not test"
+        pass
+        # print(instance['instance_id'] + ': use original test patch!!!')# original one of SWE-bench
+        # print("we do not need to test since we fail to generate test patch for this instance id!")
+
+    #  this is for my rog only, since several instances have failed.
+    # error_run_ids = { "astropy__astropy-12907", "psf__requests-2317", "psf__requests-2674", "psf__requests-3362", "scikit-learn__scikit-learn-25500", "scikit-learn__scikit-learn-25570", "scikit-learn__scikit-learn-25638", "scikit-learn__scikit-learn-25747", "sympy__sympy-13146", "sympy__sympy-13177"}
+    # if instance_id in error_run_ids:
+    #     test_patch = "Do not test"
 
     def _from_json_or_obj(key: str) -> Any:
         """If key points to string, load with json"""
@@ -301,6 +308,27 @@ def make_test_spec(instance: SWEbenchInstance) -> TestSpec:
 
     pass_to_pass = _from_json_or_obj(PASS_TO_PASS)
     fail_to_pass = _from_json_or_obj(FAIL_TO_PASS)
+
+    # pdb.set_trace()
+    # fix the parser with perfect parser
+    try:
+        tmp_added_test = instance_dict[instance_id]
+        if PASS_TO_PASS in tmp_added_test:
+            pass_to_pass = tmp_added_test[PASS_TO_PASS]
+        if FAIL_TO_PASS in tmp_added_test:
+            fail_to_pass = tmp_added_test[FAIL_TO_PASS]
+    except:
+        pass
+
+    # add new test cases
+    try:
+        test_patch = new_bench_dict[instance_id]['aug_test']
+        fail_to_pass.extend(new_bench_dict[instance_id]['augFail2Pass'])
+        # pdb.set_trace()
+    except:
+        test_patch = ""
+        # pdb.set_trace()
+        # print(instance_id + ': do not test patch!!!')
 
     env_name = "testbed"
     repo_directory = f"/{env_name}"
