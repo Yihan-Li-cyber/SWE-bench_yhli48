@@ -1,0 +1,49 @@
+2025-04-04 12:27:41,288 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-11578
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-11578:latest for scikit-learn__scikit-learn-11578
+2025-04-04 12:33:35,388 - INFO - Creating container for scikit-learn__scikit-learn-11578...
+2025-04-04 12:33:35,423 - INFO - Container for scikit-learn__scikit-learn-11578 created: d246cd3cf205c56ee3d6bf2fcf2d3a6df971d6595f522bd4663ad5473d911ea7
+2025-04-04 12:33:35,720 - INFO - Container for scikit-learn__scikit-learn-11578 started: d246cd3cf205c56ee3d6bf2fcf2d3a6df971d6595f522bd4663ad5473d911ea7
+2025-04-04 12:33:35,721 - INFO - Intermediate patch for scikit-learn__scikit-learn-11578 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11578/patch.diff, now applying to container...
+2025-04-04 12:33:35,973 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:33:36,045 - INFO - >>>>> Applied Patch:
+patching file sklearn/linear_model/logistic.py
+
+2025-04-04 12:33:36,489 - INFO - Git diff before:
+diff --git a/sklearn/linear_model/logistic.py b/sklearn/linear_model/logistic.py
+index e4ea696ce..a3afb06e4 100644
+--- a/sklearn/linear_model/logistic.py
++++ b/sklearn/linear_model/logistic.py
+@@ -922,7 +922,7 @@ def _log_reg_scoring_path(X, y, train, test, pos_class=None, Cs=10,
+         check_input=False, max_squared_sum=max_squared_sum,
+         sample_weight=sample_weight)
+ 
+-    log_reg = LogisticRegression(fit_intercept=fit_intercept)
++    log_reg = LogisticRegression(multi_class=multi_class)
+ 
+     # The score method of Logistic Regression has a classes_ attribute.
+     if multi_class == 'ovr':
+2025-04-04 12:33:36,490 - INFO - Eval script for scikit-learn__scikit-learn-11578 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11578/eval.sh; copying to container...
+2025-04-04 12:33:51,142 - INFO - Test runtime: 14.45 seconds
+2025-04-04 12:33:51,143 - INFO - Test output for scikit-learn__scikit-learn-11578 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11578/test_output.txt
+2025-04-04 12:33:51,203 - INFO - Git diff after:
+diff --git a/sklearn/linear_model/logistic.py b/sklearn/linear_model/logistic.py
+index e4ea696ce..a3afb06e4 100644
+--- a/sklearn/linear_model/logistic.py
++++ b/sklearn/linear_model/logistic.py
+@@ -922,7 +922,7 @@ def _log_reg_scoring_path(X, y, train, test, pos_class=None, Cs=10,
+         check_input=False, max_squared_sum=max_squared_sum,
+         sample_weight=sample_weight)
+ 
+-    log_reg = LogisticRegression(fit_intercept=fit_intercept)
++    log_reg = LogisticRegression(multi_class=multi_class)
+ 
+     # The score method of Logistic Regression has a classes_ attribute.
+     if multi_class == 'ovr':
+2025-04-04 12:33:51,203 - INFO - Grading answer for scikit-learn__scikit-learn-11578...
+2025-04-04 12:33:51,203 - INFO - report: {'scikit-learn__scikit-learn-11578': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-11578: resolved: False
+2025-04-04 12:33:51,204 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-11578.gold...
+2025-04-04 12:34:36,461 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-11578.gold...
+2025-04-04 12:34:36,684 - INFO - Container sweb.eval.scikit-learn__scikit-learn-11578.gold removed.
+2025-04-04 12:34:36,684 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-11578:latest...
+2025-04-04 12:34:36,912 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-11578:latest removed.

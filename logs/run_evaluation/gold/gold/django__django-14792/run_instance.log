@@ -1,0 +1,57 @@
+2025-04-04 10:52:13,274 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14792
+Building instance image sweb.eval.x86_64.django__django-14792:latest for django__django-14792
+2025-04-04 10:53:12,077 - INFO - Creating container for django__django-14792...
+2025-04-04 10:53:12,110 - INFO - Container for django__django-14792 created: 12b7bf12e1c9e28910ba28c9b8efc515ffcfc8ed25a8816118ea0da81e11884c
+2025-04-04 10:53:12,544 - INFO - Container for django__django-14792 started: 12b7bf12e1c9e28910ba28c9b8efc515ffcfc8ed25a8816118ea0da81e11884c
+2025-04-04 10:53:12,544 - INFO - Intermediate patch for django__django-14792 written to logs/run_evaluation/gold/gold/django__django-14792/patch.diff, now applying to container...
+2025-04-04 10:53:12,852 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:53:12,909 - INFO - >>>>> Applied Patch:
+patching file django/utils/timezone.py
+
+2025-04-04 10:53:14,543 - INFO - Git diff before:
+diff --git a/django/utils/timezone.py b/django/utils/timezone.py
+index bb2b6b9594..0f5d012c59 100644
+--- a/django/utils/timezone.py
++++ b/django/utils/timezone.py
+@@ -72,8 +72,11 @@ def get_current_timezone_name():
+ 
+ 
+ def _get_timezone_name(timezone):
+-    """Return the name of ``timezone``."""
+-    return str(timezone)
++    """
++    Return the offset for fixed offset timezones, or the name of timezone if
++    not set.
++    """
++    return timezone.tzname(None) or str(timezone)
+ 
+ # Timezone selection functions.
+2025-04-04 10:53:14,544 - INFO - Eval script for django__django-14792 written to logs/run_evaluation/gold/gold/django__django-14792/eval.sh; copying to container...
+2025-04-04 10:53:27,897 - INFO - Test runtime: 13.16 seconds
+2025-04-04 10:53:27,898 - INFO - Test output for django__django-14792 written to logs/run_evaluation/gold/gold/django__django-14792/test_output.txt
+2025-04-04 10:53:28,017 - INFO - Git diff after:
+diff --git a/django/utils/timezone.py b/django/utils/timezone.py
+index bb2b6b9594..0f5d012c59 100644
+--- a/django/utils/timezone.py
++++ b/django/utils/timezone.py
+@@ -72,8 +72,11 @@ def get_current_timezone_name():
+ 
+ 
+ def _get_timezone_name(timezone):
+-    """Return the name of ``timezone``."""
+-    return str(timezone)
++    """
++    Return the offset for fixed offset timezones, or the name of timezone if
++    not set.
++    """
++    return timezone.tzname(None) or str(timezone)
+ 
+ # Timezone selection functions.
+2025-04-04 10:53:28,018 - INFO - Grading answer for django__django-14792...
+2025-04-04 10:53:28,018 - INFO - report: {'django__django-14792': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14792: resolved: False
+2025-04-04 10:53:28,018 - INFO - Attempting to stop container sweb.eval.django__django-14792.gold...
+2025-04-04 10:53:43,415 - INFO - Attempting to remove container sweb.eval.django__django-14792.gold...
+2025-04-04 10:53:43,449 - INFO - Container sweb.eval.django__django-14792.gold removed.
+2025-04-04 10:53:43,449 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14792:latest...
+2025-04-04 10:53:44,085 - INFO - Image sweb.eval.x86_64.django__django-14792:latest removed.

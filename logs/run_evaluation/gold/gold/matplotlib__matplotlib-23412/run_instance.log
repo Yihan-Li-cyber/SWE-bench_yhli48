@@ -1,0 +1,55 @@
+2025-04-04 11:29:13,106 - INFO - Environment image sweb.env.x86_64.7037e8c448a4b8ebfe9b13:latest found for matplotlib__matplotlib-23412
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-23412:latest for matplotlib__matplotlib-23412
+2025-04-04 11:36:58,888 - INFO - Creating container for matplotlib__matplotlib-23412...
+2025-04-04 11:36:58,938 - INFO - Container for matplotlib__matplotlib-23412 created: 2bf67ff969197c45c38693a342a85be63f9a19b14dd30a578d21d255a596acb2
+2025-04-04 11:36:59,510 - INFO - Container for matplotlib__matplotlib-23412 started: 2bf67ff969197c45c38693a342a85be63f9a19b14dd30a578d21d255a596acb2
+2025-04-04 11:36:59,511 - INFO - Intermediate patch for matplotlib__matplotlib-23412 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23412/patch.diff, now applying to container...
+2025-04-04 11:36:59,849 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:36:59,965 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/patches.py
+
+2025-04-04 11:37:01,745 - INFO - Git diff before:
+diff --git a/lib/matplotlib/patches.py b/lib/matplotlib/patches.py
+index e062249589..8a8b2e2db5 100644
+--- a/lib/matplotlib/patches.py
++++ b/lib/matplotlib/patches.py
+@@ -586,9 +586,8 @@ class Patch(artist.Artist):
+         # docstring inherited
+         if not self.get_visible():
+             return
+-        # Patch has traditionally ignored the dashoffset.
+-        with cbook._setattr_cm(
+-                 self, _dash_pattern=(0, self._dash_pattern[1])), \
++
++        with cbook._setattr_cm(self, _dash_pattern=(self._dash_pattern)), \
+              self._bind_draw_path_function(renderer) as draw_path:
+             path = self.get_path()
+             transform = self.get_transform()
+2025-04-04 11:37:01,746 - INFO - Eval script for matplotlib__matplotlib-23412 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23412/eval.sh; copying to container...
+2025-04-04 11:37:23,735 - INFO - Test runtime: 21.58 seconds
+2025-04-04 11:37:23,735 - INFO - Test output for matplotlib__matplotlib-23412 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23412/test_output.txt
+2025-04-04 11:37:23,832 - INFO - Git diff after:
+diff --git a/lib/matplotlib/patches.py b/lib/matplotlib/patches.py
+index e062249589..8a8b2e2db5 100644
+--- a/lib/matplotlib/patches.py
++++ b/lib/matplotlib/patches.py
+@@ -586,9 +586,8 @@ class Patch(artist.Artist):
+         # docstring inherited
+         if not self.get_visible():
+             return
+-        # Patch has traditionally ignored the dashoffset.
+-        with cbook._setattr_cm(
+-                 self, _dash_pattern=(0, self._dash_pattern[1])), \
++
++        with cbook._setattr_cm(self, _dash_pattern=(self._dash_pattern)), \
+              self._bind_draw_path_function(renderer) as draw_path:
+             path = self.get_path()
+             transform = self.get_transform()
+2025-04-04 11:37:23,833 - INFO - Grading answer for matplotlib__matplotlib-23412...
+2025-04-04 11:37:23,833 - INFO - report: {'matplotlib__matplotlib-23412': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-23412: resolved: False
+2025-04-04 11:37:23,833 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-23412.gold...
+2025-04-04 11:38:10,793 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-23412.gold...
+2025-04-04 11:38:10,831 - INFO - Container sweb.eval.matplotlib__matplotlib-23412.gold removed.
+2025-04-04 11:38:10,831 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-23412:latest...
+2025-04-04 11:38:15,143 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-23412:latest removed.

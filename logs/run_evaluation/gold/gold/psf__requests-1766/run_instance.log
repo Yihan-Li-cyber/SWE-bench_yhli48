@@ -1,0 +1,65 @@
+2025-04-04 12:13:38,047 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-1766
+Building instance image sweb.eval.x86_64.psf__requests-1766:latest for psf__requests-1766
+2025-04-04 12:13:46,925 - INFO - Creating container for psf__requests-1766...
+2025-04-04 12:13:47,089 - INFO - Container for psf__requests-1766 created: ebdd4d4b2d13e9f198a163a08f11d1048ed7b2b0b24299e079749bd948842f6a
+2025-04-04 12:13:47,527 - INFO - Container for psf__requests-1766 started: ebdd4d4b2d13e9f198a163a08f11d1048ed7b2b0b24299e079749bd948842f6a
+2025-04-04 12:13:47,528 - INFO - Intermediate patch for psf__requests-1766 written to logs/run_evaluation/gold/gold/psf__requests-1766/patch.diff, now applying to container...
+2025-04-04 12:13:47,803 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:13:47,871 - INFO - >>>>> Applied Patch:
+patching file requests/auth.py
+
+2025-04-04 12:13:47,966 - INFO - Git diff before:
+diff --git a/requests/auth.py b/requests/auth.py
+index a3de123d..f87087df 100644
+--- a/requests/auth.py
++++ b/requests/auth.py
+@@ -105,7 +105,7 @@ class HTTPDigestAuth(AuthBase):
+ 
+         A1 = '%s:%s:%s' % (self.username, realm, self.password)
+         A2 = '%s:%s' % (method, path)
+-        
++
+         HA1 = hash_utf8(A1)
+         HA2 = hash_utf8(A2)
+ 
+@@ -144,7 +144,7 @@ class HTTPDigestAuth(AuthBase):
+         if entdig:
+             base += ', digest="%s"' % entdig
+         if qop:
+-            base += ', qop=auth, nc=%s, cnonce="%s"' % (ncvalue, cnonce)
++            base += ', qop="auth", nc=%s, cnonce="%s"' % (ncvalue, cnonce)
+ 
+         return 'Digest %s' % (base)
+2025-04-04 12:13:47,966 - INFO - Eval script for psf__requests-1766 written to logs/run_evaluation/gold/gold/psf__requests-1766/eval.sh; copying to container...
+2025-04-04 12:14:39,383 - INFO - Test runtime: 51.23 seconds
+2025-04-04 12:14:39,384 - INFO - Test output for psf__requests-1766 written to logs/run_evaluation/gold/gold/psf__requests-1766/test_output.txt
+2025-04-04 12:14:39,455 - INFO - Git diff after:
+diff --git a/requests/auth.py b/requests/auth.py
+index a3de123d..f87087df 100644
+--- a/requests/auth.py
++++ b/requests/auth.py
+@@ -105,7 +105,7 @@ class HTTPDigestAuth(AuthBase):
+ 
+         A1 = '%s:%s:%s' % (self.username, realm, self.password)
+         A2 = '%s:%s' % (method, path)
+-        
++
+         HA1 = hash_utf8(A1)
+         HA2 = hash_utf8(A2)
+ 
+@@ -144,7 +144,7 @@ class HTTPDigestAuth(AuthBase):
+         if entdig:
+             base += ', digest="%s"' % entdig
+         if qop:
+-            base += ', qop=auth, nc=%s, cnonce="%s"' % (ncvalue, cnonce)
++            base += ', qop="auth", nc=%s, cnonce="%s"' % (ncvalue, cnonce)
+ 
+         return 'Digest %s' % (base)
+2025-04-04 12:14:39,455 - INFO - Grading answer for psf__requests-1766...
+2025-04-04 12:14:39,455 - INFO - report: {'psf__requests-1766': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-1766: resolved: False
+2025-04-04 12:14:39,456 - INFO - Attempting to stop container sweb.eval.psf__requests-1766.gold...
+2025-04-04 12:14:54,824 - INFO - Attempting to remove container sweb.eval.psf__requests-1766.gold...
+2025-04-04 12:14:54,862 - INFO - Container sweb.eval.psf__requests-1766.gold removed.
+2025-04-04 12:14:54,862 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-1766:latest...
+2025-04-04 12:14:54,908 - INFO - Image sweb.eval.x86_64.psf__requests-1766:latest removed.

@@ -1,0 +1,65 @@
+2025-04-04 10:45:03,374 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14349
+Building instance image sweb.eval.x86_64.django__django-14349:latest for django__django-14349
+2025-04-04 10:45:55,341 - INFO - Creating container for django__django-14349...
+2025-04-04 10:45:55,445 - INFO - Container for django__django-14349 created: a5e99df8cd9c0a3fed0ab4de01e5186c483cbb389b52fe803dfb0a47c63d651c
+2025-04-04 10:45:56,048 - INFO - Container for django__django-14349 started: a5e99df8cd9c0a3fed0ab4de01e5186c483cbb389b52fe803dfb0a47c63d651c
+2025-04-04 10:45:56,049 - INFO - Intermediate patch for django__django-14349 written to logs/run_evaluation/gold/gold/django__django-14349/patch.diff, now applying to container...
+2025-04-04 10:45:56,356 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:45:56,426 - INFO - >>>>> Applied Patch:
+patching file django/core/validators.py
+
+2025-04-04 10:45:57,943 - INFO - Git diff before:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index a385819510..f9abec602c 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -92,6 +92,7 @@ class URLValidator(RegexValidator):
+         r'\Z', re.IGNORECASE)
+     message = _('Enter a valid URL.')
+     schemes = ['http', 'https', 'ftp', 'ftps']
++    unsafe_chars = frozenset('\t\r\n')
+ 
+     def __init__(self, schemes=None, **kwargs):
+         super().__init__(**kwargs)
+@@ -101,6 +102,8 @@ class URLValidator(RegexValidator):
+     def __call__(self, value):
+         if not isinstance(value, str):
+             raise ValidationError(self.message, code=self.code, params={'value': value})
++        if self.unsafe_chars.intersection(value):
++            raise ValidationError(self.message, code=self.code, params={'value': value})
+         # Check if the scheme is valid.
+         scheme = value.split('://')[0].lower()
+         if scheme not in self.schemes:
+2025-04-04 10:45:57,943 - INFO - Eval script for django__django-14349 written to logs/run_evaluation/gold/gold/django__django-14349/eval.sh; copying to container...
+2025-04-04 10:46:10,765 - INFO - Test runtime: 12.64 seconds
+2025-04-04 10:46:10,765 - INFO - Test output for django__django-14349 written to logs/run_evaluation/gold/gold/django__django-14349/test_output.txt
+2025-04-04 10:46:10,863 - INFO - Git diff after:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index a385819510..f9abec602c 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -92,6 +92,7 @@ class URLValidator(RegexValidator):
+         r'\Z', re.IGNORECASE)
+     message = _('Enter a valid URL.')
+     schemes = ['http', 'https', 'ftp', 'ftps']
++    unsafe_chars = frozenset('\t\r\n')
+ 
+     def __init__(self, schemes=None, **kwargs):
+         super().__init__(**kwargs)
+@@ -101,6 +102,8 @@ class URLValidator(RegexValidator):
+     def __call__(self, value):
+         if not isinstance(value, str):
+             raise ValidationError(self.message, code=self.code, params={'value': value})
++        if self.unsafe_chars.intersection(value):
++            raise ValidationError(self.message, code=self.code, params={'value': value})
+         # Check if the scheme is valid.
+         scheme = value.split('://')[0].lower()
+         if scheme not in self.schemes:
+2025-04-04 10:46:10,864 - INFO - Grading answer for django__django-14349...
+2025-04-04 10:46:10,865 - INFO - report: {'django__django-14349': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14349: resolved: False
+2025-04-04 10:46:10,865 - INFO - Attempting to stop container sweb.eval.django__django-14349.gold...
+2025-04-04 10:46:26,210 - INFO - Attempting to remove container sweb.eval.django__django-14349.gold...
+2025-04-04 10:46:26,715 - INFO - Container sweb.eval.django__django-14349.gold removed.
+2025-04-04 10:46:26,715 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14349:latest...
+2025-04-04 10:46:27,277 - INFO - Image sweb.eval.x86_64.django__django-14349:latest removed.

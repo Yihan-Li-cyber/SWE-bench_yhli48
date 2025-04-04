@@ -1,0 +1,109 @@
+2025-04-04 16:20:56,577 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14182
+Building instance image sweb.eval.x86_64.astropy__astropy-14182:latest for astropy__astropy-14182
+2025-04-04 16:31:28,650 - INFO - Creating container for astropy__astropy-14182...
+2025-04-04 16:31:28,839 - INFO - Container for astropy__astropy-14182 created: a3a80bd6a16e032c38db37710ebccf3667d19df0ce4b1a4aefa847957da0adc5
+2025-04-04 16:31:30,320 - INFO - Container for astropy__astropy-14182 started: a3a80bd6a16e032c38db37710ebccf3667d19df0ce4b1a4aefa847957da0adc5
+2025-04-04 16:31:30,320 - INFO - Intermediate patch for astropy__astropy-14182 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14182/patch.diff, now applying to container...
+2025-04-04 16:31:31,438 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 16:31:31,726 - INFO - >>>>> Applied Patch:
+patching file astropy/io/ascii/rst.py
+
+2025-04-04 16:31:34,856 - INFO - Git diff before:
+diff --git a/astropy/io/ascii/rst.py b/astropy/io/ascii/rst.py
+index abdeba8efb..1186b7cada 100644
+--- a/astropy/io/ascii/rst.py
++++ b/astropy/io/ascii/rst.py
+@@ -57,10 +57,23 @@ class RST(FixedWidth):
+     data_class = SimpleRSTData
+     header_class = SimpleRSTHeader
+ 
+-    def __init__(self):
+-        super().__init__(delimiter_pad=None, bookend=False)
++    def __init__(self, header_rows=None):
++        if header_rows is None:
++            header_rows = ["name"]
++        super().__init__(delimiter_pad=None, bookend=False, header_rows=header_rows)
+ 
+     def write(self, lines):
+         lines = super().write(lines)
+-        lines = [lines[1]] + lines + [lines[1]]
+-        return lines
++        # Add the RST-style separator line at the top, after each header row, and at the bottom
++        separator = lines[len(self.header.header_rows)]  # The first separator after headers
++        header_lines = lines[:len(self.header.header_rows)]
++        data_lines = lines[len(self.header.header_rows) + 1:]
++        
++        # Construct output with separators
++        output = []
++        output.append(separator)  # Top separator
++        output.extend(header_lines)  # Header rows
++        output.append(separator)  # Separator after headers
++        output.extend(data_lines)  # Data rows
++        output.append(separator)  # Bottom separator
++        return output
+diff --git a/pyproject.toml b/pyproject.toml
+index 0d1ee66ab9..ec234472e2 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:31:34,857 - INFO - Eval script for astropy__astropy-14182 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14182/eval.sh; copying to container...
+2025-04-04 16:40:04,848 - INFO - Test runtime: 509.30 seconds
+2025-04-04 16:40:04,849 - INFO - Test output for astropy__astropy-14182 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14182/test_output.txt
+2025-04-04 16:40:05,144 - INFO - Git diff after:
+diff --git a/astropy/io/ascii/rst.py b/astropy/io/ascii/rst.py
+index abdeba8efb..1186b7cada 100644
+--- a/astropy/io/ascii/rst.py
++++ b/astropy/io/ascii/rst.py
+@@ -57,10 +57,23 @@ class RST(FixedWidth):
+     data_class = SimpleRSTData
+     header_class = SimpleRSTHeader
+ 
+-    def __init__(self):
+-        super().__init__(delimiter_pad=None, bookend=False)
++    def __init__(self, header_rows=None):
++        if header_rows is None:
++            header_rows = ["name"]
++        super().__init__(delimiter_pad=None, bookend=False, header_rows=header_rows)
+ 
+     def write(self, lines):
+         lines = super().write(lines)
+-        lines = [lines[1]] + lines + [lines[1]]
+-        return lines
++        # Add the RST-style separator line at the top, after each header row, and at the bottom
++        separator = lines[len(self.header.header_rows)]  # The first separator after headers
++        header_lines = lines[:len(self.header.header_rows)]
++        data_lines = lines[len(self.header.header_rows) + 1:]
++        
++        # Construct output with separators
++        output = []
++        output.append(separator)  # Top separator
++        output.extend(header_lines)  # Header rows
++        output.append(separator)  # Separator after headers
++        output.extend(data_lines)  # Data rows
++        output.append(separator)  # Bottom separator
++        return output
+diff --git a/pyproject.toml b/pyproject.toml
+index 0d1ee66ab9..ec234472e2 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:40:05,145 - INFO - Grading answer for astropy__astropy-14182...
+2025-04-04 16:40:05,151 - INFO - report: {'astropy__astropy-14182': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14182: resolved: False
+2025-04-04 16:40:05,151 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14182.241028_solver...
+2025-04-04 16:40:20,919 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14182.241028_solver...
+2025-04-04 16:40:21,035 - INFO - Container sweb.eval.astropy__astropy-14182.241028_solver removed.
+2025-04-04 16:40:21,035 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14182:latest...
+2025-04-04 16:40:21,763 - INFO - Image sweb.eval.x86_64.astropy__astropy-14182:latest removed.

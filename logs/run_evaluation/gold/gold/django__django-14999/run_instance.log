@@ -1,0 +1,69 @@
+2025-04-04 10:52:13,288 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-14999
+Building instance image sweb.eval.x86_64.django__django-14999:latest for django__django-14999
+2025-04-04 10:53:05,329 - INFO - Creating container for django__django-14999...
+2025-04-04 10:53:05,524 - INFO - Container for django__django-14999 created: 6d17a31ab9d5dd00b3cd350470c7a00978e3dc6b19cf55fd6bfde640e854243c
+2025-04-04 10:53:06,218 - INFO - Container for django__django-14999 started: 6d17a31ab9d5dd00b3cd350470c7a00978e3dc6b19cf55fd6bfde640e854243c
+2025-04-04 10:53:06,218 - INFO - Intermediate patch for django__django-14999 written to logs/run_evaluation/gold/gold/django__django-14999/patch.diff, now applying to container...
+2025-04-04 10:53:06,594 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:53:06,667 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+
+2025-04-04 10:53:08,354 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 982816be3a..c120f5d32d 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -320,12 +320,13 @@ class RenameModel(ModelOperation):
+         new_model = to_state.apps.get_model(app_label, self.new_name)
+         if self.allow_migrate_model(schema_editor.connection.alias, new_model):
+             old_model = from_state.apps.get_model(app_label, self.old_name)
++            old_db_table = old_model._meta.db_table
++            new_db_table = new_model._meta.db_table
++            # Don't alter when a table name is not changed.
++            if old_db_table == new_db_table:
++                return
+             # Move the main table
+-            schema_editor.alter_db_table(
+-                new_model,
+-                old_model._meta.db_table,
+-                new_model._meta.db_table,
+-            )
++            schema_editor.alter_db_table(new_model, old_db_table, new_db_table)
+             # Alter the fields pointing to us
+             for related_object in old_model._meta.related_objects:
+                 if related_object.related_model == old_model:
+2025-04-04 10:53:08,355 - INFO - Eval script for django__django-14999 written to logs/run_evaluation/gold/gold/django__django-14999/eval.sh; copying to container...
+2025-04-04 10:53:24,116 - INFO - Test runtime: 15.52 seconds
+2025-04-04 10:53:24,117 - INFO - Test output for django__django-14999 written to logs/run_evaluation/gold/gold/django__django-14999/test_output.txt
+2025-04-04 10:53:24,242 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 982816be3a..c120f5d32d 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -320,12 +320,13 @@ class RenameModel(ModelOperation):
+         new_model = to_state.apps.get_model(app_label, self.new_name)
+         if self.allow_migrate_model(schema_editor.connection.alias, new_model):
+             old_model = from_state.apps.get_model(app_label, self.old_name)
++            old_db_table = old_model._meta.db_table
++            new_db_table = new_model._meta.db_table
++            # Don't alter when a table name is not changed.
++            if old_db_table == new_db_table:
++                return
+             # Move the main table
+-            schema_editor.alter_db_table(
+-                new_model,
+-                old_model._meta.db_table,
+-                new_model._meta.db_table,
+-            )
++            schema_editor.alter_db_table(new_model, old_db_table, new_db_table)
+             # Alter the fields pointing to us
+             for related_object in old_model._meta.related_objects:
+                 if related_object.related_model == old_model:
+2025-04-04 10:53:24,242 - INFO - Grading answer for django__django-14999...
+2025-04-04 10:53:24,242 - INFO - report: {'django__django-14999': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14999: resolved: False
+2025-04-04 10:53:24,243 - INFO - Attempting to stop container sweb.eval.django__django-14999.gold...
+2025-04-04 10:53:40,004 - INFO - Attempting to remove container sweb.eval.django__django-14999.gold...
+2025-04-04 10:53:40,038 - INFO - Container sweb.eval.django__django-14999.gold removed.
+2025-04-04 10:53:40,038 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14999:latest...
+2025-04-04 10:53:40,773 - INFO - Image sweb.eval.x86_64.django__django-14999:latest removed.

@@ -1,0 +1,49 @@
+2025-04-04 13:58:35,278 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-17139
+Building instance image sweb.eval.x86_64.sympy__sympy-17139:latest for sympy__sympy-17139
+2025-04-04 13:59:33,610 - INFO - Creating container for sympy__sympy-17139...
+2025-04-04 13:59:33,712 - INFO - Container for sympy__sympy-17139 created: ca3c85ec7d80dc66430a5ea46a5356e9775fa74111525a25ca797d7538cb962e
+2025-04-04 13:59:46,918 - INFO - Container for sympy__sympy-17139 started: ca3c85ec7d80dc66430a5ea46a5356e9775fa74111525a25ca797d7538cb962e
+2025-04-04 13:59:46,918 - INFO - Intermediate patch for sympy__sympy-17139 written to logs/run_evaluation/gold/gold/sympy__sympy-17139/patch.diff, now applying to container...
+2025-04-04 13:59:47,438 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:59:47,540 - INFO - >>>>> Applied Patch:
+patching file sympy/simplify/fu.py
+
+2025-04-04 13:59:48,284 - INFO - Git diff before:
+diff --git a/sympy/simplify/fu.py b/sympy/simplify/fu.py
+index ad1130ef96..612bc0bb69 100644
+--- a/sympy/simplify/fu.py
++++ b/sympy/simplify/fu.py
+@@ -500,6 +500,8 @@ def _f(rv):
+         # change is not going to allow a simplification as far as I can tell.
+         if not (rv.is_Pow and rv.base.func == f):
+             return rv
++        if not rv.exp.is_real:
++            return rv
+ 
+         if (rv.exp < 0) == True:
+             return rv
+2025-04-04 13:59:48,286 - INFO - Eval script for sympy__sympy-17139 written to logs/run_evaluation/gold/gold/sympy__sympy-17139/eval.sh; copying to container...
+2025-04-04 14:04:04,321 - INFO - Test runtime: 255.73 seconds
+2025-04-04 14:04:04,321 - INFO - Test output for sympy__sympy-17139 written to logs/run_evaluation/gold/gold/sympy__sympy-17139/test_output.txt
+2025-04-04 14:04:04,467 - INFO - Git diff after:
+diff --git a/sympy/simplify/fu.py b/sympy/simplify/fu.py
+index ad1130ef96..612bc0bb69 100644
+--- a/sympy/simplify/fu.py
++++ b/sympy/simplify/fu.py
+@@ -500,6 +500,8 @@ def _f(rv):
+         # change is not going to allow a simplification as far as I can tell.
+         if not (rv.is_Pow and rv.base.func == f):
+             return rv
++        if not rv.exp.is_real:
++            return rv
+ 
+         if (rv.exp < 0) == True:
+             return rv
+2025-04-04 14:04:04,467 - INFO - Grading answer for sympy__sympy-17139...
+2025-04-04 14:04:04,467 - INFO - report: {'sympy__sympy-17139': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-17139: resolved: False
+2025-04-04 14:04:04,468 - INFO - Attempting to stop container sweb.eval.sympy__sympy-17139.gold...
+2025-04-04 14:04:20,658 - INFO - Attempting to remove container sweb.eval.sympy__sympy-17139.gold...
+2025-04-04 14:04:20,700 - INFO - Container sweb.eval.sympy__sympy-17139.gold removed.
+2025-04-04 14:04:20,700 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-17139:latest...
+2025-04-04 14:04:21,082 - INFO - Image sweb.eval.x86_64.sympy__sympy-17139:latest removed.

@@ -1,0 +1,65 @@
+2025-04-04 11:13:14,203 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16877
+Building instance image sweb.eval.x86_64.django__django-16877:latest for django__django-16877
+2025-04-04 11:14:02,482 - INFO - Creating container for django__django-16877...
+2025-04-04 11:14:02,526 - INFO - Container for django__django-16877 created: 24eb7bf7602ff834100fd43e0c5ef8ef4a1e5ef9269342ab12f225043b82fb08
+2025-04-04 11:14:02,962 - INFO - Container for django__django-16877 started: 24eb7bf7602ff834100fd43e0c5ef8ef4a1e5ef9269342ab12f225043b82fb08
+2025-04-04 11:14:02,962 - INFO - Intermediate patch for django__django-16877 written to logs/run_evaluation/gold/gold/django__django-16877/patch.diff, now applying to container...
+2025-04-04 11:14:03,461 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:14:03,562 - INFO - >>>>> Applied Patch:
+patching file django/template/defaultfilters.py
+
+2025-04-04 11:14:04,968 - INFO - Git diff before:
+diff --git a/django/template/defaultfilters.py b/django/template/defaultfilters.py
+index 5289ef34a0..589ca38414 100644
+--- a/django/template/defaultfilters.py
++++ b/django/template/defaultfilters.py
+@@ -444,6 +444,16 @@ def escape_filter(value):
+     return conditional_escape(value)
+ 
+ 
++@register.filter(is_safe=True)
++def escapeseq(value):
++    """
++    An "escape" filter for sequences. Mark each element in the sequence,
++    individually, as a string that should be auto-escaped. Return a list with
++    the results.
++    """
++    return [conditional_escape(obj) for obj in value]
++
++
+ @register.filter(is_safe=True)
+ @stringfilter
+ def force_escape(value):
+2025-04-04 11:14:04,968 - INFO - Eval script for django__django-16877 written to logs/run_evaluation/gold/gold/django__django-16877/eval.sh; copying to container...
+2025-04-04 11:14:16,534 - INFO - Test runtime: 11.27 seconds
+2025-04-04 11:14:16,535 - INFO - Test output for django__django-16877 written to logs/run_evaluation/gold/gold/django__django-16877/test_output.txt
+2025-04-04 11:14:16,660 - INFO - Git diff after:
+diff --git a/django/template/defaultfilters.py b/django/template/defaultfilters.py
+index 5289ef34a0..589ca38414 100644
+--- a/django/template/defaultfilters.py
++++ b/django/template/defaultfilters.py
+@@ -444,6 +444,16 @@ def escape_filter(value):
+     return conditional_escape(value)
+ 
+ 
++@register.filter(is_safe=True)
++def escapeseq(value):
++    """
++    An "escape" filter for sequences. Mark each element in the sequence,
++    individually, as a string that should be auto-escaped. Return a list with
++    the results.
++    """
++    return [conditional_escape(obj) for obj in value]
++
++
+ @register.filter(is_safe=True)
+ @stringfilter
+ def force_escape(value):
+2025-04-04 11:14:16,660 - INFO - Grading answer for django__django-16877...
+2025-04-04 11:14:16,661 - INFO - report: {'django__django-16877': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16877: resolved: False
+2025-04-04 11:14:16,662 - INFO - Attempting to stop container sweb.eval.django__django-16877.gold...
+2025-04-04 11:14:32,122 - INFO - Attempting to remove container sweb.eval.django__django-16877.gold...
+2025-04-04 11:14:32,174 - INFO - Container sweb.eval.django__django-16877.gold removed.
+2025-04-04 11:14:32,174 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16877:latest...
+2025-04-04 11:14:32,906 - INFO - Image sweb.eval.x86_64.django__django-16877:latest removed.

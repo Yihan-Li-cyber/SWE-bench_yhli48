@@ -1,0 +1,65 @@
+2025-04-04 10:38:11,354 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13786
+Building instance image sweb.eval.x86_64.django__django-13786:latest for django__django-13786
+2025-04-04 10:39:18,307 - INFO - Creating container for django__django-13786...
+2025-04-04 10:39:18,395 - INFO - Container for django__django-13786 created: 40da3c44bf62b4fbff995f138b66effffdcf0281d60fd9aea54806c2175b3c04
+2025-04-04 10:39:23,528 - INFO - Container for django__django-13786 started: 40da3c44bf62b4fbff995f138b66effffdcf0281d60fd9aea54806c2175b3c04
+2025-04-04 10:39:23,530 - INFO - Intermediate patch for django__django-13786 written to logs/run_evaluation/gold/gold/django__django-13786/patch.diff, now applying to container...
+2025-04-04 10:39:23,836 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:39:23,908 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+
+2025-04-04 10:39:25,629 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index dddf7c679c..7e8becb100 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -137,11 +137,15 @@ class CreateModel(ModelOperation):
+                 ),
+             ]
+         elif isinstance(operation, AlterModelOptions) and self.name_lower == operation.name_lower:
++            options = {**self.options, **operation.options}
++            for key in operation.ALTER_OPTION_KEYS:
++                if key not in operation.options:
++                    options.pop(key, None)
+             return [
+                 CreateModel(
+                     self.name,
+                     fields=self.fields,
+-                    options={**self.options, **operation.options},
++                    options=options,
+                     bases=self.bases,
+                     managers=self.managers,
+                 ),
+2025-04-04 10:39:25,630 - INFO - Eval script for django__django-13786 written to logs/run_evaluation/gold/gold/django__django-13786/eval.sh; copying to container...
+2025-04-04 10:39:37,742 - INFO - Test runtime: 11.68 seconds
+2025-04-04 10:39:37,742 - INFO - Test output for django__django-13786 written to logs/run_evaluation/gold/gold/django__django-13786/test_output.txt
+2025-04-04 10:39:37,878 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index dddf7c679c..7e8becb100 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -137,11 +137,15 @@ class CreateModel(ModelOperation):
+                 ),
+             ]
+         elif isinstance(operation, AlterModelOptions) and self.name_lower == operation.name_lower:
++            options = {**self.options, **operation.options}
++            for key in operation.ALTER_OPTION_KEYS:
++                if key not in operation.options:
++                    options.pop(key, None)
+             return [
+                 CreateModel(
+                     self.name,
+                     fields=self.fields,
+-                    options={**self.options, **operation.options},
++                    options=options,
+                     bases=self.bases,
+                     managers=self.managers,
+                 ),
+2025-04-04 10:39:37,879 - INFO - Grading answer for django__django-13786...
+2025-04-04 10:39:37,879 - INFO - report: {'django__django-13786': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13786: resolved: False
+2025-04-04 10:39:37,879 - INFO - Attempting to stop container sweb.eval.django__django-13786.gold...
+2025-04-04 10:39:54,096 - INFO - Attempting to remove container sweb.eval.django__django-13786.gold...
+2025-04-04 10:39:54,149 - INFO - Container sweb.eval.django__django-13786.gold removed.
+2025-04-04 10:39:54,149 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13786:latest...
+2025-04-04 10:39:56,012 - INFO - Image sweb.eval.x86_64.django__django-13786:latest removed.

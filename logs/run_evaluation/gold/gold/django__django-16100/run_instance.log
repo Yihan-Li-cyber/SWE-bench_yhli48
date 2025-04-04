@@ -1,0 +1,85 @@
+2025-04-04 11:05:08,003 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16100
+Building instance image sweb.eval.x86_64.django__django-16100:latest for django__django-16100
+2025-04-04 11:05:55,230 - INFO - Creating container for django__django-16100...
+2025-04-04 11:05:55,273 - INFO - Container for django__django-16100 created: cd7ff3d9ad07d625bf5e579f4b5db9a4f38eb7f5b077f56e42227d5ec7a78728
+2025-04-04 11:05:55,712 - INFO - Container for django__django-16100 started: cd7ff3d9ad07d625bf5e579f4b5db9a4f38eb7f5b077f56e42227d5ec7a78728
+2025-04-04 11:05:55,714 - INFO - Intermediate patch for django__django-16100 written to logs/run_evaluation/gold/gold/django__django-16100/patch.diff, now applying to container...
+2025-04-04 11:05:55,975 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:05:56,035 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-04 11:05:57,497 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 5f07a4208a..215df9a059 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -2011,15 +2011,17 @@ class ModelAdmin(BaseModelAdmin):
+             )
+             if formset.is_valid():
+                 changecount = 0
+-                for form in formset.forms:
+-                    if form.has_changed():
+-                        obj = self.save_form(request, form, change=True)
+-                        self.save_model(request, obj, form, change=True)
+-                        self.save_related(request, form, formsets=[], change=True)
+-                        change_msg = self.construct_change_message(request, form, None)
+-                        self.log_change(request, obj, change_msg)
+-                        changecount += 1
+-
++                with transaction.atomic(using=router.db_for_write(self.model)):
++                    for form in formset.forms:
++                        if form.has_changed():
++                            obj = self.save_form(request, form, change=True)
++                            self.save_model(request, obj, form, change=True)
++                            self.save_related(request, form, formsets=[], change=True)
++                            change_msg = self.construct_change_message(
++                                request, form, None
++                            )
++                            self.log_change(request, obj, change_msg)
++                            changecount += 1
+                 if changecount:
+                     msg = ngettext(
+                         "%(count)s %(name)s was changed successfully.",
+2025-04-04 11:05:57,497 - INFO - Eval script for django__django-16100 written to logs/run_evaluation/gold/gold/django__django-16100/eval.sh; copying to container...
+2025-04-04 11:06:12,050 - INFO - Test runtime: 14.38 seconds
+2025-04-04 11:06:12,051 - INFO - Test output for django__django-16100 written to logs/run_evaluation/gold/gold/django__django-16100/test_output.txt
+2025-04-04 11:06:12,167 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 5f07a4208a..215df9a059 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -2011,15 +2011,17 @@ class ModelAdmin(BaseModelAdmin):
+             )
+             if formset.is_valid():
+                 changecount = 0
+-                for form in formset.forms:
+-                    if form.has_changed():
+-                        obj = self.save_form(request, form, change=True)
+-                        self.save_model(request, obj, form, change=True)
+-                        self.save_related(request, form, formsets=[], change=True)
+-                        change_msg = self.construct_change_message(request, form, None)
+-                        self.log_change(request, obj, change_msg)
+-                        changecount += 1
+-
++                with transaction.atomic(using=router.db_for_write(self.model)):
++                    for form in formset.forms:
++                        if form.has_changed():
++                            obj = self.save_form(request, form, change=True)
++                            self.save_model(request, obj, form, change=True)
++                            self.save_related(request, form, formsets=[], change=True)
++                            change_msg = self.construct_change_message(
++                                request, form, None
++                            )
++                            self.log_change(request, obj, change_msg)
++                            changecount += 1
+                 if changecount:
+                     msg = ngettext(
+                         "%(count)s %(name)s was changed successfully.",
+2025-04-04 11:06:12,167 - INFO - Grading answer for django__django-16100...
+2025-04-04 11:06:12,168 - INFO - report: {'django__django-16100': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16100: resolved: False
+2025-04-04 11:06:12,168 - INFO - Attempting to stop container sweb.eval.django__django-16100.gold...
+2025-04-04 11:06:27,654 - INFO - Attempting to remove container sweb.eval.django__django-16100.gold...
+2025-04-04 11:06:27,726 - INFO - Container sweb.eval.django__django-16100.gold removed.
+2025-04-04 11:06:27,726 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16100:latest...
+2025-04-04 11:06:28,615 - INFO - Image sweb.eval.x86_64.django__django-16100:latest removed.

@@ -1,0 +1,47 @@
+2025-04-04 09:58:31,017 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11490
+Building instance image sweb.eval.x86_64.django__django-11490:latest for django__django-11490
+2025-04-04 09:59:16,279 - INFO - Creating container for django__django-11490...
+2025-04-04 09:59:16,447 - INFO - Container for django__django-11490 created: 7075556f263284d4b49470c913f26cc9d86e620759e4cb11c51ce74c961ea42e
+2025-04-04 09:59:16,972 - INFO - Container for django__django-11490 started: 7075556f263284d4b49470c913f26cc9d86e620759e4cb11c51ce74c961ea42e
+2025-04-04 09:59:16,973 - INFO - Intermediate patch for django__django-11490 written to logs/run_evaluation/gold/gold/django__django-11490/patch.diff, now applying to container...
+2025-04-04 09:59:17,443 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:59:17,575 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-04 09:59:19,177 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a44adfc760..a791908caf 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -426,6 +426,7 @@ class SQLCompiler:
+                 # must have the same columns list. Set the selects defined on
+                 # the query on all combined queries, if not already set.
+                 if not compiler.query.values_select and self.query.values_select:
++                    compiler.query = compiler.query.clone()
+                     compiler.query.set_values((
+                         *self.query.extra_select,
+                         *self.query.values_select,
+2025-04-04 09:59:19,178 - INFO - Eval script for django__django-11490 written to logs/run_evaluation/gold/gold/django__django-11490/eval.sh; copying to container...
+2025-04-04 09:59:31,641 - INFO - Test runtime: 12.18 seconds
+2025-04-04 09:59:31,641 - INFO - Test output for django__django-11490 written to logs/run_evaluation/gold/gold/django__django-11490/test_output.txt
+2025-04-04 09:59:31,892 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a44adfc760..a791908caf 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -426,6 +426,7 @@ class SQLCompiler:
+                 # must have the same columns list. Set the selects defined on
+                 # the query on all combined queries, if not already set.
+                 if not compiler.query.values_select and self.query.values_select:
++                    compiler.query = compiler.query.clone()
+                     compiler.query.set_values((
+                         *self.query.extra_select,
+                         *self.query.values_select,
+2025-04-04 09:59:31,892 - INFO - Grading answer for django__django-11490...
+2025-04-04 09:59:31,892 - INFO - report: {'django__django-11490': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11490: resolved: False
+2025-04-04 09:59:31,892 - INFO - Attempting to stop container sweb.eval.django__django-11490.gold...
+2025-04-04 09:59:47,649 - INFO - Attempting to remove container sweb.eval.django__django-11490.gold...
+2025-04-04 09:59:47,695 - INFO - Container sweb.eval.django__django-11490.gold removed.
+2025-04-04 09:59:47,695 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11490:latest...
+2025-04-04 09:59:48,367 - INFO - Image sweb.eval.x86_64.django__django-11490:latest removed.

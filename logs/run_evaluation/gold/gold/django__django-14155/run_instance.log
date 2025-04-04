@@ -1,0 +1,67 @@
+2025-04-04 10:43:37,457 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14155
+Building instance image sweb.eval.x86_64.django__django-14155:latest for django__django-14155
+2025-04-04 10:44:39,649 - INFO - Creating container for django__django-14155...
+2025-04-04 10:44:39,677 - INFO - Container for django__django-14155 created: c78e7b02c073bd3c46535aae8af157a4881a4beac5d827f5af734f15848cb394
+2025-04-04 10:44:40,000 - INFO - Container for django__django-14155 started: c78e7b02c073bd3c46535aae8af157a4881a4beac5d827f5af734f15848cb394
+2025-04-04 10:44:40,000 - INFO - Intermediate patch for django__django-14155 written to logs/run_evaluation/gold/gold/django__django-14155/patch.diff, now applying to container...
+2025-04-04 10:44:40,229 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:44:40,280 - INFO - >>>>> Applied Patch:
+patching file django/urls/resolvers.py
+
+2025-04-04 10:44:41,673 - INFO - Git diff before:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 9b00e24509..0912a82f14 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -59,9 +59,16 @@ class ResolverMatch:
+         return (self.func, self.args, self.kwargs)[index]
+ 
+     def __repr__(self):
+-        return "ResolverMatch(func=%s, args=%s, kwargs=%s, url_name=%s, app_names=%s, namespaces=%s, route=%s)" % (
+-            self._func_path, self.args, self.kwargs, self.url_name,
+-            self.app_names, self.namespaces, self.route,
++        if isinstance(self.func, functools.partial):
++            func = repr(self.func)
++        else:
++            func = self._func_path
++        return (
++            'ResolverMatch(func=%s, args=%r, kwargs=%r, url_name=%r, '
++            'app_names=%r, namespaces=%r, route=%r)' % (
++                func, self.args, self.kwargs, self.url_name,
++                self.app_names, self.namespaces, self.route,
++            )
+         )
+2025-04-04 10:44:41,673 - INFO - Eval script for django__django-14155 written to logs/run_evaluation/gold/gold/django__django-14155/eval.sh; copying to container...
+2025-04-04 10:44:53,954 - INFO - Test runtime: 12.05 seconds
+2025-04-04 10:44:53,954 - INFO - Test output for django__django-14155 written to logs/run_evaluation/gold/gold/django__django-14155/test_output.txt
+2025-04-04 10:44:54,055 - INFO - Git diff after:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 9b00e24509..0912a82f14 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -59,9 +59,16 @@ class ResolverMatch:
+         return (self.func, self.args, self.kwargs)[index]
+ 
+     def __repr__(self):
+-        return "ResolverMatch(func=%s, args=%s, kwargs=%s, url_name=%s, app_names=%s, namespaces=%s, route=%s)" % (
+-            self._func_path, self.args, self.kwargs, self.url_name,
+-            self.app_names, self.namespaces, self.route,
++        if isinstance(self.func, functools.partial):
++            func = repr(self.func)
++        else:
++            func = self._func_path
++        return (
++            'ResolverMatch(func=%s, args=%r, kwargs=%r, url_name=%r, '
++            'app_names=%r, namespaces=%r, route=%r)' % (
++                func, self.args, self.kwargs, self.url_name,
++                self.app_names, self.namespaces, self.route,
++            )
+         )
+2025-04-04 10:44:54,055 - INFO - Grading answer for django__django-14155...
+2025-04-04 10:44:54,056 - INFO - report: {'django__django-14155': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14155: resolved: False
+2025-04-04 10:44:54,056 - INFO - Attempting to stop container sweb.eval.django__django-14155.gold...
+2025-04-04 10:45:09,676 - INFO - Attempting to remove container sweb.eval.django__django-14155.gold...
+2025-04-04 10:45:09,718 - INFO - Container sweb.eval.django__django-14155.gold removed.
+2025-04-04 10:45:09,718 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14155:latest...
+2025-04-04 10:45:10,688 - INFO - Image sweb.eval.x86_64.django__django-14155:latest removed.

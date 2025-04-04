@@ -1,0 +1,45 @@
+2025-04-04 12:13:43,414 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-1921
+Building instance image sweb.eval.x86_64.psf__requests-1921:latest for psf__requests-1921
+2025-04-04 12:13:49,383 - INFO - Creating container for psf__requests-1921...
+2025-04-04 12:13:49,411 - INFO - Container for psf__requests-1921 created: 5262725096ecab4e0847bf17e162debded9aac6190b71f42d21176a5274e12c4
+2025-04-04 12:13:49,755 - INFO - Container for psf__requests-1921 started: 5262725096ecab4e0847bf17e162debded9aac6190b71f42d21176a5274e12c4
+2025-04-04 12:13:49,756 - INFO - Intermediate patch for psf__requests-1921 written to logs/run_evaluation/gold/gold/psf__requests-1921/patch.diff, now applying to container...
+2025-04-04 12:13:49,981 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:13:50,036 - INFO - >>>>> Applied Patch:
+patching file requests/sessions.py
+
+2025-04-04 12:13:50,143 - INFO - Git diff before:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index a023e4ec..c06fbcbe 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -59,6 +59,8 @@ def merge_setting(request_setting, session_setting, dict_class=OrderedDict):
+         if v is None:
+             del merged_setting[k]
+ 
++    merged_setting = dict((k, v) for (k, v) in merged_setting.items() if v is not None)
++
+     return merged_setting
+2025-04-04 12:13:50,143 - INFO - Eval script for psf__requests-1921 written to logs/run_evaluation/gold/gold/psf__requests-1921/eval.sh; copying to container...
+2025-04-04 12:14:34,961 - INFO - Test runtime: 44.65 seconds
+2025-04-04 12:14:34,962 - INFO - Test output for psf__requests-1921 written to logs/run_evaluation/gold/gold/psf__requests-1921/test_output.txt
+2025-04-04 12:14:35,045 - INFO - Git diff after:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index a023e4ec..c06fbcbe 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -59,6 +59,8 @@ def merge_setting(request_setting, session_setting, dict_class=OrderedDict):
+         if v is None:
+             del merged_setting[k]
+ 
++    merged_setting = dict((k, v) for (k, v) in merged_setting.items() if v is not None)
++
+     return merged_setting
+2025-04-04 12:14:35,045 - INFO - Grading answer for psf__requests-1921...
+2025-04-04 12:14:35,045 - INFO - report: {'psf__requests-1921': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-1921: resolved: False
+2025-04-04 12:14:35,046 - INFO - Attempting to stop container sweb.eval.psf__requests-1921.gold...
+2025-04-04 12:14:50,412 - INFO - Attempting to remove container sweb.eval.psf__requests-1921.gold...
+2025-04-04 12:14:50,469 - INFO - Container sweb.eval.psf__requests-1921.gold removed.
+2025-04-04 12:14:50,469 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-1921:latest...
+2025-04-04 12:14:50,561 - INFO - Image sweb.eval.x86_64.psf__requests-1921:latest removed.

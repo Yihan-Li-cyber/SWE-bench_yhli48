@@ -1,0 +1,69 @@
+2025-04-04 11:11:56,537 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16661
+Building instance image sweb.eval.x86_64.django__django-16661:latest for django__django-16661
+2025-04-04 11:13:14,528 - INFO - Creating container for django__django-16661...
+2025-04-04 11:13:14,863 - INFO - Container for django__django-16661 created: 6422db2e95774aefafcd04b454bb875ad05e3c904a8031486075accd516ac132
+2025-04-04 11:13:15,844 - INFO - Container for django__django-16661 started: 6422db2e95774aefafcd04b454bb875ad05e3c904a8031486075accd516ac132
+2025-04-04 11:13:15,847 - INFO - Intermediate patch for django__django-16661 written to logs/run_evaluation/gold/gold/django__django-16661/patch.diff, now applying to container...
+2025-04-04 11:13:16,333 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:13:16,432 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-04 11:13:17,796 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 5240b07cd6..49c816dc9e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -461,12 +461,14 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+                 # Lookups on nonexistent fields are ok, since they're ignored
+                 # later.
+                 break
+-            # It is allowed to filter on values that would be found from local
+-            # model anyways. For example, if you filter on employee__department__id,
+-            # then the id value would be found already from employee__department_id.
+             if not prev_field or (
+                 prev_field.is_relation
+-                and field not in prev_field.path_infos[-1].target_fields
++                and field not in model._meta.parents.values()
++                and field is not model._meta.auto_field
++                and (
++                    model._meta.auto_field is None
++                    or part not in getattr(prev_field, "to_fields", [])
++                )
+             ):
+                 relation_parts.append(part)
+             if not getattr(field, "path_infos", None):
+2025-04-04 11:13:17,796 - INFO - Eval script for django__django-16661 written to logs/run_evaluation/gold/gold/django__django-16661/eval.sh; copying to container...
+2025-04-04 11:13:29,029 - INFO - Test runtime: 11.03 seconds
+2025-04-04 11:13:29,029 - INFO - Test output for django__django-16661 written to logs/run_evaluation/gold/gold/django__django-16661/test_output.txt
+2025-04-04 11:13:29,145 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 5240b07cd6..49c816dc9e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -461,12 +461,14 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+                 # Lookups on nonexistent fields are ok, since they're ignored
+                 # later.
+                 break
+-            # It is allowed to filter on values that would be found from local
+-            # model anyways. For example, if you filter on employee__department__id,
+-            # then the id value would be found already from employee__department_id.
+             if not prev_field or (
+                 prev_field.is_relation
+-                and field not in prev_field.path_infos[-1].target_fields
++                and field not in model._meta.parents.values()
++                and field is not model._meta.auto_field
++                and (
++                    model._meta.auto_field is None
++                    or part not in getattr(prev_field, "to_fields", [])
++                )
+             ):
+                 relation_parts.append(part)
+             if not getattr(field, "path_infos", None):
+2025-04-04 11:13:29,145 - INFO - Grading answer for django__django-16661...
+2025-04-04 11:13:29,146 - INFO - report: {'django__django-16661': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16661: resolved: False
+2025-04-04 11:13:29,146 - INFO - Attempting to stop container sweb.eval.django__django-16661.gold...
+2025-04-04 11:13:44,586 - INFO - Attempting to remove container sweb.eval.django__django-16661.gold...
+2025-04-04 11:13:45,278 - INFO - Container sweb.eval.django__django-16661.gold removed.
+2025-04-04 11:13:45,278 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16661:latest...
+2025-04-04 11:13:46,962 - INFO - Image sweb.eval.x86_64.django__django-16661:latest removed.

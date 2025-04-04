@@ -1,0 +1,89 @@
+2025-04-04 09:45:54,091 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14598
+Building instance image sweb.eval.x86_64.astropy__astropy-14598:latest for astropy__astropy-14598
+2025-04-04 09:47:39,936 - INFO - Creating container for astropy__astropy-14598...
+2025-04-04 09:47:40,112 - INFO - Container for astropy__astropy-14598 created: 96d4855e9af4b19e008bab3dc43b0f68206ff3b2bebd5d33ed77c65c65eddd1b
+2025-04-04 09:47:40,512 - INFO - Container for astropy__astropy-14598 started: 96d4855e9af4b19e008bab3dc43b0f68206ff3b2bebd5d33ed77c65c65eddd1b
+2025-04-04 09:47:40,512 - INFO - Intermediate patch for astropy__astropy-14598 written to logs/run_evaluation/gold/gold/astropy__astropy-14598/patch.diff, now applying to container...
+2025-04-04 09:47:40,936 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:47:41,025 - INFO - >>>>> Applied Patch:
+patching file astropy/io/fits/card.py
+
+2025-04-04 09:47:41,753 - INFO - Git diff before:
+diff --git a/astropy/io/fits/card.py b/astropy/io/fits/card.py
+index 1b3285ddce..89a5c0c0e8 100644
+--- a/astropy/io/fits/card.py
++++ b/astropy/io/fits/card.py
+@@ -66,7 +66,7 @@ class Card(_Verify):
+     # followed by an optional comment
+     _strg = r"\'(?P<strg>([ -~]+?|\'\'|) *?)\'(?=$|/| )"
+     _comm_field = r"(?P<comm_field>(?P<sepr>/ *)(?P<comm>(.|\n)*))"
+-    _strg_comment_RE = re.compile(f"({_strg})? *{_comm_field}?")
++    _strg_comment_RE = re.compile(f"({_strg})? *{_comm_field}?$")
+ 
+     # FSC commentary card string which must contain printable ASCII characters.
+     # Note: \Z matches the end of the string without allowing newlines
+@@ -859,7 +859,7 @@ class Card(_Verify):
+                     return kw, vc
+ 
+                 value = m.group("strg") or ""
+-                value = value.rstrip().replace("''", "'")
++                value = value.rstrip()
+                 if value and value[-1] == "&":
+                     value = value[:-1]
+                 values.append(value)
+diff --git a/pyproject.toml b/pyproject.toml
+index 243782fdfc..b2688da2a5 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:47:41,753 - INFO - Eval script for astropy__astropy-14598 written to logs/run_evaluation/gold/gold/astropy__astropy-14598/eval.sh; copying to container...
+2025-04-04 09:49:05,385 - INFO - Test runtime: 83.44 seconds
+2025-04-04 09:49:05,386 - INFO - Test output for astropy__astropy-14598 written to logs/run_evaluation/gold/gold/astropy__astropy-14598/test_output.txt
+2025-04-04 09:49:05,463 - INFO - Git diff after:
+diff --git a/astropy/io/fits/card.py b/astropy/io/fits/card.py
+index 1b3285ddce..89a5c0c0e8 100644
+--- a/astropy/io/fits/card.py
++++ b/astropy/io/fits/card.py
+@@ -66,7 +66,7 @@ class Card(_Verify):
+     # followed by an optional comment
+     _strg = r"\'(?P<strg>([ -~]+?|\'\'|) *?)\'(?=$|/| )"
+     _comm_field = r"(?P<comm_field>(?P<sepr>/ *)(?P<comm>(.|\n)*))"
+-    _strg_comment_RE = re.compile(f"({_strg})? *{_comm_field}?")
++    _strg_comment_RE = re.compile(f"({_strg})? *{_comm_field}?$")
+ 
+     # FSC commentary card string which must contain printable ASCII characters.
+     # Note: \Z matches the end of the string without allowing newlines
+@@ -859,7 +859,7 @@ class Card(_Verify):
+                     return kw, vc
+ 
+                 value = m.group("strg") or ""
+-                value = value.rstrip().replace("''", "'")
++                value = value.rstrip()
+                 if value and value[-1] == "&":
+                     value = value[:-1]
+                 values.append(value)
+diff --git a/pyproject.toml b/pyproject.toml
+index 243782fdfc..b2688da2a5 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:49:05,463 - INFO - Grading answer for astropy__astropy-14598...
+2025-04-04 09:49:05,465 - INFO - report: {'astropy__astropy-14598': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14598: resolved: False
+2025-04-04 09:49:05,466 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14598.gold...
+2025-04-04 09:49:21,324 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14598.gold...
+2025-04-04 09:49:21,369 - INFO - Container sweb.eval.astropy__astropy-14598.gold removed.
+2025-04-04 09:49:21,369 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14598:latest...
+2025-04-04 09:49:21,763 - INFO - Image sweb.eval.x86_64.astropy__astropy-14598:latest removed.

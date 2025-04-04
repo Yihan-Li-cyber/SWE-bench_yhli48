@@ -1,0 +1,49 @@
+2025-04-04 09:54:21,201 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11119
+Building instance image sweb.eval.x86_64.django__django-11119:latest for django__django-11119
+2025-04-04 09:55:27,358 - INFO - Creating container for django__django-11119...
+2025-04-04 09:55:27,383 - INFO - Container for django__django-11119 created: 437a457bd93ea54245fd6bb404eb41b4c4591fb09692ba25c8533d7c51e0b6de
+2025-04-04 09:55:37,461 - INFO - Container for django__django-11119 started: 437a457bd93ea54245fd6bb404eb41b4c4591fb09692ba25c8533d7c51e0b6de
+2025-04-04 09:55:37,462 - INFO - Intermediate patch for django__django-11119 written to logs/run_evaluation/gold/gold/django__django-11119/patch.diff, now applying to container...
+2025-04-04 09:55:37,711 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:55:37,779 - INFO - >>>>> Applied Patch:
+patching file django/template/engine.py
+
+2025-04-04 09:55:39,024 - INFO - Git diff before:
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..ff9ce58d59 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -160,7 +160,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """
+2025-04-04 09:55:39,025 - INFO - Eval script for django__django-11119 written to logs/run_evaluation/gold/gold/django__django-11119/eval.sh; copying to container...
+2025-04-04 09:55:49,744 - INFO - Test runtime: 10.49 seconds
+2025-04-04 09:55:49,745 - INFO - Test output for django__django-11119 written to logs/run_evaluation/gold/gold/django__django-11119/test_output.txt
+2025-04-04 09:55:49,878 - INFO - Git diff after:
+diff --git a/django/template/engine.py b/django/template/engine.py
+index dfaa67ba12..ff9ce58d59 100644
+--- a/django/template/engine.py
++++ b/django/template/engine.py
+@@ -160,7 +160,7 @@ class Engine:
+         if isinstance(context, Context):
+             return t.render(context)
+         else:
+-            return t.render(Context(context))
++            return t.render(Context(context, autoescape=self.autoescape))
+ 
+     def select_template(self, template_name_list):
+         """
+2025-04-04 09:55:49,879 - INFO - Grading answer for django__django-11119...
+2025-04-04 09:55:49,879 - INFO - report: {'django__django-11119': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11119: resolved: False
+2025-04-04 09:55:49,879 - INFO - Attempting to stop container sweb.eval.django__django-11119.gold...
+2025-04-04 09:56:05,659 - INFO - Attempting to remove container sweb.eval.django__django-11119.gold...
+2025-04-04 09:56:05,714 - INFO - Container sweb.eval.django__django-11119.gold removed.
+2025-04-04 09:56:05,714 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11119:latest...
+2025-04-04 09:56:06,326 - INFO - Image sweb.eval.x86_64.django__django-11119:latest removed.

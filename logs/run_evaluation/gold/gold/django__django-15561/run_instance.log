@@ -1,0 +1,138 @@
+2025-04-04 10:59:07,958 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15561
+Building instance image sweb.eval.x86_64.django__django-15561:latest for django__django-15561
+2025-04-04 11:00:22,173 - INFO - Creating container for django__django-15561...
+2025-04-04 11:00:22,247 - INFO - Container for django__django-15561 created: 0f61aef42cde0da66c2a0f9e20f2d91c41b4d35409b2e92d7356249f4397bac5
+2025-04-04 11:00:23,714 - INFO - Container for django__django-15561 started: 0f61aef42cde0da66c2a0f9e20f2d91c41b4d35409b2e92d7356249f4397bac5
+2025-04-04 11:00:23,716 - INFO - Intermediate patch for django__django-15561 written to logs/run_evaluation/gold/gold/django__django-15561/patch.diff, now applying to container...
+2025-04-04 11:00:24,022 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:00:24,120 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/schema.py
+patching file django/db/models/fields/__init__.py
+
+2025-04-04 11:00:25,848 - INFO - Git diff before:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 9d6952df21..a140a6dc61 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1376,22 +1376,9 @@ class BaseDatabaseSchemaEditor:
+         # - changing only a field name
+         # - changing an attribute that doesn't affect the schema
+         # - adding only a db_column and the column name is not changed
+-        non_database_attrs = [
+-            "blank",
+-            "db_column",
+-            "editable",
+-            "error_messages",
+-            "help_text",
+-            "limit_choices_to",
+-            # Database-level options are not supported, see #21961.
+-            "on_delete",
+-            "related_name",
+-            "related_query_name",
+-            "validators",
+-            "verbose_name",
+-        ]
+-        for attr in non_database_attrs:
++        for attr in old_field.non_db_attrs:
+             old_kwargs.pop(attr, None)
++        for attr in new_field.non_db_attrs:
+             new_kwargs.pop(attr, None)
+         return self.quote_name(old_field.column) != self.quote_name(
+             new_field.column
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 72208efd04..5c5a5e0cfe 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -140,6 +140,24 @@ class Field(RegisterLookupMixin):
+     system_check_deprecated_details = None
+     system_check_removed_details = None
+ 
++    # Attributes that don't affect a column definition.
++    # These attributes are ignored when altering the field.
++    non_db_attrs = (
++        "blank",
++        "choices",
++        "db_column",
++        "editable",
++        "error_messages",
++        "help_text",
++        "limit_choices_to",
++        # Database-level options are not supported, see #21961.
++        "on_delete",
++        "related_name",
++        "related_query_name",
++        "validators",
++        "verbose_name",
++    )
++
+     # Field flags
+     hidden = False
+2025-04-04 11:00:25,848 - INFO - Eval script for django__django-15561 written to logs/run_evaluation/gold/gold/django__django-15561/eval.sh; copying to container...
+2025-04-04 11:00:40,817 - INFO - Test runtime: 14.73 seconds
+2025-04-04 11:00:40,817 - INFO - Test output for django__django-15561 written to logs/run_evaluation/gold/gold/django__django-15561/test_output.txt
+2025-04-04 11:00:40,928 - INFO - Git diff after:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 9d6952df21..a140a6dc61 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1376,22 +1376,9 @@ class BaseDatabaseSchemaEditor:
+         # - changing only a field name
+         # - changing an attribute that doesn't affect the schema
+         # - adding only a db_column and the column name is not changed
+-        non_database_attrs = [
+-            "blank",
+-            "db_column",
+-            "editable",
+-            "error_messages",
+-            "help_text",
+-            "limit_choices_to",
+-            # Database-level options are not supported, see #21961.
+-            "on_delete",
+-            "related_name",
+-            "related_query_name",
+-            "validators",
+-            "verbose_name",
+-        ]
+-        for attr in non_database_attrs:
++        for attr in old_field.non_db_attrs:
+             old_kwargs.pop(attr, None)
++        for attr in new_field.non_db_attrs:
+             new_kwargs.pop(attr, None)
+         return self.quote_name(old_field.column) != self.quote_name(
+             new_field.column
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 72208efd04..5c5a5e0cfe 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -140,6 +140,24 @@ class Field(RegisterLookupMixin):
+     system_check_deprecated_details = None
+     system_check_removed_details = None
+ 
++    # Attributes that don't affect a column definition.
++    # These attributes are ignored when altering the field.
++    non_db_attrs = (
++        "blank",
++        "choices",
++        "db_column",
++        "editable",
++        "error_messages",
++        "help_text",
++        "limit_choices_to",
++        # Database-level options are not supported, see #21961.
++        "on_delete",
++        "related_name",
++        "related_query_name",
++        "validators",
++        "verbose_name",
++    )
++
+     # Field flags
+     hidden = False
+2025-04-04 11:00:40,928 - INFO - Grading answer for django__django-15561...
+2025-04-04 11:00:40,929 - INFO - report: {'django__django-15561': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15561: resolved: False
+2025-04-04 11:00:40,929 - INFO - Attempting to stop container sweb.eval.django__django-15561.gold...
+2025-04-04 11:00:56,604 - INFO - Attempting to remove container sweb.eval.django__django-15561.gold...
+2025-04-04 11:00:57,207 - INFO - Container sweb.eval.django__django-15561.gold removed.
+2025-04-04 11:00:57,209 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15561:latest...
+2025-04-04 11:00:58,895 - INFO - Image sweb.eval.x86_64.django__django-15561:latest removed.

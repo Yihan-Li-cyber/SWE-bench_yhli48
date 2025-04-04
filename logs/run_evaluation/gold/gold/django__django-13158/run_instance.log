@@ -1,0 +1,65 @@
+2025-04-04 10:31:45,857 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13158
+Building instance image sweb.eval.x86_64.django__django-13158:latest for django__django-13158
+2025-04-04 10:32:39,811 - INFO - Creating container for django__django-13158...
+2025-04-04 10:32:39,856 - INFO - Container for django__django-13158 created: 66a283f0fd23f50fa8f5521b5e9f12d658db8a86eae9e1c8d2d596976b521cce
+2025-04-04 10:32:40,210 - INFO - Container for django__django-13158 started: 66a283f0fd23f50fa8f5521b5e9f12d658db8a86eae9e1c8d2d596976b521cce
+2025-04-04 10:32:40,210 - INFO - Intermediate patch for django__django-13158 written to logs/run_evaluation/gold/gold/django__django-13158/patch.diff, now applying to container...
+2025-04-04 10:32:40,493 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:32:40,560 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-04 10:32:42,326 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index c913267476..1623263964 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -305,6 +305,7 @@ class Query(BaseExpression):
+             obj.annotation_select_mask = None
+         else:
+             obj.annotation_select_mask = self.annotation_select_mask.copy()
++        obj.combined_queries = tuple(query.clone() for query in self.combined_queries)
+         # _annotation_select_cache cannot be copied, as doing so breaks the
+         # (necessary) state in which both annotations and
+         # _annotation_select_cache point to the same underlying objects.
+@@ -1777,6 +1778,8 @@ class Query(BaseExpression):
+ 
+     def set_empty(self):
+         self.where.add(NothingNode(), AND)
++        for query in self.combined_queries:
++            query.set_empty()
+ 
+     def is_empty(self):
+         return any(isinstance(c, NothingNode) for c in self.where.children)
+2025-04-04 10:32:42,327 - INFO - Eval script for django__django-13158 written to logs/run_evaluation/gold/gold/django__django-13158/eval.sh; copying to container...
+2025-04-04 10:32:55,003 - INFO - Test runtime: 12.41 seconds
+2025-04-04 10:32:55,003 - INFO - Test output for django__django-13158 written to logs/run_evaluation/gold/gold/django__django-13158/test_output.txt
+2025-04-04 10:32:55,108 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index c913267476..1623263964 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -305,6 +305,7 @@ class Query(BaseExpression):
+             obj.annotation_select_mask = None
+         else:
+             obj.annotation_select_mask = self.annotation_select_mask.copy()
++        obj.combined_queries = tuple(query.clone() for query in self.combined_queries)
+         # _annotation_select_cache cannot be copied, as doing so breaks the
+         # (necessary) state in which both annotations and
+         # _annotation_select_cache point to the same underlying objects.
+@@ -1777,6 +1778,8 @@ class Query(BaseExpression):
+ 
+     def set_empty(self):
+         self.where.add(NothingNode(), AND)
++        for query in self.combined_queries:
++            query.set_empty()
+ 
+     def is_empty(self):
+         return any(isinstance(c, NothingNode) for c in self.where.children)
+2025-04-04 10:32:55,108 - INFO - Grading answer for django__django-13158...
+2025-04-04 10:32:55,109 - INFO - report: {'django__django-13158': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13158: resolved: False
+2025-04-04 10:32:55,109 - INFO - Attempting to stop container sweb.eval.django__django-13158.gold...
+2025-04-04 10:33:10,565 - INFO - Attempting to remove container sweb.eval.django__django-13158.gold...
+2025-04-04 10:33:10,609 - INFO - Container sweb.eval.django__django-13158.gold removed.
+2025-04-04 10:33:10,609 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13158:latest...
+2025-04-04 10:33:11,316 - INFO - Image sweb.eval.x86_64.django__django-13158:latest removed.

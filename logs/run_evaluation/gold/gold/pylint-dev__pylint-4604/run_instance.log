@@ -1,0 +1,92 @@
+2025-04-04 12:22:15,349 - INFO - Environment image sweb.env.x86_64.d905bb51fb68acc5d4221b:latest found for pylint-dev__pylint-4604
+Building instance image sweb.eval.x86_64.pylint-dev__pylint-4604:latest for pylint-dev__pylint-4604
+2025-04-04 12:22:26,811 - INFO - Creating container for pylint-dev__pylint-4604...
+2025-04-04 12:22:26,843 - INFO - Container for pylint-dev__pylint-4604 created: cc4154ec39e069c0098197c2acecbac48b50bcbf3cc4d85e231781c47c843e18
+2025-04-04 12:22:27,197 - INFO - Container for pylint-dev__pylint-4604 started: cc4154ec39e069c0098197c2acecbac48b50bcbf3cc4d85e231781c47c843e18
+2025-04-04 12:22:27,197 - INFO - Intermediate patch for pylint-dev__pylint-4604 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-4604/patch.diff, now applying to container...
+2025-04-04 12:22:27,495 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:22:27,550 - INFO - >>>>> Applied Patch:
+patching file pylint/checkers/variables.py
+patching file pylint/constants.py
+
+2025-04-04 12:22:27,866 - INFO - Git diff before:
+diff --git a/pylint/checkers/variables.py b/pylint/checkers/variables.py
+index 3ddafd599..8a4637509 100644
+--- a/pylint/checkers/variables.py
++++ b/pylint/checkers/variables.py
+@@ -1826,6 +1826,10 @@ class VariablesChecker(BaseChecker):
+             self._type_annotation_names.append(type_annotation.name)
+             return
+ 
++        if isinstance(type_annotation, astroid.Attribute):
++            self._store_type_annotation_node(type_annotation.expr)
++            return
++
+         if not isinstance(type_annotation, astroid.Subscript):
+             return
+ 
+diff --git a/pylint/constants.py b/pylint/constants.py
+index b95d701c0..786cde7d0 100644
+--- a/pylint/constants.py
++++ b/pylint/constants.py
+@@ -1,6 +1,7 @@
+ # Licensed under the GPL: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ # For details: https://github.com/PyCQA/pylint/blob/master/LICENSE
+ 
++import platform
+ import sys
+ 
+ import astroid
+@@ -11,6 +12,7 @@ PY38_PLUS = sys.version_info[:2] >= (3, 8)
+ PY39_PLUS = sys.version_info[:2] >= (3, 9)
+ PY310_PLUS = sys.version_info[:2] >= (3, 10)
+ 
++IS_PYPY = platform.python_implementation() == "PyPy"
+ 
+ PY_EXTS = (".py", ".pyc", ".pyo", ".pyw", ".so", ".dll")
+2025-04-04 12:22:27,866 - INFO - Eval script for pylint-dev__pylint-4604 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-4604/eval.sh; copying to container...
+2025-04-04 12:22:34,543 - INFO - Test runtime: 6.46 seconds
+2025-04-04 12:22:34,543 - INFO - Test output for pylint-dev__pylint-4604 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-4604/test_output.txt
+2025-04-04 12:22:34,625 - INFO - Git diff after:
+diff --git a/pylint/checkers/variables.py b/pylint/checkers/variables.py
+index 3ddafd599..8a4637509 100644
+--- a/pylint/checkers/variables.py
++++ b/pylint/checkers/variables.py
+@@ -1826,6 +1826,10 @@ class VariablesChecker(BaseChecker):
+             self._type_annotation_names.append(type_annotation.name)
+             return
+ 
++        if isinstance(type_annotation, astroid.Attribute):
++            self._store_type_annotation_node(type_annotation.expr)
++            return
++
+         if not isinstance(type_annotation, astroid.Subscript):
+             return
+ 
+diff --git a/pylint/constants.py b/pylint/constants.py
+index b95d701c0..786cde7d0 100644
+--- a/pylint/constants.py
++++ b/pylint/constants.py
+@@ -1,6 +1,7 @@
+ # Licensed under the GPL: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ # For details: https://github.com/PyCQA/pylint/blob/master/LICENSE
+ 
++import platform
+ import sys
+ 
+ import astroid
+@@ -11,6 +12,7 @@ PY38_PLUS = sys.version_info[:2] >= (3, 8)
+ PY39_PLUS = sys.version_info[:2] >= (3, 9)
+ PY310_PLUS = sys.version_info[:2] >= (3, 10)
+ 
++IS_PYPY = platform.python_implementation() == "PyPy"
+ 
+ PY_EXTS = (".py", ".pyc", ".pyo", ".pyw", ".so", ".dll")
+2025-04-04 12:22:34,626 - INFO - Grading answer for pylint-dev__pylint-4604...
+2025-04-04 12:22:34,626 - INFO - report: {'pylint-dev__pylint-4604': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pylint-dev__pylint-4604: resolved: False
+2025-04-04 12:22:34,627 - INFO - Attempting to stop container sweb.eval.pylint-dev__pylint-4604.gold...
+2025-04-04 12:22:50,287 - INFO - Attempting to remove container sweb.eval.pylint-dev__pylint-4604.gold...
+2025-04-04 12:22:50,313 - INFO - Container sweb.eval.pylint-dev__pylint-4604.gold removed.
+2025-04-04 12:22:50,313 - INFO - Attempting to remove image sweb.eval.x86_64.pylint-dev__pylint-4604:latest...
+2025-04-04 12:22:50,433 - INFO - Image sweb.eval.x86_64.pylint-dev__pylint-4604:latest removed.

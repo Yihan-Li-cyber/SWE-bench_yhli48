@@ -1,0 +1,49 @@
+2025-04-04 12:17:12,879 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-4094
+Building instance image sweb.eval.x86_64.pydata__xarray-4094:latest for pydata__xarray-4094
+2025-04-04 12:17:27,188 - INFO - Creating container for pydata__xarray-4094...
+2025-04-04 12:17:27,289 - INFO - Container for pydata__xarray-4094 created: 605c07eb2aee00f18daa13e625f920dd0c76d0bd5d3a3994c6cd904bd8b8d71d
+2025-04-04 12:17:27,665 - INFO - Container for pydata__xarray-4094 started: 605c07eb2aee00f18daa13e625f920dd0c76d0bd5d3a3994c6cd904bd8b8d71d
+2025-04-04 12:17:27,665 - INFO - Intermediate patch for pydata__xarray-4094 written to logs/run_evaluation/gold/gold/pydata__xarray-4094/patch.diff, now applying to container...
+2025-04-04 12:17:27,923 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:17:27,987 - INFO - >>>>> Applied Patch:
+patching file xarray/core/dataarray.py
+
+2025-04-04 12:17:28,172 - INFO - Git diff before:
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index b0df8749..3be9bb79 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,7 +1961,7 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            data_dict[k] = self.sel({variable_dim: k}, drop=True).squeeze(drop=True)
+ 
+         # unstacked dataset
+         return Dataset(data_dict)
+2025-04-04 12:17:28,174 - INFO - Eval script for pydata__xarray-4094 written to logs/run_evaluation/gold/gold/pydata__xarray-4094/eval.sh; copying to container...
+2025-04-04 12:18:00,510 - INFO - Test runtime: 32.15 seconds
+2025-04-04 12:18:00,510 - INFO - Test output for pydata__xarray-4094 written to logs/run_evaluation/gold/gold/pydata__xarray-4094/test_output.txt
+2025-04-04 12:18:00,601 - INFO - Git diff after:
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index b0df8749..3be9bb79 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,7 +1961,7 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            data_dict[k] = self.sel({variable_dim: k}, drop=True).squeeze(drop=True)
+ 
+         # unstacked dataset
+         return Dataset(data_dict)
+2025-04-04 12:18:00,601 - INFO - Grading answer for pydata__xarray-4094...
+2025-04-04 12:18:00,602 - INFO - report: {'pydata__xarray-4094': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-4094: resolved: False
+2025-04-04 12:18:00,602 - INFO - Attempting to stop container sweb.eval.pydata__xarray-4094.gold...
+2025-04-04 12:18:15,999 - INFO - Attempting to remove container sweb.eval.pydata__xarray-4094.gold...
+2025-04-04 12:18:16,028 - INFO - Container sweb.eval.pydata__xarray-4094.gold removed.
+2025-04-04 12:18:16,028 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4094:latest...
+2025-04-04 12:18:16,096 - INFO - Image sweb.eval.x86_64.pydata__xarray-4094:latest removed.

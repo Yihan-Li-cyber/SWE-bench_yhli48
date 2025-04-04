@@ -1,0 +1,49 @@
+2025-04-04 11:35:07,071 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24177
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-24177:latest for matplotlib__matplotlib-24177
+2025-04-04 11:42:04,399 - INFO - Creating container for matplotlib__matplotlib-24177...
+2025-04-04 11:42:04,481 - INFO - Container for matplotlib__matplotlib-24177 created: 7e4e6b4e77104761e4edc60edfa47175ef81ac61136385de39bb39424583aa9e
+2025-04-04 11:42:27,370 - INFO - Container for matplotlib__matplotlib-24177 started: 7e4e6b4e77104761e4edc60edfa47175ef81ac61136385de39bb39424583aa9e
+2025-04-04 11:42:27,379 - INFO - Intermediate patch for matplotlib__matplotlib-24177 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24177/patch.diff, now applying to container...
+2025-04-04 11:42:27,901 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:42:27,989 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/axes/_base.py
+
+2025-04-04 11:42:30,361 - INFO - Git diff before:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 4f805e0177..056ff7ea2c 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -2434,7 +2434,7 @@ class _AxesBase(martist.Artist):
+         # Get all vertices on the path
+         # Loop through each segment to get extrema for Bezier curve sections
+         vertices = []
+-        for curve, code in p.iter_bezier():
++        for curve, code in p.iter_bezier(simplify=False):
+             # Get distance along the curve of any extrema
+             _, dzeros = curve.axis_aligned_extrema()
+             # Calculate vertices of start, end and any extrema in between
+2025-04-04 11:42:30,361 - INFO - Eval script for matplotlib__matplotlib-24177 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24177/eval.sh; copying to container...
+2025-04-04 11:46:39,059 - INFO - Test runtime: 248.47 seconds
+2025-04-04 11:46:39,060 - INFO - Test output for matplotlib__matplotlib-24177 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24177/test_output.txt
+2025-04-04 11:46:39,152 - INFO - Git diff after:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 4f805e0177..056ff7ea2c 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -2434,7 +2434,7 @@ class _AxesBase(martist.Artist):
+         # Get all vertices on the path
+         # Loop through each segment to get extrema for Bezier curve sections
+         vertices = []
+-        for curve, code in p.iter_bezier():
++        for curve, code in p.iter_bezier(simplify=False):
+             # Get distance along the curve of any extrema
+             _, dzeros = curve.axis_aligned_extrema()
+             # Calculate vertices of start, end and any extrema in between
+2025-04-04 11:46:39,178 - INFO - Grading answer for matplotlib__matplotlib-24177...
+2025-04-04 11:46:39,178 - INFO - report: {'matplotlib__matplotlib-24177': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-24177: resolved: False
+2025-04-04 11:46:39,179 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-24177.gold...
+2025-04-04 11:46:54,754 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-24177.gold...
+2025-04-04 11:46:54,835 - INFO - Container sweb.eval.matplotlib__matplotlib-24177.gold removed.
+2025-04-04 11:46:54,835 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-24177:latest...
+2025-04-04 11:46:59,917 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-24177:latest removed.

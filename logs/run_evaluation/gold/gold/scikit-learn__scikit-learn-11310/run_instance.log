@@ -1,0 +1,123 @@
+2025-04-04 12:27:40,394 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-11310
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-11310:latest for scikit-learn__scikit-learn-11310
+2025-04-04 12:33:03,668 - INFO - Creating container for scikit-learn__scikit-learn-11310...
+2025-04-04 12:33:03,705 - INFO - Container for scikit-learn__scikit-learn-11310 created: abc535c1c3df3976bb669f61dbf59a03261198d1651a053ca0a0fb324a273c12
+2025-04-04 12:33:04,088 - INFO - Container for scikit-learn__scikit-learn-11310 started: abc535c1c3df3976bb669f61dbf59a03261198d1651a053ca0a0fb324a273c12
+2025-04-04 12:33:04,089 - INFO - Intermediate patch for scikit-learn__scikit-learn-11310 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11310/patch.diff, now applying to container...
+2025-04-04 12:33:04,371 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:33:04,443 - INFO - >>>>> Applied Patch:
+patching file sklearn/model_selection/_search.py
+
+2025-04-04 12:33:04,908 - INFO - Git diff before:
+diff --git a/sklearn/model_selection/_search.py b/sklearn/model_selection/_search.py
+index 99d6096af..a339b9b16 100644
+--- a/sklearn/model_selection/_search.py
++++ b/sklearn/model_selection/_search.py
+@@ -17,6 +17,7 @@ from collections import Mapping, namedtuple, defaultdict, Sequence, Iterable
+ from functools import partial, reduce
+ from itertools import product
+ import operator
++import time
+ import warnings
+ 
+ import numpy as np
+@@ -766,10 +767,13 @@ class BaseSearchCV(six.with_metaclass(ABCMeta, BaseEstimator,
+         if self.refit:
+             self.best_estimator_ = clone(base_estimator).set_params(
+                 **self.best_params_)
++            refit_start_time = time.time()
+             if y is not None:
+                 self.best_estimator_.fit(X, y, **fit_params)
+             else:
+                 self.best_estimator_.fit(X, **fit_params)
++            refit_end_time = time.time()
++            self.refit_time_ = refit_end_time - refit_start_time
+ 
+         # Store the only scorer not as a dict for single metric evaluation
+         self.scorer_ = scorers if self.multimetric_ else scorers['score']
+@@ -1076,6 +1080,11 @@ class GridSearchCV(BaseSearchCV):
+     n_splits_ : int
+         The number of cross-validation splits (folds/iterations).
+ 
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++
++        This is present only if ``refit`` is not False.
++
+     Notes
+     ------
+     The parameters selected are those that maximize the score of the left out
+@@ -1387,6 +1396,11 @@ class RandomizedSearchCV(BaseSearchCV):
+     n_splits_ : int
+         The number of cross-validation splits (folds/iterations).
+ 
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++
++        This is present only if ``refit`` is not False.
++
+     Notes
+     -----
+     The parameters selected are those that maximize the score of the held-out
+2025-04-04 12:33:04,908 - INFO - Eval script for scikit-learn__scikit-learn-11310 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11310/eval.sh; copying to container...
+2025-04-04 12:33:20,920 - INFO - Test runtime: 15.77 seconds
+2025-04-04 12:33:20,921 - INFO - Test output for scikit-learn__scikit-learn-11310 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-11310/test_output.txt
+2025-04-04 12:33:20,995 - INFO - Git diff after:
+diff --git a/sklearn/model_selection/_search.py b/sklearn/model_selection/_search.py
+index 99d6096af..a339b9b16 100644
+--- a/sklearn/model_selection/_search.py
++++ b/sklearn/model_selection/_search.py
+@@ -17,6 +17,7 @@ from collections import Mapping, namedtuple, defaultdict, Sequence, Iterable
+ from functools import partial, reduce
+ from itertools import product
+ import operator
++import time
+ import warnings
+ 
+ import numpy as np
+@@ -766,10 +767,13 @@ class BaseSearchCV(six.with_metaclass(ABCMeta, BaseEstimator,
+         if self.refit:
+             self.best_estimator_ = clone(base_estimator).set_params(
+                 **self.best_params_)
++            refit_start_time = time.time()
+             if y is not None:
+                 self.best_estimator_.fit(X, y, **fit_params)
+             else:
+                 self.best_estimator_.fit(X, **fit_params)
++            refit_end_time = time.time()
++            self.refit_time_ = refit_end_time - refit_start_time
+ 
+         # Store the only scorer not as a dict for single metric evaluation
+         self.scorer_ = scorers if self.multimetric_ else scorers['score']
+@@ -1076,6 +1080,11 @@ class GridSearchCV(BaseSearchCV):
+     n_splits_ : int
+         The number of cross-validation splits (folds/iterations).
+ 
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++
++        This is present only if ``refit`` is not False.
++
+     Notes
+     ------
+     The parameters selected are those that maximize the score of the left out
+@@ -1387,6 +1396,11 @@ class RandomizedSearchCV(BaseSearchCV):
+     n_splits_ : int
+         The number of cross-validation splits (folds/iterations).
+ 
++    refit_time_ : float
++        Seconds used for refitting the best model on the whole dataset.
++
++        This is present only if ``refit`` is not False.
++
+     Notes
+     -----
+     The parameters selected are those that maximize the score of the held-out
+2025-04-04 12:33:20,995 - INFO - Grading answer for scikit-learn__scikit-learn-11310...
+2025-04-04 12:33:20,996 - INFO - report: {'scikit-learn__scikit-learn-11310': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-11310: resolved: False
+2025-04-04 12:33:20,996 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-11310.gold...
+2025-04-04 12:33:36,327 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-11310.gold...
+2025-04-04 12:33:36,356 - INFO - Container sweb.eval.scikit-learn__scikit-learn-11310.gold removed.
+2025-04-04 12:33:36,356 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-11310:latest...
+2025-04-04 12:33:36,787 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-11310:latest removed.

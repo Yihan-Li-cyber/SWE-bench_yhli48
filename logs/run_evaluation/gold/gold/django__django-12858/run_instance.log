@@ -1,0 +1,53 @@
+2025-04-04 10:27:44,008 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12858
+Building instance image sweb.eval.x86_64.django__django-12858:latest for django__django-12858
+2025-04-04 10:28:33,198 - INFO - Creating container for django__django-12858...
+2025-04-04 10:28:33,354 - INFO - Container for django__django-12858 created: 7004333f460948f6e11977c6b632d35c94c77ff66024ea5f2206d547685856c9
+2025-04-04 10:28:34,070 - INFO - Container for django__django-12858 started: 7004333f460948f6e11977c6b632d35c94c77ff66024ea5f2206d547685856c9
+2025-04-04 10:28:34,071 - INFO - Intermediate patch for django__django-12858 written to logs/run_evaluation/gold/gold/django__django-12858/patch.diff, now applying to container...
+2025-04-04 10:28:34,380 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:28:34,455 - INFO - >>>>> Applied Patch:
+patching file django/db/models/base.py
+
+2025-04-04 10:28:36,119 - INFO - Git diff before:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 6c9e9d3707..bc6f7d283e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -1747,7 +1747,9 @@ class Model(metaclass=ModelBase):
+                     else:
+                         _cls = None
+                 except (FieldDoesNotExist, AttributeError):
+-                    if fld is None or fld.get_transform(part) is None:
++                    if fld is None or (
++                        fld.get_transform(part) is None and fld.get_lookup(part) is None
++                    ):
+                         errors.append(
+                             checks.Error(
+                                 "'ordering' refers to the nonexistent field, "
+2025-04-04 10:28:36,120 - INFO - Eval script for django__django-12858 written to logs/run_evaluation/gold/gold/django__django-12858/eval.sh; copying to container...
+2025-04-04 10:28:47,302 - INFO - Test runtime: 10.97 seconds
+2025-04-04 10:28:47,303 - INFO - Test output for django__django-12858 written to logs/run_evaluation/gold/gold/django__django-12858/test_output.txt
+2025-04-04 10:28:47,417 - INFO - Git diff after:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 6c9e9d3707..bc6f7d283e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -1747,7 +1747,9 @@ class Model(metaclass=ModelBase):
+                     else:
+                         _cls = None
+                 except (FieldDoesNotExist, AttributeError):
+-                    if fld is None or fld.get_transform(part) is None:
++                    if fld is None or (
++                        fld.get_transform(part) is None and fld.get_lookup(part) is None
++                    ):
+                         errors.append(
+                             checks.Error(
+                                 "'ordering' refers to the nonexistent field, "
+2025-04-04 10:28:47,417 - INFO - Grading answer for django__django-12858...
+2025-04-04 10:28:47,417 - INFO - report: {'django__django-12858': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12858: resolved: False
+2025-04-04 10:28:47,417 - INFO - Attempting to stop container sweb.eval.django__django-12858.gold...
+2025-04-04 10:29:02,976 - INFO - Attempting to remove container sweb.eval.django__django-12858.gold...
+2025-04-04 10:29:03,018 - INFO - Container sweb.eval.django__django-12858.gold removed.
+2025-04-04 10:29:03,019 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12858:latest...
+2025-04-04 10:29:06,768 - INFO - Image sweb.eval.x86_64.django__django-12858:latest removed.

@@ -1,0 +1,72 @@
+2025-04-04 16:20:56,573 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14309
+Building instance image sweb.eval.x86_64.astropy__astropy-14309:latest for astropy__astropy-14309
+2025-04-04 16:28:39,745 - INFO - Creating container for astropy__astropy-14309...
+2025-04-04 16:28:39,853 - INFO - Container for astropy__astropy-14309 created: 38ec3720042141587a16a567fcd2576f6df5360a642934e1f1bdde571fc1a112
+2025-04-04 16:28:41,265 - INFO - Container for astropy__astropy-14309 started: 38ec3720042141587a16a567fcd2576f6df5360a642934e1f1bdde571fc1a112
+2025-04-04 16:28:41,265 - INFO - Intermediate patch for astropy__astropy-14309 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14309/patch.diff, now applying to container...
+2025-04-04 16:28:42,259 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 16:28:42,437 - INFO - >>>>> Applied Patch:
+patching file astropy/io/fits/connect.py
+patching file test_identify_format.py
+
+2025-04-04 16:28:45,051 - INFO - Git diff before:
+diff --git a/astropy/io/fits/connect.py b/astropy/io/fits/connect.py
+index 4b6150f4ac..1f51fe4835 100644
+--- a/astropy/io/fits/connect.py
++++ b/astropy/io/fits/connect.py
+@@ -69,7 +69,7 @@ def is_fits(origin, filepath, fileobj, *args, **kwargs):
+             (".fits", ".fits.gz", ".fit", ".fit.gz", ".fts", ".fts.gz")
+         ):
+             return True
+-    return isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
++    return len(args) > 0 and isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
+ 
+ 
+ def _decode_mixins(tbl):
+diff --git a/pyproject.toml b/pyproject.toml
+index 41865a87d1..922d14bf49 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:28:45,051 - INFO - Eval script for astropy__astropy-14309 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14309/eval.sh; copying to container...
+2025-04-04 16:35:01,145 - INFO - Test runtime: 375.40 seconds
+2025-04-04 16:35:01,146 - INFO - Test output for astropy__astropy-14309 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14309/test_output.txt
+2025-04-04 16:35:01,456 - INFO - Git diff after:
+diff --git a/astropy/io/fits/connect.py b/astropy/io/fits/connect.py
+index 4b6150f4ac..1f51fe4835 100644
+--- a/astropy/io/fits/connect.py
++++ b/astropy/io/fits/connect.py
+@@ -69,7 +69,7 @@ def is_fits(origin, filepath, fileobj, *args, **kwargs):
+             (".fits", ".fits.gz", ".fit", ".fit.gz", ".fts", ".fts.gz")
+         ):
+             return True
+-    return isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
++    return len(args) > 0 and isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
+ 
+ 
+ def _decode_mixins(tbl):
+diff --git a/pyproject.toml b/pyproject.toml
+index 41865a87d1..922d14bf49 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:35:01,456 - INFO - Grading answer for astropy__astropy-14309...
+2025-04-04 16:35:01,521 - INFO - report: {'astropy__astropy-14309': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14309: resolved: False
+2025-04-04 16:35:01,522 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14309.241028_solver...
+2025-04-04 16:35:17,921 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14309.241028_solver...
+2025-04-04 16:35:18,131 - INFO - Container sweb.eval.astropy__astropy-14309.241028_solver removed.
+2025-04-04 16:35:18,131 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14309:latest...
+2025-04-04 16:35:18,925 - INFO - Image sweb.eval.x86_64.astropy__astropy-14309:latest removed.

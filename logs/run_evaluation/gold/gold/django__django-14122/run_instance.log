@@ -1,0 +1,67 @@
+2025-04-04 10:43:37,447 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14122
+Building instance image sweb.eval.x86_64.django__django-14122:latest for django__django-14122
+2025-04-04 10:44:28,441 - INFO - Creating container for django__django-14122...
+2025-04-04 10:44:28,636 - INFO - Container for django__django-14122 created: c3bbfd6a7cd446f7093adf72aac143cbe771136a4ed7814e1c7378f000e29b77
+2025-04-04 10:44:29,320 - INFO - Container for django__django-14122 started: c3bbfd6a7cd446f7093adf72aac143cbe771136a4ed7814e1c7378f000e29b77
+2025-04-04 10:44:29,325 - INFO - Intermediate patch for django__django-14122 written to logs/run_evaluation/gold/gold/django__django-14122/patch.diff, now applying to container...
+2025-04-04 10:44:29,723 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:44:29,787 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-04 10:44:31,469 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 850734709d..f02199d97c 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -125,11 +125,12 @@ class SQLCompiler:
+             cols = expr.get_group_by_cols()
+             for col in cols:
+                 expressions.append(col)
+-        for expr, (sql, params, is_ref) in order_by:
+-            # Skip References to the select clause, as all expressions in the
+-            # select clause are already part of the group by.
+-            if not is_ref:
+-                expressions.extend(expr.get_group_by_cols())
++        if not self._meta_ordering:
++            for expr, (sql, params, is_ref) in order_by:
++                # Skip references to the SELECT clause, as all expressions in
++                # the SELECT clause are already part of the GROUP BY.
++                if not is_ref:
++                    expressions.extend(expr.get_group_by_cols())
+         having_group_by = self.having.get_group_by_cols() if self.having else ()
+         for expr in having_group_by:
+             expressions.append(expr)
+2025-04-04 10:44:31,470 - INFO - Eval script for django__django-14122 written to logs/run_evaluation/gold/gold/django__django-14122/eval.sh; copying to container...
+2025-04-04 10:44:43,530 - INFO - Test runtime: 11.80 seconds
+2025-04-04 10:44:43,530 - INFO - Test output for django__django-14122 written to logs/run_evaluation/gold/gold/django__django-14122/test_output.txt
+2025-04-04 10:44:43,670 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 850734709d..f02199d97c 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -125,11 +125,12 @@ class SQLCompiler:
+             cols = expr.get_group_by_cols()
+             for col in cols:
+                 expressions.append(col)
+-        for expr, (sql, params, is_ref) in order_by:
+-            # Skip References to the select clause, as all expressions in the
+-            # select clause are already part of the group by.
+-            if not is_ref:
+-                expressions.extend(expr.get_group_by_cols())
++        if not self._meta_ordering:
++            for expr, (sql, params, is_ref) in order_by:
++                # Skip references to the SELECT clause, as all expressions in
++                # the SELECT clause are already part of the GROUP BY.
++                if not is_ref:
++                    expressions.extend(expr.get_group_by_cols())
+         having_group_by = self.having.get_group_by_cols() if self.having else ()
+         for expr in having_group_by:
+             expressions.append(expr)
+2025-04-04 10:44:43,671 - INFO - Grading answer for django__django-14122...
+2025-04-04 10:44:43,671 - INFO - report: {'django__django-14122': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14122: resolved: False
+2025-04-04 10:44:43,671 - INFO - Attempting to stop container sweb.eval.django__django-14122.gold...
+2025-04-04 10:44:59,085 - INFO - Attempting to remove container sweb.eval.django__django-14122.gold...
+2025-04-04 10:44:59,743 - INFO - Container sweb.eval.django__django-14122.gold removed.
+2025-04-04 10:44:59,744 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14122:latest...
+2025-04-04 10:45:01,264 - INFO - Image sweb.eval.x86_64.django__django-14122:latest removed.

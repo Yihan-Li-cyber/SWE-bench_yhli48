@@ -1,0 +1,77 @@
+2025-04-04 10:39:46,969 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13809
+Building instance image sweb.eval.x86_64.django__django-13809:latest for django__django-13809
+2025-04-04 10:40:32,257 - INFO - Creating container for django__django-13809...
+2025-04-04 10:40:32,327 - INFO - Container for django__django-13809 created: 637a041896ee7097db1037db3bcdd67eddd6027b8e525b55b860e1752d35bea3
+2025-04-04 10:40:32,650 - INFO - Container for django__django-13809 started: 637a041896ee7097db1037db3bcdd67eddd6027b8e525b55b860e1752d35bea3
+2025-04-04 10:40:32,650 - INFO - Intermediate patch for django__django-13809 written to logs/run_evaluation/gold/gold/django__django-13809/patch.diff, now applying to container...
+2025-04-04 10:40:32,909 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:40:32,983 - INFO - >>>>> Applied Patch:
+patching file django/core/management/commands/runserver.py
+
+2025-04-04 10:40:34,535 - INFO - Git diff before:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index d9fb088350..1e8f4d3b25 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -51,6 +51,10 @@ class Command(BaseCommand):
+             '--noreload', action='store_false', dest='use_reloader',
+             help='Tells Django to NOT use the auto-reloader.',
+         )
++        parser.add_argument(
++            '--skip-checks', action='store_true',
++            help='Skip system checks.',
++        )
+ 
+     def execute(self, *args, **options):
+         if options['no_color']:
+@@ -114,8 +118,9 @@ class Command(BaseCommand):
+         shutdown_message = options.get('shutdown_message', '')
+         quit_command = 'CTRL-BREAK' if sys.platform == 'win32' else 'CONTROL-C'
+ 
+-        self.stdout.write("Performing system checks...\n\n")
+-        self.check(display_num_errors=True)
++        if not options['skip_checks']:
++            self.stdout.write('Performing system checks...\n\n')
++            self.check(display_num_errors=True)
+         # Need to check migrations here, so can't use the
+         # requires_migrations_check attribute.
+         self.check_migrations()
+2025-04-04 10:40:34,535 - INFO - Eval script for django__django-13809 written to logs/run_evaluation/gold/gold/django__django-13809/eval.sh; copying to container...
+2025-04-04 10:42:22,620 - INFO - Test runtime: 107.89 seconds
+2025-04-04 10:42:22,621 - INFO - Test output for django__django-13809 written to logs/run_evaluation/gold/gold/django__django-13809/test_output.txt
+2025-04-04 10:42:22,731 - INFO - Git diff after:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index d9fb088350..1e8f4d3b25 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -51,6 +51,10 @@ class Command(BaseCommand):
+             '--noreload', action='store_false', dest='use_reloader',
+             help='Tells Django to NOT use the auto-reloader.',
+         )
++        parser.add_argument(
++            '--skip-checks', action='store_true',
++            help='Skip system checks.',
++        )
+ 
+     def execute(self, *args, **options):
+         if options['no_color']:
+@@ -114,8 +118,9 @@ class Command(BaseCommand):
+         shutdown_message = options.get('shutdown_message', '')
+         quit_command = 'CTRL-BREAK' if sys.platform == 'win32' else 'CONTROL-C'
+ 
+-        self.stdout.write("Performing system checks...\n\n")
+-        self.check(display_num_errors=True)
++        if not options['skip_checks']:
++            self.stdout.write('Performing system checks...\n\n')
++            self.check(display_num_errors=True)
+         # Need to check migrations here, so can't use the
+         # requires_migrations_check attribute.
+         self.check_migrations()
+2025-04-04 10:42:22,731 - INFO - Grading answer for django__django-13809...
+2025-04-04 10:42:22,732 - INFO - report: {'django__django-13809': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13809: resolved: False
+2025-04-04 10:42:22,732 - INFO - Attempting to stop container sweb.eval.django__django-13809.gold...
+2025-04-04 10:43:08,027 - INFO - Attempting to remove container sweb.eval.django__django-13809.gold...
+2025-04-04 10:43:08,064 - INFO - Container sweb.eval.django__django-13809.gold removed.
+2025-04-04 10:43:08,064 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13809:latest...
+2025-04-04 10:43:37,437 - INFO - Image sweb.eval.x86_64.django__django-13809:latest removed.

@@ -1,0 +1,47 @@
+2025-04-04 10:49:50,514 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14672
+Building instance image sweb.eval.x86_64.django__django-14672:latest for django__django-14672
+2025-04-04 10:51:05,972 - INFO - Creating container for django__django-14672...
+2025-04-04 10:51:06,004 - INFO - Container for django__django-14672 created: a272df1b4390c57802ebb0f1b0d7da4cb4bcf035f0083851a9468ff2ed80c149
+2025-04-04 10:51:06,439 - INFO - Container for django__django-14672 started: a272df1b4390c57802ebb0f1b0d7da4cb4bcf035f0083851a9468ff2ed80c149
+2025-04-04 10:51:06,440 - INFO - Intermediate patch for django__django-14672 written to logs/run_evaluation/gold/gold/django__django-14672/patch.diff, now applying to container...
+2025-04-04 10:51:06,850 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:51:06,936 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/reverse_related.py
+
+2025-04-04 10:51:08,616 - INFO - Git diff before:
+diff --git a/django/db/models/fields/reverse_related.py b/django/db/models/fields/reverse_related.py
+index ccc2223a5f..65950590e2 100644
+--- a/django/db/models/fields/reverse_related.py
++++ b/django/db/models/fields/reverse_related.py
+@@ -310,7 +310,7 @@ class ManyToManyRel(ForeignObjectRel):
+     def identity(self):
+         return super().identity + (
+             self.through,
+-            self.through_fields,
++            make_hashable(self.through_fields),
+             self.db_constraint,
+         )
+2025-04-04 10:51:08,616 - INFO - Eval script for django__django-14672 written to logs/run_evaluation/gold/gold/django__django-14672/eval.sh; copying to container...
+2025-04-04 10:51:21,921 - INFO - Test runtime: 13.10 seconds
+2025-04-04 10:51:21,922 - INFO - Test output for django__django-14672 written to logs/run_evaluation/gold/gold/django__django-14672/test_output.txt
+2025-04-04 10:51:22,032 - INFO - Git diff after:
+diff --git a/django/db/models/fields/reverse_related.py b/django/db/models/fields/reverse_related.py
+index ccc2223a5f..65950590e2 100644
+--- a/django/db/models/fields/reverse_related.py
++++ b/django/db/models/fields/reverse_related.py
+@@ -310,7 +310,7 @@ class ManyToManyRel(ForeignObjectRel):
+     def identity(self):
+         return super().identity + (
+             self.through,
+-            self.through_fields,
++            make_hashable(self.through_fields),
+             self.db_constraint,
+         )
+2025-04-04 10:51:22,032 - INFO - Grading answer for django__django-14672...
+2025-04-04 10:51:22,033 - INFO - report: {'django__django-14672': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14672: resolved: False
+2025-04-04 10:51:22,033 - INFO - Attempting to stop container sweb.eval.django__django-14672.gold...
+2025-04-04 10:52:07,430 - INFO - Attempting to remove container sweb.eval.django__django-14672.gold...
+2025-04-04 10:52:07,984 - INFO - Container sweb.eval.django__django-14672.gold removed.
+2025-04-04 10:52:07,984 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14672:latest...
+2025-04-04 10:52:13,275 - INFO - Image sweb.eval.x86_64.django__django-14672:latest removed.

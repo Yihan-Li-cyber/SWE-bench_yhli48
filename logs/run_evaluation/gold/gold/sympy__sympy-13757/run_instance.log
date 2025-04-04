@@ -1,0 +1,47 @@
+2025-04-04 13:53:29,877 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13757
+Building instance image sweb.eval.x86_64.sympy__sympy-13757:latest for sympy__sympy-13757
+2025-04-04 13:54:06,991 - INFO - Creating container for sympy__sympy-13757...
+2025-04-04 13:54:07,024 - INFO - Container for sympy__sympy-13757 created: fc2ee46689c65df561d8d58d9363353845ce4580ff65e952a2f385279fd8c64e
+2025-04-04 13:54:07,482 - INFO - Container for sympy__sympy-13757 started: fc2ee46689c65df561d8d58d9363353845ce4580ff65e952a2f385279fd8c64e
+2025-04-04 13:54:07,482 - INFO - Intermediate patch for sympy__sympy-13757 written to logs/run_evaluation/gold/gold/sympy__sympy-13757/patch.diff, now applying to container...
+2025-04-04 13:54:07,946 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:54:08,066 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/polytools.py
+
+2025-04-04 13:54:08,805 - INFO - Git diff before:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index d5ac051f63..32b7027a28 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -106,6 +106,7 @@ class Poly(Expr):
+ 
+     is_commutative = True
+     is_Poly = True
++    _op_priority = 10.001
+ 
+     def __new__(cls, rep, *gens, **args):
+         """Create a new polynomial instance out of something useful. """
+2025-04-04 13:54:08,806 - INFO - Eval script for sympy__sympy-13757 written to logs/run_evaluation/gold/gold/sympy__sympy-13757/eval.sh; copying to container...
+2025-04-04 13:54:27,000 - INFO - Test runtime: 17.78 seconds
+2025-04-04 13:54:27,001 - INFO - Test output for sympy__sympy-13757 written to logs/run_evaluation/gold/gold/sympy__sympy-13757/test_output.txt
+2025-04-04 13:54:27,150 - INFO - Git diff after:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index d5ac051f63..32b7027a28 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -106,6 +106,7 @@ class Poly(Expr):
+ 
+     is_commutative = True
+     is_Poly = True
++    _op_priority = 10.001
+ 
+     def __new__(cls, rep, *gens, **args):
+         """Create a new polynomial instance out of something useful. """
+2025-04-04 13:54:27,150 - INFO - Grading answer for sympy__sympy-13757...
+2025-04-04 13:54:27,151 - INFO - report: {'sympy__sympy-13757': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13757: resolved: False
+2025-04-04 13:54:27,151 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13757.gold...
+2025-04-04 13:55:12,449 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13757.gold...
+2025-04-04 13:55:12,511 - INFO - Container sweb.eval.sympy__sympy-13757.gold removed.
+2025-04-04 13:55:12,512 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13757:latest...
+2025-04-04 13:55:13,614 - INFO - Image sweb.eval.x86_64.sympy__sympy-13757:latest removed.

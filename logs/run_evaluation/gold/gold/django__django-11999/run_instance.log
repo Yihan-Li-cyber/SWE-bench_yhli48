@@ -1,0 +1,61 @@
+2025-04-04 10:01:37,304 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11999
+Building instance image sweb.eval.x86_64.django__django-11999:latest for django__django-11999
+2025-04-04 10:02:47,972 - INFO - Creating container for django__django-11999...
+2025-04-04 10:02:48,017 - INFO - Container for django__django-11999 created: 62ec651260b45f191fd29a24723ba7cb0bbb6fd5f881b3f41bba507b85889122
+2025-04-04 10:02:48,377 - INFO - Container for django__django-11999 started: 62ec651260b45f191fd29a24723ba7cb0bbb6fd5f881b3f41bba507b85889122
+2025-04-04 10:02:48,378 - INFO - Intermediate patch for django__django-11999 written to logs/run_evaluation/gold/gold/django__django-11999/patch.diff, now applying to container...
+2025-04-04 10:02:48,661 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:02:48,728 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/__init__.py
+
+2025-04-04 10:02:50,166 - INFO - Git diff before:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index ee45bb941e..fe550169bd 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -763,8 +763,12 @@ class Field(RegisterLookupMixin):
+             if not getattr(cls, self.attname, None):
+                 setattr(cls, self.attname, self.descriptor_class(self))
+         if self.choices is not None:
+-            setattr(cls, 'get_%s_display' % self.name,
+-                    partialmethod(cls._get_FIELD_display, field=self))
++            if not hasattr(cls, 'get_%s_display' % self.name):
++                setattr(
++                    cls,
++                    'get_%s_display' % self.name,
++                    partialmethod(cls._get_FIELD_display, field=self),
++                )
+ 
+     def get_filter_kwargs_for_object(self, obj):
+         """
+2025-04-04 10:02:50,166 - INFO - Eval script for django__django-11999 written to logs/run_evaluation/gold/gold/django__django-11999/eval.sh; copying to container...
+2025-04-04 10:03:02,888 - INFO - Test runtime: 12.49 seconds
+2025-04-04 10:03:02,889 - INFO - Test output for django__django-11999 written to logs/run_evaluation/gold/gold/django__django-11999/test_output.txt
+2025-04-04 10:03:03,040 - INFO - Git diff after:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index ee45bb941e..fe550169bd 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -763,8 +763,12 @@ class Field(RegisterLookupMixin):
+             if not getattr(cls, self.attname, None):
+                 setattr(cls, self.attname, self.descriptor_class(self))
+         if self.choices is not None:
+-            setattr(cls, 'get_%s_display' % self.name,
+-                    partialmethod(cls._get_FIELD_display, field=self))
++            if not hasattr(cls, 'get_%s_display' % self.name):
++                setattr(
++                    cls,
++                    'get_%s_display' % self.name,
++                    partialmethod(cls._get_FIELD_display, field=self),
++                )
+ 
+     def get_filter_kwargs_for_object(self, obj):
+         """
+2025-04-04 10:03:03,041 - INFO - Grading answer for django__django-11999...
+2025-04-04 10:03:03,041 - INFO - report: {'django__django-11999': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11999: resolved: False
+2025-04-04 10:03:03,041 - INFO - Attempting to stop container sweb.eval.django__django-11999.gold...
+2025-04-04 10:03:18,495 - INFO - Attempting to remove container sweb.eval.django__django-11999.gold...
+2025-04-04 10:03:18,557 - INFO - Container sweb.eval.django__django-11999.gold removed.
+2025-04-04 10:03:18,557 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11999:latest...
+2025-04-04 10:03:19,326 - INFO - Image sweb.eval.x86_64.django__django-11999:latest removed.

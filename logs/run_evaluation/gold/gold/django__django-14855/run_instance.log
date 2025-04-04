@@ -1,0 +1,57 @@
+2025-04-04 10:52:13,295 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14855
+Building instance image sweb.eval.x86_64.django__django-14855:latest for django__django-14855
+2025-04-04 10:53:25,831 - INFO - Creating container for django__django-14855...
+2025-04-04 10:53:26,123 - INFO - Container for django__django-14855 created: dc1871d37122eadc78581b4b788789ec78ad048ffb5e340f666c134fad05a8ae
+2025-04-04 10:53:26,656 - INFO - Container for django__django-14855 started: dc1871d37122eadc78581b4b788789ec78ad048ffb5e340f666c134fad05a8ae
+2025-04-04 10:53:26,656 - INFO - Intermediate patch for django__django-14855 written to logs/run_evaluation/gold/gold/django__django-14855/patch.diff, now applying to container...
+2025-04-04 10:53:26,921 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:53:27,011 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/helpers.py
+
+2025-04-04 10:53:28,530 - INFO - Git diff before:
+diff --git a/django/contrib/admin/helpers.py b/django/contrib/admin/helpers.py
+index dd154f72ee..dae626b550 100644
+--- a/django/contrib/admin/helpers.py
++++ b/django/contrib/admin/helpers.py
+@@ -209,7 +209,11 @@ class AdminReadonlyField:
+             remote_field.model._meta.model_name,
+         )
+         try:
+-            url = reverse(url_name, args=[quote(remote_obj.pk)])
++            url = reverse(
++                url_name,
++                args=[quote(remote_obj.pk)],
++                current_app=self.model_admin.admin_site.name,
++            )
+             return format_html('<a href="{}">{}</a>', url, remote_obj)
+         except NoReverseMatch:
+             return str(remote_obj)
+2025-04-04 10:53:28,530 - INFO - Eval script for django__django-14855 written to logs/run_evaluation/gold/gold/django__django-14855/eval.sh; copying to container...
+2025-04-04 10:54:47,639 - INFO - Test runtime: 78.91 seconds
+2025-04-04 10:54:47,640 - INFO - Test output for django__django-14855 written to logs/run_evaluation/gold/gold/django__django-14855/test_output.txt
+2025-04-04 10:54:47,746 - INFO - Git diff after:
+diff --git a/django/contrib/admin/helpers.py b/django/contrib/admin/helpers.py
+index dd154f72ee..dae626b550 100644
+--- a/django/contrib/admin/helpers.py
++++ b/django/contrib/admin/helpers.py
+@@ -209,7 +209,11 @@ class AdminReadonlyField:
+             remote_field.model._meta.model_name,
+         )
+         try:
+-            url = reverse(url_name, args=[quote(remote_obj.pk)])
++            url = reverse(
++                url_name,
++                args=[quote(remote_obj.pk)],
++                current_app=self.model_admin.admin_site.name,
++            )
+             return format_html('<a href="{}">{}</a>', url, remote_obj)
+         except NoReverseMatch:
+             return str(remote_obj)
+2025-04-04 10:54:47,746 - INFO - Grading answer for django__django-14855...
+2025-04-04 10:54:47,747 - INFO - report: {'django__django-14855': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14855: resolved: False
+2025-04-04 10:54:47,747 - INFO - Attempting to stop container sweb.eval.django__django-14855.gold...
+2025-04-04 10:55:03,213 - INFO - Attempting to remove container sweb.eval.django__django-14855.gold...
+2025-04-04 10:55:03,257 - INFO - Container sweb.eval.django__django-14855.gold removed.
+2025-04-04 10:55:03,257 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14855:latest...
+2025-04-04 10:55:04,065 - INFO - Image sweb.eval.x86_64.django__django-14855:latest removed.

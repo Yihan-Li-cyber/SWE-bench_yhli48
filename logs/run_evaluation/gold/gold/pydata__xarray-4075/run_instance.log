@@ -1,0 +1,63 @@
+2025-04-04 12:17:12,876 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-4075
+Building instance image sweb.eval.x86_64.pydata__xarray-4075:latest for pydata__xarray-4075
+2025-04-04 12:17:27,251 - INFO - Creating container for pydata__xarray-4075...
+2025-04-04 12:17:27,364 - INFO - Container for pydata__xarray-4075 created: a9c3b1f00e131ed9c0a12634f44060478a7aa350e8c0824a284f712812dc8ff2
+2025-04-04 12:17:27,729 - INFO - Container for pydata__xarray-4075 started: a9c3b1f00e131ed9c0a12634f44060478a7aa350e8c0824a284f712812dc8ff2
+2025-04-04 12:17:27,729 - INFO - Intermediate patch for pydata__xarray-4075 written to logs/run_evaluation/gold/gold/pydata__xarray-4075/patch.diff, now applying to container...
+2025-04-04 12:17:27,968 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:17:28,032 - INFO - >>>>> Applied Patch:
+patching file xarray/core/weighted.py
+
+2025-04-04 12:17:28,173 - INFO - Git diff before:
+diff --git a/xarray/core/weighted.py b/xarray/core/weighted.py
+index 996d2e4c..21ed06ea 100644
+--- a/xarray/core/weighted.py
++++ b/xarray/core/weighted.py
+@@ -142,7 +142,14 @@ class Weighted:
+         # we need to mask data values that are nan; else the weights are wrong
+         mask = da.notnull()
+ 
+-        sum_of_weights = self._reduce(mask, self.weights, dim=dim, skipna=False)
++        # bool -> int, because ``xr.dot([True, True], [True, True])`` -> True
++        # (and not 2); GH4074
++        if self.weights.dtype == bool:
++            sum_of_weights = self._reduce(
++                mask, self.weights.astype(int), dim=dim, skipna=False
++            )
++        else:
++            sum_of_weights = self._reduce(mask, self.weights, dim=dim, skipna=False)
+ 
+         # 0-weights are not valid
+         valid_weights = sum_of_weights != 0.0
+2025-04-04 12:17:28,174 - INFO - Eval script for pydata__xarray-4075 written to logs/run_evaluation/gold/gold/pydata__xarray-4075/eval.sh; copying to container...
+2025-04-04 12:17:50,092 - INFO - Test runtime: 21.72 seconds
+2025-04-04 12:17:50,095 - INFO - Test output for pydata__xarray-4075 written to logs/run_evaluation/gold/gold/pydata__xarray-4075/test_output.txt
+2025-04-04 12:17:50,159 - INFO - Git diff after:
+diff --git a/xarray/core/weighted.py b/xarray/core/weighted.py
+index 996d2e4c..21ed06ea 100644
+--- a/xarray/core/weighted.py
++++ b/xarray/core/weighted.py
+@@ -142,7 +142,14 @@ class Weighted:
+         # we need to mask data values that are nan; else the weights are wrong
+         mask = da.notnull()
+ 
+-        sum_of_weights = self._reduce(mask, self.weights, dim=dim, skipna=False)
++        # bool -> int, because ``xr.dot([True, True], [True, True])`` -> True
++        # (and not 2); GH4074
++        if self.weights.dtype == bool:
++            sum_of_weights = self._reduce(
++                mask, self.weights.astype(int), dim=dim, skipna=False
++            )
++        else:
++            sum_of_weights = self._reduce(mask, self.weights, dim=dim, skipna=False)
+ 
+         # 0-weights are not valid
+         valid_weights = sum_of_weights != 0.0
+2025-04-04 12:17:50,458 - INFO - Grading answer for pydata__xarray-4075...
+2025-04-04 12:17:50,478 - INFO - report: {'pydata__xarray-4075': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-4075: resolved: False
+2025-04-04 12:17:50,480 - INFO - Attempting to stop container sweb.eval.pydata__xarray-4075.gold...
+2025-04-04 12:18:05,869 - INFO - Attempting to remove container sweb.eval.pydata__xarray-4075.gold...
+2025-04-04 12:18:05,896 - INFO - Container sweb.eval.pydata__xarray-4075.gold removed.
+2025-04-04 12:18:05,896 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4075:latest...
+2025-04-04 12:18:05,972 - INFO - Image sweb.eval.x86_64.pydata__xarray-4075:latest removed.

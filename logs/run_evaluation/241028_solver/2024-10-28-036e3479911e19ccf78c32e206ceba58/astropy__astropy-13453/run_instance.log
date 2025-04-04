@@ -1,0 +1,100 @@
+2025-04-04 15:32:37,937 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-13453
+Building instance image sweb.eval.x86_64.astropy__astropy-13453:latest for astropy__astropy-13453
+2025-04-04 15:42:28,106 - INFO - Creating container for astropy__astropy-13453...
+2025-04-04 15:42:28,453 - INFO - Container for astropy__astropy-13453 created: def532bfeae88e80c3acfea7950aaa34fd1cdfbcdb9be8a6615d1afc0c92b6b3
+2025-04-04 15:42:29,372 - INFO - Container for astropy__astropy-13453 started: def532bfeae88e80c3acfea7950aaa34fd1cdfbcdb9be8a6615d1afc0c92b6b3
+2025-04-04 15:42:29,372 - INFO - Intermediate patch for astropy__astropy-13453 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13453/patch.diff, now applying to container...
+2025-04-04 15:42:30,057 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 15:42:30,245 - INFO - >>>>> Applied Patch:
+patching file astropy/io/ascii/html.py
+patching file test_html_format.py
+
+2025-04-04 15:42:32,641 - INFO - Git diff before:
+diff --git a/astropy/io/ascii/html.py b/astropy/io/ascii/html.py
+index 266cf229cc..664e1040e2 100644
+--- a/astropy/io/ascii/html.py
++++ b/astropy/io/ascii/html.py
+@@ -430,16 +430,20 @@ class HTML(core.BaseReader):
+                                     # Split up multicolumns into separate columns
+                                     new_col = Column([el[i] for el in col])
+ 
++                                    # Apply formats before getting string values
++                                    if col.info.name in self.formats:
++                                        new_col.info.format = self.formats[col.info.name]
+                                     new_col_iter_str_vals = self.fill_values(
+                                         col, new_col.info.iter_str_vals())
+                                     col_str_iters.append(new_col_iter_str_vals)
+                                     new_cols_escaped.append(col_escaped)
+                                     new_cols.append(new_col)
+                             else:
+-
++                                # Apply formats before getting string values
++                                if col.info.name in self.formats:
++                                    col.info.format = self.formats[col.info.name]
+                                 col_iter_str_vals = self.fill_values(col, col.info.iter_str_vals())
+                                 col_str_iters.append(col_iter_str_vals)
+-
+                                 new_cols_escaped.append(col_escaped)
+ 
+                     for row in zip(*col_str_iters):
+diff --git a/pyproject.toml b/pyproject.toml
+index 7a3b85fc92..83f08ed124 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 15:42:32,641 - INFO - Eval script for astropy__astropy-13453 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13453/eval.sh; copying to container...
+2025-04-04 15:49:56,260 - INFO - Test runtime: 443.02 seconds
+2025-04-04 15:49:56,261 - INFO - Test output for astropy__astropy-13453 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13453/test_output.txt
+2025-04-04 15:49:56,557 - INFO - Git diff after:
+diff --git a/astropy/io/ascii/html.py b/astropy/io/ascii/html.py
+index 266cf229cc..664e1040e2 100644
+--- a/astropy/io/ascii/html.py
++++ b/astropy/io/ascii/html.py
+@@ -430,16 +430,20 @@ class HTML(core.BaseReader):
+                                     # Split up multicolumns into separate columns
+                                     new_col = Column([el[i] for el in col])
+ 
++                                    # Apply formats before getting string values
++                                    if col.info.name in self.formats:
++                                        new_col.info.format = self.formats[col.info.name]
+                                     new_col_iter_str_vals = self.fill_values(
+                                         col, new_col.info.iter_str_vals())
+                                     col_str_iters.append(new_col_iter_str_vals)
+                                     new_cols_escaped.append(col_escaped)
+                                     new_cols.append(new_col)
+                             else:
+-
++                                # Apply formats before getting string values
++                                if col.info.name in self.formats:
++                                    col.info.format = self.formats[col.info.name]
+                                 col_iter_str_vals = self.fill_values(col, col.info.iter_str_vals())
+                                 col_str_iters.append(col_iter_str_vals)
+-
+                                 new_cols_escaped.append(col_escaped)
+ 
+                     for row in zip(*col_str_iters):
+diff --git a/pyproject.toml b/pyproject.toml
+index 7a3b85fc92..83f08ed124 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 15:49:56,557 - INFO - Grading answer for astropy__astropy-13453...
+2025-04-04 15:49:56,562 - INFO - report: {'astropy__astropy-13453': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-13453: resolved: False
+2025-04-04 15:49:56,562 - INFO - Attempting to stop container sweb.eval.astropy__astropy-13453.241028_solver...
+2025-04-04 15:50:12,543 - INFO - Attempting to remove container sweb.eval.astropy__astropy-13453.241028_solver...
+2025-04-04 15:50:13,255 - INFO - Container sweb.eval.astropy__astropy-13453.241028_solver removed.
+2025-04-04 15:50:13,255 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-13453:latest...
+2025-04-04 15:50:13,960 - INFO - Image sweb.eval.x86_64.astropy__astropy-13453:latest removed.

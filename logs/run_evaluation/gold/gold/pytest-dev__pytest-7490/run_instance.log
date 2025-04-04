@@ -1,0 +1,115 @@
+2025-04-04 12:26:21,118 - INFO - Environment image sweb.env.x86_64.cc47cc71483942d0c3a15e:latest found for pytest-dev__pytest-7490
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-7490:latest for pytest-dev__pytest-7490
+2025-04-04 12:26:37,289 - INFO - Creating container for pytest-dev__pytest-7490...
+2025-04-04 12:26:37,438 - INFO - Container for pytest-dev__pytest-7490 created: 28aa3ff80988566b2eceb8a54095b2d2387286217bc3d8e525f20eab1c5be16b
+2025-04-04 12:26:37,902 - INFO - Container for pytest-dev__pytest-7490 started: 28aa3ff80988566b2eceb8a54095b2d2387286217bc3d8e525f20eab1c5be16b
+2025-04-04 12:26:37,902 - INFO - Intermediate patch for pytest-dev__pytest-7490 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7490/patch.diff, now applying to container...
+2025-04-04 12:26:38,268 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:26:38,340 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/skipping.py
+
+2025-04-04 12:26:38,537 - INFO - Git diff before:
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 335e10996..e333e78df 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -231,17 +231,14 @@ unexpectedsuccess_key = StoreKey[str]()
+ 
+ @hookimpl(tryfirst=True)
+ def pytest_runtest_setup(item: Item) -> None:
+-    item._store[skipped_by_mark_key] = False
+-
+     skipped = evaluate_skip_marks(item)
++    item._store[skipped_by_mark_key] = skipped is not None
+     if skipped:
+-        item._store[skipped_by_mark_key] = True
+         skip(skipped.reason)
+ 
+-    if not item.config.option.runxfail:
+-        item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+-        if xfailed and not xfailed.run:
+-            xfail("[NOTRUN] " + xfailed.reason)
++    item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
++    if xfailed and not item.config.option.runxfail and not xfailed.run:
++        xfail("[NOTRUN] " + xfailed.reason)
+ 
+ 
+ @hookimpl(hookwrapper=True)
+@@ -250,12 +247,16 @@ def pytest_runtest_call(item: Item) -> Generator[None, None, None]:
+     if xfailed is None:
+         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+ 
+-    if not item.config.option.runxfail:
+-        if xfailed and not xfailed.run:
+-            xfail("[NOTRUN] " + xfailed.reason)
++    if xfailed and not item.config.option.runxfail and not xfailed.run:
++        xfail("[NOTRUN] " + xfailed.reason)
+ 
+     yield
+ 
++    # The test run may have added an xfail mark dynamically.
++    xfailed = item._store.get(xfailed_key, None)
++    if xfailed is None:
++        item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
++
+ 
+ @hookimpl(hookwrapper=True)
+ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+2025-04-04 12:26:38,538 - INFO - Eval script for pytest-dev__pytest-7490 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7490/eval.sh; copying to container...
+2025-04-04 12:26:53,830 - INFO - Test runtime: 15.10 seconds
+2025-04-04 12:26:53,831 - INFO - Test output for pytest-dev__pytest-7490 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7490/test_output.txt
+2025-04-04 12:26:53,910 - INFO - Git diff after:
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 335e10996..e333e78df 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -231,17 +231,14 @@ unexpectedsuccess_key = StoreKey[str]()
+ 
+ @hookimpl(tryfirst=True)
+ def pytest_runtest_setup(item: Item) -> None:
+-    item._store[skipped_by_mark_key] = False
+-
+     skipped = evaluate_skip_marks(item)
++    item._store[skipped_by_mark_key] = skipped is not None
+     if skipped:
+-        item._store[skipped_by_mark_key] = True
+         skip(skipped.reason)
+ 
+-    if not item.config.option.runxfail:
+-        item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+-        if xfailed and not xfailed.run:
+-            xfail("[NOTRUN] " + xfailed.reason)
++    item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
++    if xfailed and not item.config.option.runxfail and not xfailed.run:
++        xfail("[NOTRUN] " + xfailed.reason)
+ 
+ 
+ @hookimpl(hookwrapper=True)
+@@ -250,12 +247,16 @@ def pytest_runtest_call(item: Item) -> Generator[None, None, None]:
+     if xfailed is None:
+         item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
+ 
+-    if not item.config.option.runxfail:
+-        if xfailed and not xfailed.run:
+-            xfail("[NOTRUN] " + xfailed.reason)
++    if xfailed and not item.config.option.runxfail and not xfailed.run:
++        xfail("[NOTRUN] " + xfailed.reason)
+ 
+     yield
+ 
++    # The test run may have added an xfail mark dynamically.
++    xfailed = item._store.get(xfailed_key, None)
++    if xfailed is None:
++        item._store[xfailed_key] = xfailed = evaluate_xfail_marks(item)
++
+ 
+ @hookimpl(hookwrapper=True)
+ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+2025-04-04 12:26:53,911 - INFO - Grading answer for pytest-dev__pytest-7490...
+2025-04-04 12:26:53,911 - INFO - report: {'pytest-dev__pytest-7490': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-7490: resolved: False
+2025-04-04 12:26:53,912 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-7490.gold...
+2025-04-04 12:27:09,467 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-7490.gold...
+2025-04-04 12:27:09,561 - INFO - Container sweb.eval.pytest-dev__pytest-7490.gold removed.
+2025-04-04 12:27:09,561 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7490:latest...
+2025-04-04 12:27:09,633 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7490:latest removed.

@@ -1,0 +1,55 @@
+2025-04-04 10:29:07,621 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13028
+Building instance image sweb.eval.x86_64.django__django-13028:latest for django__django-13028
+2025-04-04 10:31:08,625 - INFO - Creating container for django__django-13028...
+2025-04-04 10:31:08,667 - INFO - Container for django__django-13028 created: 46f4c31d53358a536713e25c58b1de68089f29ddfe27334f4151feff549eb56e
+2025-04-04 10:31:11,870 - INFO - Container for django__django-13028 started: 46f4c31d53358a536713e25c58b1de68089f29ddfe27334f4151feff549eb56e
+2025-04-04 10:31:11,871 - INFO - Intermediate patch for django__django-13028 written to logs/run_evaluation/gold/gold/django__django-13028/patch.diff, now applying to container...
+2025-04-04 10:31:12,181 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:31:12,243 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-04 10:31:13,702 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index ce18098fd2..d65141b834 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1124,7 +1124,10 @@ class Query(BaseExpression):
+ 
+     def check_filterable(self, expression):
+         """Raise an error if expression cannot be used in a WHERE clause."""
+-        if not getattr(expression, 'filterable', True):
++        if (
++            hasattr(expression, 'resolve_expression') and
++            not getattr(expression, 'filterable', True)
++        ):
+             raise NotSupportedError(
+                 expression.__class__.__name__ + ' is disallowed in the filter '
+                 'clause.'
+2025-04-04 10:31:13,703 - INFO - Eval script for django__django-13028 written to logs/run_evaluation/gold/gold/django__django-13028/eval.sh; copying to container...
+2025-04-04 10:31:28,536 - INFO - Test runtime: 14.62 seconds
+2025-04-04 10:31:28,537 - INFO - Test output for django__django-13028 written to logs/run_evaluation/gold/gold/django__django-13028/test_output.txt
+2025-04-04 10:31:28,669 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index ce18098fd2..d65141b834 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1124,7 +1124,10 @@ class Query(BaseExpression):
+ 
+     def check_filterable(self, expression):
+         """Raise an error if expression cannot be used in a WHERE clause."""
+-        if not getattr(expression, 'filterable', True):
++        if (
++            hasattr(expression, 'resolve_expression') and
++            not getattr(expression, 'filterable', True)
++        ):
+             raise NotSupportedError(
+                 expression.__class__.__name__ + ' is disallowed in the filter '
+                 'clause.'
+2025-04-04 10:31:28,669 - INFO - Grading answer for django__django-13028...
+2025-04-04 10:31:28,670 - INFO - report: {'django__django-13028': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13028: resolved: False
+2025-04-04 10:31:28,671 - INFO - Attempting to stop container sweb.eval.django__django-13028.gold...
+2025-04-04 10:31:44,079 - INFO - Attempting to remove container sweb.eval.django__django-13028.gold...
+2025-04-04 10:31:44,742 - INFO - Container sweb.eval.django__django-13028.gold removed.
+2025-04-04 10:31:44,742 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13028:latest...
+2025-04-04 10:31:45,855 - INFO - Image sweb.eval.x86_64.django__django-13028:latest removed.

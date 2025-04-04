@@ -1,0 +1,49 @@
+2025-04-04 14:00:13,641 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18189
+Building instance image sweb.eval.x86_64.sympy__sympy-18189:latest for sympy__sympy-18189
+2025-04-04 14:00:49,487 - INFO - Creating container for sympy__sympy-18189...
+2025-04-04 14:00:49,540 - INFO - Container for sympy__sympy-18189 created: df6feed51ef6311a3e280f1f469ce97449a8634ea315432e848c80411296653c
+2025-04-04 14:00:50,172 - INFO - Container for sympy__sympy-18189 started: df6feed51ef6311a3e280f1f469ce97449a8634ea315432e848c80411296653c
+2025-04-04 14:00:50,172 - INFO - Intermediate patch for sympy__sympy-18189 written to logs/run_evaluation/gold/gold/sympy__sympy-18189/patch.diff, now applying to container...
+2025-04-04 14:00:50,623 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:00:50,765 - INFO - >>>>> Applied Patch:
+patching file sympy/solvers/diophantine.py
+
+2025-04-04 14:00:51,749 - INFO - Git diff before:
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..b43f5c1dcf 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -182,7 +182,7 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+             if syms != var:
+                 dict_sym_index = dict(zip(syms, range(len(syms))))
+                 return {tuple([t[dict_sym_index[i]] for i in var])
+-                            for t in diophantine(eq, param)}
++                            for t in diophantine(eq, param, permute=permute)}
+         n, d = eq.as_numer_denom()
+         if n.is_number:
+             return set()
+2025-04-04 14:00:51,749 - INFO - Eval script for sympy__sympy-18189 written to logs/run_evaluation/gold/gold/sympy__sympy-18189/eval.sh; copying to container...
+2025-04-04 14:02:03,982 - INFO - Test runtime: 71.85 seconds
+2025-04-04 14:02:03,982 - INFO - Test output for sympy__sympy-18189 written to logs/run_evaluation/gold/gold/sympy__sympy-18189/test_output.txt
+2025-04-04 14:02:04,104 - INFO - Git diff after:
+diff --git a/sympy/solvers/diophantine.py b/sympy/solvers/diophantine.py
+index 6092e35dab..b43f5c1dcf 100644
+--- a/sympy/solvers/diophantine.py
++++ b/sympy/solvers/diophantine.py
+@@ -182,7 +182,7 @@ def diophantine(eq, param=symbols("t", integer=True), syms=None,
+             if syms != var:
+                 dict_sym_index = dict(zip(syms, range(len(syms))))
+                 return {tuple([t[dict_sym_index[i]] for i in var])
+-                            for t in diophantine(eq, param)}
++                            for t in diophantine(eq, param, permute=permute)}
+         n, d = eq.as_numer_denom()
+         if n.is_number:
+             return set()
+2025-04-04 14:02:04,104 - INFO - Grading answer for sympy__sympy-18189...
+2025-04-04 14:02:04,104 - INFO - report: {'sympy__sympy-18189': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-18189: resolved: False
+2025-04-04 14:02:04,105 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18189.gold...
+2025-04-04 14:02:19,646 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18189.gold...
+2025-04-04 14:02:19,700 - INFO - Container sweb.eval.sympy__sympy-18189.gold removed.
+2025-04-04 14:02:19,700 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-18189:latest...
+2025-04-04 14:02:19,896 - INFO - Image sweb.eval.x86_64.sympy__sympy-18189:latest removed.

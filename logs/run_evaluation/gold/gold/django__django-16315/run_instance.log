@@ -1,0 +1,124 @@
+2025-04-04 11:07:14,525 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16315
+Building instance image sweb.eval.x86_64.django__django-16315:latest for django__django-16315
+2025-04-04 11:08:07,390 - INFO - Creating container for django__django-16315...
+2025-04-04 11:08:07,423 - INFO - Container for django__django-16315 created: 29862d8bc48fbe17045c96c9a6adc59c8a68011cacb0a824daa0216453060167
+2025-04-04 11:08:07,856 - INFO - Container for django__django-16315 started: 29862d8bc48fbe17045c96c9a6adc59c8a68011cacb0a824daa0216453060167
+2025-04-04 11:08:07,856 - INFO - Intermediate patch for django__django-16315 written to logs/run_evaluation/gold/gold/django__django-16315/patch.diff, now applying to container...
+2025-04-04 11:08:08,162 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:08:08,219 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+patching file django/db/models/sql/compiler.py
+
+2025-04-04 11:08:09,602 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index be8580f2c4..cf419cb8cf 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -720,7 +720,6 @@ class QuerySet(AltersData):
+                     "Unique fields that can trigger the upsert must be provided."
+                 )
+             # Updating primary keys and non-concrete fields is forbidden.
+-            update_fields = [self.model._meta.get_field(name) for name in update_fields]
+             if any(not f.concrete or f.many_to_many for f in update_fields):
+                 raise ValueError(
+                     "bulk_create() can only be used with concrete fields in "
+@@ -732,9 +731,6 @@ class QuerySet(AltersData):
+                     "update_fields."
+                 )
+             if unique_fields:
+-                unique_fields = [
+-                    self.model._meta.get_field(name) for name in unique_fields
+-                ]
+                 if any(not f.concrete or f.many_to_many for f in unique_fields):
+                     raise ValueError(
+                         "bulk_create() can only be used with concrete fields "
+@@ -786,8 +782,11 @@ class QuerySet(AltersData):
+         if unique_fields:
+             # Primary key is allowed in unique_fields.
+             unique_fields = [
+-                opts.pk.name if name == "pk" else name for name in unique_fields
++                self.model._meta.get_field(opts.pk.name if name == "pk" else name)
++                for name in unique_fields
+             ]
++        if update_fields:
++            update_fields = [self.model._meta.get_field(name) for name in update_fields]
+         on_conflict = self._check_bulk_create_options(
+             ignore_conflicts,
+             update_conflicts,
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 0562a71dd1..caf36382b5 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1725,8 +1725,8 @@ class SQLInsertCompiler(SQLCompiler):
+         on_conflict_suffix_sql = self.connection.ops.on_conflict_suffix_sql(
+             fields,
+             self.query.on_conflict,
+-            self.query.update_fields,
+-            self.query.unique_fields,
++            (f.column for f in self.query.update_fields),
++            (f.column for f in self.query.unique_fields),
+         )
+         if (
+             self.returning_fields
+2025-04-04 11:08:09,602 - INFO - Eval script for django__django-16315 written to logs/run_evaluation/gold/gold/django__django-16315/eval.sh; copying to container...
+2025-04-04 11:08:21,168 - INFO - Test runtime: 11.32 seconds
+2025-04-04 11:08:21,169 - INFO - Test output for django__django-16315 written to logs/run_evaluation/gold/gold/django__django-16315/test_output.txt
+2025-04-04 11:08:21,273 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index be8580f2c4..cf419cb8cf 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -720,7 +720,6 @@ class QuerySet(AltersData):
+                     "Unique fields that can trigger the upsert must be provided."
+                 )
+             # Updating primary keys and non-concrete fields is forbidden.
+-            update_fields = [self.model._meta.get_field(name) for name in update_fields]
+             if any(not f.concrete or f.many_to_many for f in update_fields):
+                 raise ValueError(
+                     "bulk_create() can only be used with concrete fields in "
+@@ -732,9 +731,6 @@ class QuerySet(AltersData):
+                     "update_fields."
+                 )
+             if unique_fields:
+-                unique_fields = [
+-                    self.model._meta.get_field(name) for name in unique_fields
+-                ]
+                 if any(not f.concrete or f.many_to_many for f in unique_fields):
+                     raise ValueError(
+                         "bulk_create() can only be used with concrete fields "
+@@ -786,8 +782,11 @@ class QuerySet(AltersData):
+         if unique_fields:
+             # Primary key is allowed in unique_fields.
+             unique_fields = [
+-                opts.pk.name if name == "pk" else name for name in unique_fields
++                self.model._meta.get_field(opts.pk.name if name == "pk" else name)
++                for name in unique_fields
+             ]
++        if update_fields:
++            update_fields = [self.model._meta.get_field(name) for name in update_fields]
+         on_conflict = self._check_bulk_create_options(
+             ignore_conflicts,
+             update_conflicts,
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 0562a71dd1..caf36382b5 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1725,8 +1725,8 @@ class SQLInsertCompiler(SQLCompiler):
+         on_conflict_suffix_sql = self.connection.ops.on_conflict_suffix_sql(
+             fields,
+             self.query.on_conflict,
+-            self.query.update_fields,
+-            self.query.unique_fields,
++            (f.column for f in self.query.update_fields),
++            (f.column for f in self.query.unique_fields),
+         )
+         if (
+             self.returning_fields
+2025-04-04 11:08:21,273 - INFO - Grading answer for django__django-16315...
+2025-04-04 11:08:21,273 - INFO - report: {'django__django-16315': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16315: resolved: False
+2025-04-04 11:08:21,273 - INFO - Attempting to stop container sweb.eval.django__django-16315.gold...
+2025-04-04 11:09:06,558 - INFO - Attempting to remove container sweb.eval.django__django-16315.gold...
+2025-04-04 11:09:06,597 - INFO - Container sweb.eval.django__django-16315.gold removed.
+2025-04-04 11:09:06,597 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16315:latest...
+2025-04-04 11:09:12,046 - INFO - Image sweb.eval.x86_64.django__django-16315:latest removed.

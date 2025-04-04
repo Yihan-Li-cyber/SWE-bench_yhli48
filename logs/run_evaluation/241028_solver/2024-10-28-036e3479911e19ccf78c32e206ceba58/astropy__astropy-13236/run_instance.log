@@ -1,0 +1,83 @@
+2025-04-04 15:32:37,872 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-13236
+Building instance image sweb.eval.x86_64.astropy__astropy-13236:latest for astropy__astropy-13236
+2025-04-04 15:42:02,161 - INFO - Creating container for astropy__astropy-13236...
+2025-04-04 15:42:02,537 - INFO - Container for astropy__astropy-13236 created: 7572c7748aa1f52c7cbe95eafb929f16259a635b0704e128cdaeff5cedd76906
+2025-04-04 15:42:03,945 - INFO - Container for astropy__astropy-13236 started: 7572c7748aa1f52c7cbe95eafb929f16259a635b0704e128cdaeff5cedd76906
+2025-04-04 15:42:03,945 - INFO - Intermediate patch for astropy__astropy-13236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13236/patch.diff, now applying to container...
+2025-04-04 15:42:04,944 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 15:42:05,239 - INFO - >>>>> Applied Patch:
+patching file astropy/table/table.py
+
+2025-04-04 15:42:08,251 - INFO - Git diff before:
+diff --git a/astropy/table/table.py b/astropy/table/table.py
+index 5afe2127a3..384f038b4e 100644
+--- a/astropy/table/table.py
++++ b/astropy/table/table.py
+@@ -1243,9 +1243,13 @@ class Table:
+         # mixin class
+         if (not isinstance(data, Column) and not data_is_mixin
+                 and isinstance(data, np.ndarray) and len(data.dtype) > 1):
++            warnings.warn(
++                "In astropy 5.2, structured arrays will no longer be automatically "
++                "converted to NdarrayMixin. Please wrap your data in Column() "
++                "explicitly if you want to add it to a Table.",
++                FutureWarning)
+             data = data.view(NdarrayMixin)
+             data_is_mixin = True
+-
+         # Get the final column name using precedence.  Some objects may not
+         # have an info attribute. Also avoid creating info as a side effect.
+         if not name:
+diff --git a/pyproject.toml b/pyproject.toml
+index 4e84dd196b..3c3d00c32d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 15:42:08,251 - INFO - Eval script for astropy__astropy-13236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13236/eval.sh; copying to container...
+2025-04-04 15:50:00,661 - INFO - Test runtime: 471.71 seconds
+2025-04-04 15:50:00,663 - INFO - Test output for astropy__astropy-13236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13236/test_output.txt
+2025-04-04 15:50:00,859 - INFO - Git diff after:
+diff --git a/astropy/table/table.py b/astropy/table/table.py
+index 5afe2127a3..384f038b4e 100644
+--- a/astropy/table/table.py
++++ b/astropy/table/table.py
+@@ -1243,9 +1243,13 @@ class Table:
+         # mixin class
+         if (not isinstance(data, Column) and not data_is_mixin
+                 and isinstance(data, np.ndarray) and len(data.dtype) > 1):
++            warnings.warn(
++                "In astropy 5.2, structured arrays will no longer be automatically "
++                "converted to NdarrayMixin. Please wrap your data in Column() "
++                "explicitly if you want to add it to a Table.",
++                FutureWarning)
+             data = data.view(NdarrayMixin)
+             data_is_mixin = True
+-
+         # Get the final column name using precedence.  Some objects may not
+         # have an info attribute. Also avoid creating info as a side effect.
+         if not name:
+diff --git a/pyproject.toml b/pyproject.toml
+index 4e84dd196b..3c3d00c32d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 15:50:00,859 - INFO - Grading answer for astropy__astropy-13236...
+2025-04-04 15:50:00,863 - INFO - report: {'astropy__astropy-13236': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-13236: resolved: False
+2025-04-04 15:50:00,864 - INFO - Attempting to stop container sweb.eval.astropy__astropy-13236.241028_solver...
+2025-04-04 15:50:17,445 - INFO - Attempting to remove container sweb.eval.astropy__astropy-13236.241028_solver...
+2025-04-04 15:50:17,548 - INFO - Container sweb.eval.astropy__astropy-13236.241028_solver removed.
+2025-04-04 15:50:17,549 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-13236:latest...
+2025-04-04 15:50:18,561 - INFO - Image sweb.eval.x86_64.astropy__astropy-13236:latest removed.

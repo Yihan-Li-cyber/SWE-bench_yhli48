@@ -1,0 +1,82 @@
+2025-04-04 11:55:01,022 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-25479
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-25479:latest for matplotlib__matplotlib-25479
+2025-04-04 12:01:21,311 - INFO - Creating container for matplotlib__matplotlib-25479...
+2025-04-04 12:01:21,379 - INFO - Container for matplotlib__matplotlib-25479 created: 00c4dbc695f20d6a537c6418203243d911dc233fa7251f24d58d2a642334be4e
+2025-04-04 12:01:21,818 - INFO - Container for matplotlib__matplotlib-25479 started: 00c4dbc695f20d6a537c6418203243d911dc233fa7251f24d58d2a642334be4e
+2025-04-04 12:01:21,819 - INFO - Intermediate patch for matplotlib__matplotlib-25479 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25479/patch.diff, now applying to container...
+2025-04-04 12:01:22,118 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:01:22,177 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/cm.py
+patching file lib/matplotlib/colors.py
+
+2025-04-04 12:01:24,126 - INFO - Git diff before:
+diff --git a/lib/matplotlib/cm.py b/lib/matplotlib/cm.py
+index 38158db956..78c4ce1635 100644
+--- a/lib/matplotlib/cm.py
++++ b/lib/matplotlib/cm.py
+@@ -146,6 +146,11 @@ class ColormapRegistry(Mapping):
+                                "that was already in the registry.")
+ 
+         self._cmaps[name] = cmap.copy()
++        # Someone may set the extremes of a builtin colormap and want to register it
++        # with a different name for future lookups. The object would still have the
++        # builtin name, so we should update it to the registered name
++        if self._cmaps[name].name != name:
++            self._cmaps[name].name = name
+ 
+     def unregister(self, name):
+         """
+diff --git a/lib/matplotlib/colors.py b/lib/matplotlib/colors.py
+index 05922c93df..434bb54235 100644
+--- a/lib/matplotlib/colors.py
++++ b/lib/matplotlib/colors.py
+@@ -774,7 +774,7 @@ class Colormap:
+         return cmapobject
+ 
+     def __eq__(self, other):
+-        if (not isinstance(other, Colormap) or self.name != other.name or
++        if (not isinstance(other, Colormap) or
+                 self.colorbar_extend != other.colorbar_extend):
+             return False
+         # To compare lookup tables the Colormaps have to be initialized
+2025-04-04 12:01:24,126 - INFO - Eval script for matplotlib__matplotlib-25479 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25479/eval.sh; copying to container...
+2025-04-04 12:03:40,091 - INFO - Test runtime: 135.76 seconds
+2025-04-04 12:03:40,091 - INFO - Test output for matplotlib__matplotlib-25479 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25479/test_output.txt
+2025-04-04 12:03:40,182 - INFO - Git diff after:
+diff --git a/lib/matplotlib/cm.py b/lib/matplotlib/cm.py
+index 38158db956..78c4ce1635 100644
+--- a/lib/matplotlib/cm.py
++++ b/lib/matplotlib/cm.py
+@@ -146,6 +146,11 @@ class ColormapRegistry(Mapping):
+                                "that was already in the registry.")
+ 
+         self._cmaps[name] = cmap.copy()
++        # Someone may set the extremes of a builtin colormap and want to register it
++        # with a different name for future lookups. The object would still have the
++        # builtin name, so we should update it to the registered name
++        if self._cmaps[name].name != name:
++            self._cmaps[name].name = name
+ 
+     def unregister(self, name):
+         """
+diff --git a/lib/matplotlib/colors.py b/lib/matplotlib/colors.py
+index 05922c93df..434bb54235 100644
+--- a/lib/matplotlib/colors.py
++++ b/lib/matplotlib/colors.py
+@@ -774,7 +774,7 @@ class Colormap:
+         return cmapobject
+ 
+     def __eq__(self, other):
+-        if (not isinstance(other, Colormap) or self.name != other.name or
++        if (not isinstance(other, Colormap) or
+                 self.colorbar_extend != other.colorbar_extend):
+             return False
+         # To compare lookup tables the Colormaps have to be initialized
+2025-04-04 12:03:40,182 - INFO - Grading answer for matplotlib__matplotlib-25479...
+2025-04-04 12:03:40,183 - INFO - report: {'matplotlib__matplotlib-25479': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-25479: resolved: False
+2025-04-04 12:03:40,183 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-25479.gold...
+2025-04-04 12:04:21,582 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-25479.gold...
+2025-04-04 12:04:21,610 - INFO - Container sweb.eval.matplotlib__matplotlib-25479.gold removed.
+2025-04-04 12:04:21,610 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-25479:latest...
+2025-04-04 12:04:25,338 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-25479:latest removed.

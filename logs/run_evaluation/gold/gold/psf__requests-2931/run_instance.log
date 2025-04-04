@@ -1,0 +1,69 @@
+2025-04-04 12:14:14,720 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-2931
+Building instance image sweb.eval.x86_64.psf__requests-2931:latest for psf__requests-2931
+2025-04-04 12:14:21,433 - INFO - Creating container for psf__requests-2931...
+2025-04-04 12:14:21,546 - INFO - Container for psf__requests-2931 created: 4c49023d76e1e569109adc900e990520ee8c4892c9a6bed1bc759059bca20b01
+2025-04-04 12:14:21,909 - INFO - Container for psf__requests-2931 started: 4c49023d76e1e569109adc900e990520ee8c4892c9a6bed1bc759059bca20b01
+2025-04-04 12:14:21,910 - INFO - Intermediate patch for psf__requests-2931 written to logs/run_evaluation/gold/gold/psf__requests-2931/patch.diff, now applying to container...
+2025-04-04 12:14:22,212 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:14:22,281 - INFO - >>>>> Applied Patch:
+patching file requests/models.py
+
+2025-04-04 12:14:22,402 - INFO - Git diff before:
+diff --git a/requests/models.py b/requests/models.py
+index 9c624d3c..4bcbc548 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -81,7 +81,7 @@ class RequestEncodingMixin(object):
+         """
+ 
+         if isinstance(data, (str, bytes)):
+-            return to_native_string(data)
++            return data
+         elif hasattr(data, 'read'):
+             return data
+         elif hasattr(data, '__iter__'):
+@@ -385,6 +385,9 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+             if isinstance(fragment, str):
+                 fragment = fragment.encode('utf-8')
+ 
++        if isinstance(params, (str, bytes)):
++            params = to_native_string(params)
++
+         enc_params = self._encode_params(params)
+         if enc_params:
+             if query:
+2025-04-04 12:14:22,403 - INFO - Eval script for psf__requests-2931 written to logs/run_evaluation/gold/gold/psf__requests-2931/eval.sh; copying to container...
+2025-04-04 12:14:27,306 - INFO - Test runtime: 4.70 seconds
+2025-04-04 12:14:27,306 - INFO - Test output for psf__requests-2931 written to logs/run_evaluation/gold/gold/psf__requests-2931/test_output.txt
+2025-04-04 12:14:27,374 - INFO - Git diff after:
+diff --git a/requests/models.py b/requests/models.py
+index 9c624d3c..4bcbc548 100644
+--- a/requests/models.py
++++ b/requests/models.py
+@@ -81,7 +81,7 @@ class RequestEncodingMixin(object):
+         """
+ 
+         if isinstance(data, (str, bytes)):
+-            return to_native_string(data)
++            return data
+         elif hasattr(data, 'read'):
+             return data
+         elif hasattr(data, '__iter__'):
+@@ -385,6 +385,9 @@ class PreparedRequest(RequestEncodingMixin, RequestHooksMixin):
+             if isinstance(fragment, str):
+                 fragment = fragment.encode('utf-8')
+ 
++        if isinstance(params, (str, bytes)):
++            params = to_native_string(params)
++
+         enc_params = self._encode_params(params)
+         if enc_params:
+             if query:
+2025-04-04 12:14:27,374 - INFO - Grading answer for psf__requests-2931...
+2025-04-04 12:14:27,375 - INFO - report: {'psf__requests-2931': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-2931: resolved: False
+2025-04-04 12:14:27,375 - INFO - Attempting to stop container sweb.eval.psf__requests-2931.gold...
+2025-04-04 12:14:42,673 - INFO - Attempting to remove container sweb.eval.psf__requests-2931.gold...
+2025-04-04 12:14:42,697 - INFO - Container sweb.eval.psf__requests-2931.gold removed.
+2025-04-04 12:14:42,697 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-2931:latest...
+2025-04-04 12:14:42,749 - INFO - Image sweb.eval.x86_64.psf__requests-2931:latest removed.

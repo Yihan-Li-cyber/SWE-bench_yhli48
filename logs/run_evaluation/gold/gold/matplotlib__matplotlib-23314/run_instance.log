@@ -1,0 +1,49 @@
+2025-04-04 11:28:38,691 - INFO - Environment image sweb.env.x86_64.7037e8c448a4b8ebfe9b13:latest found for matplotlib__matplotlib-23314
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-23314:latest for matplotlib__matplotlib-23314
+2025-04-04 11:35:07,651 - INFO - Creating container for matplotlib__matplotlib-23314...
+2025-04-04 11:35:07,743 - INFO - Container for matplotlib__matplotlib-23314 created: 5452f46a2a6ab28d13969608c316ace15f633f3278d28eb4395c464a1c239bca
+2025-04-04 11:35:08,262 - INFO - Container for matplotlib__matplotlib-23314 started: 5452f46a2a6ab28d13969608c316ace15f633f3278d28eb4395c464a1c239bca
+2025-04-04 11:35:08,262 - INFO - Intermediate patch for matplotlib__matplotlib-23314 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23314/patch.diff, now applying to container...
+2025-04-04 11:35:08,588 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:35:08,702 - INFO - >>>>> Applied Patch:
+patching file lib/mpl_toolkits/mplot3d/axes3d.py
+
+2025-04-04 11:35:10,366 - INFO - Git diff before:
+diff --git a/lib/mpl_toolkits/mplot3d/axes3d.py b/lib/mpl_toolkits/mplot3d/axes3d.py
+index 9db44b7994..5479bc1af0 100644
+--- a/lib/mpl_toolkits/mplot3d/axes3d.py
++++ b/lib/mpl_toolkits/mplot3d/axes3d.py
+@@ -387,6 +387,8 @@ class Axes3D(Axes):
+ 
+     @martist.allow_rasterization
+     def draw(self, renderer):
++        if not self.get_visible():
++            return
+         self._unstale_viewLim()
+ 
+         # draw the background patch
+2025-04-04 11:35:10,367 - INFO - Eval script for matplotlib__matplotlib-23314 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23314/eval.sh; copying to container...
+2025-04-04 11:38:37,116 - INFO - Test runtime: 206.54 seconds
+2025-04-04 11:38:37,117 - INFO - Test output for matplotlib__matplotlib-23314 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-23314/test_output.txt
+2025-04-04 11:38:37,210 - INFO - Git diff after:
+diff --git a/lib/mpl_toolkits/mplot3d/axes3d.py b/lib/mpl_toolkits/mplot3d/axes3d.py
+index 9db44b7994..5479bc1af0 100644
+--- a/lib/mpl_toolkits/mplot3d/axes3d.py
++++ b/lib/mpl_toolkits/mplot3d/axes3d.py
+@@ -387,6 +387,8 @@ class Axes3D(Axes):
+ 
+     @martist.allow_rasterization
+     def draw(self, renderer):
++        if not self.get_visible():
++            return
+         self._unstale_viewLim()
+ 
+         # draw the background patch
+2025-04-04 11:38:37,210 - INFO - Grading answer for matplotlib__matplotlib-23314...
+2025-04-04 11:38:37,211 - INFO - report: {'matplotlib__matplotlib-23314': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-23314: resolved: False
+2025-04-04 11:38:37,211 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-23314.gold...
+2025-04-04 11:38:53,425 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-23314.gold...
+2025-04-04 11:38:53,674 - INFO - Container sweb.eval.matplotlib__matplotlib-23314.gold removed.
+2025-04-04 11:38:53,674 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-23314:latest...
+2025-04-04 11:38:58,607 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-23314:latest removed.

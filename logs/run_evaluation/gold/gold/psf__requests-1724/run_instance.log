@@ -1,0 +1,69 @@
+2025-04-04 12:13:06,688 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-1724
+Building instance image sweb.eval.x86_64.psf__requests-1724:latest for psf__requests-1724
+2025-04-04 12:13:15,767 - INFO - Creating container for psf__requests-1724...
+2025-04-04 12:13:15,931 - INFO - Container for psf__requests-1724 created: 4a94cde5bf964f5318a62f1334bd449f15831fb476b38c08e40cafdecfafc1b1
+2025-04-04 12:13:16,411 - INFO - Container for psf__requests-1724 started: 4a94cde5bf964f5318a62f1334bd449f15831fb476b38c08e40cafdecfafc1b1
+2025-04-04 12:13:16,412 - INFO - Intermediate patch for psf__requests-1724 written to logs/run_evaluation/gold/gold/psf__requests-1724/patch.diff, now applying to container...
+2025-04-04 12:13:16,842 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:13:16,920 - INFO - >>>>> Applied Patch:
+patching file requests/sessions.py
+
+2025-04-04 12:13:17,058 - INFO - Git diff before:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index cc72f65d..175712f9 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -12,7 +12,7 @@ import os
+ from collections import Mapping
+ from datetime import datetime
+ 
+-from .compat import cookielib, OrderedDict, urljoin, urlparse, urlunparse
++from .compat import cookielib, OrderedDict, urljoin, urlparse, urlunparse, builtin_str
+ from .cookies import cookiejar_from_dict, extract_cookies_to_jar, RequestsCookieJar
+ from .models import Request, PreparedRequest
+ from .hooks import default_hooks, dispatch_hook
+@@ -309,6 +309,9 @@ class Session(SessionRedirectMixin):
+         :param cert: (optional) if String, path to ssl client cert file (.pem).
+             If Tuple, ('cert', 'key') pair.
+         """
++
++        method = builtin_str(method)
++
+         # Create the Request.
+         req = Request(
+             method = method.upper(),
+2025-04-04 12:13:17,060 - INFO - Eval script for psf__requests-1724 written to logs/run_evaluation/gold/gold/psf__requests-1724/eval.sh; copying to container...
+2025-04-04 12:13:59,015 - INFO - Test runtime: 41.77 seconds
+2025-04-04 12:13:59,015 - INFO - Test output for psf__requests-1724 written to logs/run_evaluation/gold/gold/psf__requests-1724/test_output.txt
+2025-04-04 12:13:59,084 - INFO - Git diff after:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index cc72f65d..175712f9 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -12,7 +12,7 @@ import os
+ from collections import Mapping
+ from datetime import datetime
+ 
+-from .compat import cookielib, OrderedDict, urljoin, urlparse, urlunparse
++from .compat import cookielib, OrderedDict, urljoin, urlparse, urlunparse, builtin_str
+ from .cookies import cookiejar_from_dict, extract_cookies_to_jar, RequestsCookieJar
+ from .models import Request, PreparedRequest
+ from .hooks import default_hooks, dispatch_hook
+@@ -309,6 +309,9 @@ class Session(SessionRedirectMixin):
+         :param cert: (optional) if String, path to ssl client cert file (.pem).
+             If Tuple, ('cert', 'key') pair.
+         """
++
++        method = builtin_str(method)
++
+         # Create the Request.
+         req = Request(
+             method = method.upper(),
+2025-04-04 12:13:59,084 - INFO - Grading answer for psf__requests-1724...
+2025-04-04 12:13:59,084 - INFO - report: {'psf__requests-1724': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-1724: resolved: False
+2025-04-04 12:13:59,085 - INFO - Attempting to stop container sweb.eval.psf__requests-1724.gold...
+2025-04-04 12:14:14,590 - INFO - Attempting to remove container sweb.eval.psf__requests-1724.gold...
+2025-04-04 12:14:14,611 - INFO - Container sweb.eval.psf__requests-1724.gold removed.
+2025-04-04 12:14:14,611 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-1724:latest...
+2025-04-04 12:14:14,714 - INFO - Image sweb.eval.x86_64.psf__requests-1724:latest removed.

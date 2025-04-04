@@ -1,0 +1,779 @@
+2025-04-04 09:19:01,243 - INFO - Building image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest
+Using dockerfile:
+FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+
+COPY ./setup_env.sh /root/
+RUN sed -i -e 's/\r$//' /root/setup_env.sh
+RUN chmod +x /root/setup_env.sh
+RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+
+WORKDIR /testbed/
+
+# Automatically activate the testbed environment
+RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+
+Adding (1) setup scripts to image build repo
+2025-04-04 09:19:01,243 - INFO - [SETUP SCRIPT] setup_env.sh:
+#!/bin/bash
+set -euxo pipefail
+source /opt/miniconda3/bin/activate
+conda create -n testbed python=3.8 -y
+cat <<'EOF_59812759871' > $HOME/requirements.txt
+sphinx>=1.8.1,!=2.0.0,<4.3.0
+colorspacious
+ipython
+ipywidgets
+numpydoc>=0.8
+packaging>=20
+pyparsing<3.0.0
+mpl-sphinx-theme
+sphinxcontrib-svg2pdfconverter>=1.1.0
+sphinx-gallery>=0.10
+sphinx-copybutton
+sphinx-panels
+scipy
+
+
+certifi
+coverage
+pyparsing<3.0.0
+pytest!=4.6.0,!=5.4.0
+pytest-cov
+pytest-rerunfailures
+pytest-timeout
+pytest-xdist
+python-dateutil
+tornado
+
+
+ipykernel
+nbconvert[execute]!=6.0.0,!=6.0.1
+nbformat!=5.0.0,!=5.0.1
+pandas!=0.25.0
+pikepdf
+pytz
+pywin32; sys.platform == 'win32'
+
+
+flake8>=3.8
+pydocstyle>=5.1.0
+flake8-docstrings>=1.4.0
+
+
+EOF_59812759871
+conda activate testbed && python -m pip install -r $HOME/requirements.txt
+rm $HOME/requirements.txt
+conda activate testbed
+python -m pip install pytest ipython
+
+2025-04-04 09:19:01,243 - INFO - Building docker image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest in logs/build_images/env/sweb.env.x86_64.b382c45e0a94d34ef0fc86__latest with platform linux/x86_64
+2025-04-04 09:19:01,251 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-04 09:19:01,251 - INFO - 
+2025-04-04 09:19:01,251 - INFO - ---> 7652b8eed4b5
+2025-04-04 09:19:01,252 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-04 09:19:01,252 - INFO - 
+2025-04-04 09:19:01,601 - INFO - ---> 827fc30f1b9a
+2025-04-04 09:19:01,601 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-04 09:19:01,601 - INFO - 
+2025-04-04 09:19:01,640 - INFO - ---> Running in 148380d4af8a
+2025-04-04 09:19:02,792 - INFO - ---> Removed intermediate container 148380d4af8a
+2025-04-04 09:19:02,793 - INFO - ---> 1a4b996235b7
+2025-04-04 09:19:02,793 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-04 09:19:02,793 - INFO - 
+2025-04-04 09:19:02,820 - INFO - ---> Running in 6166916f4645
+2025-04-04 09:19:03,886 - INFO - ---> Removed intermediate container 6166916f4645
+2025-04-04 09:19:03,887 - INFO - ---> 725d729ae262
+2025-04-04 09:19:03,887 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-04 09:19:03,887 - INFO - 
+2025-04-04 09:19:03,918 - INFO - ---> Running in 6e115234d635
+2025-04-04 09:19:04,438 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-04 09:19:04,439 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
+2025-04-04 09:19:04,439 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-04 09:19:04,441 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-04 09:19:04,443 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
+2025-04-04 09:19:04,444 - INFO - +++ PS1=
++++ __conda_exe shell.posix activate
+2025-04-04 09:19:04,444 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-04 09:19:04,658 - INFO - ++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+2025-04-04 09:19:04,658 - INFO - +++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda create -n testbed python=3.8 -y
++ local cmd=create
++ case "$cmd" in
++ __conda_exe create -n testbed python=3.8 -y
+2025-04-04 09:19:04,659 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.8 -y
+2025-04-04 09:19:05,751 - INFO - Channels:
+ - defaults
+ - conda-forge
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working...
+2025-04-04 09:20:23,733 - INFO - done
+Solving environment: ...working...
+2025-04-04 09:20:25,821 - INFO - done
+2025-04-04 09:20:32,824 - INFO - ## Package Plan ##
+
+  environment location: /opt/miniconda3/envs/testbed
+
+  added / updated specs:
+    - python=3.8
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    ca-certificates-2025.2.25  |       h06a4308_0         129 KB
+    ld_impl_linux-64-2.40      |       h12ee557_0         710 KB
+    libffi-3.4.4               |       h6a678d5_1         141 KB
+    openssl-3.0.16             |       h5eee18b_0         5.2 MB
+    pip-24.2                   |   py38h06a4308_0         2.2 MB
+    python-3.8.20              |       he870216_0        23.8 MB
+    setuptools-75.1.0          |   py38h06a4308_0         1.7 MB
+    sqlite-3.45.3              |       h5eee18b_0         1.2 MB
+    tk-8.6.14                  |       h39e8969_0         3.4 MB
+    wheel-0.44.0               |   py38h06a4308_0         108 KB
+    xz-5.6.4                   |       h5eee18b_1         567 KB
+    zlib-1.2.13                |       h5eee18b_1         111 KB
+    ------------------------------------------------------------
+                                           Total:        39.3 MB
+
+The following NEW packages will be INSTALLED:
+
+  _libgcc_mutex      pkgs/main/linux-64::_libgcc_mutex-0.1-main 
+  _openmp_mutex      pkgs/main/linux-64::_openmp_mutex-5.1-1_gnu 
+  ca-certificates    pkgs/main/linux-64::ca-certificates-2025.2.25-h06a4308_0 
+  ld_impl_linux-64   pkgs/main/linux-64::ld_impl_linux-64-2.40-h12ee557_0 
+  libffi             pkgs/main/linux-64::libffi-3.4.4-h6a678d5_1 
+  libgcc-ng          pkgs/main/linux-64::libgcc-ng-11.2.0-h1234567_1 
+  libgomp            pkgs/main/linux-64::libgomp-11.2.0-h1234567_1 
+  libstdcxx-ng       pkgs/main/linux-64::libstdcxx-ng-11.2.0-h1234567_1 
+  ncurses            pkgs/main/linux-64::ncurses-6.4-h6a678d5_0 
+  openssl            pkgs/main/linux-64::openssl-3.0.16-h5eee18b_0 
+  pip                pkgs/main/linux-64::pip-24.2-py38h06a4308_0 
+  python             pkgs/main/linux-64::python-3.8.20-he870216_0 
+  readline           pkgs/main/linux-64::readline-8.2-h5eee18b_0 
+  setuptools         pkgs/main/linux-64::setuptools-75.1.0-py38h06a4308_0 
+  sqlite             pkgs/main/linux-64::sqlite-3.45.3-h5eee18b_0 
+  tk                 pkgs/main/linux-64::tk-8.6.14-h39e8969_0 
+  wheel              pkgs/main/linux-64::wheel-0.44.0-py38h06a4308_0 
+  xz                 pkgs/main/linux-64::xz-5.6.4-h5eee18b_1 
+  zlib               pkgs/main/linux-64::zlib-1.2.13-h5eee18b_1 
+
+
+
+Downloading and Extracting Packages: ...working... done
+Preparing transaction: ...working...
+2025-04-04 09:20:33,190 - INFO - done
+Verifying transaction: ...working...
+2025-04-04 09:20:35,265 - INFO - done
+2025-04-04 09:20:35,266 - INFO - Executing transaction: ...working...
+2025-04-04 09:20:44,199 - INFO - done
+2025-04-04 09:20:44,296 - INFO - #
+# To activate this environment, use
+#
+#     $ conda activate testbed
+#
+# To deactivate an active environment, use
+#
+#     $ conda deactivate
+2025-04-04 09:20:44,475 - INFO - + cat
+2025-04-04 09:20:44,477 - INFO - + conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+2025-04-04 09:20:44,478 - INFO - ++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+2025-04-04 09:20:44,478 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-04 09:20:44,672 - INFO - + ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
+2025-04-04 09:20:44,673 - INFO - + '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
+2025-04-04 09:20:44,673 - INFO - + python -m pip install -r /root/requirements.txt
+2025-04-04 09:20:45,494 - INFO - Ignoring pywin32: markers 'sys_platform == "win32"' don't match your environment
+2025-04-04 09:20:45,836 - INFO - Collecting sphinx!=2.0.0,<4.3.0,>=1.8.1 (from -r /root/requirements.txt (line 1))
+2025-04-04 09:20:45,883 - INFO - Downloading Sphinx-4.2.0-py3-none-any.whl.metadata (7.9 kB)
+2025-04-04 09:20:45,915 - INFO - Collecting colorspacious (from -r /root/requirements.txt (line 2))
+2025-04-04 09:20:45,926 - INFO - Downloading colorspacious-1.1.2-py2.py3-none-any.whl.metadata (3.6 kB)
+2025-04-04 09:20:46,106 - INFO - Collecting ipython (from -r /root/requirements.txt (line 3))
+2025-04-04 09:20:46,112 - INFO - Downloading ipython-8.12.3-py3-none-any.whl.metadata (5.7 kB)
+2025-04-04 09:20:46,252 - INFO - Collecting ipywidgets (from -r /root/requirements.txt (line 4))
+2025-04-04 09:20:46,257 - INFO - Downloading ipywidgets-8.1.5-py3-none-any.whl.metadata (2.3 kB)
+2025-04-04 09:20:46,292 - INFO - Collecting numpydoc>=0.8 (from -r /root/requirements.txt (line 5))
+2025-04-04 09:20:46,351 - INFO - Downloading numpydoc-1.7.0-py3-none-any.whl.metadata (4.2 kB)
+2025-04-04 09:20:46,490 - INFO - Collecting packaging>=20 (from -r /root/requirements.txt (line 6))
+2025-04-04 09:20:46,497 - INFO - Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+2025-04-04 09:20:46,692 - INFO - Collecting pyparsing<3.0.0 (from -r /root/requirements.txt (line 7))
+2025-04-04 09:20:46,698 - INFO - Downloading pyparsing-2.4.7-py2.py3-none-any.whl.metadata (3.6 kB)
+2025-04-04 09:20:46,791 - INFO - Collecting mpl-sphinx-theme (from -r /root/requirements.txt (line 8))
+2025-04-04 09:20:46,799 - INFO - Downloading mpl_sphinx_theme-3.9.0-py3-none-any.whl.metadata (5.7 kB)
+2025-04-04 09:20:46,828 - INFO - Collecting sphinxcontrib-svg2pdfconverter>=1.1.0 (from -r /root/requirements.txt (line 9))
+2025-04-04 09:20:46,836 - INFO - Downloading sphinxcontrib_svg2pdfconverter-1.3.0-py3-none-any.whl.metadata (3.3 kB)
+2025-04-04 09:20:46,941 - INFO - Collecting sphinx-gallery>=0.10 (from -r /root/requirements.txt (line 10))
+2025-04-04 09:20:46,946 - INFO - Downloading sphinx_gallery-0.19.0-py3-none-any.whl.metadata (8.9 kB)
+2025-04-04 09:20:46,987 - INFO - Collecting sphinx-copybutton (from -r /root/requirements.txt (line 11))
+2025-04-04 09:20:46,991 - INFO - Downloading sphinx_copybutton-0.5.2-py3-none-any.whl.metadata (3.2 kB)
+2025-04-04 09:20:47,084 - INFO - Collecting sphinx-panels (from -r /root/requirements.txt (line 12))
+2025-04-04 09:20:47,114 - INFO - Downloading sphinx_panels-0.6.0-py3-none-any.whl.metadata (4.3 kB)
+2025-04-04 09:20:47,406 - INFO - Collecting scipy (from -r /root/requirements.txt (line 13))
+2025-04-04 09:20:47,413 - INFO - Downloading scipy-1.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (58 kB)
+2025-04-04 09:20:47,469 - INFO - Collecting certifi (from -r /root/requirements.txt (line 16))
+2025-04-04 09:20:47,493 - INFO - Downloading certifi-2025.1.31-py3-none-any.whl.metadata (2.5 kB)
+2025-04-04 09:20:48,348 - INFO - Collecting coverage (from -r /root/requirements.txt (line 17))
+2025-04-04 09:20:48,354 - INFO - Downloading coverage-7.6.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.3 kB)
+2025-04-04 09:20:48,582 - INFO - Collecting pytest!=4.6.0,!=5.4.0 (from -r /root/requirements.txt (line 19))
+2025-04-04 09:20:48,590 - INFO - Downloading pytest-8.3.5-py3-none-any.whl.metadata (7.6 kB)
+2025-04-04 09:20:48,685 - INFO - Collecting pytest-cov (from -r /root/requirements.txt (line 20))
+2025-04-04 09:20:48,693 - INFO - Downloading pytest_cov-5.0.0-py3-none-any.whl.metadata (27 kB)
+2025-04-04 09:20:48,774 - INFO - Collecting pytest-rerunfailures (from -r /root/requirements.txt (line 21))
+2025-04-04 09:20:48,821 - INFO - Downloading pytest_rerunfailures-14.0-py3-none-any.whl.metadata (18 kB)
+2025-04-04 09:20:48,903 - INFO - Collecting pytest-timeout (from -r /root/requirements.txt (line 22))
+2025-04-04 09:20:48,908 - INFO - Downloading pytest_timeout-2.3.1-py3-none-any.whl.metadata (20 kB)
+2025-04-04 09:20:49,013 - INFO - Collecting pytest-xdist (from -r /root/requirements.txt (line 23))
+2025-04-04 09:20:49,018 - INFO - Downloading pytest_xdist-3.6.1-py3-none-any.whl.metadata (4.3 kB)
+2025-04-04 09:20:49,065 - INFO - Collecting python-dateutil (from -r /root/requirements.txt (line 24))
+2025-04-04 09:20:49,070 - INFO - Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+2025-04-04 09:20:49,156 - INFO - Collecting tornado (from -r /root/requirements.txt (line 25))
+2025-04-04 09:20:49,161 - INFO - Downloading tornado-6.4.2-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.5 kB)
+2025-04-04 09:20:49,387 - INFO - Collecting ipykernel (from -r /root/requirements.txt (line 28))
+2025-04-04 09:20:49,394 - INFO - Downloading ipykernel-6.29.5-py3-none-any.whl.metadata (6.3 kB)
+2025-04-04 09:20:49,543 - INFO - Collecting nbconvert!=6.0.0,!=6.0.1 (from nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:49,550 - INFO - Downloading nbconvert-7.16.6-py3-none-any.whl.metadata (8.5 kB)
+2025-04-04 09:20:49,701 - INFO - Collecting nbformat!=5.0.0,!=5.0.1 (from -r /root/requirements.txt (line 30))
+2025-04-04 09:20:49,707 - INFO - Downloading nbformat-5.10.4-py3-none-any.whl.metadata (3.6 kB)
+2025-04-04 09:20:50,087 - INFO - Collecting pandas!=0.25.0 (from -r /root/requirements.txt (line 31))
+2025-04-04 09:20:50,095 - INFO - Downloading pandas-2.0.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (18 kB)
+2025-04-04 09:20:51,257 - INFO - Collecting pikepdf (from -r /root/requirements.txt (line 32))
+2025-04-04 09:20:51,266 - INFO - Downloading pikepdf-9.2.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (8.2 kB)
+2025-04-04 09:20:51,514 - INFO - Collecting pytz (from -r /root/requirements.txt (line 33))
+2025-04-04 09:20:51,524 - INFO - Downloading pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+2025-04-04 09:20:51,603 - INFO - Collecting flake8>=3.8 (from -r /root/requirements.txt (line 37))
+2025-04-04 09:20:51,611 - INFO - Downloading flake8-7.1.2-py2.py3-none-any.whl.metadata (3.8 kB)
+2025-04-04 09:20:51,654 - INFO - Collecting pydocstyle>=5.1.0 (from -r /root/requirements.txt (line 38))
+2025-04-04 09:20:51,661 - INFO - Downloading pydocstyle-6.3.0-py3-none-any.whl.metadata (3.7 kB)
+2025-04-04 09:20:51,695 - INFO - Collecting flake8-docstrings>=1.4.0 (from -r /root/requirements.txt (line 39))
+2025-04-04 09:20:51,704 - INFO - Downloading flake8_docstrings-1.7.0-py2.py3-none-any.whl.metadata (2.0 kB)
+2025-04-04 09:20:51,735 - INFO - Collecting sphinxcontrib-applehelp (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,742 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl.metadata (2.7 kB)
+2025-04-04 09:20:51,777 - INFO - Collecting sphinxcontrib-devhelp (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,784 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-04 09:20:51,814 - INFO - Collecting sphinxcontrib-jsmath (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,822 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-04 09:20:51,857 - INFO - Collecting sphinxcontrib-htmlhelp>=2.0.0 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,866 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl.metadata (2.8 kB)
+2025-04-04 09:20:51,904 - INFO - Collecting sphinxcontrib-serializinghtml>=1.1.5 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,910 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl.metadata (1.5 kB)
+2025-04-04 09:20:51,955 - INFO - Collecting sphinxcontrib-qthelp (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:51,963 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-04 09:20:52,030 - INFO - Collecting Jinja2>=2.3 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,036 - INFO - Downloading jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+2025-04-04 09:20:52,104 - INFO - Collecting Pygments>=2.0 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,109 - INFO - Downloading pygments-2.19.1-py3-none-any.whl.metadata (2.5 kB)
+2025-04-04 09:20:52,166 - INFO - Collecting docutils<0.18,>=0.14 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,172 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl.metadata (2.9 kB)
+2025-04-04 09:20:52,201 - INFO - Collecting snowballstemmer>=1.1 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,207 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
+2025-04-04 09:20:52,262 - INFO - Collecting babel>=1.3 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,269 - INFO - Downloading babel-2.17.0-py3-none-any.whl.metadata (2.0 kB)
+2025-04-04 09:20:52,305 - INFO - Collecting alabaster<0.8,>=0.7 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,310 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl.metadata (3.0 kB)
+2025-04-04 09:20:52,479 - INFO - Collecting imagesize (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,484 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl.metadata (1.5 kB)
+2025-04-04 09:20:52,554 - INFO - Collecting requests>=2.5.0 (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:20:52,559 - INFO - Downloading requests-2.32.3-py3-none-any.whl.metadata (4.6 kB)
+2025-04-04 09:20:52,572 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1)) (75.1.0)
+2025-04-04 09:20:53,113 - INFO - Collecting numpy (from colorspacious->-r /root/requirements.txt (line 2))
+2025-04-04 09:20:53,124 - INFO - Downloading numpy-1.24.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.6 kB)
+2025-04-04 09:20:53,188 - INFO - Collecting backcall (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,193 - INFO - Downloading backcall-0.2.0-py2.py3-none-any.whl.metadata (2.0 kB)
+2025-04-04 09:20:53,241 - INFO - Collecting decorator (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,249 - INFO - Downloading decorator-5.2.1-py3-none-any.whl.metadata (3.9 kB)
+2025-04-04 09:20:53,321 - INFO - Collecting jedi>=0.16 (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,327 - INFO - Downloading jedi-0.19.2-py2.py3-none-any.whl.metadata (22 kB)
+2025-04-04 09:20:53,368 - INFO - Collecting matplotlib-inline (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,373 - INFO - Downloading matplotlib_inline-0.1.7-py3-none-any.whl.metadata (3.9 kB)
+2025-04-04 09:20:53,402 - INFO - Collecting pickleshare (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,409 - INFO - Downloading pickleshare-0.7.5-py2.py3-none-any.whl.metadata (1.5 kB)
+2025-04-04 09:20:53,559 - INFO - Collecting prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30 (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,565 - INFO - Downloading prompt_toolkit-3.0.50-py3-none-any.whl.metadata (6.6 kB)
+2025-04-04 09:20:53,616 - INFO - Collecting stack-data (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,621 - INFO - Downloading stack_data-0.6.3-py3-none-any.whl.metadata (18 kB)
+2025-04-04 09:20:53,682 - INFO - Collecting traitlets>=5 (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,687 - INFO - Downloading traitlets-5.14.3-py3-none-any.whl.metadata (10 kB)
+2025-04-04 09:20:53,743 - INFO - Collecting typing-extensions (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,748 - INFO - Downloading typing_extensions-4.13.1-py3-none-any.whl.metadata (3.0 kB)
+2025-04-04 09:20:53,780 - INFO - Collecting pexpect>4.3 (from ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:20:53,787 - INFO - Downloading pexpect-4.9.0-py2.py3-none-any.whl.metadata (2.5 kB)
+2025-04-04 09:20:53,816 - INFO - Collecting comm>=0.1.3 (from ipywidgets->-r /root/requirements.txt (line 4))
+2025-04-04 09:20:53,821 - INFO - Downloading comm-0.2.2-py3-none-any.whl.metadata (3.7 kB)
+2025-04-04 09:20:53,948 - INFO - Collecting widgetsnbextension~=4.0.12 (from ipywidgets->-r /root/requirements.txt (line 4))
+2025-04-04 09:20:53,955 - INFO - Downloading widgetsnbextension-4.0.13-py3-none-any.whl.metadata (1.6 kB)
+2025-04-04 09:20:54,098 - INFO - Collecting jupyterlab-widgets~=3.0.12 (from ipywidgets->-r /root/requirements.txt (line 4))
+2025-04-04 09:20:54,103 - INFO - Downloading jupyterlab_widgets-3.0.13-py3-none-any.whl.metadata (4.1 kB)
+2025-04-04 09:20:54,150 - INFO - INFO: pip is looking at multiple versions of numpydoc to determine which version is compatible with other requirements. This could take a while.
+2025-04-04 09:20:54,151 - INFO - Collecting numpydoc>=0.8 (from -r /root/requirements.txt (line 5))
+2025-04-04 09:20:54,158 - INFO - Downloading numpydoc-1.6.0-py3-none-any.whl.metadata (4.2 kB)
+2025-04-04 09:20:54,220 - INFO - Downloading numpydoc-1.5.0-py3-none-any.whl.metadata (2.2 kB)
+2025-04-04 09:20:54,335 - INFO - Collecting pydata-sphinx-theme>=0.13.1 (from mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:20:54,344 - INFO - Downloading pydata_sphinx_theme-0.14.4-py3-none-any.whl.metadata (7.3 kB)
+2025-04-04 09:20:54,747 - INFO - Collecting matplotlib (from mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:20:54,759 - INFO - Downloading matplotlib-3.7.5-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (5.7 kB)
+2025-04-04 09:20:55,578 - INFO - Collecting pillow (from sphinx-gallery>=0.10->-r /root/requirements.txt (line 10))
+2025-04-04 09:20:55,586 - INFO - Downloading pillow-10.4.0-cp38-cp38-manylinux_2_28_x86_64.whl.metadata (9.2 kB)
+2025-04-04 09:20:55,652 - INFO - INFO: pip is looking at multiple versions of sphinx-gallery to determine which version is compatible with other requirements. This could take a while.
+2025-04-04 09:20:55,654 - INFO - Collecting sphinx-gallery>=0.10 (from -r /root/requirements.txt (line 10))
+2025-04-04 09:20:55,662 - INFO - Downloading sphinx_gallery-0.18.0-py3-none-any.whl.metadata (8.9 kB)
+2025-04-04 09:20:55,686 - INFO - Downloading sphinx_gallery-0.17.1-py3-none-any.whl.metadata (8.9 kB)
+2025-04-04 09:20:55,712 - INFO - Downloading sphinx_gallery-0.17.0-py3-none-any.whl.metadata (8.9 kB)
+2025-04-04 09:20:55,760 - INFO - Downloading sphinx_gallery-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+2025-04-04 09:20:55,976 - INFO - Collecting exceptiongroup>=1.0.0rc8 (from pytest!=4.6.0,!=5.4.0->-r /root/requirements.txt (line 19))
+2025-04-04 09:20:55,982 - INFO - Downloading exceptiongroup-1.2.2-py3-none-any.whl.metadata (6.6 kB)
+2025-04-04 09:20:56,130 - INFO - Collecting iniconfig (from pytest!=4.6.0,!=5.4.0->-r /root/requirements.txt (line 19))
+2025-04-04 09:20:56,135 - INFO - Downloading iniconfig-2.1.0-py3-none-any.whl.metadata (2.7 kB)
+2025-04-04 09:20:56,288 - INFO - Collecting pluggy<2,>=1.5 (from pytest!=4.6.0,!=5.4.0->-r /root/requirements.txt (line 19))
+2025-04-04 09:20:56,292 - INFO - Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+2025-04-04 09:20:56,355 - INFO - Collecting tomli>=1 (from pytest!=4.6.0,!=5.4.0->-r /root/requirements.txt (line 19))
+2025-04-04 09:20:56,359 - INFO - Downloading tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
+2025-04-04 09:20:56,634 - INFO - Collecting execnet>=2.1 (from pytest-xdist->-r /root/requirements.txt (line 23))
+2025-04-04 09:20:56,638 - INFO - Downloading execnet-2.1.1-py3-none-any.whl.metadata (2.9 kB)
+2025-04-04 09:20:56,681 - INFO - Collecting six>=1.5 (from python-dateutil->-r /root/requirements.txt (line 24))
+2025-04-04 09:20:56,686 - INFO - Downloading six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+2025-04-04 09:20:57,013 - INFO - Collecting debugpy>=1.6.5 (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:57,020 - INFO - Downloading debugpy-1.8.13-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.1 kB)
+2025-04-04 09:20:57,139 - INFO - Collecting jupyter-client>=6.1.12 (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:57,144 - INFO - Downloading jupyter_client-8.6.3-py3-none-any.whl.metadata (8.3 kB)
+2025-04-04 09:20:57,216 - INFO - Collecting jupyter-core!=5.0.*,>=4.12 (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:57,222 - INFO - Downloading jupyter_core-5.7.2-py3-none-any.whl.metadata (3.4 kB)
+2025-04-04 09:20:57,279 - INFO - Collecting nest-asyncio (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:57,285 - INFO - Downloading nest_asyncio-1.6.0-py3-none-any.whl.metadata (2.8 kB)
+2025-04-04 09:20:57,501 - INFO - Collecting psutil (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:57,508 - INFO - Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (22 kB)
+2025-04-04 09:20:58,260 - INFO - Collecting pyzmq>=24 (from ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:20:58,266 - INFO - Downloading pyzmq-26.3.0-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl.metadata (6.2 kB)
+2025-04-04 09:20:58,331 - INFO - Collecting beautifulsoup4 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,336 - INFO - Downloading beautifulsoup4-4.13.3-py3-none-any.whl.metadata (3.8 kB)
+2025-04-04 09:20:58,395 - INFO - Collecting bleach!=5.0.0 (from bleach[css]!=5.0.0->nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,400 - INFO - Downloading bleach-6.1.0-py3-none-any.whl.metadata (30 kB)
+2025-04-04 09:20:58,439 - INFO - Collecting defusedxml (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,445 - INFO - Downloading defusedxml-0.7.1-py2.py3-none-any.whl.metadata (32 kB)
+2025-04-04 09:20:58,584 - INFO - Collecting importlib-metadata>=3.6 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,589 - INFO - Downloading importlib_metadata-8.5.0-py3-none-any.whl.metadata (4.8 kB)
+2025-04-04 09:20:58,647 - INFO - Collecting jupyterlab-pygments (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,669 - INFO - Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl.metadata (4.4 kB)
+2025-04-04 09:20:58,802 - INFO - Collecting markupsafe>=2.0 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,809 - INFO - Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.0 kB)
+2025-04-04 09:20:58,854 - INFO - Collecting mistune<4,>=2.0.3 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,859 - INFO - Downloading mistune-3.1.3-py3-none-any.whl.metadata (1.8 kB)
+2025-04-04 09:20:58,900 - INFO - Collecting nbclient>=0.5.0 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,911 - INFO - Downloading nbclient-0.10.1-py3-none-any.whl.metadata (8.2 kB)
+2025-04-04 09:20:58,965 - INFO - Collecting pandocfilters>=1.4.1 (from nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:20:58,970 - INFO - Downloading pandocfilters-1.5.1-py2.py3-none-any.whl.metadata (9.0 kB)
+2025-04-04 09:20:59,056 - INFO - Collecting fastjsonschema>=2.15 (from nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:20:59,062 - INFO - Downloading fastjsonschema-2.21.1-py3-none-any.whl.metadata (2.2 kB)
+2025-04-04 09:20:59,149 - INFO - Collecting jsonschema>=2.6 (from nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:20:59,154 - INFO - Downloading jsonschema-4.23.0-py3-none-any.whl.metadata (7.9 kB)
+2025-04-04 09:20:59,241 - INFO - Collecting tzdata>=2022.1 (from pandas!=0.25.0->-r /root/requirements.txt (line 31))
+2025-04-04 09:20:59,247 - INFO - Downloading tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-04 09:20:59,371 - INFO - Collecting Deprecated (from pikepdf->-r /root/requirements.txt (line 32))
+2025-04-04 09:20:59,376 - INFO - Downloading Deprecated-1.2.18-py2.py3-none-any.whl.metadata (5.7 kB)
+2025-04-04 09:21:00,078 - INFO - Collecting lxml>=4.8 (from pikepdf->-r /root/requirements.txt (line 32))
+2025-04-04 09:21:00,087 - INFO - Downloading lxml-5.3.1-cp38-cp38-manylinux_2_28_x86_64.whl.metadata (3.5 kB)
+2025-04-04 09:21:00,137 - INFO - Collecting mccabe<0.8.0,>=0.7.0 (from flake8>=3.8->-r /root/requirements.txt (line 37))
+2025-04-04 09:21:00,144 - INFO - Downloading mccabe-0.7.0-py2.py3-none-any.whl.metadata (5.0 kB)
+2025-04-04 09:21:00,188 - INFO - Collecting pycodestyle<2.13.0,>=2.12.0 (from flake8>=3.8->-r /root/requirements.txt (line 37))
+2025-04-04 09:21:00,197 - INFO - Downloading pycodestyle-2.12.1-py2.py3-none-any.whl.metadata (4.5 kB)
+2025-04-04 09:21:00,312 - INFO - Collecting pyflakes<3.3.0,>=3.2.0 (from flake8>=3.8->-r /root/requirements.txt (line 37))
+2025-04-04 09:21:00,320 - INFO - Downloading pyflakes-3.2.0-py2.py3-none-any.whl.metadata (3.5 kB)
+2025-04-04 09:21:00,361 - INFO - WARNING: nbconvert 7.16.6 does not provide the extra 'execute'
+2025-04-04 09:21:00,410 - INFO - Collecting webencodings (from bleach!=5.0.0->bleach[css]!=5.0.0->nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:21:00,417 - INFO - Downloading webencodings-0.5.1-py2.py3-none-any.whl.metadata (2.1 kB)
+2025-04-04 09:21:00,455 - INFO - Collecting tinycss2<1.3,>=1.1.0 (from bleach[css]!=5.0.0->nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:21:00,461 - INFO - Downloading tinycss2-1.2.1-py3-none-any.whl.metadata (3.0 kB)
+2025-04-04 09:21:00,585 - INFO - Collecting zipp>=3.20 (from importlib-metadata>=3.6->nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:21:00,591 - INFO - Downloading zipp-3.20.2-py3-none-any.whl.metadata (3.7 kB)
+2025-04-04 09:21:00,648 - INFO - Collecting parso<0.9.0,>=0.8.4 (from jedi>=0.16->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:00,653 - INFO - Downloading parso-0.8.4-py2.py3-none-any.whl.metadata (7.7 kB)
+2025-04-04 09:21:00,721 - INFO - Collecting attrs>=22.2.0 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:00,729 - INFO - Downloading attrs-25.3.0-py3-none-any.whl.metadata (10 kB)
+2025-04-04 09:21:00,834 - INFO - Collecting importlib-resources>=1.4.0 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:00,839 - INFO - Downloading importlib_resources-6.4.5-py3-none-any.whl.metadata (4.0 kB)
+2025-04-04 09:21:00,885 - INFO - Collecting jsonschema-specifications>=2023.03.6 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:00,891 - INFO - Downloading jsonschema_specifications-2023.12.1-py3-none-any.whl.metadata (3.0 kB)
+2025-04-04 09:21:00,950 - INFO - Collecting pkgutil-resolve-name>=1.3.10 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:00,955 - INFO - Downloading pkgutil_resolve_name-1.3.10-py3-none-any.whl.metadata (624 bytes)
+2025-04-04 09:21:01,049 - INFO - Collecting referencing>=0.28.4 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:01,056 - INFO - Downloading referencing-0.35.1-py3-none-any.whl.metadata (2.8 kB)
+2025-04-04 09:21:01,986 - INFO - Collecting rpds-py>=0.7.1 (from jsonschema>=2.6->nbformat!=5.0.0,!=5.0.1->-r /root/requirements.txt (line 30))
+2025-04-04 09:21:01,993 - INFO - Downloading rpds_py-0.20.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+2025-04-04 09:21:02,225 - INFO - Collecting platformdirs>=2.5 (from jupyter-core!=5.0.*,>=4.12->ipykernel->-r /root/requirements.txt (line 28))
+2025-04-04 09:21:02,231 - INFO - Downloading platformdirs-4.3.6-py3-none-any.whl.metadata (11 kB)
+2025-04-04 09:21:02,383 - INFO - Collecting ptyprocess>=0.5 (from pexpect>4.3->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:02,389 - INFO - Downloading ptyprocess-0.7.0-py2.py3-none-any.whl.metadata (1.3 kB)
+2025-04-04 09:21:02,527 - INFO - Collecting wcwidth (from prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:02,536 - INFO - Downloading wcwidth-0.2.13-py2.py3-none-any.whl.metadata (14 kB)
+2025-04-04 09:21:02,606 - INFO - INFO: pip is looking at multiple versions of pydata-sphinx-theme to determine which version is compatible with other requirements. This could take a while.
+2025-04-04 09:21:02,608 - INFO - Collecting pydata-sphinx-theme>=0.13.1 (from mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:02,618 - INFO - Downloading pydata_sphinx_theme-0.14.3-py3-none-any.whl.metadata (7.3 kB)
+2025-04-04 09:21:02,683 - INFO - Downloading pydata_sphinx_theme-0.14.2-py3-none-any.whl.metadata (7.3 kB)
+2025-04-04 09:21:02,719 - INFO - Downloading pydata_sphinx_theme-0.14.1-py3-none-any.whl.metadata (7.2 kB)
+2025-04-04 09:21:02,749 - INFO - Downloading pydata_sphinx_theme-0.14.0-py3-none-any.whl.metadata (7.1 kB)
+2025-04-04 09:21:02,779 - INFO - Downloading pydata_sphinx_theme-0.13.3-py3-none-any.whl.metadata (6.8 kB)
+2025-04-04 09:21:02,872 - INFO - Collecting accessible-pygments (from pydata-sphinx-theme>=0.13.1->mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:02,879 - INFO - Downloading accessible_pygments-0.0.4-py2.py3-none-any.whl.metadata (6.0 kB)
+2025-04-04 09:21:03,254 - INFO - Collecting charset-normalizer<4,>=2 (from requests>=2.5.0->sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:21:03,260 - INFO - Downloading charset_normalizer-3.4.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (35 kB)
+2025-04-04 09:21:03,378 - INFO - Collecting idna<4,>=2.5 (from requests>=2.5.0->sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:21:03,384 - INFO - Downloading idna-3.10-py3-none-any.whl.metadata (10 kB)
+2025-04-04 09:21:03,501 - INFO - Collecting urllib3<3,>=1.21.1 (from requests>=2.5.0->sphinx!=2.0.0,<4.3.0,>=1.8.1->-r /root/requirements.txt (line 1))
+2025-04-04 09:21:03,508 - INFO - Downloading urllib3-2.2.3-py3-none-any.whl.metadata (6.5 kB)
+2025-04-04 09:21:03,650 - INFO - Collecting soupsieve>1.2 (from beautifulsoup4->nbconvert!=6.0.0,!=6.0.1->nbconvert[execute]!=6.0.0,!=6.0.1->-r /root/requirements.txt (line 29))
+2025-04-04 09:21:03,658 - INFO - Downloading soupsieve-2.6-py3-none-any.whl.metadata (4.6 kB)
+2025-04-04 09:21:04,007 - INFO - Collecting wrapt<2,>=1.10 (from Deprecated->pikepdf->-r /root/requirements.txt (line 32))
+2025-04-04 09:21:04,014 - INFO - Downloading wrapt-1.17.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+2025-04-04 09:21:04,263 - INFO - Collecting contourpy>=1.0.1 (from matplotlib->mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:04,270 - INFO - Downloading contourpy-1.1.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.9 kB)
+2025-04-04 09:21:04,562 - INFO - Collecting cycler>=0.10 (from matplotlib->mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:04,570 - INFO - Downloading cycler-0.12.1-py3-none-any.whl.metadata (3.8 kB)
+2025-04-04 09:21:04,959 - INFO - Collecting fonttools>=4.22.0 (from matplotlib->mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:04,968 - INFO - Downloading fonttools-4.57.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (102 kB)
+2025-04-04 09:21:05,187 - INFO - Collecting kiwisolver>=1.0.1 (from matplotlib->mpl-sphinx-theme->-r /root/requirements.txt (line 8))
+2025-04-04 09:21:05,194 - INFO - Downloading kiwisolver-1.4.7-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl.metadata (6.3 kB)
+2025-04-04 09:21:05,389 - INFO - Collecting executing>=1.2.0 (from stack-data->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:05,396 - INFO - Downloading executing-2.2.0-py2.py3-none-any.whl.metadata (8.9 kB)
+2025-04-04 09:21:05,436 - INFO - Collecting asttokens>=2.1.0 (from stack-data->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:05,444 - INFO - Downloading asttokens-3.0.0-py3-none-any.whl.metadata (4.7 kB)
+2025-04-04 09:21:05,475 - INFO - Collecting pure-eval (from stack-data->ipython->-r /root/requirements.txt (line 3))
+2025-04-04 09:21:05,481 - INFO - Downloading pure_eval-0.2.3-py3-none-any.whl.metadata (6.3 kB)
+2025-04-04 09:21:05,754 - INFO - Downloading Sphinx-4.2.0-py3-none-any.whl (3.1 MB)
+2025-04-04 09:21:05,843 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 34.8 MB/s eta 0:00:00
+2025-04-04 09:21:05,844 - INFO - 
+2025-04-04 09:21:05,853 - INFO - Downloading colorspacious-1.1.2-py2.py3-none-any.whl (37 kB)
+2025-04-04 09:21:05,892 - INFO - Downloading ipython-8.12.3-py3-none-any.whl (798 kB)
+2025-04-04 09:21:05,923 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 798.3/798.3 kB 25.6 MB/s eta 0:00:00
+2025-04-04 09:21:05,924 - INFO - 
+2025-04-04 09:21:05,932 - INFO - Downloading ipywidgets-8.1.5-py3-none-any.whl (139 kB)
+2025-04-04 09:21:05,951 - INFO - Downloading numpydoc-1.5.0-py3-none-any.whl (52 kB)
+2025-04-04 09:21:05,968 - INFO - Downloading packaging-24.2-py3-none-any.whl (65 kB)
+2025-04-04 09:21:05,986 - INFO - Downloading pyparsing-2.4.7-py2.py3-none-any.whl (67 kB)
+2025-04-04 09:21:06,010 - INFO - Downloading mpl_sphinx_theme-3.9.0-py3-none-any.whl (53 kB)
+2025-04-04 09:21:06,061 - INFO - Downloading sphinxcontrib_svg2pdfconverter-1.3.0-py3-none-any.whl (7.9 kB)
+2025-04-04 09:21:06,079 - INFO - Downloading sphinx_gallery-0.16.0-py3-none-any.whl (413 kB)
+2025-04-04 09:21:06,099 - INFO - Downloading sphinx_copybutton-0.5.2-py3-none-any.whl (13 kB)
+2025-04-04 09:21:06,113 - INFO - Downloading sphinx_panels-0.6.0-py3-none-any.whl (87 kB)
+2025-04-04 09:21:06,129 - INFO - Downloading scipy-1.10.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (34.5 MB)
+2025-04-04 09:21:06,690 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 34.5/34.5 MB 61.8 MB/s eta 0:00:00
+2025-04-04 09:21:06,691 - INFO - 
+2025-04-04 09:21:06,695 - INFO - Downloading certifi-2025.1.31-py3-none-any.whl (166 kB)
+2025-04-04 09:21:06,711 - INFO - Downloading coverage-7.6.1-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (235 kB)
+2025-04-04 09:21:06,758 - INFO - Downloading pytest-8.3.5-py3-none-any.whl (343 kB)
+2025-04-04 09:21:06,778 - INFO - Downloading pytest_cov-5.0.0-py3-none-any.whl (21 kB)
+2025-04-04 09:21:06,794 - INFO - Downloading pytest_rerunfailures-14.0-py3-none-any.whl (12 kB)
+2025-04-04 09:21:06,807 - INFO - Downloading pytest_timeout-2.3.1-py3-none-any.whl (14 kB)
+2025-04-04 09:21:06,823 - INFO - Downloading pytest_xdist-3.6.1-py3-none-any.whl (46 kB)
+2025-04-04 09:21:06,839 - INFO - Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+2025-04-04 09:21:06,863 - INFO - Downloading tornado-6.4.2-cp38-abi3-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (437 kB)
+2025-04-04 09:21:06,882 - INFO - Downloading ipykernel-6.29.5-py3-none-any.whl (117 kB)
+2025-04-04 09:21:06,902 - INFO - Downloading nbconvert-7.16.6-py3-none-any.whl (258 kB)
+2025-04-04 09:21:06,917 - INFO - Downloading nbformat-5.10.4-py3-none-any.whl (78 kB)
+2025-04-04 09:21:06,928 - INFO - Downloading pandas-2.0.3-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.4 MB)
+2025-04-04 09:21:07,236 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.4/12.4 MB 40.5 MB/s eta 0:00:00
+2025-04-04 09:21:07,241 - INFO - Downloading pikepdf-9.2.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.4 MB)
+2025-04-04 09:21:07,291 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.4/2.4 MB 47.8 MB/s eta 0:00:00
+2025-04-04 09:21:07,292 - INFO - 
+2025-04-04 09:21:07,297 - INFO - Downloading pytz-2025.2-py2.py3-none-any.whl (509 kB)
+2025-04-04 09:21:07,342 - INFO - Downloading flake8-7.1.2-py2.py3-none-any.whl (57 kB)
+2025-04-04 09:21:07,356 - INFO - Downloading pydocstyle-6.3.0-py3-none-any.whl (38 kB)
+2025-04-04 09:21:07,369 - INFO - Downloading flake8_docstrings-1.7.0-py2.py3-none-any.whl (5.0 kB)
+2025-04-04 09:21:07,383 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl (13 kB)
+2025-04-04 09:21:07,397 - INFO - Downloading babel-2.17.0-py3-none-any.whl (10.2 MB)
+2025-04-04 09:21:07,603 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.2/10.2 MB 50.5 MB/s eta 0:00:00
+2025-04-04 09:21:07,603 - INFO - 
+2025-04-04 09:21:07,611 - INFO - Downloading bleach-6.1.0-py3-none-any.whl (162 kB)
+2025-04-04 09:21:07,627 - INFO - Downloading comm-0.2.2-py3-none-any.whl (7.2 kB)
+2025-04-04 09:21:07,645 - INFO - Downloading debugpy-1.8.13-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.6 MB)
+2025-04-04 09:21:07,709 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.6/3.6 MB 60.5 MB/s eta 0:00:00
+2025-04-04 09:21:07,709 - INFO - 
+2025-04-04 09:21:07,715 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl (575 kB)
+2025-04-04 09:21:07,753 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 575.5/575.5 kB 10.3 MB/s eta 0:00:00
+2025-04-04 09:21:07,753 - INFO - 
+2025-04-04 09:21:07,759 - INFO - Downloading exceptiongroup-1.2.2-py3-none-any.whl (16 kB)
+2025-04-04 09:21:07,815 - INFO - Downloading execnet-2.1.1-py3-none-any.whl (40 kB)
+2025-04-04 09:21:07,849 - INFO - Downloading fastjsonschema-2.21.1-py3-none-any.whl (23 kB)
+2025-04-04 09:21:07,869 - INFO - Downloading importlib_metadata-8.5.0-py3-none-any.whl (26 kB)
+2025-04-04 09:21:07,886 - INFO - Downloading jedi-0.19.2-py2.py3-none-any.whl (1.6 MB)
+2025-04-04 09:21:07,950 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.6/1.6 MB 23.9 MB/s eta 0:00:00
+2025-04-04 09:21:07,950 - INFO - 
+2025-04-04 09:21:07,957 - INFO - Downloading jinja2-3.1.6-py3-none-any.whl (134 kB)
+2025-04-04 09:21:07,978 - INFO - Downloading jsonschema-4.23.0-py3-none-any.whl (88 kB)
+2025-04-04 09:21:08,121 - INFO - Downloading jupyter_client-8.6.3-py3-none-any.whl (106 kB)
+2025-04-04 09:21:08,136 - INFO - Downloading jupyter_core-5.7.2-py3-none-any.whl (28 kB)
+2025-04-04 09:21:08,262 - INFO - Downloading jupyterlab_widgets-3.0.13-py3-none-any.whl (214 kB)
+2025-04-04 09:21:08,283 - INFO - Downloading lxml-5.3.1-cp38-cp38-manylinux_2_28_x86_64.whl (5.1 MB)
+2025-04-04 09:21:08,459 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.1/5.1 MB 28.5 MB/s eta 0:00:00
+2025-04-04 09:21:08,460 - INFO - 
+2025-04-04 09:21:08,470 - INFO - Downloading MarkupSafe-2.1.5-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (26 kB)
+2025-04-04 09:21:08,497 - INFO - Downloading matplotlib_inline-0.1.7-py3-none-any.whl (9.9 kB)
+2025-04-04 09:21:08,514 - INFO - Downloading mccabe-0.7.0-py2.py3-none-any.whl (7.3 kB)
+2025-04-04 09:21:08,552 - INFO - Downloading mistune-3.1.3-py3-none-any.whl (53 kB)
+2025-04-04 09:21:08,567 - INFO - Downloading nbclient-0.10.1-py3-none-any.whl (25 kB)
+2025-04-04 09:21:08,581 - INFO - Downloading numpy-1.24.4-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (17.3 MB)
+2025-04-04 09:21:09,120 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 17.3/17.3 MB 32.2 MB/s eta 0:00:00
+2025-04-04 09:21:09,121 - INFO - 
+2025-04-04 09:21:09,128 - INFO - Downloading pandocfilters-1.5.1-py2.py3-none-any.whl (8.7 kB)
+2025-04-04 09:21:09,159 - INFO - Downloading pexpect-4.9.0-py2.py3-none-any.whl (63 kB)
+2025-04-04 09:21:09,233 - INFO - Downloading pillow-10.4.0-cp38-cp38-manylinux_2_28_x86_64.whl (4.5 MB)
+2025-04-04 09:21:09,435 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 21.9 MB/s eta 0:00:00
+2025-04-04 09:21:09,435 - INFO - 
+2025-04-04 09:21:09,440 - INFO - Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+2025-04-04 09:21:09,465 - INFO - Downloading prompt_toolkit-3.0.50-py3-none-any.whl (387 kB)
+2025-04-04 09:21:09,490 - INFO - Downloading pycodestyle-2.12.1-py2.py3-none-any.whl (31 kB)
+2025-04-04 09:21:09,525 - INFO - Downloading pydata_sphinx_theme-0.13.3-py3-none-any.whl (2.0 MB)
+2025-04-04 09:21:09,592 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 32.3 MB/s eta 0:00:00
+2025-04-04 09:21:09,593 - INFO - 
+2025-04-04 09:21:09,600 - INFO - Downloading pyflakes-3.2.0-py2.py3-none-any.whl (62 kB)
+2025-04-04 09:21:09,623 - INFO - Downloading pygments-2.19.1-py3-none-any.whl (1.2 MB)
+2025-04-04 09:21:09,656 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 39.5 MB/s eta 0:00:00
+2025-04-04 09:21:09,657 - INFO - 
+2025-04-04 09:21:09,664 - INFO - Downloading pyzmq-26.3.0-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (867 kB)
+2025-04-04 09:21:09,690 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 867.5/867.5 kB 29.6 MB/s eta 0:00:00
+2025-04-04 09:21:09,691 - INFO - 
+2025-04-04 09:21:09,696 - INFO - Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+2025-04-04 09:21:09,774 - INFO - Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2025-04-04 09:21:09,892 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl (93 kB)
+2025-04-04 09:21:09,986 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl (99 kB)
+2025-04-04 09:21:10,117 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl (94 kB)
+2025-04-04 09:21:10,313 - INFO - Downloading tomli-2.2.1-py3-none-any.whl (14 kB)
+2025-04-04 09:21:10,582 - INFO - Downloading traitlets-5.14.3-py3-none-any.whl (85 kB)
+2025-04-04 09:21:10,715 - INFO - Downloading tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+2025-04-04 09:21:10,838 - INFO - Downloading widgetsnbextension-4.0.13-py3-none-any.whl (2.3 MB)
+2025-04-04 09:21:11,052 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.3/2.3 MB 10.1 MB/s eta 0:00:00
+2025-04-04 09:21:11,052 - INFO - 
+2025-04-04 09:21:11,059 - INFO - Downloading backcall-0.2.0-py2.py3-none-any.whl (11 kB)
+2025-04-04 09:21:11,093 - INFO - Downloading beautifulsoup4-4.13.3-py3-none-any.whl (186 kB)
+2025-04-04 09:21:11,116 - INFO - Downloading typing_extensions-4.13.1-py3-none-any.whl (45 kB)
+2025-04-04 09:21:11,165 - INFO - Downloading decorator-5.2.1-py3-none-any.whl (9.2 kB)
+2025-04-04 09:21:11,243 - INFO - Downloading defusedxml-0.7.1-py2.py3-none-any.whl (25 kB)
+2025-04-04 09:21:11,280 - INFO - Downloading Deprecated-1.2.18-py2.py3-none-any.whl (10.0 kB)
+2025-04-04 09:21:11,303 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl (8.8 kB)
+2025-04-04 09:21:11,318 - INFO - Downloading iniconfig-2.1.0-py3-none-any.whl (6.0 kB)
+2025-04-04 09:21:11,335 - INFO - Downloading jupyterlab_pygments-0.3.0-py3-none-any.whl (15 kB)
+2025-04-04 09:21:11,355 - INFO - Downloading matplotlib-3.7.5-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (9.2 MB)
+2025-04-04 09:21:11,510 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.2/9.2 MB 60.8 MB/s eta 0:00:00
+2025-04-04 09:21:11,511 - INFO - 
+2025-04-04 09:21:11,521 - INFO - Downloading nest_asyncio-1.6.0-py3-none-any.whl (5.2 kB)
+2025-04-04 09:21:11,537 - INFO - Downloading pickleshare-0.7.5-py2.py3-none-any.whl (6.9 kB)
+2025-04-04 09:21:11,555 - INFO - Downloading psutil-7.0.0-cp36-abi3-manylinux_2_12_x86_64.manylinux2010_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (277 kB)
+2025-04-04 09:21:11,719 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl (120 kB)
+2025-04-04 09:21:11,737 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl (84 kB)
+2025-04-04 09:21:11,826 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl (5.1 kB)
+2025-04-04 09:21:11,929 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl (90 kB)
+2025-04-04 09:21:11,956 - INFO - Downloading stack_data-0.6.3-py3-none-any.whl (24 kB)
+2025-04-04 09:21:11,984 - INFO - Downloading asttokens-3.0.0-py3-none-any.whl (26 kB)
+2025-04-04 09:21:12,057 - INFO - Downloading attrs-25.3.0-py3-none-any.whl (63 kB)
+2025-04-04 09:21:12,127 - INFO - Downloading charset_normalizer-3.4.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (144 kB)
+2025-04-04 09:21:12,183 - INFO - Downloading contourpy-1.1.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (301 kB)
+2025-04-04 09:21:12,329 - INFO - Downloading cycler-0.12.1-py3-none-any.whl (8.3 kB)
+2025-04-04 09:21:12,367 - INFO - Downloading executing-2.2.0-py2.py3-none-any.whl (26 kB)
+2025-04-04 09:21:12,387 - INFO - Downloading fonttools-4.57.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (4.7 MB)
+2025-04-04 09:21:12,516 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.7/4.7 MB 38.2 MB/s eta 0:00:00
+2025-04-04 09:21:12,518 - INFO - 
+2025-04-04 09:21:12,531 - INFO - Downloading idna-3.10-py3-none-any.whl (70 kB)
+2025-04-04 09:21:12,548 - INFO - Downloading importlib_resources-6.4.5-py3-none-any.whl (36 kB)
+2025-04-04 09:21:12,570 - INFO - Downloading jsonschema_specifications-2023.12.1-py3-none-any.whl (18 kB)
+2025-04-04 09:21:12,593 - INFO - Downloading kiwisolver-1.4.7-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (1.2 MB)
+2025-04-04 09:21:12,626 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 41.6 MB/s eta 0:00:00
+2025-04-04 09:21:12,626 - INFO - 
+2025-04-04 09:21:12,634 - INFO - Downloading parso-0.8.4-py2.py3-none-any.whl (103 kB)
+2025-04-04 09:21:12,662 - INFO - Downloading pkgutil_resolve_name-1.3.10-py3-none-any.whl (4.7 kB)
+2025-04-04 09:21:12,679 - INFO - Downloading platformdirs-4.3.6-py3-none-any.whl (18 kB)
+2025-04-04 09:21:12,741 - INFO - Downloading ptyprocess-0.7.0-py2.py3-none-any.whl (13 kB)
+2025-04-04 09:21:12,759 - INFO - Downloading referencing-0.35.1-py3-none-any.whl (26 kB)
+2025-04-04 09:21:12,775 - INFO - Downloading rpds_py-0.20.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (360 kB)
+2025-04-04 09:21:12,794 - INFO - Downloading soupsieve-2.6-py3-none-any.whl (36 kB)
+2025-04-04 09:21:12,811 - INFO - Downloading tinycss2-1.2.1-py3-none-any.whl (21 kB)
+2025-04-04 09:21:12,828 - INFO - Downloading urllib3-2.2.3-py3-none-any.whl (126 kB)
+2025-04-04 09:21:12,875 - INFO - Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+2025-04-04 09:21:12,933 - INFO - Downloading wrapt-1.17.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (85 kB)
+2025-04-04 09:21:12,952 - INFO - Downloading zipp-3.20.2-py3-none-any.whl (9.2 kB)
+2025-04-04 09:21:12,971 - INFO - Downloading accessible_pygments-0.0.4-py2.py3-none-any.whl (29 kB)
+2025-04-04 09:21:12,985 - INFO - Downloading pure_eval-0.2.3-py3-none-any.whl (11 kB)
+2025-04-04 09:21:13,001 - INFO - Downloading wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+2025-04-04 09:21:14,264 - INFO - Installing collected packages: webencodings, wcwidth, snowballstemmer, pytz, pure-eval, ptyprocess, pickleshare, fastjsonschema, backcall, zipp, wrapt, widgetsnbextension, urllib3, tzdata, typing-extensions, traitlets, tornado, tomli, tinycss2, sphinxcontrib-serializinghtml, sphinxcontrib-qthelp, sphinxcontrib-jsmath, sphinxcontrib-htmlhelp, sphinxcontrib-devhelp, sphinxcontrib-applehelp, soupsieve, six, rpds-py, pyzmq, pyparsing, Pygments, pyflakes, pydocstyle, pycodestyle, psutil, prompt-toolkit, pluggy, platformdirs, pkgutil-resolve-name, pillow, pexpect, parso, pandocfilters, packaging, numpy, nest-asyncio, mccabe, markupsafe, lxml, kiwisolver, jupyterlab-widgets, jupyterlab-pygments, iniconfig, imagesize, idna, fonttools, executing, execnet, exceptiongroup, docutils, defusedxml, decorator, debugpy, cycler, coverage, charset-normalizer, certifi, babel, attrs, asttokens, alabaster, stack-data, scipy, requests, referencing, python-dateutil, pytest, mistune, matplotlib-inline, jupyter-core, Jinja2, jedi, importlib-resources, importlib-metadata, flake8, Deprecated, contourpy, comm, colorspacious, bleach, beautifulsoup4, accessible-pygments, sphinx, pytest-xdist, pytest-timeout, pytest-rerunfailures, pytest-cov, pikepdf, pandas, matplotlib, jupyter-client, jsonschema-specifications, ipython, flake8-docstrings, sphinxcontrib-svg2pdfconverter, sphinx-panels, sphinx-gallery, sphinx-copybutton, pydata-sphinx-theme, numpydoc, jsonschema, ipywidgets, ipykernel, nbformat, mpl-sphinx-theme, nbclient, nbconvert
+2025-04-04 09:21:52,867 - INFO - Successfully installed Deprecated-1.2.18 Jinja2-3.1.6 Pygments-2.19.1 accessible-pygments-0.0.4 alabaster-0.7.13 asttokens-3.0.0 attrs-25.3.0 babel-2.17.0 backcall-0.2.0 beautifulsoup4-4.13.3 bleach-6.1.0 certifi-2025.1.31 charset-normalizer-3.4.1 colorspacious-1.1.2 comm-0.2.2 contourpy-1.1.1 coverage-7.6.1 cycler-0.12.1 debugpy-1.8.13 decorator-5.2.1 defusedxml-0.7.1 docutils-0.17.1 exceptiongroup-1.2.2 execnet-2.1.1 executing-2.2.0 fastjsonschema-2.21.1 flake8-7.1.2 flake8-docstrings-1.7.0 fonttools-4.57.0 idna-3.10 imagesize-1.4.1 importlib-metadata-8.5.0 importlib-resources-6.4.5 iniconfig-2.1.0 ipykernel-6.29.5 ipython-8.12.3 ipywidgets-8.1.5 jedi-0.19.2 jsonschema-4.23.0 jsonschema-specifications-2023.12.1 jupyter-client-8.6.3 jupyter-core-5.7.2 jupyterlab-pygments-0.3.0 jupyterlab-widgets-3.0.13 kiwisolver-1.4.7 lxml-5.3.1 markupsafe-2.1.5 matplotlib-3.7.5 matplotlib-inline-0.1.7 mccabe-0.7.0 mistune-3.1.3 mpl-sphinx-theme-3.9.0 nbclient-0.10.1 nbconvert-7.16.6 nbformat-5.10.4 nest-asyncio-1.6.0 numpy-1.24.4 numpydoc-1.5.0 packaging-24.2 pandas-2.0.3 pandocfilters-1.5.1 parso-0.8.4 pexpect-4.9.0 pickleshare-0.7.5 pikepdf-9.2.1 pillow-10.4.0 pkgutil-resolve-name-1.3.10 platformdirs-4.3.6 pluggy-1.5.0 prompt-toolkit-3.0.50 psutil-7.0.0 ptyprocess-0.7.0 pure-eval-0.2.3 pycodestyle-2.12.1 pydata-sphinx-theme-0.13.3 pydocstyle-6.3.0 pyflakes-3.2.0 pyparsing-2.4.7 pytest-8.3.5 pytest-cov-5.0.0 pytest-rerunfailures-14.0 pytest-timeout-2.3.1 pytest-xdist-3.6.1 python-dateutil-2.9.0.post0 pytz-2025.2 pyzmq-26.3.0 referencing-0.35.1 requests-2.32.3 rpds-py-0.20.1 scipy-1.10.1 six-1.17.0 snowballstemmer-2.2.0 soupsieve-2.6 sphinx-4.2.0 sphinx-copybutton-0.5.2 sphinx-gallery-0.16.0 sphinx-panels-0.6.0 sphinxcontrib-applehelp-1.0.4 sphinxcontrib-devhelp-1.0.2 sphinxcontrib-htmlhelp-2.0.1 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-qthelp-1.0.3 sphinxcontrib-serializinghtml-1.1.5 sphinxcontrib-svg2pdfconverter-1.3.0 stack-data-0.6.3 tinycss2-1.2.1 tomli-2.2.1 tornado-6.4.2 traitlets-5.14.3 typing-extensions-4.13.1 tzdata-2025.2 urllib3-2.2.3 wcwidth-0.2.13 webencodings-0.5.1 widgetsnbextension-4.0.13 wrapt-1.17.2 zipp-3.20.2
+2025-04-04 09:21:52,867 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-04 09:21:55,288 - INFO - + rm /root/requirements.txt
+2025-04-04 09:21:55,290 - INFO - + conda activate testbed
++ local cmd=activate
++ case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+2025-04-04 09:21:55,291 - INFO - ++ PS1='(testbed) '
+++ __conda_exe shell.posix activate testbed
+2025-04-04 09:21:55,292 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-04 09:21:55,494 - INFO - + ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
++ __conda_hashr
++ '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
+2025-04-04 09:21:55,494 - INFO - + python -m pip install pytest ipython
+2025-04-04 09:21:56,107 - INFO - Requirement already satisfied: pytest in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (8.3.5)
+2025-04-04 09:21:56,108 - INFO - Requirement already satisfied: ipython in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (8.12.3)
+2025-04-04 09:21:56,117 - INFO - Requirement already satisfied: exceptiongroup>=1.0.0rc8 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pytest) (1.2.2)
+2025-04-04 09:21:56,118 - INFO - Requirement already satisfied: iniconfig in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pytest) (2.1.0)
+2025-04-04 09:21:56,119 - INFO - Requirement already satisfied: packaging in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pytest) (24.2)
+2025-04-04 09:21:56,119 - INFO - Requirement already satisfied: pluggy<2,>=1.5 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pytest) (1.5.0)
+2025-04-04 09:21:56,120 - INFO - Requirement already satisfied: tomli>=1 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pytest) (2.2.1)
+2025-04-04 09:21:56,159 - INFO - Requirement already satisfied: backcall in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (0.2.0)
+2025-04-04 09:21:56,160 - INFO - Requirement already satisfied: decorator in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (5.2.1)
+2025-04-04 09:21:56,160 - INFO - Requirement already satisfied: jedi>=0.16 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (0.19.2)
+2025-04-04 09:21:56,162 - INFO - Requirement already satisfied: matplotlib-inline in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (0.1.7)
+2025-04-04 09:21:56,162 - INFO - Requirement already satisfied: pickleshare in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (0.7.5)
+2025-04-04 09:21:56,163 - INFO - Requirement already satisfied: prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (3.0.50)
+2025-04-04 09:21:56,164 - INFO - Requirement already satisfied: pygments>=2.4.0 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (2.19.1)
+2025-04-04 09:21:56,165 - INFO - Requirement already satisfied: stack-data in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (0.6.3)
+2025-04-04 09:21:56,166 - INFO - Requirement already satisfied: traitlets>=5 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (5.14.3)
+2025-04-04 09:21:56,167 - INFO - Requirement already satisfied: typing-extensions in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (4.13.1)
+2025-04-04 09:21:56,168 - INFO - Requirement already satisfied: pexpect>4.3 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from ipython) (4.9.0)
+2025-04-04 09:21:56,185 - INFO - Requirement already satisfied: parso<0.9.0,>=0.8.4 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from jedi>=0.16->ipython) (0.8.4)
+2025-04-04 09:21:56,189 - INFO - Requirement already satisfied: ptyprocess>=0.5 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from pexpect>4.3->ipython) (0.7.0)
+2025-04-04 09:21:56,193 - INFO - Requirement already satisfied: wcwidth in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from prompt-toolkit!=3.0.37,<3.1.0,>=3.0.30->ipython) (0.2.13)
+2025-04-04 09:21:56,210 - INFO - Requirement already satisfied: executing>=1.2.0 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from stack-data->ipython) (2.2.0)
+2025-04-04 09:21:56,211 - INFO - Requirement already satisfied: asttokens>=2.1.0 in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from stack-data->ipython) (3.0.0)
+2025-04-04 09:21:56,213 - INFO - Requirement already satisfied: pure-eval in /opt/miniconda3/envs/testbed/lib/python3.8/site-packages (from stack-data->ipython) (0.2.3)
+2025-04-04 09:21:56,664 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-04 09:22:31,636 - INFO - ---> Removed intermediate container 6e115234d635
+2025-04-04 09:22:31,636 - INFO - ---> 009bde929127
+2025-04-04 09:22:31,637 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-04 09:22:31,637 - INFO - 
+2025-04-04 09:22:31,700 - INFO - ---> Running in 32e22ad6f702
+2025-04-04 09:22:31,738 - INFO - ---> Removed intermediate container 32e22ad6f702
+2025-04-04 09:22:31,738 - INFO - ---> a0082d1ed005
+2025-04-04 09:22:31,738 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-04 09:22:31,739 - INFO - 
+2025-04-04 09:22:31,761 - INFO - ---> Running in e6e0934c2c3e
+2025-04-04 09:22:32,486 - INFO - ---> Removed intermediate container e6e0934c2c3e
+2025-04-04 09:22:32,487 - INFO - ---> edf8a273747d
+2025-04-04 09:22:32,487 - INFO - Successfully built edf8a273747d
+2025-04-04 09:22:32,490 - INFO - Successfully tagged sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest
+2025-04-04 09:22:32,490 - INFO - Image built successfully!

@@ -1,0 +1,71 @@
+2025-04-04 10:04:17,313 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12276
+Building instance image sweb.eval.x86_64.django__django-12276:latest for django__django-12276
+2025-04-04 10:04:55,306 - INFO - Creating container for django__django-12276...
+2025-04-04 10:04:55,363 - INFO - Container for django__django-12276 created: c60b56b6deeaf957a8c25076a7b7ac1e7fdb26d59e1a3b240f9ebcdbc1f72bdd
+2025-04-04 10:04:55,722 - INFO - Container for django__django-12276 started: c60b56b6deeaf957a8c25076a7b7ac1e7fdb26d59e1a3b240f9ebcdbc1f72bdd
+2025-04-04 10:04:55,723 - INFO - Intermediate patch for django__django-12276 written to logs/run_evaluation/gold/gold/django__django-12276/patch.diff, now applying to container...
+2025-04-04 10:04:56,047 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:04:56,105 - INFO - >>>>> Applied Patch:
+patching file django/forms/widgets.py
+
+2025-04-04 10:04:57,769 - INFO - Git diff before:
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 338d54d72f..40ac1d3162 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -387,6 +387,9 @@ class FileInput(Input):
+     def value_omitted_from_data(self, data, files, name):
+         return name not in files
+ 
++    def use_required_attribute(self, initial):
++        return super().use_required_attribute(initial) and not initial
++
+ 
+ FILE_INPUT_CONTRADICTION = object()
+ 
+@@ -451,9 +454,6 @@ class ClearableFileInput(FileInput):
+             return False
+         return upload
+ 
+-    def use_required_attribute(self, initial):
+-        return super().use_required_attribute(initial) and not initial
+-
+     def value_omitted_from_data(self, data, files, name):
+         return (
+             super().value_omitted_from_data(data, files, name) and
+2025-04-04 10:04:57,769 - INFO - Eval script for django__django-12276 written to logs/run_evaluation/gold/gold/django__django-12276/eval.sh; copying to container...
+2025-04-04 10:05:11,310 - INFO - Test runtime: 13.30 seconds
+2025-04-04 10:05:11,311 - INFO - Test output for django__django-12276 written to logs/run_evaluation/gold/gold/django__django-12276/test_output.txt
+2025-04-04 10:05:11,453 - INFO - Git diff after:
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 338d54d72f..40ac1d3162 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -387,6 +387,9 @@ class FileInput(Input):
+     def value_omitted_from_data(self, data, files, name):
+         return name not in files
+ 
++    def use_required_attribute(self, initial):
++        return super().use_required_attribute(initial) and not initial
++
+ 
+ FILE_INPUT_CONTRADICTION = object()
+ 
+@@ -451,9 +454,6 @@ class ClearableFileInput(FileInput):
+             return False
+         return upload
+ 
+-    def use_required_attribute(self, initial):
+-        return super().use_required_attribute(initial) and not initial
+-
+     def value_omitted_from_data(self, data, files, name):
+         return (
+             super().value_omitted_from_data(data, files, name) and
+2025-04-04 10:05:11,453 - INFO - Grading answer for django__django-12276...
+2025-04-04 10:05:11,454 - INFO - report: {'django__django-12276': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12276: resolved: False
+2025-04-04 10:05:11,454 - INFO - Attempting to stop container sweb.eval.django__django-12276.gold...
+2025-04-04 10:05:28,180 - INFO - Attempting to remove container sweb.eval.django__django-12276.gold...
+2025-04-04 10:05:28,592 - INFO - Container sweb.eval.django__django-12276.gold removed.
+2025-04-04 10:05:28,592 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12276:latest...
+2025-04-04 10:05:29,423 - INFO - Image sweb.eval.x86_64.django__django-12276:latest removed.

@@ -1,0 +1,49 @@
+2025-04-04 11:15:05,301 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-17087
+Building instance image sweb.eval.x86_64.django__django-17087:latest for django__django-17087
+2025-04-04 11:15:53,300 - INFO - Creating container for django__django-17087...
+2025-04-04 11:15:53,373 - INFO - Container for django__django-17087 created: ad3227abb4ce86420be455a830cfe17716c8a387e8edb3b7f3eed30c75e93c17
+2025-04-04 11:15:53,936 - INFO - Container for django__django-17087 started: ad3227abb4ce86420be455a830cfe17716c8a387e8edb3b7f3eed30c75e93c17
+2025-04-04 11:15:53,939 - INFO - Intermediate patch for django__django-17087 written to logs/run_evaluation/gold/gold/django__django-17087/patch.diff, now applying to container...
+2025-04-04 11:15:54,267 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:15:54,345 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/serializer.py
+
+2025-04-04 11:15:55,983 - INFO - Git diff before:
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index d88cda6e20..06657ebaab 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -168,7 +168,7 @@ class FunctionTypeSerializer(BaseSerializer):
+         ):
+             klass = self.value.__self__
+             module = klass.__module__
+-            return "%s.%s.%s" % (module, klass.__name__, self.value.__name__), {
++            return "%s.%s.%s" % (module, klass.__qualname__, self.value.__name__), {
+                 "import %s" % module
+             }
+         # Further error checking
+2025-04-04 11:15:55,984 - INFO - Eval script for django__django-17087 written to logs/run_evaluation/gold/gold/django__django-17087/eval.sh; copying to container...
+2025-04-04 11:16:08,445 - INFO - Test runtime: 12.26 seconds
+2025-04-04 11:16:08,445 - INFO - Test output for django__django-17087 written to logs/run_evaluation/gold/gold/django__django-17087/test_output.txt
+2025-04-04 11:16:08,548 - INFO - Git diff after:
+diff --git a/django/db/migrations/serializer.py b/django/db/migrations/serializer.py
+index d88cda6e20..06657ebaab 100644
+--- a/django/db/migrations/serializer.py
++++ b/django/db/migrations/serializer.py
+@@ -168,7 +168,7 @@ class FunctionTypeSerializer(BaseSerializer):
+         ):
+             klass = self.value.__self__
+             module = klass.__module__
+-            return "%s.%s.%s" % (module, klass.__name__, self.value.__name__), {
++            return "%s.%s.%s" % (module, klass.__qualname__, self.value.__name__), {
+                 "import %s" % module
+             }
+         # Further error checking
+2025-04-04 11:16:08,548 - INFO - Grading answer for django__django-17087...
+2025-04-04 11:16:08,548 - INFO - report: {'django__django-17087': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-17087: resolved: False
+2025-04-04 11:16:08,548 - INFO - Attempting to stop container sweb.eval.django__django-17087.gold...
+2025-04-04 11:16:53,844 - INFO - Attempting to remove container sweb.eval.django__django-17087.gold...
+2025-04-04 11:16:53,883 - INFO - Container sweb.eval.django__django-17087.gold removed.
+2025-04-04 11:16:53,883 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-17087:latest...
+2025-04-04 11:17:03,223 - INFO - Image sweb.eval.x86_64.django__django-17087:latest removed.

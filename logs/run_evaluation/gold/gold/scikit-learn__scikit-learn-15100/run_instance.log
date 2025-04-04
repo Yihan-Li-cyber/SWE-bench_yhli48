@@ -1,0 +1,60 @@
+2025-04-04 14:59:08,327 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-15100
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-15100:latest for scikit-learn__scikit-learn-15100
+2025-04-04 14:59:08,332 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-15100:latest already exists, skipping build.
+2025-04-04 14:59:08,332 - INFO - Creating container for scikit-learn__scikit-learn-15100...
+2025-04-04 14:59:08,407 - INFO - Container for scikit-learn__scikit-learn-15100 created: 3811c119ea3f18c88fe79bb57e38eb08257a38357bf3f088d30a493d26151838
+2025-04-04 14:59:51,155 - INFO - Container for scikit-learn__scikit-learn-15100 started: 3811c119ea3f18c88fe79bb57e38eb08257a38357bf3f088d30a493d26151838
+2025-04-04 14:59:51,159 - INFO - Intermediate patch for scikit-learn__scikit-learn-15100 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-15100/patch.diff, now applying to container...
+2025-04-04 14:59:51,456 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:59:51,526 - INFO - >>>>> Applied Patch:
+patching file sklearn/feature_extraction/text.py
+
+2025-04-04 14:59:51,974 - INFO - Git diff before:
+diff --git a/sklearn/feature_extraction/text.py b/sklearn/feature_extraction/text.py
+index bb5a9d646..d73bd94d7 100644
+--- a/sklearn/feature_extraction/text.py
++++ b/sklearn/feature_extraction/text.py
+@@ -129,10 +129,13 @@ def strip_accents_unicode(s):
+         Remove accentuated char for any unicode symbol that has a direct
+         ASCII equivalent.
+     """
+-    normalized = unicodedata.normalize('NFKD', s)
+-    if normalized == s:
++    try:
++        # If `s` is ASCII-compatible, then it does not contain any accented
++        # characters and we can avoid an expensive list comprehension
++        s.encode("ASCII", errors="strict")
+         return s
+-    else:
++    except UnicodeEncodeError:
++        normalized = unicodedata.normalize('NFKD', s)
+         return ''.join([c for c in normalized if not unicodedata.combining(c)])
+2025-04-04 14:59:51,975 - INFO - Eval script for scikit-learn__scikit-learn-15100 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-15100/eval.sh; copying to container...
+2025-04-04 15:00:01,014 - INFO - Test runtime: 8.83 seconds
+2025-04-04 15:00:01,014 - INFO - Test output for scikit-learn__scikit-learn-15100 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-15100/test_output.txt
+2025-04-04 15:00:01,309 - INFO - Git diff after:
+diff --git a/sklearn/feature_extraction/text.py b/sklearn/feature_extraction/text.py
+index bb5a9d646..d73bd94d7 100644
+--- a/sklearn/feature_extraction/text.py
++++ b/sklearn/feature_extraction/text.py
+@@ -129,10 +129,13 @@ def strip_accents_unicode(s):
+         Remove accentuated char for any unicode symbol that has a direct
+         ASCII equivalent.
+     """
+-    normalized = unicodedata.normalize('NFKD', s)
+-    if normalized == s:
++    try:
++        # If `s` is ASCII-compatible, then it does not contain any accented
++        # characters and we can avoid an expensive list comprehension
++        s.encode("ASCII", errors="strict")
+         return s
+-    else:
++    except UnicodeEncodeError:
++        normalized = unicodedata.normalize('NFKD', s)
+         return ''.join([c for c in normalized if not unicodedata.combining(c)])
+2025-04-04 15:00:01,309 - INFO - Grading answer for scikit-learn__scikit-learn-15100...
+2025-04-04 15:00:01,310 - INFO - report: {'scikit-learn__scikit-learn-15100': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-15100: resolved: False
+2025-04-04 15:00:01,310 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-15100.gold...
+2025-04-04 15:00:16,837 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-15100.gold...
+2025-04-04 15:00:16,856 - INFO - Container sweb.eval.scikit-learn__scikit-learn-15100.gold removed.

@@ -1,0 +1,61 @@
+2025-04-04 10:50:05,047 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14765
+Building instance image sweb.eval.x86_64.django__django-14765:latest for django__django-14765
+2025-04-04 10:50:52,123 - INFO - Creating container for django__django-14765...
+2025-04-04 10:50:52,246 - INFO - Container for django__django-14765 created: 0deeec059ec292d28cd64619ff179f713d596eae7c3d4ed901f3fd13ea65d8ec
+2025-04-04 10:50:52,677 - INFO - Container for django__django-14765 started: 0deeec059ec292d28cd64619ff179f713d596eae7c3d4ed901f3fd13ea65d8ec
+2025-04-04 10:50:52,678 - INFO - Intermediate patch for django__django-14765 written to logs/run_evaluation/gold/gold/django__django-14765/patch.diff, now applying to container...
+2025-04-04 10:50:52,928 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:50:52,990 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/state.py
+
+2025-04-04 10:50:54,599 - INFO - Git diff before:
+diff --git a/django/db/migrations/state.py b/django/db/migrations/state.py
+index 088f5c41f0..6e023415bd 100644
+--- a/django/db/migrations/state.py
++++ b/django/db/migrations/state.py
+@@ -91,10 +91,11 @@ class ProjectState:
+     def __init__(self, models=None, real_apps=None):
+         self.models = models or {}
+         # Apps to include from main registry, usually unmigrated ones
+-        if real_apps:
+-            self.real_apps = real_apps if isinstance(real_apps, set) else set(real_apps)
++        if real_apps is None:
++            real_apps = set()
+         else:
+-            self.real_apps = set()
++            assert isinstance(real_apps, set)
++        self.real_apps = real_apps
+         self.is_delayed = False
+         # {remote_model_key: {model_key: [(field_name, field)]}}
+         self.relations = None
+2025-04-04 10:50:54,680 - INFO - Eval script for django__django-14765 written to logs/run_evaluation/gold/gold/django__django-14765/eval.sh; copying to container...
+2025-04-04 10:51:07,718 - INFO - Test runtime: 12.78 seconds
+2025-04-04 10:51:07,719 - INFO - Test output for django__django-14765 written to logs/run_evaluation/gold/gold/django__django-14765/test_output.txt
+2025-04-04 10:51:07,848 - INFO - Git diff after:
+diff --git a/django/db/migrations/state.py b/django/db/migrations/state.py
+index 088f5c41f0..6e023415bd 100644
+--- a/django/db/migrations/state.py
++++ b/django/db/migrations/state.py
+@@ -91,10 +91,11 @@ class ProjectState:
+     def __init__(self, models=None, real_apps=None):
+         self.models = models or {}
+         # Apps to include from main registry, usually unmigrated ones
+-        if real_apps:
+-            self.real_apps = real_apps if isinstance(real_apps, set) else set(real_apps)
++        if real_apps is None:
++            real_apps = set()
+         else:
+-            self.real_apps = set()
++            assert isinstance(real_apps, set)
++        self.real_apps = real_apps
+         self.is_delayed = False
+         # {remote_model_key: {model_key: [(field_name, field)]}}
+         self.relations = None
+2025-04-04 10:51:07,848 - INFO - Grading answer for django__django-14765...
+2025-04-04 10:51:07,849 - INFO - report: {'django__django-14765': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14765: resolved: False
+2025-04-04 10:51:07,849 - INFO - Attempting to stop container sweb.eval.django__django-14765.gold...
+2025-04-04 10:51:53,175 - INFO - Attempting to remove container sweb.eval.django__django-14765.gold...
+2025-04-04 10:51:53,225 - INFO - Container sweb.eval.django__django-14765.gold removed.
+2025-04-04 10:51:53,225 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14765:latest...
+2025-04-04 10:52:13,261 - INFO - Image sweb.eval.x86_64.django__django-14765:latest removed.

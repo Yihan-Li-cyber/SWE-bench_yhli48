@@ -1,0 +1,53 @@
+2025-04-04 10:03:15,557 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12143
+Building instance image sweb.eval.x86_64.django__django-12143:latest for django__django-12143
+2025-04-04 10:04:06,580 - INFO - Creating container for django__django-12143...
+2025-04-04 10:04:06,767 - INFO - Container for django__django-12143 created: 48dacd01252c7f75f71065aa5a45bf86ad3e19ed92cfd9e3cbc17627398595dc
+2025-04-04 10:04:07,517 - INFO - Container for django__django-12143 started: 48dacd01252c7f75f71065aa5a45bf86ad3e19ed92cfd9e3cbc17627398595dc
+2025-04-04 10:04:07,520 - INFO - Intermediate patch for django__django-12143 written to logs/run_evaluation/gold/gold/django__django-12143/patch.diff, now applying to container...
+2025-04-04 10:04:07,823 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:04:07,923 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-04 10:04:09,447 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 137e6faa0f..85896bed7e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1631,7 +1631,9 @@ class ModelAdmin(BaseModelAdmin):
+ 
+     def _get_edited_object_pks(self, request, prefix):
+         """Return POST data values of list_editable primary keys."""
+-        pk_pattern = re.compile(r'{}-\d+-{}$'.format(prefix, self.model._meta.pk.name))
++        pk_pattern = re.compile(
++            r'{}-\d+-{}$'.format(re.escape(prefix), self.model._meta.pk.name)
++        )
+         return [value for key, value in request.POST.items() if pk_pattern.match(key)]
+ 
+     def _get_list_editable_queryset(self, request, prefix):
+2025-04-04 10:04:09,447 - INFO - Eval script for django__django-12143 written to logs/run_evaluation/gold/gold/django__django-12143/eval.sh; copying to container...
+2025-04-04 10:04:23,740 - INFO - Test runtime: 14.04 seconds
+2025-04-04 10:04:23,740 - INFO - Test output for django__django-12143 written to logs/run_evaluation/gold/gold/django__django-12143/test_output.txt
+2025-04-04 10:04:23,943 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 137e6faa0f..85896bed7e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1631,7 +1631,9 @@ class ModelAdmin(BaseModelAdmin):
+ 
+     def _get_edited_object_pks(self, request, prefix):
+         """Return POST data values of list_editable primary keys."""
+-        pk_pattern = re.compile(r'{}-\d+-{}$'.format(prefix, self.model._meta.pk.name))
++        pk_pattern = re.compile(
++            r'{}-\d+-{}$'.format(re.escape(prefix), self.model._meta.pk.name)
++        )
+         return [value for key, value in request.POST.items() if pk_pattern.match(key)]
+ 
+     def _get_list_editable_queryset(self, request, prefix):
+2025-04-04 10:04:23,943 - INFO - Grading answer for django__django-12143...
+2025-04-04 10:04:23,943 - INFO - report: {'django__django-12143': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12143: resolved: False
+2025-04-04 10:04:23,943 - INFO - Attempting to stop container sweb.eval.django__django-12143.gold...
+2025-04-04 10:04:39,965 - INFO - Attempting to remove container sweb.eval.django__django-12143.gold...
+2025-04-04 10:04:40,124 - INFO - Container sweb.eval.django__django-12143.gold removed.
+2025-04-04 10:04:40,124 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12143:latest...
+2025-04-04 10:04:40,687 - INFO - Image sweb.eval.x86_64.django__django-12143:latest removed.

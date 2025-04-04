@@ -1,0 +1,61 @@
+2025-04-04 12:27:09,639 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-10844
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-10844:latest for scikit-learn__scikit-learn-10844
+2025-04-04 12:32:33,304 - INFO - Creating container for scikit-learn__scikit-learn-10844...
+2025-04-04 12:32:33,364 - INFO - Container for scikit-learn__scikit-learn-10844 created: 0d5ff90440d3c35304d39c74426c84f6aeab197e70d3a6b307d7ac6d13093ce3
+2025-04-04 12:32:33,726 - INFO - Container for scikit-learn__scikit-learn-10844 started: 0d5ff90440d3c35304d39c74426c84f6aeab197e70d3a6b307d7ac6d13093ce3
+2025-04-04 12:32:33,727 - INFO - Intermediate patch for scikit-learn__scikit-learn-10844 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-10844/patch.diff, now applying to container...
+2025-04-04 12:32:34,000 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:32:34,059 - INFO - >>>>> Applied Patch:
+patching file sklearn/metrics/cluster/supervised.py
+
+2025-04-04 12:32:34,449 - INFO - Git diff before:
+diff --git a/sklearn/metrics/cluster/supervised.py b/sklearn/metrics/cluster/supervised.py
+index a987778ae..a33d0cb25 100644
+--- a/sklearn/metrics/cluster/supervised.py
++++ b/sklearn/metrics/cluster/supervised.py
+@@ -852,11 +852,12 @@ def fowlkes_mallows_score(labels_true, labels_pred, sparse=False):
+     labels_true, labels_pred = check_clusterings(labels_true, labels_pred)
+     n_samples, = labels_true.shape
+ 
+-    c = contingency_matrix(labels_true, labels_pred, sparse=True)
++    c = contingency_matrix(labels_true, labels_pred,
++                           sparse=True).astype(np.int64)
+     tk = np.dot(c.data, c.data) - n_samples
+     pk = np.sum(np.asarray(c.sum(axis=0)).ravel() ** 2) - n_samples
+     qk = np.sum(np.asarray(c.sum(axis=1)).ravel() ** 2) - n_samples
+-    return tk / np.sqrt(pk * qk) if tk != 0. else 0.
++    return np.sqrt(tk / pk) * np.sqrt(tk / qk) if tk != 0. else 0.
+ 
+ 
+ def entropy(labels):
+2025-04-04 12:32:34,449 - INFO - Eval script for scikit-learn__scikit-learn-10844 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-10844/eval.sh; copying to container...
+2025-04-04 12:32:41,123 - INFO - Test runtime: 6.49 seconds
+2025-04-04 12:32:41,124 - INFO - Test output for scikit-learn__scikit-learn-10844 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-10844/test_output.txt
+2025-04-04 12:32:41,195 - INFO - Git diff after:
+diff --git a/sklearn/metrics/cluster/supervised.py b/sklearn/metrics/cluster/supervised.py
+index a987778ae..a33d0cb25 100644
+--- a/sklearn/metrics/cluster/supervised.py
++++ b/sklearn/metrics/cluster/supervised.py
+@@ -852,11 +852,12 @@ def fowlkes_mallows_score(labels_true, labels_pred, sparse=False):
+     labels_true, labels_pred = check_clusterings(labels_true, labels_pred)
+     n_samples, = labels_true.shape
+ 
+-    c = contingency_matrix(labels_true, labels_pred, sparse=True)
++    c = contingency_matrix(labels_true, labels_pred,
++                           sparse=True).astype(np.int64)
+     tk = np.dot(c.data, c.data) - n_samples
+     pk = np.sum(np.asarray(c.sum(axis=0)).ravel() ** 2) - n_samples
+     qk = np.sum(np.asarray(c.sum(axis=1)).ravel() ** 2) - n_samples
+-    return tk / np.sqrt(pk * qk) if tk != 0. else 0.
++    return np.sqrt(tk / pk) * np.sqrt(tk / qk) if tk != 0. else 0.
+ 
+ 
+ def entropy(labels):
+2025-04-04 12:32:41,195 - INFO - Grading answer for scikit-learn__scikit-learn-10844...
+2025-04-04 12:32:41,195 - INFO - report: {'scikit-learn__scikit-learn-10844': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-10844: resolved: False
+2025-04-04 12:32:41,196 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-10844.gold...
+2025-04-04 12:32:56,729 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-10844.gold...
+2025-04-04 12:32:56,745 - INFO - Container sweb.eval.scikit-learn__scikit-learn-10844.gold removed.
+2025-04-04 12:32:56,745 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-10844:latest...
+2025-04-04 12:32:56,940 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-10844:latest removed.

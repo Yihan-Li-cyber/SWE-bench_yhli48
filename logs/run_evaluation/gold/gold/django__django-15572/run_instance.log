@@ -1,0 +1,65 @@
+2025-04-04 11:00:55,703 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15572
+Building instance image sweb.eval.x86_64.django__django-15572:latest for django__django-15572
+2025-04-04 11:02:03,801 - INFO - Creating container for django__django-15572...
+2025-04-04 11:02:03,849 - INFO - Container for django__django-15572 created: cedef4724412e78f93ad28c7dcca60a6ebc69d65ac0d63cb56d8fb864b4cc7fa
+2025-04-04 11:02:04,272 - INFO - Container for django__django-15572 started: cedef4724412e78f93ad28c7dcca60a6ebc69d65ac0d63cb56d8fb864b4cc7fa
+2025-04-04 11:02:04,272 - INFO - Intermediate patch for django__django-15572 written to logs/run_evaluation/gold/gold/django__django-15572/patch.diff, now applying to container...
+2025-04-04 11:02:04,566 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:02:04,655 - INFO - >>>>> Applied Patch:
+patching file django/template/autoreload.py
+
+2025-04-04 11:02:05,952 - INFO - Git diff before:
+diff --git a/django/template/autoreload.py b/django/template/autoreload.py
+index 84c8554165..f3fd704031 100644
+--- a/django/template/autoreload.py
++++ b/django/template/autoreload.py
+@@ -17,7 +17,7 @@ def get_template_directories():
+         if not isinstance(backend, DjangoTemplates):
+             continue
+ 
+-        items.update(cwd / to_path(dir) for dir in backend.engine.dirs)
++        items.update(cwd / to_path(dir) for dir in backend.engine.dirs if dir)
+ 
+         for loader in backend.engine.template_loaders:
+             if not hasattr(loader, "get_dirs"):
+@@ -25,7 +25,7 @@ def get_template_directories():
+             items.update(
+                 cwd / to_path(directory)
+                 for directory in loader.get_dirs()
+-                if not is_django_path(directory)
++                if directory and not is_django_path(directory)
+             )
+     return items
+2025-04-04 11:02:05,952 - INFO - Eval script for django__django-15572 written to logs/run_evaluation/gold/gold/django__django-15572/eval.sh; copying to container...
+2025-04-04 11:02:18,473 - INFO - Test runtime: 12.26 seconds
+2025-04-04 11:02:18,473 - INFO - Test output for django__django-15572 written to logs/run_evaluation/gold/gold/django__django-15572/test_output.txt
+2025-04-04 11:02:18,586 - INFO - Git diff after:
+diff --git a/django/template/autoreload.py b/django/template/autoreload.py
+index 84c8554165..f3fd704031 100644
+--- a/django/template/autoreload.py
++++ b/django/template/autoreload.py
+@@ -17,7 +17,7 @@ def get_template_directories():
+         if not isinstance(backend, DjangoTemplates):
+             continue
+ 
+-        items.update(cwd / to_path(dir) for dir in backend.engine.dirs)
++        items.update(cwd / to_path(dir) for dir in backend.engine.dirs if dir)
+ 
+         for loader in backend.engine.template_loaders:
+             if not hasattr(loader, "get_dirs"):
+@@ -25,7 +25,7 @@ def get_template_directories():
+             items.update(
+                 cwd / to_path(directory)
+                 for directory in loader.get_dirs()
+-                if not is_django_path(directory)
++                if directory and not is_django_path(directory)
+             )
+     return items
+2025-04-04 11:02:18,586 - INFO - Grading answer for django__django-15572...
+2025-04-04 11:02:18,586 - INFO - report: {'django__django-15572': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15572: resolved: False
+2025-04-04 11:02:18,586 - INFO - Attempting to stop container sweb.eval.django__django-15572.gold...
+2025-04-04 11:02:33,984 - INFO - Attempting to remove container sweb.eval.django__django-15572.gold...
+2025-04-04 11:02:34,022 - INFO - Container sweb.eval.django__django-15572.gold removed.
+2025-04-04 11:02:34,022 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15572:latest...
+2025-04-04 11:02:34,709 - INFO - Image sweb.eval.x86_64.django__django-15572:latest removed.

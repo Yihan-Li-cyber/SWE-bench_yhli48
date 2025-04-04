@@ -1,0 +1,49 @@
+2025-04-04 09:49:12,483 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7336
+Building instance image sweb.eval.x86_64.astropy__astropy-7336:latest for astropy__astropy-7336
+2025-04-04 09:52:29,478 - INFO - Creating container for astropy__astropy-7336...
+2025-04-04 09:52:29,542 - INFO - Container for astropy__astropy-7336 created: 04c399a240f37e9da5e0895e58e7d7a23ee118dde4f9e88efc62a3d935299993
+2025-04-04 09:52:29,876 - INFO - Container for astropy__astropy-7336 started: 04c399a240f37e9da5e0895e58e7d7a23ee118dde4f9e88efc62a3d935299993
+2025-04-04 09:52:29,877 - INFO - Intermediate patch for astropy__astropy-7336 written to logs/run_evaluation/gold/gold/astropy__astropy-7336/patch.diff, now applying to container...
+2025-04-04 09:52:30,140 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:52:30,209 - INFO - >>>>> Applied Patch:
+patching file astropy/units/decorators.py
+
+2025-04-04 09:52:30,923 - INFO - Git diff before:
+diff --git a/astropy/units/decorators.py b/astropy/units/decorators.py
+index 8bece5a850..a7ac743e44 100644
+--- a/astropy/units/decorators.py
++++ b/astropy/units/decorators.py
+@@ -220,7 +220,7 @@ class QuantityInput:
+             # Call the original function with any equivalencies in force.
+             with add_enabled_equivalencies(self.equivalencies):
+                 return_ = wrapped_function(*func_args, **func_kwargs)
+-            if wrapped_signature.return_annotation is not inspect.Signature.empty:
++            if wrapped_signature.return_annotation not in (inspect.Signature.empty, None):
+                 return return_.to(wrapped_signature.return_annotation)
+             else:
+                 return return_
+2025-04-04 09:52:30,924 - INFO - Eval script for astropy__astropy-7336 written to logs/run_evaluation/gold/gold/astropy__astropy-7336/eval.sh; copying to container...
+2025-04-04 09:52:41,001 - INFO - Test runtime: 9.85 seconds
+2025-04-04 09:52:41,002 - INFO - Test output for astropy__astropy-7336 written to logs/run_evaluation/gold/gold/astropy__astropy-7336/test_output.txt
+2025-04-04 09:52:41,090 - INFO - Git diff after:
+diff --git a/astropy/units/decorators.py b/astropy/units/decorators.py
+index 8bece5a850..a7ac743e44 100644
+--- a/astropy/units/decorators.py
++++ b/astropy/units/decorators.py
+@@ -220,7 +220,7 @@ class QuantityInput:
+             # Call the original function with any equivalencies in force.
+             with add_enabled_equivalencies(self.equivalencies):
+                 return_ = wrapped_function(*func_args, **func_kwargs)
+-            if wrapped_signature.return_annotation is not inspect.Signature.empty:
++            if wrapped_signature.return_annotation not in (inspect.Signature.empty, None):
+                 return return_.to(wrapped_signature.return_annotation)
+             else:
+                 return return_
+2025-04-04 09:52:41,091 - INFO - Grading answer for astropy__astropy-7336...
+2025-04-04 09:52:41,091 - INFO - report: {'astropy__astropy-7336': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-7336: resolved: False
+2025-04-04 09:52:41,091 - INFO - Attempting to stop container sweb.eval.astropy__astropy-7336.gold...
+2025-04-04 09:52:56,980 - INFO - Attempting to remove container sweb.eval.astropy__astropy-7336.gold...
+2025-04-04 09:52:57,060 - INFO - Container sweb.eval.astropy__astropy-7336.gold removed.
+2025-04-04 09:52:57,060 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-7336:latest...
+2025-04-04 09:52:57,377 - INFO - Image sweb.eval.x86_64.astropy__astropy-7336:latest removed.

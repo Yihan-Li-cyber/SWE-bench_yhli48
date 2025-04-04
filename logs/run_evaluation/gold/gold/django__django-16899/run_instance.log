@@ -1,0 +1,59 @@
+2025-04-04 11:13:46,965 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16899
+Building instance image sweb.eval.x86_64.django__django-16899:latest for django__django-16899
+2025-04-04 11:14:33,208 - INFO - Creating container for django__django-16899...
+2025-04-04 11:14:33,279 - INFO - Container for django__django-16899 created: 093c7e72f463c04d16ae050417ee3503fa367845047e672d8270956e85207d10
+2025-04-04 11:14:34,035 - INFO - Container for django__django-16899 started: 093c7e72f463c04d16ae050417ee3503fa367845047e672d8270956e85207d10
+2025-04-04 11:14:34,037 - INFO - Intermediate patch for django__django-16899 written to logs/run_evaluation/gold/gold/django__django-16899/patch.diff, now applying to container...
+2025-04-04 11:14:34,363 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:14:34,422 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/checks.py
+
+2025-04-04 11:14:35,849 - INFO - Git diff before:
+diff --git a/django/contrib/admin/checks.py b/django/contrib/admin/checks.py
+index c395b0bde2..2c90dedc31 100644
+--- a/django/contrib/admin/checks.py
++++ b/django/contrib/admin/checks.py
+@@ -771,10 +771,11 @@ class BaseModelAdminChecks:
+             except FieldDoesNotExist:
+                 return [
+                     checks.Error(
+-                        "The value of '%s' is not a callable, an attribute of "
+-                        "'%s', or an attribute of '%s'."
++                        "The value of '%s' refers to '%s', which is not a callable, "
++                        "an attribute of '%s', or an attribute of '%s'."
+                         % (
+                             label,
++                            field_name,
+                             obj.__class__.__name__,
+                             obj.model._meta.label,
+                         ),
+2025-04-04 11:14:35,850 - INFO - Eval script for django__django-16899 written to logs/run_evaluation/gold/gold/django__django-16899/eval.sh; copying to container...
+2025-04-04 11:14:47,300 - INFO - Test runtime: 11.27 seconds
+2025-04-04 11:14:47,301 - INFO - Test output for django__django-16899 written to logs/run_evaluation/gold/gold/django__django-16899/test_output.txt
+2025-04-04 11:14:47,440 - INFO - Git diff after:
+diff --git a/django/contrib/admin/checks.py b/django/contrib/admin/checks.py
+index c395b0bde2..2c90dedc31 100644
+--- a/django/contrib/admin/checks.py
++++ b/django/contrib/admin/checks.py
+@@ -771,10 +771,11 @@ class BaseModelAdminChecks:
+             except FieldDoesNotExist:
+                 return [
+                     checks.Error(
+-                        "The value of '%s' is not a callable, an attribute of "
+-                        "'%s', or an attribute of '%s'."
++                        "The value of '%s' refers to '%s', which is not a callable, "
++                        "an attribute of '%s', or an attribute of '%s'."
+                         % (
+                             label,
++                            field_name,
+                             obj.__class__.__name__,
+                             obj.model._meta.label,
+                         ),
+2025-04-04 11:14:47,441 - INFO - Grading answer for django__django-16899...
+2025-04-04 11:14:47,441 - INFO - report: {'django__django-16899': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16899: resolved: False
+2025-04-04 11:14:47,441 - INFO - Attempting to stop container sweb.eval.django__django-16899.gold...
+2025-04-04 11:15:03,205 - INFO - Attempting to remove container sweb.eval.django__django-16899.gold...
+2025-04-04 11:15:03,402 - INFO - Container sweb.eval.django__django-16899.gold removed.
+2025-04-04 11:15:03,403 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16899:latest...
+2025-04-04 11:15:05,290 - INFO - Image sweb.eval.x86_64.django__django-16899:latest removed.

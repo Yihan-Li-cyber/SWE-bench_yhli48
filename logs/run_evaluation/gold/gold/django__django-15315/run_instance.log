@@ -1,0 +1,57 @@
+2025-04-04 10:56:58,306 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15315
+Building instance image sweb.eval.x86_64.django__django-15315:latest for django__django-15315
+2025-04-04 10:58:34,354 - INFO - Creating container for django__django-15315...
+2025-04-04 10:58:34,721 - INFO - Container for django__django-15315 created: e8fa1b54d1761040cf43bb43e5a247de4f7f84311436ebeecfcca6b0135d4365
+2025-04-04 10:58:35,169 - INFO - Container for django__django-15315 started: e8fa1b54d1761040cf43bb43e5a247de4f7f84311436ebeecfcca6b0135d4365
+2025-04-04 10:58:35,169 - INFO - Intermediate patch for django__django-15315 written to logs/run_evaluation/gold/gold/django__django-15315/patch.diff, now applying to container...
+2025-04-04 10:58:35,600 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:58:35,741 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/__init__.py
+
+2025-04-04 10:58:37,265 - INFO - Git diff before:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 88c9ca9f28..fcea1597ef 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -542,11 +542,7 @@ class Field(RegisterLookupMixin):
+         return NotImplemented
+ 
+     def __hash__(self):
+-        return hash((
+-            self.creation_counter,
+-            self.model._meta.app_label if hasattr(self, 'model') else None,
+-            self.model._meta.model_name if hasattr(self, 'model') else None,
+-        ))
++        return hash(self.creation_counter)
+ 
+     def __deepcopy__(self, memodict):
+         # We don't have to deepcopy very much here, since most things are not
+2025-04-04 10:58:37,265 - INFO - Eval script for django__django-15315 written to logs/run_evaluation/gold/gold/django__django-15315/eval.sh; copying to container...
+2025-04-04 10:58:49,720 - INFO - Test runtime: 12.27 seconds
+2025-04-04 10:58:49,721 - INFO - Test output for django__django-15315 written to logs/run_evaluation/gold/gold/django__django-15315/test_output.txt
+2025-04-04 10:58:49,860 - INFO - Git diff after:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 88c9ca9f28..fcea1597ef 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -542,11 +542,7 @@ class Field(RegisterLookupMixin):
+         return NotImplemented
+ 
+     def __hash__(self):
+-        return hash((
+-            self.creation_counter,
+-            self.model._meta.app_label if hasattr(self, 'model') else None,
+-            self.model._meta.model_name if hasattr(self, 'model') else None,
+-        ))
++        return hash(self.creation_counter)
+ 
+     def __deepcopy__(self, memodict):
+         # We don't have to deepcopy very much here, since most things are not
+2025-04-04 10:58:49,860 - INFO - Grading answer for django__django-15315...
+2025-04-04 10:58:49,861 - INFO - report: {'django__django-15315': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15315: resolved: False
+2025-04-04 10:58:49,861 - INFO - Attempting to stop container sweb.eval.django__django-15315.gold...
+2025-04-04 10:59:06,180 - INFO - Attempting to remove container sweb.eval.django__django-15315.gold...
+2025-04-04 10:59:06,222 - INFO - Container sweb.eval.django__django-15315.gold removed.
+2025-04-04 10:59:06,222 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15315:latest...
+2025-04-04 10:59:07,257 - INFO - Image sweb.eval.x86_64.django__django-15315:latest removed.

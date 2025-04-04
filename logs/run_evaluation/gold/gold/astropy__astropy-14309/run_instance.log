@@ -1,0 +1,79 @@
+2025-04-04 09:45:42,470 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14309
+Building instance image sweb.eval.x86_64.astropy__astropy-14309:latest for astropy__astropy-14309
+2025-04-04 09:47:27,401 - INFO - Creating container for astropy__astropy-14309...
+2025-04-04 09:47:27,480 - INFO - Container for astropy__astropy-14309 created: 75864889fd97c85463a5986f3713d6f86babef2a8dd4b864f05f81ff086e5fa0
+2025-04-04 09:47:27,888 - INFO - Container for astropy__astropy-14309 started: 75864889fd97c85463a5986f3713d6f86babef2a8dd4b864f05f81ff086e5fa0
+2025-04-04 09:47:27,889 - INFO - Intermediate patch for astropy__astropy-14309 written to logs/run_evaluation/gold/gold/astropy__astropy-14309/patch.diff, now applying to container...
+2025-04-04 09:47:28,178 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:47:28,261 - INFO - >>>>> Applied Patch:
+patching file astropy/io/fits/connect.py
+
+2025-04-04 09:47:29,049 - INFO - Git diff before:
+diff --git a/astropy/io/fits/connect.py b/astropy/io/fits/connect.py
+index 4b6150f4ac..210af2b96c 100644
+--- a/astropy/io/fits/connect.py
++++ b/astropy/io/fits/connect.py
+@@ -65,10 +65,9 @@ def is_fits(origin, filepath, fileobj, *args, **kwargs):
+         fileobj.seek(pos)
+         return sig == FITS_SIGNATURE
+     elif filepath is not None:
+-        if filepath.lower().endswith(
++        return filepath.lower().endswith(
+             (".fits", ".fits.gz", ".fit", ".fit.gz", ".fts", ".fts.gz")
+-        ):
+-            return True
++        )
+     return isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
+ 
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+index 41865a87d1..922d14bf49 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:47:29,050 - INFO - Eval script for astropy__astropy-14309 written to logs/run_evaluation/gold/gold/astropy__astropy-14309/eval.sh; copying to container...
+2025-04-04 09:48:56,082 - INFO - Test runtime: 86.76 seconds
+2025-04-04 09:48:56,083 - INFO - Test output for astropy__astropy-14309 written to logs/run_evaluation/gold/gold/astropy__astropy-14309/test_output.txt
+2025-04-04 09:48:56,159 - INFO - Git diff after:
+diff --git a/astropy/io/fits/connect.py b/astropy/io/fits/connect.py
+index 4b6150f4ac..210af2b96c 100644
+--- a/astropy/io/fits/connect.py
++++ b/astropy/io/fits/connect.py
+@@ -65,10 +65,9 @@ def is_fits(origin, filepath, fileobj, *args, **kwargs):
+         fileobj.seek(pos)
+         return sig == FITS_SIGNATURE
+     elif filepath is not None:
+-        if filepath.lower().endswith(
++        return filepath.lower().endswith(
+             (".fits", ".fits.gz", ".fit", ".fit.gz", ".fts", ".fts.gz")
+-        ):
+-            return True
++        )
+     return isinstance(args[0], (HDUList, TableHDU, BinTableHDU, GroupsHDU))
+ 
+ 
+diff --git a/pyproject.toml b/pyproject.toml
+index 41865a87d1..922d14bf49 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:48:56,160 - INFO - Grading answer for astropy__astropy-14309...
+2025-04-04 09:48:56,161 - INFO - report: {'astropy__astropy-14309': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14309: resolved: False
+2025-04-04 09:48:56,162 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14309.gold...
+2025-04-04 09:49:11,527 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14309.gold...
+2025-04-04 09:49:11,600 - INFO - Container sweb.eval.astropy__astropy-14309.gold removed.
+2025-04-04 09:49:11,601 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14309:latest...
+2025-04-04 09:49:12,476 - INFO - Image sweb.eval.x86_64.astropy__astropy-14309:latest removed.

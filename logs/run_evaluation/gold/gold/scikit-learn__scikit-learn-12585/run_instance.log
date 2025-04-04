@@ -1,0 +1,49 @@
+2025-04-04 12:27:45,611 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-12585
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-12585:latest for scikit-learn__scikit-learn-12585
+2025-04-04 12:33:36,360 - INFO - Creating container for scikit-learn__scikit-learn-12585...
+2025-04-04 12:33:36,410 - INFO - Container for scikit-learn__scikit-learn-12585 created: e03db90782d197d940fa2c66b302fb62f6cd9d5471f217df0f15d01638e875e1
+2025-04-04 12:33:36,779 - INFO - Container for scikit-learn__scikit-learn-12585 started: e03db90782d197d940fa2c66b302fb62f6cd9d5471f217df0f15d01638e875e1
+2025-04-04 12:33:36,780 - INFO - Intermediate patch for scikit-learn__scikit-learn-12585 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-12585/patch.diff, now applying to container...
+2025-04-04 12:33:37,108 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:33:37,201 - INFO - >>>>> Applied Patch:
+patching file sklearn/base.py
+
+2025-04-04 12:33:37,695 - INFO - Git diff before:
+diff --git a/sklearn/base.py b/sklearn/base.py
+index 56ffb18bf..34998270c 100644
+--- a/sklearn/base.py
++++ b/sklearn/base.py
+@@ -48,7 +48,7 @@ def clone(estimator, safe=True):
+     # XXX: not handling dictionaries
+     if estimator_type in (list, tuple, set, frozenset):
+         return estimator_type([clone(e, safe=safe) for e in estimator])
+-    elif not hasattr(estimator, 'get_params'):
++    elif not hasattr(estimator, 'get_params') or isinstance(estimator, type):
+         if not safe:
+             return copy.deepcopy(estimator)
+         else:
+2025-04-04 12:33:37,731 - INFO - Eval script for scikit-learn__scikit-learn-12585 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-12585/eval.sh; copying to container...
+2025-04-04 12:33:44,381 - INFO - Test runtime: 6.44 seconds
+2025-04-04 12:33:44,382 - INFO - Test output for scikit-learn__scikit-learn-12585 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-12585/test_output.txt
+2025-04-04 12:33:44,460 - INFO - Git diff after:
+diff --git a/sklearn/base.py b/sklearn/base.py
+index 56ffb18bf..34998270c 100644
+--- a/sklearn/base.py
++++ b/sklearn/base.py
+@@ -48,7 +48,7 @@ def clone(estimator, safe=True):
+     # XXX: not handling dictionaries
+     if estimator_type in (list, tuple, set, frozenset):
+         return estimator_type([clone(e, safe=safe) for e in estimator])
+-    elif not hasattr(estimator, 'get_params'):
++    elif not hasattr(estimator, 'get_params') or isinstance(estimator, type):
+         if not safe:
+             return copy.deepcopy(estimator)
+         else:
+2025-04-04 12:33:44,460 - INFO - Grading answer for scikit-learn__scikit-learn-12585...
+2025-04-04 12:33:44,460 - INFO - report: {'scikit-learn__scikit-learn-12585': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-12585: resolved: False
+2025-04-04 12:33:44,460 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-12585.gold...
+2025-04-04 12:34:29,955 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-12585.gold...
+2025-04-04 12:34:29,976 - INFO - Container sweb.eval.scikit-learn__scikit-learn-12585.gold removed.
+2025-04-04 12:34:29,977 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-12585:latest...
+2025-04-04 12:34:36,694 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-12585:latest removed.

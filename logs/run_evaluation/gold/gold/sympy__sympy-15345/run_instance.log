@@ -1,0 +1,69 @@
+2025-04-04 13:56:41,479 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15345
+Building instance image sweb.eval.x86_64.sympy__sympy-15345:latest for sympy__sympy-15345
+2025-04-04 13:57:12,777 - INFO - Creating container for sympy__sympy-15345...
+2025-04-04 13:57:12,807 - INFO - Container for sympy__sympy-15345 created: 27e98e191b39d0ab1430d6e306b402ebfd54ebab62ca431be8ed806982d68146
+2025-04-04 13:57:13,369 - INFO - Container for sympy__sympy-15345 started: 27e98e191b39d0ab1430d6e306b402ebfd54ebab62ca431be8ed806982d68146
+2025-04-04 13:57:13,369 - INFO - Intermediate patch for sympy__sympy-15345 written to logs/run_evaluation/gold/gold/sympy__sympy-15345/patch.diff, now applying to container...
+2025-04-04 13:57:13,905 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:57:14,034 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/mathematica.py
+
+2025-04-04 13:57:14,714 - INFO - Git diff before:
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index ea7e3a2d94..9505e008dc 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -31,7 +31,8 @@
+     "asech": [(lambda x: True, "ArcSech")],
+     "acsch": [(lambda x: True, "ArcCsch")],
+     "conjugate": [(lambda x: True, "Conjugate")],
+-
++    "Max": [(lambda *x: True, "Max")],
++    "Min": [(lambda *x: True, "Min")],
+ }
+ 
+ 
+@@ -101,6 +102,8 @@ def _print_Function(self, expr):
+                     return "%s[%s]" % (mfunc, self.stringify(expr.args, ", "))
+         return expr.func.__name__ + "[%s]" % self.stringify(expr.args, ", ")
+ 
++    _print_MinMaxBase = _print_Function
++
+     def _print_Integral(self, expr):
+         if len(expr.variables) == 1 and not expr.limits[0][1:]:
+             args = [expr.args[0], expr.variables[0]]
+2025-04-04 13:57:14,715 - INFO - Eval script for sympy__sympy-15345 written to logs/run_evaluation/gold/gold/sympy__sympy-15345/eval.sh; copying to container...
+2025-04-04 13:57:21,905 - INFO - Test runtime: 6.83 seconds
+2025-04-04 13:57:21,905 - INFO - Test output for sympy__sympy-15345 written to logs/run_evaluation/gold/gold/sympy__sympy-15345/test_output.txt
+2025-04-04 13:57:22,031 - INFO - Git diff after:
+diff --git a/sympy/printing/mathematica.py b/sympy/printing/mathematica.py
+index ea7e3a2d94..9505e008dc 100644
+--- a/sympy/printing/mathematica.py
++++ b/sympy/printing/mathematica.py
+@@ -31,7 +31,8 @@
+     "asech": [(lambda x: True, "ArcSech")],
+     "acsch": [(lambda x: True, "ArcCsch")],
+     "conjugate": [(lambda x: True, "Conjugate")],
+-
++    "Max": [(lambda *x: True, "Max")],
++    "Min": [(lambda *x: True, "Min")],
+ }
+ 
+ 
+@@ -101,6 +102,8 @@ def _print_Function(self, expr):
+                     return "%s[%s]" % (mfunc, self.stringify(expr.args, ", "))
+         return expr.func.__name__ + "[%s]" % self.stringify(expr.args, ", ")
+ 
++    _print_MinMaxBase = _print_Function
++
+     def _print_Integral(self, expr):
+         if len(expr.variables) == 1 and not expr.limits[0][1:]:
+             args = [expr.args[0], expr.variables[0]]
+2025-04-04 13:57:22,031 - INFO - Grading answer for sympy__sympy-15345...
+2025-04-04 13:57:22,032 - INFO - report: {'sympy__sympy-15345': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-15345: resolved: False
+2025-04-04 13:57:22,032 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15345.gold...
+2025-04-04 13:57:37,720 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15345.gold...
+2025-04-04 13:57:37,787 - INFO - Container sweb.eval.sympy__sympy-15345.gold removed.
+2025-04-04 13:57:37,787 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-15345:latest...
+2025-04-04 13:57:39,119 - INFO - Image sweb.eval.x86_64.sympy__sympy-15345:latest removed.

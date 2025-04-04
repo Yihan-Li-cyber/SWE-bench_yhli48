@@ -1,0 +1,69 @@
+2025-04-04 11:52:13,662 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-25332
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest for matplotlib__matplotlib-25332
+2025-04-04 11:59:20,910 - INFO - Creating container for matplotlib__matplotlib-25332...
+2025-04-04 11:59:20,944 - INFO - Container for matplotlib__matplotlib-25332 created: b45873024e4cf0ad90d30f11582930e3cc141f2000fcb6dfef10bf4d9d488cc0
+2025-04-04 12:00:12,628 - INFO - Container for matplotlib__matplotlib-25332 started: b45873024e4cf0ad90d30f11582930e3cc141f2000fcb6dfef10bf4d9d488cc0
+2025-04-04 12:00:12,629 - INFO - Intermediate patch for matplotlib__matplotlib-25332 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25332/patch.diff, now applying to container...
+2025-04-04 12:00:13,036 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:00:13,104 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/cbook.py
+
+2025-04-04 12:00:15,229 - INFO - Git diff before:
+diff --git a/lib/matplotlib/cbook.py b/lib/matplotlib/cbook.py
+index c9699b2e21..1a64331e20 100644
+--- a/lib/matplotlib/cbook.py
++++ b/lib/matplotlib/cbook.py
+@@ -788,6 +788,19 @@ class Grouper:
+     def __init__(self, init=()):
+         self._mapping = {weakref.ref(x): [weakref.ref(x)] for x in init}
+ 
++    def __getstate__(self):
++        return {
++            **vars(self),
++            # Convert weak refs to strong ones.
++            "_mapping": {k(): [v() for v in vs] for k, vs in self._mapping.items()},
++        }
++
++    def __setstate__(self, state):
++        vars(self).update(state)
++        # Convert strong refs to weak ones.
++        self._mapping = {weakref.ref(k): [*map(weakref.ref, vs)]
++                         for k, vs in self._mapping.items()}
++
+     def __contains__(self, item):
+         return weakref.ref(item) in self._mapping
+2025-04-04 12:00:15,233 - INFO - Eval script for matplotlib__matplotlib-25332 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25332/eval.sh; copying to container...
+2025-04-04 12:02:26,325 - INFO - Test runtime: 130.80 seconds
+2025-04-04 12:02:26,325 - INFO - Test output for matplotlib__matplotlib-25332 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25332/test_output.txt
+2025-04-04 12:02:26,410 - INFO - Git diff after:
+diff --git a/lib/matplotlib/cbook.py b/lib/matplotlib/cbook.py
+index c9699b2e21..1a64331e20 100644
+--- a/lib/matplotlib/cbook.py
++++ b/lib/matplotlib/cbook.py
+@@ -788,6 +788,19 @@ class Grouper:
+     def __init__(self, init=()):
+         self._mapping = {weakref.ref(x): [weakref.ref(x)] for x in init}
+ 
++    def __getstate__(self):
++        return {
++            **vars(self),
++            # Convert weak refs to strong ones.
++            "_mapping": {k(): [v() for v in vs] for k, vs in self._mapping.items()},
++        }
++
++    def __setstate__(self, state):
++        vars(self).update(state)
++        # Convert strong refs to weak ones.
++        self._mapping = {weakref.ref(k): [*map(weakref.ref, vs)]
++                         for k, vs in self._mapping.items()}
++
+     def __contains__(self, item):
+         return weakref.ref(item) in self._mapping
+2025-04-04 12:02:26,411 - INFO - Grading answer for matplotlib__matplotlib-25332...
+2025-04-04 12:02:26,411 - INFO - report: {'matplotlib__matplotlib-25332': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-25332: resolved: False
+2025-04-04 12:02:26,412 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-25332.gold...
+2025-04-04 12:02:42,821 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-25332.gold...
+2025-04-04 12:02:42,853 - INFO - Container sweb.eval.matplotlib__matplotlib-25332.gold removed.
+2025-04-04 12:02:42,854 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest...
+2025-04-04 12:02:55,296 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest removed.

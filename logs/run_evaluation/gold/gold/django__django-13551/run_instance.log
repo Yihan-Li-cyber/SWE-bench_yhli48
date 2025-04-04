@@ -1,0 +1,79 @@
+2025-04-04 10:36:28,623 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13551
+Building instance image sweb.eval.x86_64.django__django-13551:latest for django__django-13551
+2025-04-04 10:37:09,277 - INFO - Creating container for django__django-13551...
+2025-04-04 10:37:09,316 - INFO - Container for django__django-13551 created: fc7a8aacd3a32c52725aea6f572889edd34b13e5a625a5917e9d74bd0210bd03
+2025-04-04 10:37:09,823 - INFO - Container for django__django-13551 started: fc7a8aacd3a32c52725aea6f572889edd34b13e5a625a5917e9d74bd0210bd03
+2025-04-04 10:37:09,823 - INFO - Intermediate patch for django__django-13551 written to logs/run_evaluation/gold/gold/django__django-13551/patch.diff, now applying to container...
+2025-04-04 10:37:10,119 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:37:10,194 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/tokens.py
+
+2025-04-04 10:37:11,721 - INFO - Git diff before:
+diff --git a/django/contrib/auth/tokens.py b/django/contrib/auth/tokens.py
+index 93e2d71af2..c534f304f3 100644
+--- a/django/contrib/auth/tokens.py
++++ b/django/contrib/auth/tokens.py
+@@ -78,9 +78,9 @@ class PasswordResetTokenGenerator:
+ 
+     def _make_hash_value(self, user, timestamp):
+         """
+-        Hash the user's primary key and some user state that's sure to change
+-        after a password reset to produce a token that invalidated when it's
+-        used:
++        Hash the user's primary key, email (if available), and some user state
++        that's sure to change after a password reset to produce a token that is
++        invalidated when it's used:
+         1. The password field will change upon a password reset (even if the
+            same password is chosen, due to password salting).
+         2. The last_login field will usually be updated very shortly after
+@@ -94,7 +94,9 @@ class PasswordResetTokenGenerator:
+         # Truncate microseconds so that tokens are consistent even if the
+         # database doesn't support microseconds.
+         login_timestamp = '' if user.last_login is None else user.last_login.replace(microsecond=0, tzinfo=None)
+-        return str(user.pk) + user.password + str(login_timestamp) + str(timestamp)
++        email_field = user.get_email_field_name()
++        email = getattr(user, email_field, '') or ''
++        return f'{user.pk}{user.password}{login_timestamp}{timestamp}{email}'
+ 
+     def _num_seconds(self, dt):
+         return int((dt - datetime(2001, 1, 1)).total_seconds())
+2025-04-04 10:37:11,722 - INFO - Eval script for django__django-13551 written to logs/run_evaluation/gold/gold/django__django-13551/eval.sh; copying to container...
+2025-04-04 10:37:26,036 - INFO - Test runtime: 14.11 seconds
+2025-04-04 10:37:26,037 - INFO - Test output for django__django-13551 written to logs/run_evaluation/gold/gold/django__django-13551/test_output.txt
+2025-04-04 10:37:26,195 - INFO - Git diff after:
+diff --git a/django/contrib/auth/tokens.py b/django/contrib/auth/tokens.py
+index 93e2d71af2..c534f304f3 100644
+--- a/django/contrib/auth/tokens.py
++++ b/django/contrib/auth/tokens.py
+@@ -78,9 +78,9 @@ class PasswordResetTokenGenerator:
+ 
+     def _make_hash_value(self, user, timestamp):
+         """
+-        Hash the user's primary key and some user state that's sure to change
+-        after a password reset to produce a token that invalidated when it's
+-        used:
++        Hash the user's primary key, email (if available), and some user state
++        that's sure to change after a password reset to produce a token that is
++        invalidated when it's used:
+         1. The password field will change upon a password reset (even if the
+            same password is chosen, due to password salting).
+         2. The last_login field will usually be updated very shortly after
+@@ -94,7 +94,9 @@ class PasswordResetTokenGenerator:
+         # Truncate microseconds so that tokens are consistent even if the
+         # database doesn't support microseconds.
+         login_timestamp = '' if user.last_login is None else user.last_login.replace(microsecond=0, tzinfo=None)
+-        return str(user.pk) + user.password + str(login_timestamp) + str(timestamp)
++        email_field = user.get_email_field_name()
++        email = getattr(user, email_field, '') or ''
++        return f'{user.pk}{user.password}{login_timestamp}{timestamp}{email}'
+ 
+     def _num_seconds(self, dt):
+         return int((dt - datetime(2001, 1, 1)).total_seconds())
+2025-04-04 10:37:26,195 - INFO - Grading answer for django__django-13551...
+2025-04-04 10:37:26,195 - INFO - report: {'django__django-13551': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13551: resolved: False
+2025-04-04 10:37:26,196 - INFO - Attempting to stop container sweb.eval.django__django-13551.gold...
+2025-04-04 10:37:42,150 - INFO - Attempting to remove container sweb.eval.django__django-13551.gold...
+2025-04-04 10:37:42,209 - INFO - Container sweb.eval.django__django-13551.gold removed.
+2025-04-04 10:37:42,209 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13551:latest...
+2025-04-04 10:37:43,479 - INFO - Image sweb.eval.x86_64.django__django-13551:latest removed.

@@ -1,0 +1,49 @@
+2025-04-04 09:54:25,732 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11133
+Building instance image sweb.eval.x86_64.django__django-11133:latest for django__django-11133
+2025-04-04 09:55:45,277 - INFO - Creating container for django__django-11133...
+2025-04-04 09:55:45,339 - INFO - Container for django__django-11133 created: 2f4483d763486b58021969f1a9ff59192f36e359d118b5f197e2776c980cf4c3
+2025-04-04 09:55:45,817 - INFO - Container for django__django-11133 started: 2f4483d763486b58021969f1a9ff59192f36e359d118b5f197e2776c980cf4c3
+2025-04-04 09:55:45,817 - INFO - Intermediate patch for django__django-11133 written to logs/run_evaluation/gold/gold/django__django-11133/patch.diff, now applying to container...
+2025-04-04 09:55:46,123 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:55:46,195 - INFO - >>>>> Applied Patch:
+patching file django/http/response.py
+
+2025-04-04 09:55:47,718 - INFO - Git diff before:
+diff --git a/django/http/response.py b/django/http/response.py
+index 6a84e193ba..a9ede09dd9 100644
+--- a/django/http/response.py
++++ b/django/http/response.py
+@@ -229,7 +229,7 @@ class HttpResponseBase:
+         # Handle string types -- we can't rely on force_bytes here because:
+         # - Python attempts str conversion first
+         # - when self._charset != 'utf-8' it re-encodes the content
+-        if isinstance(value, bytes):
++        if isinstance(value, (bytes, memoryview)):
+             return bytes(value)
+         if isinstance(value, str):
+             return bytes(value.encode(self.charset))
+2025-04-04 09:55:47,718 - INFO - Eval script for django__django-11133 written to logs/run_evaluation/gold/gold/django__django-11133/eval.sh; copying to container...
+2025-04-04 09:55:57,985 - INFO - Test runtime: 10.02 seconds
+2025-04-04 09:55:57,985 - INFO - Test output for django__django-11133 written to logs/run_evaluation/gold/gold/django__django-11133/test_output.txt
+2025-04-04 09:55:58,103 - INFO - Git diff after:
+diff --git a/django/http/response.py b/django/http/response.py
+index 6a84e193ba..a9ede09dd9 100644
+--- a/django/http/response.py
++++ b/django/http/response.py
+@@ -229,7 +229,7 @@ class HttpResponseBase:
+         # Handle string types -- we can't rely on force_bytes here because:
+         # - Python attempts str conversion first
+         # - when self._charset != 'utf-8' it re-encodes the content
+-        if isinstance(value, bytes):
++        if isinstance(value, (bytes, memoryview)):
+             return bytes(value)
+         if isinstance(value, str):
+             return bytes(value.encode(self.charset))
+2025-04-04 09:55:58,103 - INFO - Grading answer for django__django-11133...
+2025-04-04 09:55:58,104 - INFO - report: {'django__django-11133': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11133: resolved: False
+2025-04-04 09:55:58,104 - INFO - Attempting to stop container sweb.eval.django__django-11133.gold...
+2025-04-04 09:56:13,760 - INFO - Attempting to remove container sweb.eval.django__django-11133.gold...
+2025-04-04 09:56:14,481 - INFO - Container sweb.eval.django__django-11133.gold removed.
+2025-04-04 09:56:14,481 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11133:latest...
+2025-04-04 09:56:15,245 - INFO - Image sweb.eval.x86_64.django__django-11133:latest removed.

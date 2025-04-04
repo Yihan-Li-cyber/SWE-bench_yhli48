@@ -1,0 +1,71 @@
+2025-04-04 16:20:56,630 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14369
+Building instance image sweb.eval.x86_64.astropy__astropy-14369:latest for astropy__astropy-14369
+2025-04-04 16:28:39,750 - INFO - Creating container for astropy__astropy-14369...
+2025-04-04 16:28:39,957 - INFO - Container for astropy__astropy-14369 created: e6e685fb332286cada02f6789144eaf3d141b7174c733dd6a712fa4d3b45f8fd
+2025-04-04 16:28:41,444 - INFO - Container for astropy__astropy-14369 started: e6e685fb332286cada02f6789144eaf3d141b7174c733dd6a712fa4d3b45f8fd
+2025-04-04 16:28:41,447 - INFO - Intermediate patch for astropy__astropy-14369 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14369/patch.diff, now applying to container...
+2025-04-04 16:28:42,534 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 16:28:42,748 - INFO - >>>>> Applied Patch:
+patching file astropy/units/format/cds.py
+
+2025-04-04 16:28:45,632 - INFO - Git diff before:
+diff --git a/astropy/units/format/cds.py b/astropy/units/format/cds.py
+index 307e987ed6..207e38a2cf 100644
+--- a/astropy/units/format/cds.py
++++ b/astropy/units/format/cds.py
+@@ -182,7 +182,7 @@ class CDS(Base):
+         def p_division_of_units(p):
+             """
+             division_of_units : DIVISION unit_expression
+-                              | unit_expression DIVISION combined_units
++                              | unit_expression DIVISION product_of_units
+             """
+             if len(p) == 3:
+                 p[0] = p[2] ** -1
+diff --git a/pyproject.toml b/pyproject.toml
+index 5b691556b8..f24abc3b05 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:28:45,633 - INFO - Eval script for astropy__astropy-14369 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14369/eval.sh; copying to container...
+2025-04-04 16:34:50,336 - INFO - Test runtime: 364.00 seconds
+2025-04-04 16:34:50,338 - INFO - Test output for astropy__astropy-14369 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14369/test_output.txt
+2025-04-04 16:34:50,542 - INFO - Git diff after:
+diff --git a/astropy/units/format/cds.py b/astropy/units/format/cds.py
+index 307e987ed6..207e38a2cf 100644
+--- a/astropy/units/format/cds.py
++++ b/astropy/units/format/cds.py
+@@ -182,7 +182,7 @@ class CDS(Base):
+         def p_division_of_units(p):
+             """
+             division_of_units : DIVISION unit_expression
+-                              | unit_expression DIVISION combined_units
++                              | unit_expression DIVISION product_of_units
+             """
+             if len(p) == 3:
+                 p[0] = p[2] ** -1
+diff --git a/pyproject.toml b/pyproject.toml
+index 5b691556b8..f24abc3b05 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:34:50,542 - INFO - Grading answer for astropy__astropy-14369...
+2025-04-04 16:34:50,545 - INFO - report: {'astropy__astropy-14369': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14369: resolved: False
+2025-04-04 16:34:50,546 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14369.241028_solver...
+2025-04-04 16:35:06,544 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14369.241028_solver...
+2025-04-04 16:35:06,631 - INFO - Container sweb.eval.astropy__astropy-14369.241028_solver removed.
+2025-04-04 16:35:06,631 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14369:latest...
+2025-04-04 16:35:07,436 - INFO - Image sweb.eval.x86_64.astropy__astropy-14369:latest removed.

@@ -1,0 +1,75 @@
+2025-04-04 12:15:18,630 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-3151
+Building instance image sweb.eval.x86_64.pydata__xarray-3151:latest for pydata__xarray-3151
+2025-04-04 12:15:29,018 - INFO - Creating container for pydata__xarray-3151...
+2025-04-04 12:15:29,053 - INFO - Container for pydata__xarray-3151 created: c1c639cb2bb7a6708c936d51c52f5d5e2b6540f0b83c0b2d9b3c91be550d1c3e
+2025-04-04 12:15:29,366 - INFO - Container for pydata__xarray-3151 started: c1c639cb2bb7a6708c936d51c52f5d5e2b6540f0b83c0b2d9b3c91be550d1c3e
+2025-04-04 12:15:29,367 - INFO - Intermediate patch for pydata__xarray-3151 written to logs/run_evaluation/gold/gold/pydata__xarray-3151/patch.diff, now applying to container...
+2025-04-04 12:15:29,661 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:15:29,735 - INFO - >>>>> Applied Patch:
+patching file xarray/core/combine.py
+
+2025-04-04 12:15:29,884 - INFO - Git diff before:
+diff --git a/xarray/core/combine.py b/xarray/core/combine.py
+index 37ae903b..5718698f 100644
+--- a/xarray/core/combine.py
++++ b/xarray/core/combine.py
+@@ -501,14 +501,13 @@ def combine_by_coords(datasets, compat='no_conflicts', data_vars='all',
+                                    fill_value=fill_value)
+ 
+         # Check the overall coordinates are monotonically increasing
+-        for dim in concatenated.dims:
+-            if dim in concatenated:
+-                indexes = concatenated.indexes.get(dim)
+-                if not (indexes.is_monotonic_increasing
+-                        or indexes.is_monotonic_decreasing):
+-                    raise ValueError("Resulting object does not have monotonic"
+-                                     " global indexes along dimension {}"
+-                                     .format(dim))
++        for dim in concat_dims:
++            indexes = concatenated.indexes.get(dim)
++            if not (indexes.is_monotonic_increasing
++                    or indexes.is_monotonic_decreasing):
++                raise ValueError("Resulting object does not have monotonic"
++                                 " global indexes along dimension {}"
++                                 .format(dim))
+         concatenated_grouped_by_data_vars.append(concatenated)
+ 
+     return merge(concatenated_grouped_by_data_vars, compat=compat,
+2025-04-04 12:15:29,884 - INFO - Eval script for pydata__xarray-3151 written to logs/run_evaluation/gold/gold/pydata__xarray-3151/eval.sh; copying to container...
+2025-04-04 12:15:43,744 - INFO - Test runtime: 13.62 seconds
+2025-04-04 12:15:43,744 - INFO - Test output for pydata__xarray-3151 written to logs/run_evaluation/gold/gold/pydata__xarray-3151/test_output.txt
+2025-04-04 12:15:43,814 - INFO - Git diff after:
+diff --git a/xarray/core/combine.py b/xarray/core/combine.py
+index 37ae903b..5718698f 100644
+--- a/xarray/core/combine.py
++++ b/xarray/core/combine.py
+@@ -501,14 +501,13 @@ def combine_by_coords(datasets, compat='no_conflicts', data_vars='all',
+                                    fill_value=fill_value)
+ 
+         # Check the overall coordinates are monotonically increasing
+-        for dim in concatenated.dims:
+-            if dim in concatenated:
+-                indexes = concatenated.indexes.get(dim)
+-                if not (indexes.is_monotonic_increasing
+-                        or indexes.is_monotonic_decreasing):
+-                    raise ValueError("Resulting object does not have monotonic"
+-                                     " global indexes along dimension {}"
+-                                     .format(dim))
++        for dim in concat_dims:
++            indexes = concatenated.indexes.get(dim)
++            if not (indexes.is_monotonic_increasing
++                    or indexes.is_monotonic_decreasing):
++                raise ValueError("Resulting object does not have monotonic"
++                                 " global indexes along dimension {}"
++                                 .format(dim))
+         concatenated_grouped_by_data_vars.append(concatenated)
+ 
+     return merge(concatenated_grouped_by_data_vars, compat=compat,
+2025-04-04 12:15:43,814 - INFO - Grading answer for pydata__xarray-3151...
+2025-04-04 12:15:43,815 - INFO - report: {'pydata__xarray-3151': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-3151: resolved: False
+2025-04-04 12:15:43,815 - INFO - Attempting to stop container sweb.eval.pydata__xarray-3151.gold...
+2025-04-04 12:15:59,160 - INFO - Attempting to remove container sweb.eval.pydata__xarray-3151.gold...
+2025-04-04 12:15:59,190 - INFO - Container sweb.eval.pydata__xarray-3151.gold removed.
+2025-04-04 12:15:59,190 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-3151:latest...
+2025-04-04 12:15:59,305 - INFO - Image sweb.eval.x86_64.pydata__xarray-3151:latest removed.

@@ -1,0 +1,49 @@
+2025-04-04 09:52:57,382 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-10914
+Building instance image sweb.eval.x86_64.django__django-10914:latest for django__django-10914
+2025-04-04 09:53:38,646 - INFO - Creating container for django__django-10914...
+2025-04-04 09:53:38,679 - INFO - Container for django__django-10914 created: 18dfb739cea3f11ac83647b696b1282aea5edc5fe9dd86fc4921c709c3364223
+2025-04-04 09:53:39,060 - INFO - Container for django__django-10914 started: 18dfb739cea3f11ac83647b696b1282aea5edc5fe9dd86fc4921c709c3364223
+2025-04-04 09:53:39,060 - INFO - Intermediate patch for django__django-10914 written to logs/run_evaluation/gold/gold/django__django-10914/patch.diff, now applying to container...
+2025-04-04 09:53:39,353 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:53:39,415 - INFO - >>>>> Applied Patch:
+patching file django/conf/global_settings.py
+
+2025-04-04 09:53:40,842 - INFO - Git diff before:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index acee9887d2..bdeec80610 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -304,7 +304,7 @@ FILE_UPLOAD_TEMP_DIR = None
+ 
+ # The numeric mode to set newly-uploaded files to. The value should be a mode
+ # you'd pass directly to os.chmod; see https://docs.python.org/library/os.html#files-and-directories.
+-FILE_UPLOAD_PERMISSIONS = None
++FILE_UPLOAD_PERMISSIONS = 0o644
+ 
+ # The numeric mode to assign to newly-created directories, when uploading files.
+ # The value should be a mode as you'd pass to os.chmod;
+2025-04-04 09:53:40,842 - INFO - Eval script for django__django-10914 written to logs/run_evaluation/gold/gold/django__django-10914/eval.sh; copying to container...
+2025-04-04 09:53:53,272 - INFO - Test runtime: 12.21 seconds
+2025-04-04 09:53:53,273 - INFO - Test output for django__django-10914 written to logs/run_evaluation/gold/gold/django__django-10914/test_output.txt
+2025-04-04 09:53:53,382 - INFO - Git diff after:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index acee9887d2..bdeec80610 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -304,7 +304,7 @@ FILE_UPLOAD_TEMP_DIR = None
+ 
+ # The numeric mode to set newly-uploaded files to. The value should be a mode
+ # you'd pass directly to os.chmod; see https://docs.python.org/library/os.html#files-and-directories.
+-FILE_UPLOAD_PERMISSIONS = None
++FILE_UPLOAD_PERMISSIONS = 0o644
+ 
+ # The numeric mode to assign to newly-created directories, when uploading files.
+ # The value should be a mode as you'd pass to os.chmod;
+2025-04-04 09:53:53,382 - INFO - Grading answer for django__django-10914...
+2025-04-04 09:53:53,382 - INFO - report: {'django__django-10914': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-10914: resolved: False
+2025-04-04 09:53:53,383 - INFO - Attempting to stop container sweb.eval.django__django-10914.gold...
+2025-04-04 09:54:09,345 - INFO - Attempting to remove container sweb.eval.django__django-10914.gold...
+2025-04-04 09:54:09,399 - INFO - Container sweb.eval.django__django-10914.gold removed.
+2025-04-04 09:54:09,399 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-10914:latest...
+2025-04-04 09:54:10,158 - INFO - Image sweb.eval.x86_64.django__django-10914:latest removed.

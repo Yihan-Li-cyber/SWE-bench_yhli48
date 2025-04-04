@@ -1,0 +1,69 @@
+2025-04-04 12:51:22,164 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-14983
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-14983:latest for scikit-learn__scikit-learn-14983
+2025-04-04 12:58:14,198 - INFO - Creating container for scikit-learn__scikit-learn-14983...
+2025-04-04 12:58:14,244 - INFO - Container for scikit-learn__scikit-learn-14983 created: 34f18efe06233cefe717310e6f43d15b7e62c3a84fcbd307e05cdeb7635e0d41
+2025-04-04 12:58:14,884 - INFO - Container for scikit-learn__scikit-learn-14983 started: 34f18efe06233cefe717310e6f43d15b7e62c3a84fcbd307e05cdeb7635e0d41
+2025-04-04 12:58:14,884 - INFO - Intermediate patch for scikit-learn__scikit-learn-14983 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14983/patch.diff, now applying to container...
+2025-04-04 12:58:15,457 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:58:15,637 - INFO - >>>>> Applied Patch:
+patching file sklearn/model_selection/_split.py
+
+2025-04-04 12:58:16,155 - INFO - Git diff before:
+diff --git a/sklearn/model_selection/_split.py b/sklearn/model_selection/_split.py
+index c49a3ce6a..ceee1a081 100644
+--- a/sklearn/model_selection/_split.py
++++ b/sklearn/model_selection/_split.py
+@@ -1163,6 +1163,9 @@ class _RepeatedSplits(metaclass=ABCMeta):
+                      **self.cvargs)
+         return cv.get_n_splits(X, y, groups) * self.n_repeats
+ 
++    def __repr__(self):
++        return _build_repr(self)
++
+ 
+ class RepeatedKFold(_RepeatedSplits):
+     """Repeated K-Fold cross validator.
+@@ -2158,6 +2161,8 @@ def _build_repr(self):
+         try:
+             with warnings.catch_warnings(record=True) as w:
+                 value = getattr(self, key, None)
++                if value is None and hasattr(self, 'cvargs'):
++                    value = self.cvargs.get(key, None)
+             if len(w) and w[0].category == DeprecationWarning:
+                 # if the parameter is deprecated, don't show it
+                 continue
+2025-04-04 12:58:16,156 - INFO - Eval script for scikit-learn__scikit-learn-14983 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14983/eval.sh; copying to container...
+2025-04-04 12:58:26,046 - INFO - Test runtime: 9.49 seconds
+2025-04-04 12:58:26,047 - INFO - Test output for scikit-learn__scikit-learn-14983 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14983/test_output.txt
+2025-04-04 12:58:26,205 - INFO - Git diff after:
+diff --git a/sklearn/model_selection/_split.py b/sklearn/model_selection/_split.py
+index c49a3ce6a..ceee1a081 100644
+--- a/sklearn/model_selection/_split.py
++++ b/sklearn/model_selection/_split.py
+@@ -1163,6 +1163,9 @@ class _RepeatedSplits(metaclass=ABCMeta):
+                      **self.cvargs)
+         return cv.get_n_splits(X, y, groups) * self.n_repeats
+ 
++    def __repr__(self):
++        return _build_repr(self)
++
+ 
+ class RepeatedKFold(_RepeatedSplits):
+     """Repeated K-Fold cross validator.
+@@ -2158,6 +2161,8 @@ def _build_repr(self):
+         try:
+             with warnings.catch_warnings(record=True) as w:
+                 value = getattr(self, key, None)
++                if value is None and hasattr(self, 'cvargs'):
++                    value = self.cvargs.get(key, None)
+             if len(w) and w[0].category == DeprecationWarning:
+                 # if the parameter is deprecated, don't show it
+                 continue
+2025-04-04 12:58:26,205 - INFO - Grading answer for scikit-learn__scikit-learn-14983...
+2025-04-04 12:58:26,206 - INFO - report: {'scikit-learn__scikit-learn-14983': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-14983: resolved: False
+2025-04-04 12:58:26,206 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-14983.gold...
+2025-04-04 12:58:41,645 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-14983.gold...
+2025-04-04 12:58:41,669 - INFO - Container sweb.eval.scikit-learn__scikit-learn-14983.gold removed.
+2025-04-04 12:58:41,669 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-14983:latest...
+2025-04-04 12:58:41,904 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-14983:latest removed.

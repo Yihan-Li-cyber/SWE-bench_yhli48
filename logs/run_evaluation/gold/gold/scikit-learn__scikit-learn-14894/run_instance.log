@@ -1,0 +1,71 @@
+2025-04-04 12:50:03,138 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-14894
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-14894:latest for scikit-learn__scikit-learn-14894
+2025-04-04 12:57:10,881 - INFO - Creating container for scikit-learn__scikit-learn-14894...
+2025-04-04 12:57:10,955 - INFO - Container for scikit-learn__scikit-learn-14894 created: fc3ff38417d7fd2e84383c3e4c293b063518694393a75e0a3bc54fc0718bbb51
+2025-04-04 12:57:11,474 - INFO - Container for scikit-learn__scikit-learn-14894 started: fc3ff38417d7fd2e84383c3e4c293b063518694393a75e0a3bc54fc0718bbb51
+2025-04-04 12:57:11,474 - INFO - Intermediate patch for scikit-learn__scikit-learn-14894 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14894/patch.diff, now applying to container...
+2025-04-04 12:57:11,906 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:57:12,024 - INFO - >>>>> Applied Patch:
+patching file sklearn/svm/base.py
+
+2025-04-04 12:57:12,487 - INFO - Git diff before:
+diff --git a/sklearn/svm/base.py b/sklearn/svm/base.py
+index 64cebe837..fb2b734c0 100644
+--- a/sklearn/svm/base.py
++++ b/sklearn/svm/base.py
+@@ -287,11 +287,14 @@ class BaseLibSVM(BaseEstimator, metaclass=ABCMeta):
+         n_SV = self.support_vectors_.shape[0]
+ 
+         dual_coef_indices = np.tile(np.arange(n_SV), n_class)
+-        dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
+-                                     dual_coef_indices.size / n_class)
+-        self.dual_coef_ = sp.csr_matrix(
+-            (dual_coef_data, dual_coef_indices, dual_coef_indptr),
+-            (n_class, n_SV))
++        if not n_SV:
++            self.dual_coef_ = sp.csr_matrix([])
++        else:
++            dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
++                                         dual_coef_indices.size / n_class)
++            self.dual_coef_ = sp.csr_matrix(
++                (dual_coef_data, dual_coef_indices, dual_coef_indptr),
++                (n_class, n_SV))
+ 
+     def predict(self, X):
+         """Perform regression on samples in X.
+2025-04-04 12:57:12,487 - INFO - Eval script for scikit-learn__scikit-learn-14894 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14894/eval.sh; copying to container...
+2025-04-04 12:57:25,230 - INFO - Test runtime: 12.44 seconds
+2025-04-04 12:57:25,231 - INFO - Test output for scikit-learn__scikit-learn-14894 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14894/test_output.txt
+2025-04-04 12:57:25,348 - INFO - Git diff after:
+diff --git a/sklearn/svm/base.py b/sklearn/svm/base.py
+index 64cebe837..fb2b734c0 100644
+--- a/sklearn/svm/base.py
++++ b/sklearn/svm/base.py
+@@ -287,11 +287,14 @@ class BaseLibSVM(BaseEstimator, metaclass=ABCMeta):
+         n_SV = self.support_vectors_.shape[0]
+ 
+         dual_coef_indices = np.tile(np.arange(n_SV), n_class)
+-        dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
+-                                     dual_coef_indices.size / n_class)
+-        self.dual_coef_ = sp.csr_matrix(
+-            (dual_coef_data, dual_coef_indices, dual_coef_indptr),
+-            (n_class, n_SV))
++        if not n_SV:
++            self.dual_coef_ = sp.csr_matrix([])
++        else:
++            dual_coef_indptr = np.arange(0, dual_coef_indices.size + 1,
++                                         dual_coef_indices.size / n_class)
++            self.dual_coef_ = sp.csr_matrix(
++                (dual_coef_data, dual_coef_indices, dual_coef_indptr),
++                (n_class, n_SV))
+ 
+     def predict(self, X):
+         """Perform regression on samples in X.
+2025-04-04 12:57:25,348 - INFO - Grading answer for scikit-learn__scikit-learn-14894...
+2025-04-04 12:57:25,349 - INFO - report: {'scikit-learn__scikit-learn-14894': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-14894: resolved: False
+2025-04-04 12:57:25,349 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-14894.gold...
+2025-04-04 12:57:40,902 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-14894.gold...
+2025-04-04 12:57:40,956 - INFO - Container sweb.eval.scikit-learn__scikit-learn-14894.gold removed.
+2025-04-04 12:57:40,956 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-14894:latest...
+2025-04-04 12:57:41,226 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-14894:latest removed.

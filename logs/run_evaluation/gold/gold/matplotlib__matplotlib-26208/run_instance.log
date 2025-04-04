@@ -1,0 +1,63 @@
+2025-04-04 12:02:55,307 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-26208
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-26208:latest for matplotlib__matplotlib-26208
+2025-04-04 12:11:30,448 - INFO - Creating container for matplotlib__matplotlib-26208...
+2025-04-04 12:11:30,482 - INFO - Container for matplotlib__matplotlib-26208 created: 3ec9234b7478141324258ba2aaf27868355ba1b27849877dba47a0b385e68edb
+2025-04-04 12:11:30,826 - INFO - Container for matplotlib__matplotlib-26208 started: 3ec9234b7478141324258ba2aaf27868355ba1b27849877dba47a0b385e68edb
+2025-04-04 12:11:30,826 - INFO - Intermediate patch for matplotlib__matplotlib-26208 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26208/patch.diff, now applying to container...
+2025-04-04 12:11:31,113 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:11:31,238 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/axes/_base.py
+
+2025-04-04 12:11:33,056 - INFO - Git diff before:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 5203e3232c..0d6e5d1677 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -4441,6 +4441,7 @@ class _AxesBase(martist.Artist):
+         self.yaxis.tick_left()
+         ax2.xaxis.set_visible(False)
+         ax2.patch.set_visible(False)
++        ax2.xaxis.units = self.xaxis.units
+         return ax2
+ 
+     def twiny(self):
+@@ -4470,6 +4471,7 @@ class _AxesBase(martist.Artist):
+         self.xaxis.tick_bottom()
+         ax2.yaxis.set_visible(False)
+         ax2.patch.set_visible(False)
++        ax2.yaxis.units = self.yaxis.units
+         return ax2
+ 
+     def get_shared_x_axes(self):
+2025-04-04 12:11:33,057 - INFO - Eval script for matplotlib__matplotlib-26208 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26208/eval.sh; copying to container...
+2025-04-04 12:16:07,071 - INFO - Test runtime: 273.76 seconds
+2025-04-04 12:16:07,072 - INFO - Test output for matplotlib__matplotlib-26208 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26208/test_output.txt
+2025-04-04 12:16:07,177 - INFO - Git diff after:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 5203e3232c..0d6e5d1677 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -4441,6 +4441,7 @@ class _AxesBase(martist.Artist):
+         self.yaxis.tick_left()
+         ax2.xaxis.set_visible(False)
+         ax2.patch.set_visible(False)
++        ax2.xaxis.units = self.xaxis.units
+         return ax2
+ 
+     def twiny(self):
+@@ -4470,6 +4471,7 @@ class _AxesBase(martist.Artist):
+         self.xaxis.tick_bottom()
+         ax2.yaxis.set_visible(False)
+         ax2.patch.set_visible(False)
++        ax2.yaxis.units = self.yaxis.units
+         return ax2
+ 
+     def get_shared_x_axes(self):
+2025-04-04 12:16:07,177 - INFO - Grading answer for matplotlib__matplotlib-26208...
+2025-04-04 12:16:07,178 - INFO - report: {'matplotlib__matplotlib-26208': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-26208: resolved: False
+2025-04-04 12:16:07,178 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-26208.gold...
+2025-04-04 12:16:52,499 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-26208.gold...
+2025-04-04 12:16:52,571 - INFO - Container sweb.eval.matplotlib__matplotlib-26208.gold removed.
+2025-04-04 12:16:52,572 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-26208:latest...
+2025-04-04 12:17:12,852 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-26208:latest removed.

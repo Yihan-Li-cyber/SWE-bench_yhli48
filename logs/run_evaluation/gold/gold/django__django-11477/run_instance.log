@@ -1,0 +1,49 @@
+2025-04-04 09:58:28,166 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11477
+Building instance image sweb.eval.x86_64.django__django-11477:latest for django__django-11477
+2025-04-04 09:59:16,274 - INFO - Creating container for django__django-11477...
+2025-04-04 09:59:16,446 - INFO - Container for django__django-11477 created: 2ea38a260a09982e3ca0cbaad195aeb6024f5d59b9302eb89369e44c921435e6
+2025-04-04 09:59:17,026 - INFO - Container for django__django-11477 started: 2ea38a260a09982e3ca0cbaad195aeb6024f5d59b9302eb89369e44c921435e6
+2025-04-04 09:59:17,026 - INFO - Intermediate patch for django__django-11477 written to logs/run_evaluation/gold/gold/django__django-11477/patch.diff, now applying to container...
+2025-04-04 09:59:17,534 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:59:17,650 - INFO - >>>>> Applied Patch:
+patching file django/urls/resolvers.py
+
+2025-04-04 09:59:19,251 - INFO - Git diff before:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index af0508f94e..247e3680c0 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -153,7 +153,7 @@ class RegexPattern(CheckURLMixin):
+             # If there are any named groups, use those as kwargs, ignoring
+             # non-named groups. Otherwise, pass all non-named arguments as
+             # positional arguments.
+-            kwargs = match.groupdict()
++            kwargs = {k: v for k, v in match.groupdict().items() if v is not None}
+             args = () if kwargs else match.groups()
+             return path[match.end():], args, kwargs
+         return None
+2025-04-04 09:59:19,252 - INFO - Eval script for django__django-11477 written to logs/run_evaluation/gold/gold/django__django-11477/eval.sh; copying to container...
+2025-04-04 09:59:32,445 - INFO - Test runtime: 12.92 seconds
+2025-04-04 09:59:32,446 - INFO - Test output for django__django-11477 written to logs/run_evaluation/gold/gold/django__django-11477/test_output.txt
+2025-04-04 09:59:32,591 - INFO - Git diff after:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index af0508f94e..247e3680c0 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -153,7 +153,7 @@ class RegexPattern(CheckURLMixin):
+             # If there are any named groups, use those as kwargs, ignoring
+             # non-named groups. Otherwise, pass all non-named arguments as
+             # positional arguments.
+-            kwargs = match.groupdict()
++            kwargs = {k: v for k, v in match.groupdict().items() if v is not None}
+             args = () if kwargs else match.groups()
+             return path[match.end():], args, kwargs
+         return None
+2025-04-04 09:59:32,591 - INFO - Grading answer for django__django-11477...
+2025-04-04 09:59:32,592 - INFO - report: {'django__django-11477': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11477: resolved: False
+2025-04-04 09:59:32,592 - INFO - Attempting to stop container sweb.eval.django__django-11477.gold...
+2025-04-04 09:59:48,355 - INFO - Attempting to remove container sweb.eval.django__django-11477.gold...
+2025-04-04 09:59:48,430 - INFO - Container sweb.eval.django__django-11477.gold removed.
+2025-04-04 09:59:48,430 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11477:latest...
+2025-04-04 09:59:49,060 - INFO - Image sweb.eval.x86_64.django__django-11477:latest removed.

@@ -1,0 +1,63 @@
+2025-04-04 10:45:01,270 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14311
+Building instance image sweb.eval.x86_64.django__django-14311:latest for django__django-14311
+2025-04-04 10:45:51,107 - INFO - Creating container for django__django-14311...
+2025-04-04 10:45:51,161 - INFO - Container for django__django-14311 created: 906f00723edc45a79ec04d1d1658567ef82d78f936e6dab7bbc7a29d4b9d7994
+2025-04-04 10:45:51,586 - INFO - Container for django__django-14311 started: 906f00723edc45a79ec04d1d1658567ef82d78f936e6dab7bbc7a29d4b9d7994
+2025-04-04 10:45:51,586 - INFO - Intermediate patch for django__django-14311 written to logs/run_evaluation/gold/gold/django__django-14311/patch.diff, now applying to container...
+2025-04-04 10:45:51,907 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:45:51,978 - INFO - >>>>> Applied Patch:
+patching file django/utils/autoreload.py
+
+2025-04-04 10:45:53,686 - INFO - Git diff before:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index b6af5f5491..15df088c48 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -223,8 +223,13 @@ def get_child_arguments():
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+-    if getattr(__main__, '__spec__', None) is not None and __main__.__spec__.parent:
+-        args += ['-m', __main__.__spec__.parent]
++    if getattr(__main__, '__spec__', None) is not None:
++        spec = __main__.__spec__
++        if (spec.name == '__main__' or spec.name.endswith('.__main__')) and spec.parent:
++            name = spec.parent
++        else:
++            name = spec.name
++        args += ['-m', name]
+         args += sys.argv[1:]
+     elif not py_script.exists():
+         # sys.argv[0] may not exist for several reasons on Windows.
+2025-04-04 10:45:53,728 - INFO - Eval script for django__django-14311 written to logs/run_evaluation/gold/gold/django__django-14311/eval.sh; copying to container...
+2025-04-04 10:46:06,473 - INFO - Test runtime: 12.54 seconds
+2025-04-04 10:46:06,474 - INFO - Test output for django__django-14311 written to logs/run_evaluation/gold/gold/django__django-14311/test_output.txt
+2025-04-04 10:46:06,592 - INFO - Git diff after:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index b6af5f5491..15df088c48 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -223,8 +223,13 @@ def get_child_arguments():
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+-    if getattr(__main__, '__spec__', None) is not None and __main__.__spec__.parent:
+-        args += ['-m', __main__.__spec__.parent]
++    if getattr(__main__, '__spec__', None) is not None:
++        spec = __main__.__spec__
++        if (spec.name == '__main__' or spec.name.endswith('.__main__')) and spec.parent:
++            name = spec.parent
++        else:
++            name = spec.name
++        args += ['-m', name]
+         args += sys.argv[1:]
+     elif not py_script.exists():
+         # sys.argv[0] may not exist for several reasons on Windows.
+2025-04-04 10:46:06,592 - INFO - Grading answer for django__django-14311...
+2025-04-04 10:46:06,593 - INFO - report: {'django__django-14311': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14311: resolved: False
+2025-04-04 10:46:06,594 - INFO - Attempting to stop container sweb.eval.django__django-14311.gold...
+2025-04-04 10:46:22,247 - INFO - Attempting to remove container sweb.eval.django__django-14311.gold...
+2025-04-04 10:46:22,286 - INFO - Container sweb.eval.django__django-14311.gold removed.
+2025-04-04 10:46:22,286 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14311:latest...
+2025-04-04 10:46:23,251 - INFO - Image sweb.eval.x86_64.django__django-14311:latest removed.

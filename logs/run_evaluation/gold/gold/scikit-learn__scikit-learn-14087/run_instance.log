@@ -1,0 +1,77 @@
+2025-04-04 12:41:50,171 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-14087
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-14087:latest for scikit-learn__scikit-learn-14087
+2025-04-04 12:49:54,695 - INFO - Creating container for scikit-learn__scikit-learn-14087...
+2025-04-04 12:49:54,767 - INFO - Container for scikit-learn__scikit-learn-14087 created: a9010d83531f22345f02f7c5b9b74ce35e72e5d7203bb39186a4a9033f183118
+2025-04-04 12:49:55,075 - INFO - Container for scikit-learn__scikit-learn-14087 started: a9010d83531f22345f02f7c5b9b74ce35e72e5d7203bb39186a4a9033f183118
+2025-04-04 12:49:55,076 - INFO - Intermediate patch for scikit-learn__scikit-learn-14087 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14087/patch.diff, now applying to container...
+2025-04-04 12:49:55,347 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:49:55,403 - INFO - >>>>> Applied Patch:
+patching file sklearn/linear_model/logistic.py
+
+2025-04-04 12:49:55,858 - INFO - Git diff before:
+diff --git a/sklearn/linear_model/logistic.py b/sklearn/linear_model/logistic.py
+index 1999f1dae..a8b83759b 100644
+--- a/sklearn/linear_model/logistic.py
++++ b/sklearn/linear_model/logistic.py
+@@ -2170,7 +2170,7 @@ class LogisticRegressionCV(LogisticRegression, BaseEstimator,
+                 # Take the best scores across every fold and the average of
+                 # all coefficients corresponding to the best scores.
+                 best_indices = np.argmax(scores, axis=1)
+-                if self.multi_class == 'ovr':
++                if multi_class == 'ovr':
+                     w = np.mean([coefs_paths[i, best_indices[i], :]
+                                  for i in range(len(folds))], axis=0)
+                 else:
+@@ -2180,8 +2180,11 @@ class LogisticRegressionCV(LogisticRegression, BaseEstimator,
+                 best_indices_C = best_indices % len(self.Cs_)
+                 self.C_.append(np.mean(self.Cs_[best_indices_C]))
+ 
+-                best_indices_l1 = best_indices // len(self.Cs_)
+-                self.l1_ratio_.append(np.mean(l1_ratios_[best_indices_l1]))
++                if self.penalty == 'elasticnet':
++                    best_indices_l1 = best_indices // len(self.Cs_)
++                    self.l1_ratio_.append(np.mean(l1_ratios_[best_indices_l1]))
++                else:
++                    self.l1_ratio_.append(None)
+ 
+             if multi_class == 'multinomial':
+                 self.C_ = np.tile(self.C_, n_classes)
+2025-04-04 12:49:55,859 - INFO - Eval script for scikit-learn__scikit-learn-14087 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14087/eval.sh; copying to container...
+2025-04-04 12:50:27,774 - INFO - Test runtime: 31.73 seconds
+2025-04-04 12:50:27,774 - INFO - Test output for scikit-learn__scikit-learn-14087 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14087/test_output.txt
+2025-04-04 12:50:27,847 - INFO - Git diff after:
+diff --git a/sklearn/linear_model/logistic.py b/sklearn/linear_model/logistic.py
+index 1999f1dae..a8b83759b 100644
+--- a/sklearn/linear_model/logistic.py
++++ b/sklearn/linear_model/logistic.py
+@@ -2170,7 +2170,7 @@ class LogisticRegressionCV(LogisticRegression, BaseEstimator,
+                 # Take the best scores across every fold and the average of
+                 # all coefficients corresponding to the best scores.
+                 best_indices = np.argmax(scores, axis=1)
+-                if self.multi_class == 'ovr':
++                if multi_class == 'ovr':
+                     w = np.mean([coefs_paths[i, best_indices[i], :]
+                                  for i in range(len(folds))], axis=0)
+                 else:
+@@ -2180,8 +2180,11 @@ class LogisticRegressionCV(LogisticRegression, BaseEstimator,
+                 best_indices_C = best_indices % len(self.Cs_)
+                 self.C_.append(np.mean(self.Cs_[best_indices_C]))
+ 
+-                best_indices_l1 = best_indices // len(self.Cs_)
+-                self.l1_ratio_.append(np.mean(l1_ratios_[best_indices_l1]))
++                if self.penalty == 'elasticnet':
++                    best_indices_l1 = best_indices // len(self.Cs_)
++                    self.l1_ratio_.append(np.mean(l1_ratios_[best_indices_l1]))
++                else:
++                    self.l1_ratio_.append(None)
+ 
+             if multi_class == 'multinomial':
+                 self.C_ = np.tile(self.C_, n_classes)
+2025-04-04 12:50:27,848 - INFO - Grading answer for scikit-learn__scikit-learn-14087...
+2025-04-04 12:50:27,848 - INFO - report: {'scikit-learn__scikit-learn-14087': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-14087: resolved: False
+2025-04-04 12:50:27,849 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-14087.gold...
+2025-04-04 12:51:13,121 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-14087.gold...
+2025-04-04 12:51:13,141 - INFO - Container sweb.eval.scikit-learn__scikit-learn-14087.gold removed.
+2025-04-04 12:51:13,141 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-14087:latest...
+2025-04-04 12:51:22,156 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-14087:latest removed.

@@ -1,0 +1,123 @@
+2025-04-04 13:37:37,112 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-10449
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest for sphinx-doc__sphinx-10449
+2025-04-04 13:38:40,689 - INFO - Creating container for sphinx-doc__sphinx-10449...
+2025-04-04 13:38:40,728 - INFO - Container for sphinx-doc__sphinx-10449 created: abb1e69d3c89807c17d353babe21c98c59886f0d522ece4274b90566a3adfdc4
+2025-04-04 13:38:45,814 - INFO - Container for sphinx-doc__sphinx-10449 started: abb1e69d3c89807c17d353babe21c98c59886f0d522ece4274b90566a3adfdc4
+2025-04-04 13:38:45,815 - INFO - Intermediate patch for sphinx-doc__sphinx-10449 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-10449/patch.diff, now applying to container...
+2025-04-04 13:38:46,315 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:38:46,394 - INFO - >>>>> Applied Patch:
+patching file sphinx/ext/autodoc/typehints.py
+
+2025-04-04 13:38:46,975 - INFO - Git diff before:
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index 06768168e..d912cd7d5 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -59,7 +59,10 @@ def merge_typehints(app: Sphinx, domain: str, objtype: str, contentnode: Element
+ 
+         for field_list in field_lists:
+             if app.config.autodoc_typehints_description_target == "all":
+-                modify_field_list(field_list, annotations[fullname])
++                if objtype == 'class':
++                    modify_field_list(field_list, annotations[fullname], suppress_rtype=True)
++                else:
++                    modify_field_list(field_list, annotations[fullname])
+             elif app.config.autodoc_typehints_description_target == "documented_params":
+                 augment_descriptions_with_types(
+                     field_list, annotations[fullname], force_rtype=True
+@@ -83,7 +86,8 @@ def insert_field_list(node: Element) -> nodes.field_list:
+     return field_list
+ 
+ 
+-def modify_field_list(node: nodes.field_list, annotations: Dict[str, str]) -> None:
++def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
++                      suppress_rtype: bool = False) -> None:
+     arguments: Dict[str, Dict[str, bool]] = {}
+     fields = cast(Iterable[nodes.field], node)
+     for field in fields:
+@@ -124,6 +128,10 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str]) -> No
+             node += field
+ 
+     if 'return' in annotations and 'return' not in arguments:
++        annotation = annotations['return']
++        if annotation == 'None' and suppress_rtype:
++            return
++
+         field = nodes.field()
+         field += nodes.field_name('', 'rtype')
+         field += nodes.field_body('', nodes.paragraph('', annotation))
+diff --git a/tox.ini b/tox.ini
+index 105a02597..90ada0821 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -29,7 +29,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2025-04-04 13:38:46,976 - INFO - Eval script for sphinx-doc__sphinx-10449 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-10449/eval.sh; copying to container...
+2025-04-04 13:38:57,670 - INFO - Test runtime: 10.35 seconds
+2025-04-04 13:38:57,671 - INFO - Test output for sphinx-doc__sphinx-10449 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-10449/test_output.txt
+2025-04-04 13:38:57,806 - INFO - Git diff after:
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index 06768168e..d912cd7d5 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -59,7 +59,10 @@ def merge_typehints(app: Sphinx, domain: str, objtype: str, contentnode: Element
+ 
+         for field_list in field_lists:
+             if app.config.autodoc_typehints_description_target == "all":
+-                modify_field_list(field_list, annotations[fullname])
++                if objtype == 'class':
++                    modify_field_list(field_list, annotations[fullname], suppress_rtype=True)
++                else:
++                    modify_field_list(field_list, annotations[fullname])
+             elif app.config.autodoc_typehints_description_target == "documented_params":
+                 augment_descriptions_with_types(
+                     field_list, annotations[fullname], force_rtype=True
+@@ -83,7 +86,8 @@ def insert_field_list(node: Element) -> nodes.field_list:
+     return field_list
+ 
+ 
+-def modify_field_list(node: nodes.field_list, annotations: Dict[str, str]) -> None:
++def modify_field_list(node: nodes.field_list, annotations: Dict[str, str],
++                      suppress_rtype: bool = False) -> None:
+     arguments: Dict[str, Dict[str, bool]] = {}
+     fields = cast(Iterable[nodes.field], node)
+     for field in fields:
+@@ -124,6 +128,10 @@ def modify_field_list(node: nodes.field_list, annotations: Dict[str, str]) -> No
+             node += field
+ 
+     if 'return' in annotations and 'return' not in arguments:
++        annotation = annotations['return']
++        if annotation == 'None' and suppress_rtype:
++            return
++
+         field = nodes.field()
+         field += nodes.field_name('', 'rtype')
+         field += nodes.field_body('', nodes.paragraph('', annotation))
+diff --git a/tox.ini b/tox.ini
+index 105a02597..90ada0821 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -29,7 +29,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2025-04-04 13:38:57,807 - INFO - Grading answer for sphinx-doc__sphinx-10449...
+2025-04-04 13:38:57,807 - INFO - report: {'sphinx-doc__sphinx-10449': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-10449: resolved: False
+2025-04-04 13:38:57,807 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-10449.gold...
+2025-04-04 13:39:13,829 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-10449.gold...
+2025-04-04 13:39:13,954 - INFO - Container sweb.eval.sphinx-doc__sphinx-10449.gold removed.
+2025-04-04 13:39:13,954 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest...
+2025-04-04 13:39:14,831 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest removed.

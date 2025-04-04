@@ -1,0 +1,77 @@
+2025-04-04 09:49:21,974 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7671
+Building instance image sweb.eval.x86_64.astropy__astropy-7671:latest for astropy__astropy-7671
+2025-04-04 09:52:52,505 - INFO - Creating container for astropy__astropy-7671...
+2025-04-04 09:52:52,613 - INFO - Container for astropy__astropy-7671 created: fa7825c1f6813c59111cb2394e78364b1e5b73e2502288b32d9379940b6275d3
+2025-04-04 09:52:53,107 - INFO - Container for astropy__astropy-7671 started: fa7825c1f6813c59111cb2394e78364b1e5b73e2502288b32d9379940b6275d3
+2025-04-04 09:52:53,107 - INFO - Intermediate patch for astropy__astropy-7671 written to logs/run_evaluation/gold/gold/astropy__astropy-7671/patch.diff, now applying to container...
+2025-04-04 09:52:53,416 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:52:53,506 - INFO - >>>>> Applied Patch:
+patching file astropy/utils/introspection.py
+
+2025-04-04 09:52:54,319 - INFO - Git diff before:
+diff --git a/astropy/utils/introspection.py b/astropy/utils/introspection.py
+index 3e784f9fc3..e437b40c87 100644
+--- a/astropy/utils/introspection.py
++++ b/astropy/utils/introspection.py
+@@ -4,6 +4,7 @@
+ 
+ 
+ import inspect
++import re
+ import types
+ import importlib
+ from distutils.version import LooseVersion
+@@ -139,6 +140,14 @@ def minversion(module, version, inclusive=True, version_path='__version__'):
+     else:
+         have_version = resolve_name(module.__name__, version_path)
+ 
++    # LooseVersion raises a TypeError when strings like dev, rc1 are part
++    # of the version number. Match the dotted numbers only. Regex taken
++    # from PEP440, https://www.python.org/dev/peps/pep-0440/, Appendix B
++    expr = '^([1-9]\\d*!)?(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))*'
++    m = re.match(expr, version)
++    if m:
++        version = m.group(0)
++
+     if inclusive:
+         return LooseVersion(have_version) >= LooseVersion(version)
+     else:
+2025-04-04 09:52:54,319 - INFO - Eval script for astropy__astropy-7671 written to logs/run_evaluation/gold/gold/astropy__astropy-7671/eval.sh; copying to container...
+2025-04-04 09:53:05,414 - INFO - Test runtime: 10.85 seconds
+2025-04-04 09:53:05,415 - INFO - Test output for astropy__astropy-7671 written to logs/run_evaluation/gold/gold/astropy__astropy-7671/test_output.txt
+2025-04-04 09:53:05,527 - INFO - Git diff after:
+diff --git a/astropy/utils/introspection.py b/astropy/utils/introspection.py
+index 3e784f9fc3..e437b40c87 100644
+--- a/astropy/utils/introspection.py
++++ b/astropy/utils/introspection.py
+@@ -4,6 +4,7 @@
+ 
+ 
+ import inspect
++import re
+ import types
+ import importlib
+ from distutils.version import LooseVersion
+@@ -139,6 +140,14 @@ def minversion(module, version, inclusive=True, version_path='__version__'):
+     else:
+         have_version = resolve_name(module.__name__, version_path)
+ 
++    # LooseVersion raises a TypeError when strings like dev, rc1 are part
++    # of the version number. Match the dotted numbers only. Regex taken
++    # from PEP440, https://www.python.org/dev/peps/pep-0440/, Appendix B
++    expr = '^([1-9]\\d*!)?(0|[1-9]\\d*)(\\.(0|[1-9]\\d*))*'
++    m = re.match(expr, version)
++    if m:
++        version = m.group(0)
++
+     if inclusive:
+         return LooseVersion(have_version) >= LooseVersion(version)
+     else:
+2025-04-04 09:53:05,527 - INFO - Grading answer for astropy__astropy-7671...
+2025-04-04 09:53:05,527 - INFO - report: {'astropy__astropy-7671': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-7671: resolved: False
+2025-04-04 09:53:05,527 - INFO - Attempting to stop container sweb.eval.astropy__astropy-7671.gold...
+2025-04-04 09:53:20,890 - INFO - Attempting to remove container sweb.eval.astropy__astropy-7671.gold...
+2025-04-04 09:53:20,909 - INFO - Container sweb.eval.astropy__astropy-7671.gold removed.
+2025-04-04 09:53:20,909 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-7671:latest...
+2025-04-04 09:53:21,214 - INFO - Image sweb.eval.x86_64.astropy__astropy-7671:latest removed.

@@ -1,0 +1,71 @@
+2025-04-04 09:45:51,551 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14539
+Building instance image sweb.eval.x86_64.astropy__astropy-14539:latest for astropy__astropy-14539
+2025-04-04 09:47:49,766 - INFO - Creating container for astropy__astropy-14539...
+2025-04-04 09:47:49,892 - INFO - Container for astropy__astropy-14539 created: d06773a8b37e36cbd930ba3ad004cbfd424a42a3c176537ad098d4ebc55cd1aa
+2025-04-04 09:47:50,446 - INFO - Container for astropy__astropy-14539 started: d06773a8b37e36cbd930ba3ad004cbfd424a42a3c176537ad098d4ebc55cd1aa
+2025-04-04 09:47:50,447 - INFO - Intermediate patch for astropy__astropy-14539 written to logs/run_evaluation/gold/gold/astropy__astropy-14539/patch.diff, now applying to container...
+2025-04-04 09:47:50,749 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:47:50,833 - INFO - >>>>> Applied Patch:
+patching file astropy/io/fits/diff.py
+
+2025-04-04 09:47:51,558 - INFO - Git diff before:
+diff --git a/astropy/io/fits/diff.py b/astropy/io/fits/diff.py
+index 100cdf1b8c..d3608ef01d 100644
+--- a/astropy/io/fits/diff.py
++++ b/astropy/io/fits/diff.py
+@@ -1449,7 +1449,7 @@ class TableDataDiff(_BaseDiff):
+                 arrb.dtype, np.floating
+             ):
+                 diffs = where_not_allclose(arra, arrb, rtol=self.rtol, atol=self.atol)
+-            elif "P" in col.format:
++            elif "P" in col.format or "Q" in col.format:
+                 diffs = (
+                     [
+                         idx
+diff --git a/pyproject.toml b/pyproject.toml
+index b4e9ef8387..ff68a7403d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:47:51,558 - INFO - Eval script for astropy__astropy-14539 written to logs/run_evaluation/gold/gold/astropy__astropy-14539/eval.sh; copying to container...
+2025-04-04 09:49:12,692 - INFO - Test runtime: 80.86 seconds
+2025-04-04 09:49:12,693 - INFO - Test output for astropy__astropy-14539 written to logs/run_evaluation/gold/gold/astropy__astropy-14539/test_output.txt
+2025-04-04 09:49:12,794 - INFO - Git diff after:
+diff --git a/astropy/io/fits/diff.py b/astropy/io/fits/diff.py
+index 100cdf1b8c..d3608ef01d 100644
+--- a/astropy/io/fits/diff.py
++++ b/astropy/io/fits/diff.py
+@@ -1449,7 +1449,7 @@ class TableDataDiff(_BaseDiff):
+                 arrb.dtype, np.floating
+             ):
+                 diffs = where_not_allclose(arra, arrb, rtol=self.rtol, atol=self.atol)
+-            elif "P" in col.format:
++            elif "P" in col.format or "Q" in col.format:
+                 diffs = (
+                     [
+                         idx
+diff --git a/pyproject.toml b/pyproject.toml
+index b4e9ef8387..ff68a7403d 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:49:12,795 - INFO - Grading answer for astropy__astropy-14539...
+2025-04-04 09:49:12,797 - INFO - report: {'astropy__astropy-14539': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14539: resolved: False
+2025-04-04 09:49:12,797 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14539.gold...
+2025-04-04 09:49:28,895 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14539.gold...
+2025-04-04 09:49:28,938 - INFO - Container sweb.eval.astropy__astropy-14539.gold removed.
+2025-04-04 09:49:28,938 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14539:latest...
+2025-04-04 09:49:29,155 - INFO - Image sweb.eval.x86_64.astropy__astropy-14539:latest removed.

@@ -1,0 +1,125 @@
+2025-04-04 12:06:04,643 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-26466
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-26466:latest for matplotlib__matplotlib-26466
+2025-04-04 12:13:24,182 - INFO - Creating container for matplotlib__matplotlib-26466...
+2025-04-04 12:13:24,220 - INFO - Container for matplotlib__matplotlib-26466 created: c80f4b619289f3aa59528cdc5a4b8802ee042007f00111f8a66a54f5ac8f41da
+2025-04-04 12:13:24,815 - INFO - Container for matplotlib__matplotlib-26466 started: c80f4b619289f3aa59528cdc5a4b8802ee042007f00111f8a66a54f5ac8f41da
+2025-04-04 12:13:24,815 - INFO - Intermediate patch for matplotlib__matplotlib-26466 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26466/patch.diff, now applying to container...
+2025-04-04 12:13:25,107 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:13:25,174 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/text.py
+
+2025-04-04 12:13:27,005 - INFO - Git diff before:
+diff --git a/lib/matplotlib/text.py b/lib/matplotlib/text.py
+index d4922fc517..a3ab785756 100644
+--- a/lib/matplotlib/text.py
++++ b/lib/matplotlib/text.py
+@@ -1389,7 +1389,8 @@ class OffsetFrom:
+             The screen units to use (pixels or points) for the offset input.
+         """
+         self._artist = artist
+-        self._ref_coord = ref_coord
++        x, y = ref_coord  # Make copy when ref_coord is an array (and check the shape).
++        self._ref_coord = x, y
+         self.set_unit(unit)
+ 
+     def set_unit(self, unit):
+@@ -1407,13 +1408,6 @@ class OffsetFrom:
+         """Return the unit for input to the transform used by ``__call__``."""
+         return self._unit
+ 
+-    def _get_scale(self, renderer):
+-        unit = self.get_unit()
+-        if unit == "pixels":
+-            return 1.
+-        else:
+-            return renderer.points_to_pixels(1.)
+-
+     def __call__(self, renderer):
+         """
+         Return the offset transform.
+@@ -1443,11 +1437,8 @@ class OffsetFrom:
+             x, y = self._artist.transform(self._ref_coord)
+         else:
+             _api.check_isinstance((Artist, BboxBase, Transform), artist=self._artist)
+-
+-        sc = self._get_scale(renderer)
+-        tr = Affine2D().scale(sc).translate(x, y)
+-
+-        return tr
++        scale = 1 if self._unit == "pixels" else renderer.points_to_pixels(1)
++        return Affine2D().scale(scale).translate(x, y)
+ 
+ 
+ class _AnnotationBase:
+@@ -1456,7 +1447,8 @@ class _AnnotationBase:
+                  xycoords='data',
+                  annotation_clip=None):
+ 
+-        self.xy = xy
++        x, y = xy  # Make copy when xy is an array (and check the shape).
++        self.xy = x, y
+         self.xycoords = xycoords
+         self.set_annotation_clip(annotation_clip)
+2025-04-04 12:13:27,006 - INFO - Eval script for matplotlib__matplotlib-26466 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26466/eval.sh; copying to container...
+2025-04-04 12:15:48,446 - INFO - Test runtime: 141.22 seconds
+2025-04-04 12:15:48,447 - INFO - Test output for matplotlib__matplotlib-26466 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-26466/test_output.txt
+2025-04-04 12:15:48,530 - INFO - Git diff after:
+diff --git a/lib/matplotlib/text.py b/lib/matplotlib/text.py
+index d4922fc517..a3ab785756 100644
+--- a/lib/matplotlib/text.py
++++ b/lib/matplotlib/text.py
+@@ -1389,7 +1389,8 @@ class OffsetFrom:
+             The screen units to use (pixels or points) for the offset input.
+         """
+         self._artist = artist
+-        self._ref_coord = ref_coord
++        x, y = ref_coord  # Make copy when ref_coord is an array (and check the shape).
++        self._ref_coord = x, y
+         self.set_unit(unit)
+ 
+     def set_unit(self, unit):
+@@ -1407,13 +1408,6 @@ class OffsetFrom:
+         """Return the unit for input to the transform used by ``__call__``."""
+         return self._unit
+ 
+-    def _get_scale(self, renderer):
+-        unit = self.get_unit()
+-        if unit == "pixels":
+-            return 1.
+-        else:
+-            return renderer.points_to_pixels(1.)
+-
+     def __call__(self, renderer):
+         """
+         Return the offset transform.
+@@ -1443,11 +1437,8 @@ class OffsetFrom:
+             x, y = self._artist.transform(self._ref_coord)
+         else:
+             _api.check_isinstance((Artist, BboxBase, Transform), artist=self._artist)
+-
+-        sc = self._get_scale(renderer)
+-        tr = Affine2D().scale(sc).translate(x, y)
+-
+-        return tr
++        scale = 1 if self._unit == "pixels" else renderer.points_to_pixels(1)
++        return Affine2D().scale(scale).translate(x, y)
+ 
+ 
+ class _AnnotationBase:
+@@ -1456,7 +1447,8 @@ class _AnnotationBase:
+                  xycoords='data',
+                  annotation_clip=None):
+ 
+-        self.xy = xy
++        x, y = xy  # Make copy when xy is an array (and check the shape).
++        self.xy = x, y
+         self.xycoords = xycoords
+         self.set_annotation_clip(annotation_clip)
+2025-04-04 12:15:48,530 - INFO - Grading answer for matplotlib__matplotlib-26466...
+2025-04-04 12:15:48,531 - INFO - report: {'matplotlib__matplotlib-26466': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-26466: resolved: False
+2025-04-04 12:15:48,531 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-26466.gold...
+2025-04-04 12:16:04,132 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-26466.gold...
+2025-04-04 12:16:04,174 - INFO - Container sweb.eval.matplotlib__matplotlib-26466.gold removed.
+2025-04-04 12:16:04,175 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-26466:latest...
+2025-04-04 12:16:08,585 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-26466:latest removed.

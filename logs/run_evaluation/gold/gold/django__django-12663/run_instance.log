@@ -1,0 +1,49 @@
+2025-04-04 10:25:18,585 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12663
+Building instance image sweb.eval.x86_64.django__django-12663:latest for django__django-12663
+2025-04-04 10:26:09,673 - INFO - Creating container for django__django-12663...
+2025-04-04 10:26:09,876 - INFO - Container for django__django-12663 created: 8812e2250468e665ba3da5dce35c06bf07a1aba239595d637999308368ca15b7
+2025-04-04 10:27:08,972 - INFO - Container for django__django-12663 started: 8812e2250468e665ba3da5dce35c06bf07a1aba239595d637999308368ca15b7
+2025-04-04 10:27:08,972 - INFO - Intermediate patch for django__django-12663 written to logs/run_evaluation/gold/gold/django__django-12663/patch.diff, now applying to container...
+2025-04-04 10:27:09,335 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:27:09,421 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-04 10:27:11,089 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 9fe0c9a656..e5524a8198 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -233,7 +233,8 @@ class Query(BaseExpression):
+     @property
+     def output_field(self):
+         if len(self.select) == 1:
+-            return self.select[0].field
++            select = self.select[0]
++            return getattr(select, 'target', None) or select.field
+         elif len(self.annotation_select) == 1:
+             return next(iter(self.annotation_select.values())).output_field
+2025-04-04 10:27:11,090 - INFO - Eval script for django__django-12663 written to logs/run_evaluation/gold/gold/django__django-12663/eval.sh; copying to container...
+2025-04-04 10:27:24,600 - INFO - Test runtime: 13.30 seconds
+2025-04-04 10:27:24,600 - INFO - Test output for django__django-12663 written to logs/run_evaluation/gold/gold/django__django-12663/test_output.txt
+2025-04-04 10:27:24,717 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 9fe0c9a656..e5524a8198 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -233,7 +233,8 @@ class Query(BaseExpression):
+     @property
+     def output_field(self):
+         if len(self.select) == 1:
+-            return self.select[0].field
++            select = self.select[0]
++            return getattr(select, 'target', None) or select.field
+         elif len(self.annotation_select) == 1:
+             return next(iter(self.annotation_select.values())).output_field
+2025-04-04 10:27:24,717 - INFO - Grading answer for django__django-12663...
+2025-04-04 10:27:24,718 - INFO - report: {'django__django-12663': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12663: resolved: False
+2025-04-04 10:27:24,718 - INFO - Attempting to stop container sweb.eval.django__django-12663.gold...
+2025-04-04 10:27:40,268 - INFO - Attempting to remove container sweb.eval.django__django-12663.gold...
+2025-04-04 10:27:40,672 - INFO - Container sweb.eval.django__django-12663.gold removed.
+2025-04-04 10:27:40,672 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12663:latest...
+2025-04-04 10:27:43,984 - INFO - Image sweb.eval.x86_64.django__django-12663:latest removed.

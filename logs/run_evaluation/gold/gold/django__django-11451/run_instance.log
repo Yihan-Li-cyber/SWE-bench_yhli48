@@ -1,0 +1,49 @@
+2025-04-04 09:58:09,215 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11451
+Building instance image sweb.eval.x86_64.django__django-11451:latest for django__django-11451
+2025-04-04 09:59:19,868 - INFO - Creating container for django__django-11451...
+2025-04-04 09:59:19,944 - INFO - Container for django__django-11451 created: c4474d0ff7c2733cf6f1b85dc99923d626cc1f4474de08ce475d19617c9410bd
+2025-04-04 09:59:20,553 - INFO - Container for django__django-11451 started: c4474d0ff7c2733cf6f1b85dc99923d626cc1f4474de08ce475d19617c9410bd
+2025-04-04 09:59:20,554 - INFO - Intermediate patch for django__django-11451 written to logs/run_evaluation/gold/gold/django__django-11451/patch.diff, now applying to container...
+2025-04-04 09:59:20,975 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:59:21,086 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/backends.py
+
+2025-04-04 09:59:22,586 - INFO - Git diff before:
+diff --git a/django/contrib/auth/backends.py b/django/contrib/auth/backends.py
+index f4b1722757..a3765ae0f1 100644
+--- a/django/contrib/auth/backends.py
++++ b/django/contrib/auth/backends.py
+@@ -39,6 +39,8 @@ class ModelBackend(BaseBackend):
+     def authenticate(self, request, username=None, password=None, **kwargs):
+         if username is None:
+             username = kwargs.get(UserModel.USERNAME_FIELD)
++        if username is None or password is None:
++            return
+         try:
+             user = UserModel._default_manager.get_by_natural_key(username)
+         except UserModel.DoesNotExist:
+2025-04-04 09:59:22,587 - INFO - Eval script for django__django-11451 written to logs/run_evaluation/gold/gold/django__django-11451/eval.sh; copying to container...
+2025-04-04 09:59:33,958 - INFO - Test runtime: 11.10 seconds
+2025-04-04 09:59:33,958 - INFO - Test output for django__django-11451 written to logs/run_evaluation/gold/gold/django__django-11451/test_output.txt
+2025-04-04 09:59:34,061 - INFO - Git diff after:
+diff --git a/django/contrib/auth/backends.py b/django/contrib/auth/backends.py
+index f4b1722757..a3765ae0f1 100644
+--- a/django/contrib/auth/backends.py
++++ b/django/contrib/auth/backends.py
+@@ -39,6 +39,8 @@ class ModelBackend(BaseBackend):
+     def authenticate(self, request, username=None, password=None, **kwargs):
+         if username is None:
+             username = kwargs.get(UserModel.USERNAME_FIELD)
++        if username is None or password is None:
++            return
+         try:
+             user = UserModel._default_manager.get_by_natural_key(username)
+         except UserModel.DoesNotExist:
+2025-04-04 09:59:34,061 - INFO - Grading answer for django__django-11451...
+2025-04-04 09:59:34,062 - INFO - report: {'django__django-11451': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11451: resolved: False
+2025-04-04 09:59:34,062 - INFO - Attempting to stop container sweb.eval.django__django-11451.gold...
+2025-04-04 09:59:50,392 - INFO - Attempting to remove container sweb.eval.django__django-11451.gold...
+2025-04-04 09:59:50,445 - INFO - Container sweb.eval.django__django-11451.gold removed.
+2025-04-04 09:59:50,446 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11451:latest...
+2025-04-04 09:59:51,687 - INFO - Image sweb.eval.x86_64.django__django-11451:latest removed.

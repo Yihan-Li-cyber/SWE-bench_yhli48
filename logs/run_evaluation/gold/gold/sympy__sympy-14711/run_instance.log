@@ -1,0 +1,47 @@
+2025-04-04 13:55:51,626 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-14711
+Building instance image sweb.eval.x86_64.sympy__sympy-14711:latest for sympy__sympy-14711
+2025-04-04 13:56:39,132 - INFO - Creating container for sympy__sympy-14711...
+2025-04-04 13:56:39,168 - INFO - Container for sympy__sympy-14711 created: 897a5afe1d2f2bdea17c5ad2b630dd94ecc01df2739306d107c04a17f0c47229
+2025-04-04 13:56:39,644 - INFO - Container for sympy__sympy-14711 started: 897a5afe1d2f2bdea17c5ad2b630dd94ecc01df2739306d107c04a17f0c47229
+2025-04-04 13:56:39,644 - INFO - Intermediate patch for sympy__sympy-14711 written to logs/run_evaluation/gold/gold/sympy__sympy-14711/patch.diff, now applying to container...
+2025-04-04 13:56:40,036 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:56:40,120 - INFO - >>>>> Applied Patch:
+patching file sympy/physics/vector/vector.py
+
+2025-04-04 13:56:40,804 - INFO - Git diff before:
+diff --git a/sympy/physics/vector/vector.py b/sympy/physics/vector/vector.py
+index a048ee57f1..8849119218 100644
+--- a/sympy/physics/vector/vector.py
++++ b/sympy/physics/vector/vector.py
+@@ -57,6 +57,8 @@ def __hash__(self):
+ 
+     def __add__(self, other):
+         """The add operator for Vector. """
++        if other == 0:
++            return self
+         other = _check_vector(other)
+         return Vector(self.args + other.args)
+2025-04-04 13:56:40,804 - INFO - Eval script for sympy__sympy-14711 written to logs/run_evaluation/gold/gold/sympy__sympy-14711/eval.sh; copying to container...
+2025-04-04 13:56:51,412 - INFO - Test runtime: 10.29 seconds
+2025-04-04 13:56:51,413 - INFO - Test output for sympy__sympy-14711 written to logs/run_evaluation/gold/gold/sympy__sympy-14711/test_output.txt
+2025-04-04 13:56:51,532 - INFO - Git diff after:
+diff --git a/sympy/physics/vector/vector.py b/sympy/physics/vector/vector.py
+index a048ee57f1..8849119218 100644
+--- a/sympy/physics/vector/vector.py
++++ b/sympy/physics/vector/vector.py
+@@ -57,6 +57,8 @@ def __hash__(self):
+ 
+     def __add__(self, other):
+         """The add operator for Vector. """
++        if other == 0:
++            return self
+         other = _check_vector(other)
+         return Vector(self.args + other.args)
+2025-04-04 13:56:51,532 - INFO - Grading answer for sympy__sympy-14711...
+2025-04-04 13:56:51,533 - INFO - report: {'sympy__sympy-14711': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-14711: resolved: False
+2025-04-04 13:56:51,533 - INFO - Attempting to stop container sweb.eval.sympy__sympy-14711.gold...
+2025-04-04 13:57:07,175 - INFO - Attempting to remove container sweb.eval.sympy__sympy-14711.gold...
+2025-04-04 13:57:07,224 - INFO - Container sweb.eval.sympy__sympy-14711.gold removed.
+2025-04-04 13:57:07,225 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-14711:latest...
+2025-04-04 13:57:07,470 - INFO - Image sweb.eval.x86_64.sympy__sympy-14711:latest removed.

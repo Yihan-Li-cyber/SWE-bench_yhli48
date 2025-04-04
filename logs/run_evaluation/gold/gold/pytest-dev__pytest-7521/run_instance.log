@@ -1,0 +1,47 @@
+2025-04-04 12:26:48,075 - INFO - Environment image sweb.env.x86_64.cc47cc71483942d0c3a15e:latest found for pytest-dev__pytest-7521
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-7521:latest for pytest-dev__pytest-7521
+2025-04-04 12:27:05,170 - INFO - Creating container for pytest-dev__pytest-7521...
+2025-04-04 12:27:05,220 - INFO - Container for pytest-dev__pytest-7521 created: 814dab730fc788ed55f9a1bfa14bac9362da4952520b917eb8a06d02baac388a
+2025-04-04 12:27:05,593 - INFO - Container for pytest-dev__pytest-7521 started: 814dab730fc788ed55f9a1bfa14bac9362da4952520b917eb8a06d02baac388a
+2025-04-04 12:27:05,594 - INFO - Intermediate patch for pytest-dev__pytest-7521 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7521/patch.diff, now applying to container...
+2025-04-04 12:27:06,032 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:27:06,102 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/capture.py
+
+2025-04-04 12:27:06,286 - INFO - Git diff before:
+diff --git a/src/_pytest/capture.py b/src/_pytest/capture.py
+index 3f9c60fb9..f538b67ec 100644
+--- a/src/_pytest/capture.py
++++ b/src/_pytest/capture.py
+@@ -388,6 +388,7 @@ class FDCaptureBinary:
+                 TemporaryFile(buffering=0),  # type: ignore[arg-type]
+                 encoding="utf-8",
+                 errors="replace",
++                newline="",
+                 write_through=True,
+             )
+             if targetfd in patchsysdict:
+2025-04-04 12:27:06,287 - INFO - Eval script for pytest-dev__pytest-7521 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7521/eval.sh; copying to container...
+2025-04-04 12:27:29,353 - INFO - Test runtime: 22.80 seconds
+2025-04-04 12:27:29,353 - INFO - Test output for pytest-dev__pytest-7521 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7521/test_output.txt
+2025-04-04 12:27:29,432 - INFO - Git diff after:
+diff --git a/src/_pytest/capture.py b/src/_pytest/capture.py
+index 3f9c60fb9..f538b67ec 100644
+--- a/src/_pytest/capture.py
++++ b/src/_pytest/capture.py
+@@ -388,6 +388,7 @@ class FDCaptureBinary:
+                 TemporaryFile(buffering=0),  # type: ignore[arg-type]
+                 encoding="utf-8",
+                 errors="replace",
++                newline="",
+                 write_through=True,
+             )
+             if targetfd in patchsysdict:
+2025-04-04 12:27:29,432 - INFO - Grading answer for pytest-dev__pytest-7521...
+2025-04-04 12:27:29,433 - INFO - report: {'pytest-dev__pytest-7521': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-7521: resolved: False
+2025-04-04 12:27:29,434 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-7521.gold...
+2025-04-04 12:27:45,425 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-7521.gold...
+2025-04-04 12:27:45,498 - INFO - Container sweb.eval.pytest-dev__pytest-7521.gold removed.
+2025-04-04 12:27:45,498 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7521:latest...
+2025-04-04 12:27:45,604 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7521:latest removed.

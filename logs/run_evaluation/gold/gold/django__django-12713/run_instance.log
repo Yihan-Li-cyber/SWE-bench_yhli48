@@ -1,0 +1,105 @@
+2025-04-04 10:27:43,378 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12713
+Building instance image sweb.eval.x86_64.django__django-12713:latest for django__django-12713
+2025-04-04 10:28:33,194 - INFO - Creating container for django__django-12713...
+2025-04-04 10:28:33,239 - INFO - Container for django__django-12713 created: 0b37192f194e065b1a94ffcdfa689c0b99a18334430188cbcca20d9b24a5f212
+2025-04-04 10:28:33,791 - INFO - Container for django__django-12713 started: 0b37192f194e065b1a94ffcdfa689c0b99a18334430188cbcca20d9b24a5f212
+2025-04-04 10:28:33,791 - INFO - Intermediate patch for django__django-12713 written to logs/run_evaluation/gold/gold/django__django-12713/patch.diff, now applying to container...
+2025-04-04 10:28:34,037 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:28:34,121 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-04 10:28:35,802 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 69a5fbf389..2099d14861 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -249,17 +249,25 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+             return None
+         db = kwargs.get('using')
+ 
+-        autocomplete_fields = self.get_autocomplete_fields(request)
+-        if db_field.name in autocomplete_fields:
+-            kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in self.raw_id_fields:
+-            kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
+-            kwargs['widget'] = widgets.FilteredSelectMultiple(
+-                db_field.verbose_name,
+-                db_field.name in self.filter_vertical
+-            )
+-
++        if 'widget' not in kwargs:
++            autocomplete_fields = self.get_autocomplete_fields(request)
++            if db_field.name in autocomplete_fields:
++                kwargs['widget'] = AutocompleteSelectMultiple(
++                    db_field.remote_field,
++                    self.admin_site,
++                    using=db,
++                )
++            elif db_field.name in self.raw_id_fields:
++                kwargs['widget'] = widgets.ManyToManyRawIdWidget(
++                    db_field.remote_field,
++                    self.admin_site,
++                    using=db,
++                )
++            elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
++                kwargs['widget'] = widgets.FilteredSelectMultiple(
++                    db_field.verbose_name,
++                    db_field.name in self.filter_vertical
++                )
+         if 'queryset' not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+             if queryset is not None:
+2025-04-04 10:28:35,803 - INFO - Eval script for django__django-12713 written to logs/run_evaluation/gold/gold/django__django-12713/eval.sh; copying to container...
+2025-04-04 10:28:47,958 - INFO - Test runtime: 11.96 seconds
+2025-04-04 10:28:47,959 - INFO - Test output for django__django-12713 written to logs/run_evaluation/gold/gold/django__django-12713/test_output.txt
+2025-04-04 10:28:48,075 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 69a5fbf389..2099d14861 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -249,17 +249,25 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+             return None
+         db = kwargs.get('using')
+ 
+-        autocomplete_fields = self.get_autocomplete_fields(request)
+-        if db_field.name in autocomplete_fields:
+-            kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in self.raw_id_fields:
+-            kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
+-            kwargs['widget'] = widgets.FilteredSelectMultiple(
+-                db_field.verbose_name,
+-                db_field.name in self.filter_vertical
+-            )
+-
++        if 'widget' not in kwargs:
++            autocomplete_fields = self.get_autocomplete_fields(request)
++            if db_field.name in autocomplete_fields:
++                kwargs['widget'] = AutocompleteSelectMultiple(
++                    db_field.remote_field,
++                    self.admin_site,
++                    using=db,
++                )
++            elif db_field.name in self.raw_id_fields:
++                kwargs['widget'] = widgets.ManyToManyRawIdWidget(
++                    db_field.remote_field,
++                    self.admin_site,
++                    using=db,
++                )
++            elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
++                kwargs['widget'] = widgets.FilteredSelectMultiple(
++                    db_field.verbose_name,
++                    db_field.name in self.filter_vertical
++                )
+         if 'queryset' not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+             if queryset is not None:
+2025-04-04 10:28:48,075 - INFO - Grading answer for django__django-12713...
+2025-04-04 10:28:48,075 - INFO - report: {'django__django-12713': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12713: resolved: False
+2025-04-04 10:28:48,078 - INFO - Attempting to stop container sweb.eval.django__django-12713.gold...
+2025-04-04 10:29:03,490 - INFO - Attempting to remove container sweb.eval.django__django-12713.gold...
+2025-04-04 10:29:03,565 - INFO - Container sweb.eval.django__django-12713.gold removed.
+2025-04-04 10:29:03,565 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12713:latest...
+2025-04-04 10:29:07,569 - INFO - Image sweb.eval.x86_64.django__django-12713:latest removed.

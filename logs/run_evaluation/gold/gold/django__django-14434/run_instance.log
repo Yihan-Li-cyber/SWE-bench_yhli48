@@ -1,0 +1,81 @@
+2025-04-04 10:46:27,271 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14434
+Building instance image sweb.eval.x86_64.django__django-14434:latest for django__django-14434
+2025-04-04 10:47:17,217 - INFO - Creating container for django__django-14434...
+2025-04-04 10:47:17,307 - INFO - Container for django__django-14434 created: f2a9638cf4cd337e4478f7b16f517d824e1c4a3ca58c0ceaf2317b2538e46648
+2025-04-04 10:48:09,240 - INFO - Container for django__django-14434 started: f2a9638cf4cd337e4478f7b16f517d824e1c4a3ca58c0ceaf2317b2538e46648
+2025-04-04 10:48:09,244 - INFO - Intermediate patch for django__django-14434 written to logs/run_evaluation/gold/gold/django__django-14434/patch.diff, now applying to container...
+2025-04-04 10:48:09,600 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:48:09,676 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/schema.py
+
+2025-04-04 10:48:11,422 - INFO - Git diff before:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index ad2f5a7da1..5cecbb7d60 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1241,9 +1241,9 @@ class BaseDatabaseSchemaEditor:
+             return self.quote_name(self._create_index_name(*args, **kwargs))
+ 
+         compiler = Query(model, alias_cols=False).get_compiler(connection=self.connection)
+-        table = Table(model._meta.db_table, self.quote_name)
++        table = model._meta.db_table
+         if name is None:
+-            name = IndexName(model._meta.db_table, columns, '_uniq', create_unique_name)
++            name = IndexName(table, columns, '_uniq', create_unique_name)
+         else:
+             name = self.quote_name(name)
+         if condition or include or opclasses or expressions:
+@@ -1253,10 +1253,10 @@ class BaseDatabaseSchemaEditor:
+         if columns:
+             columns = self._index_columns(table, columns, col_suffixes=(), opclasses=opclasses)
+         else:
+-            columns = Expressions(model._meta.db_table, expressions, compiler, self.quote_value)
++            columns = Expressions(table, expressions, compiler, self.quote_value)
+         return Statement(
+             sql,
+-            table=table,
++            table=Table(table, self.quote_name),
+             name=name,
+             columns=columns,
+             condition=self._index_condition_sql(condition),
+2025-04-04 10:48:11,424 - INFO - Eval script for django__django-14434 written to logs/run_evaluation/gold/gold/django__django-14434/eval.sh; copying to container...
+2025-04-04 10:48:26,427 - INFO - Test runtime: 14.79 seconds
+2025-04-04 10:48:26,427 - INFO - Test output for django__django-14434 written to logs/run_evaluation/gold/gold/django__django-14434/test_output.txt
+2025-04-04 10:48:26,533 - INFO - Git diff after:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index ad2f5a7da1..5cecbb7d60 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1241,9 +1241,9 @@ class BaseDatabaseSchemaEditor:
+             return self.quote_name(self._create_index_name(*args, **kwargs))
+ 
+         compiler = Query(model, alias_cols=False).get_compiler(connection=self.connection)
+-        table = Table(model._meta.db_table, self.quote_name)
++        table = model._meta.db_table
+         if name is None:
+-            name = IndexName(model._meta.db_table, columns, '_uniq', create_unique_name)
++            name = IndexName(table, columns, '_uniq', create_unique_name)
+         else:
+             name = self.quote_name(name)
+         if condition or include or opclasses or expressions:
+@@ -1253,10 +1253,10 @@ class BaseDatabaseSchemaEditor:
+         if columns:
+             columns = self._index_columns(table, columns, col_suffixes=(), opclasses=opclasses)
+         else:
+-            columns = Expressions(model._meta.db_table, expressions, compiler, self.quote_value)
++            columns = Expressions(table, expressions, compiler, self.quote_value)
+         return Statement(
+             sql,
+-            table=table,
++            table=Table(table, self.quote_name),
+             name=name,
+             columns=columns,
+             condition=self._index_condition_sql(condition),
+2025-04-04 10:48:26,533 - INFO - Grading answer for django__django-14434...
+2025-04-04 10:48:26,534 - INFO - report: {'django__django-14434': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14434: resolved: False
+2025-04-04 10:48:26,534 - INFO - Attempting to stop container sweb.eval.django__django-14434.gold...
+2025-04-04 10:48:42,016 - INFO - Attempting to remove container sweb.eval.django__django-14434.gold...
+2025-04-04 10:48:42,628 - INFO - Container sweb.eval.django__django-14434.gold removed.
+2025-04-04 10:48:42,628 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14434:latest...
+2025-04-04 10:48:43,305 - INFO - Image sweb.eval.x86_64.django__django-14434:latest removed.

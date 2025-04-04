@@ -1,0 +1,57 @@
+2025-04-04 11:38:15,149 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24570
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-24570:latest for matplotlib__matplotlib-24570
+2025-04-04 11:44:35,056 - INFO - Creating container for matplotlib__matplotlib-24570...
+2025-04-04 11:44:35,094 - INFO - Container for matplotlib__matplotlib-24570 created: 6e6a1fb54c146023ad2733717286848ea806ea0881601b4a5c96f70e11337706
+2025-04-04 11:44:35,444 - INFO - Container for matplotlib__matplotlib-24570 started: 6e6a1fb54c146023ad2733717286848ea806ea0881601b4a5c96f70e11337706
+2025-04-04 11:44:35,444 - INFO - Intermediate patch for matplotlib__matplotlib-24570 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24570/patch.diff, now applying to container...
+2025-04-04 11:44:35,716 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:44:35,778 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/offsetbox.py
+
+2025-04-04 11:44:37,476 - INFO - Git diff before:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 3a506543ac..059a6c8ae3 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -166,10 +166,10 @@ def _get_aligned_offsets(hd_list, height, align="baseline"):
+         descent = max(d for h, d in hd_list)
+         height = height_descent + descent
+         offsets = [0. for h, d in hd_list]
+-    elif align in ["left", "top"]:
++    elif align in ["left", "bottom"]:
+         descent = 0.
+         offsets = [d for h, d in hd_list]
+-    elif align in ["right", "bottom"]:
++    elif align in ["right", "top"]:
+         descent = 0.
+         offsets = [height - h + d for h, d in hd_list]
+     elif align == "center":
+2025-04-04 11:44:37,500 - INFO - Eval script for matplotlib__matplotlib-24570 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24570/eval.sh; copying to container...
+2025-04-04 11:46:25,653 - INFO - Test runtime: 107.88 seconds
+2025-04-04 11:46:25,653 - INFO - Test output for matplotlib__matplotlib-24570 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24570/test_output.txt
+2025-04-04 11:46:25,734 - INFO - Git diff after:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 3a506543ac..059a6c8ae3 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -166,10 +166,10 @@ def _get_aligned_offsets(hd_list, height, align="baseline"):
+         descent = max(d for h, d in hd_list)
+         height = height_descent + descent
+         offsets = [0. for h, d in hd_list]
+-    elif align in ["left", "top"]:
++    elif align in ["left", "bottom"]:
+         descent = 0.
+         offsets = [d for h, d in hd_list]
+-    elif align in ["right", "bottom"]:
++    elif align in ["right", "top"]:
+         descent = 0.
+         offsets = [height - h + d for h, d in hd_list]
+     elif align == "center":
+2025-04-04 11:46:25,734 - INFO - Grading answer for matplotlib__matplotlib-24570...
+2025-04-04 11:46:25,734 - INFO - report: {'matplotlib__matplotlib-24570': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-24570: resolved: False
+2025-04-04 11:46:25,734 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-24570.gold...
+2025-04-04 11:46:41,952 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-24570.gold...
+2025-04-04 11:46:41,998 - INFO - Container sweb.eval.matplotlib__matplotlib-24570.gold removed.
+2025-04-04 11:46:41,998 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-24570:latest...
+2025-04-04 11:46:47,237 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-24570:latest removed.

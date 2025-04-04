@@ -1,0 +1,59 @@
+2025-04-04 11:17:03,234 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20676
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest for matplotlib__matplotlib-20676
+2025-04-04 11:25:04,769 - INFO - Creating container for matplotlib__matplotlib-20676...
+2025-04-04 11:25:04,861 - INFO - Container for matplotlib__matplotlib-20676 created: b7a299f158f75fa2302a06553110147143cc10c887ba6812a8daa3961cfaedd5
+2025-04-04 11:25:36,990 - INFO - Container for matplotlib__matplotlib-20676 started: b7a299f158f75fa2302a06553110147143cc10c887ba6812a8daa3961cfaedd5
+2025-04-04 11:25:36,992 - INFO - Intermediate patch for matplotlib__matplotlib-20676 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20676/patch.diff, now applying to container...
+2025-04-04 11:25:37,273 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:25:37,348 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/widgets.py
+
+2025-04-04 11:25:38,961 - INFO - Git diff before:
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index a199e45d40..00759db0be 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -2156,7 +2156,12 @@ class SpanSelector(_SelectorWidget):
+             self.artists.append(self._rect)
+ 
+     def _setup_edge_handle(self, props):
+-        self._edge_handles = ToolLineHandles(self.ax, self.extents,
++        # Define initial position using the axis bounds to keep the same bounds
++        if self.direction == 'horizontal':
++            positions = self.ax.get_xbound()
++        else:
++            positions = self.ax.get_ybound()
++        self._edge_handles = ToolLineHandles(self.ax, positions,
+                                              direction=self.direction,
+                                              line_props=props,
+                                              useblit=self.useblit)
+2025-04-04 11:25:38,961 - INFO - Eval script for matplotlib__matplotlib-20676 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20676/eval.sh; copying to container...
+2025-04-04 11:26:02,182 - INFO - Test runtime: 23.04 seconds
+2025-04-04 11:26:02,182 - INFO - Test output for matplotlib__matplotlib-20676 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20676/test_output.txt
+2025-04-04 11:26:02,280 - INFO - Git diff after:
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index a199e45d40..00759db0be 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -2156,7 +2156,12 @@ class SpanSelector(_SelectorWidget):
+             self.artists.append(self._rect)
+ 
+     def _setup_edge_handle(self, props):
+-        self._edge_handles = ToolLineHandles(self.ax, self.extents,
++        # Define initial position using the axis bounds to keep the same bounds
++        if self.direction == 'horizontal':
++            positions = self.ax.get_xbound()
++        else:
++            positions = self.ax.get_ybound()
++        self._edge_handles = ToolLineHandles(self.ax, positions,
+                                              direction=self.direction,
+                                              line_props=props,
+                                              useblit=self.useblit)
+2025-04-04 11:26:02,280 - INFO - Grading answer for matplotlib__matplotlib-20676...
+2025-04-04 11:26:02,280 - INFO - report: {'matplotlib__matplotlib-20676': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-20676: resolved: False
+2025-04-04 11:26:02,281 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-20676.gold...
+2025-04-04 11:26:17,939 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-20676.gold...
+2025-04-04 11:26:17,977 - INFO - Container sweb.eval.matplotlib__matplotlib-20676.gold removed.
+2025-04-04 11:26:17,977 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest...
+2025-04-04 11:26:21,362 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest removed.

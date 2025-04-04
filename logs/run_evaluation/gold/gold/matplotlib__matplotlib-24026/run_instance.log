@@ -1,0 +1,113 @@
+2025-04-04 11:35:02,566 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24026
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-24026:latest for matplotlib__matplotlib-24026
+2025-04-04 11:41:40,529 - INFO - Creating container for matplotlib__matplotlib-24026...
+2025-04-04 11:41:40,665 - INFO - Container for matplotlib__matplotlib-24026 created: 9daaa7e85e24dce03d0953c10a5d615d46983f6282a1891992ccde436fe1177f
+2025-04-04 11:42:27,306 - INFO - Container for matplotlib__matplotlib-24026 started: 9daaa7e85e24dce03d0953c10a5d615d46983f6282a1891992ccde436fe1177f
+2025-04-04 11:42:27,306 - INFO - Intermediate patch for matplotlib__matplotlib-24026 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24026/patch.diff, now applying to container...
+2025-04-04 11:42:27,749 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:42:27,847 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/stackplot.py
+
+2025-04-04 11:42:29,741 - INFO - Git diff before:
+diff --git a/lib/matplotlib/stackplot.py b/lib/matplotlib/stackplot.py
+index c580043eeb..c97a21e029 100644
+--- a/lib/matplotlib/stackplot.py
++++ b/lib/matplotlib/stackplot.py
+@@ -6,6 +6,8 @@ https://stackoverflow.com/q/2225995/
+ (https://stackoverflow.com/users/66549/doug)
+ """
+ 
++import itertools
++
+ import numpy as np
+ 
+ from matplotlib import _api
+@@ -70,7 +72,9 @@ def stackplot(axes, x, *args,
+ 
+     labels = iter(labels)
+     if colors is not None:
+-        axes.set_prop_cycle(color=colors)
++        colors = itertools.cycle(colors)
++    else:
++        colors = (axes._get_lines.get_next_color() for _ in y)
+ 
+     # Assume data passed has not been 'stacked', so stack it here.
+     # We'll need a float buffer for the upcoming calculations.
+@@ -108,17 +112,16 @@ def stackplot(axes, x, *args,
+         stack += first_line
+ 
+     # Color between x = 0 and the first array.
+-    color = axes._get_lines.get_next_color()
+     coll = axes.fill_between(x, first_line, stack[0, :],
+-                             facecolor=color, label=next(labels, None),
++                             facecolor=next(colors), label=next(labels, None),
+                              **kwargs)
+     coll.sticky_edges.y[:] = [0]
+     r = [coll]
+ 
+     # Color between array i-1 and array i
+     for i in range(len(y) - 1):
+-        color = axes._get_lines.get_next_color()
+         r.append(axes.fill_between(x, stack[i, :], stack[i + 1, :],
+-                                   facecolor=color, label=next(labels, None),
++                                   facecolor=next(colors),
++                                   label=next(labels, None),
+                                    **kwargs))
+     return r
+2025-04-04 11:42:29,742 - INFO - Eval script for matplotlib__matplotlib-24026 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24026/eval.sh; copying to container...
+2025-04-04 11:45:13,116 - INFO - Test runtime: 163.18 seconds
+2025-04-04 11:45:13,116 - INFO - Test output for matplotlib__matplotlib-24026 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24026/test_output.txt
+2025-04-04 11:45:13,203 - INFO - Git diff after:
+diff --git a/lib/matplotlib/stackplot.py b/lib/matplotlib/stackplot.py
+index c580043eeb..c97a21e029 100644
+--- a/lib/matplotlib/stackplot.py
++++ b/lib/matplotlib/stackplot.py
+@@ -6,6 +6,8 @@ https://stackoverflow.com/q/2225995/
+ (https://stackoverflow.com/users/66549/doug)
+ """
+ 
++import itertools
++
+ import numpy as np
+ 
+ from matplotlib import _api
+@@ -70,7 +72,9 @@ def stackplot(axes, x, *args,
+ 
+     labels = iter(labels)
+     if colors is not None:
+-        axes.set_prop_cycle(color=colors)
++        colors = itertools.cycle(colors)
++    else:
++        colors = (axes._get_lines.get_next_color() for _ in y)
+ 
+     # Assume data passed has not been 'stacked', so stack it here.
+     # We'll need a float buffer for the upcoming calculations.
+@@ -108,17 +112,16 @@ def stackplot(axes, x, *args,
+         stack += first_line
+ 
+     # Color between x = 0 and the first array.
+-    color = axes._get_lines.get_next_color()
+     coll = axes.fill_between(x, first_line, stack[0, :],
+-                             facecolor=color, label=next(labels, None),
++                             facecolor=next(colors), label=next(labels, None),
+                              **kwargs)
+     coll.sticky_edges.y[:] = [0]
+     r = [coll]
+ 
+     # Color between array i-1 and array i
+     for i in range(len(y) - 1):
+-        color = axes._get_lines.get_next_color()
+         r.append(axes.fill_between(x, stack[i, :], stack[i + 1, :],
+-                                   facecolor=color, label=next(labels, None),
++                                   facecolor=next(colors),
++                                   label=next(labels, None),
+                                    **kwargs))
+     return r
+2025-04-04 11:45:13,203 - INFO - Grading answer for matplotlib__matplotlib-24026...
+2025-04-04 11:45:13,204 - INFO - report: {'matplotlib__matplotlib-24026': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-24026: resolved: False
+2025-04-04 11:45:13,204 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-24026.gold...
+2025-04-04 11:45:31,415 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-24026.gold...
+2025-04-04 11:45:31,492 - INFO - Container sweb.eval.matplotlib__matplotlib-24026.gold removed.
+2025-04-04 11:45:31,493 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-24026:latest...
+2025-04-04 11:45:35,064 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-24026:latest removed.

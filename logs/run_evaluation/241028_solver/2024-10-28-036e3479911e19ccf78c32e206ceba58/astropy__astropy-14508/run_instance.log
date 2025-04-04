@@ -1,0 +1,42 @@
+2025-04-04 16:34:55,954 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14508
+Building instance image sweb.eval.x86_64.astropy__astropy-14508:latest for astropy__astropy-14508
+2025-04-04 16:42:15,129 - INFO - Creating container for astropy__astropy-14508...
+2025-04-04 16:42:15,247 - INFO - Container for astropy__astropy-14508 created: 4a07a13748973e906e9ff78b54f841cf61ff098d12cc511076da4a604aba9337
+2025-04-04 16:42:16,724 - INFO - Container for astropy__astropy-14508 started: 4a07a13748973e906e9ff78b54f841cf61ff098d12cc511076da4a604aba9337
+2025-04-04 16:42:16,724 - INFO - Intermediate patch for astropy__astropy-14508 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14508/patch.diff, now applying to container...
+2025-04-04 16:42:17,733 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 16:42:17,980 - INFO - >>>>> Applied Patch:
+patching file astropy/io/fits/card.py
+
+2025-04-04 16:42:20,736 - INFO - Git diff before:
+diff --git a/astropy/io/fits/card.py b/astropy/io/fits/card.py
+index 118bfced89..67794fba67 100644
+--- a/astropy/io/fits/card.py
++++ b/astropy/io/fits/card.py
+@@ -1299,7 +1299,13 @@ def _format_value(value):
+ 
+ def _format_float(value):
+     """Format a floating number to make sure it gets the decimal point."""
+-    value_str = f"{value:.16G}"
++    # Try the default string representation first
++    value_str = str(value)
++    # Verify the string converts back to the same float
++    if float(value_str) != value:
++        # Fall back to high precision if needed
++        value_str = f"{value:.16G}"
++    
+     if "." not in value_str and "E" not in value_str:
+         value_str += ".0"
+     elif "E" in value_str:
+diff --git a/pyproject.toml b/pyproject.toml
+index 65df5b1b77..d02c4f9eda 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:42:20,736 - INFO - Eval script for astropy__astropy-14508 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14508/eval.sh; copying to container...

@@ -1,0 +1,53 @@
+2025-04-04 10:56:58,311 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15375
+Building instance image sweb.eval.x86_64.django__django-15375:latest for django__django-15375
+2025-04-04 10:57:46,831 - INFO - Creating container for django__django-15375...
+2025-04-04 10:57:46,868 - INFO - Container for django__django-15375 created: 01cf2c0ba0b72d8e26338afee33a6e85c2b1a199eaf7a5b984b0bbf2975c0845
+2025-04-04 10:57:47,236 - INFO - Container for django__django-15375 started: 01cf2c0ba0b72d8e26338afee33a6e85c2b1a199eaf7a5b984b0bbf2975c0845
+2025-04-04 10:57:47,236 - INFO - Intermediate patch for django__django-15375 written to logs/run_evaluation/gold/gold/django__django-15375/patch.diff, now applying to container...
+2025-04-04 10:57:47,507 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:57:47,566 - INFO - >>>>> Applied Patch:
+patching file django/db/models/aggregates.py
+
+2025-04-04 10:57:49,223 - INFO - Git diff before:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index 8c4eae7906..bc31b48d8d 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -65,7 +65,9 @@ class Aggregate(Func):
+         if hasattr(default, 'resolve_expression'):
+             default = default.resolve_expression(query, allow_joins, reuse, summarize)
+         c.default = None  # Reset the default argument before wrapping.
+-        return Coalesce(c, default, output_field=c._output_field_or_none)
++        coalesce = Coalesce(c, default, output_field=c._output_field_or_none)
++        coalesce.is_summary = c.is_summary
++        return coalesce
+ 
+     @property
+     def default_alias(self):
+2025-04-04 10:57:49,224 - INFO - Eval script for django__django-15375 written to logs/run_evaluation/gold/gold/django__django-15375/eval.sh; copying to container...
+2025-04-04 10:58:01,835 - INFO - Test runtime: 12.38 seconds
+2025-04-04 10:58:01,836 - INFO - Test output for django__django-15375 written to logs/run_evaluation/gold/gold/django__django-15375/test_output.txt
+2025-04-04 10:58:01,949 - INFO - Git diff after:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index 8c4eae7906..bc31b48d8d 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -65,7 +65,9 @@ class Aggregate(Func):
+         if hasattr(default, 'resolve_expression'):
+             default = default.resolve_expression(query, allow_joins, reuse, summarize)
+         c.default = None  # Reset the default argument before wrapping.
+-        return Coalesce(c, default, output_field=c._output_field_or_none)
++        coalesce = Coalesce(c, default, output_field=c._output_field_or_none)
++        coalesce.is_summary = c.is_summary
++        return coalesce
+ 
+     @property
+     def default_alias(self):
+2025-04-04 10:58:01,949 - INFO - Grading answer for django__django-15375...
+2025-04-04 10:58:01,952 - INFO - report: {'django__django-15375': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15375: resolved: False
+2025-04-04 10:58:01,953 - INFO - Attempting to stop container sweb.eval.django__django-15375.gold...
+2025-04-04 10:58:17,899 - INFO - Attempting to remove container sweb.eval.django__django-15375.gold...
+2025-04-04 10:58:17,938 - INFO - Container sweb.eval.django__django-15375.gold removed.
+2025-04-04 10:58:17,939 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15375:latest...
+2025-04-04 10:58:18,599 - INFO - Image sweb.eval.x86_64.django__django-15375:latest removed.

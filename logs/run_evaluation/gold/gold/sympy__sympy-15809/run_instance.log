@@ -1,0 +1,47 @@
+2025-04-04 13:57:07,476 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15809
+Building instance image sweb.eval.x86_64.sympy__sympy-15809:latest for sympy__sympy-15809
+2025-04-04 13:57:38,137 - INFO - Creating container for sympy__sympy-15809...
+2025-04-04 13:57:38,340 - INFO - Container for sympy__sympy-15809 created: b5ea04814c53b46f39006ba7e5b83c541a105d00729a1a76b0da25c4d08c82ce
+2025-04-04 13:57:39,104 - INFO - Container for sympy__sympy-15809 started: b5ea04814c53b46f39006ba7e5b83c541a105d00729a1a76b0da25c4d08c82ce
+2025-04-04 13:57:39,105 - INFO - Intermediate patch for sympy__sympy-15809 written to logs/run_evaluation/gold/gold/sympy__sympy-15809/patch.diff, now applying to container...
+2025-04-04 13:57:39,548 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:57:39,654 - INFO - >>>>> Applied Patch:
+patching file sympy/functions/elementary/miscellaneous.py
+
+2025-04-04 13:57:40,390 - INFO - Git diff before:
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 5f9fe73c5c..5e4e89bdf4 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -339,8 +339,6 @@ def real_root(arg, n=None, evaluate=None):
+ 
+ class MinMaxBase(Expr, LatticeOp):
+     def __new__(cls, *args, **assumptions):
+-        if not args:
+-            raise ValueError("The Max/Min functions must have arguments.")
+ 
+         args = (sympify(arg) for arg in args)
+2025-04-04 13:57:40,390 - INFO - Eval script for sympy__sympy-15809 written to logs/run_evaluation/gold/gold/sympy__sympy-15809/eval.sh; copying to container...
+2025-04-04 13:58:04,729 - INFO - Test runtime: 23.94 seconds
+2025-04-04 13:58:04,730 - INFO - Test output for sympy__sympy-15809 written to logs/run_evaluation/gold/gold/sympy__sympy-15809/test_output.txt
+2025-04-04 13:58:04,813 - INFO - Git diff after:
+diff --git a/sympy/functions/elementary/miscellaneous.py b/sympy/functions/elementary/miscellaneous.py
+index 5f9fe73c5c..5e4e89bdf4 100644
+--- a/sympy/functions/elementary/miscellaneous.py
++++ b/sympy/functions/elementary/miscellaneous.py
+@@ -339,8 +339,6 @@ def real_root(arg, n=None, evaluate=None):
+ 
+ class MinMaxBase(Expr, LatticeOp):
+     def __new__(cls, *args, **assumptions):
+-        if not args:
+-            raise ValueError("The Max/Min functions must have arguments.")
+ 
+         args = (sympify(arg) for arg in args)
+2025-04-04 13:58:04,813 - INFO - Grading answer for sympy__sympy-15809...
+2025-04-04 13:58:04,813 - INFO - report: {'sympy__sympy-15809': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-15809: resolved: False
+2025-04-04 13:58:04,813 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15809.gold...
+2025-04-04 13:58:20,572 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15809.gold...
+2025-04-04 13:58:20,649 - INFO - Container sweb.eval.sympy__sympy-15809.gold removed.
+2025-04-04 13:58:20,649 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-15809:latest...
+2025-04-04 13:58:21,348 - INFO - Image sweb.eval.x86_64.sympy__sympy-15809:latest removed.

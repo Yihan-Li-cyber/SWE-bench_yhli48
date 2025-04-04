@@ -1,0 +1,47 @@
+2025-04-04 10:25:18,512 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12304
+Building instance image sweb.eval.x86_64.django__django-12304:latest for django__django-12304
+2025-04-04 10:26:10,178 - INFO - Creating container for django__django-12304...
+2025-04-04 10:26:10,284 - INFO - Container for django__django-12304 created: 830a53638b717d3976febb9b7c69f05ac53ab6c491a0e92f7d628f656b45dadd
+2025-04-04 10:27:08,961 - INFO - Container for django__django-12304 started: 830a53638b717d3976febb9b7c69f05ac53ab6c491a0e92f7d628f656b45dadd
+2025-04-04 10:27:08,962 - INFO - Intermediate patch for django__django-12304 written to logs/run_evaluation/gold/gold/django__django-12304/patch.diff, now applying to container...
+2025-04-04 10:27:09,283 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:27:09,365 - INFO - >>>>> Applied Patch:
+patching file django/db/models/enums.py
+
+2025-04-04 10:27:11,009 - INFO - Git diff before:
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index f48143ddaf..51821a2b45 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -31,6 +31,7 @@ class ChoicesMeta(enum.EnumMeta):
+         # that is passed in as "self" as the value to use when looking up the
+         # label in the choices.
+         cls.label = property(lambda self: cls._value2label_map_.get(self.value))
++        cls.do_not_call_in_templates = True
+         return enum.unique(cls)
+ 
+     def __contains__(cls, member):
+2025-04-04 10:27:11,010 - INFO - Eval script for django__django-12304 written to logs/run_evaluation/gold/gold/django__django-12304/eval.sh; copying to container...
+2025-04-04 10:27:23,912 - INFO - Test runtime: 12.70 seconds
+2025-04-04 10:27:23,914 - INFO - Test output for django__django-12304 written to logs/run_evaluation/gold/gold/django__django-12304/test_output.txt
+2025-04-04 10:27:24,041 - INFO - Git diff after:
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index f48143ddaf..51821a2b45 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -31,6 +31,7 @@ class ChoicesMeta(enum.EnumMeta):
+         # that is passed in as "self" as the value to use when looking up the
+         # label in the choices.
+         cls.label = property(lambda self: cls._value2label_map_.get(self.value))
++        cls.do_not_call_in_templates = True
+         return enum.unique(cls)
+ 
+     def __contains__(cls, member):
+2025-04-04 10:27:24,059 - INFO - Grading answer for django__django-12304...
+2025-04-04 10:27:24,060 - INFO - report: {'django__django-12304': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12304: resolved: False
+2025-04-04 10:27:24,061 - INFO - Attempting to stop container sweb.eval.django__django-12304.gold...
+2025-04-04 10:27:39,834 - INFO - Attempting to remove container sweb.eval.django__django-12304.gold...
+2025-04-04 10:27:39,945 - INFO - Container sweb.eval.django__django-12304.gold removed.
+2025-04-04 10:27:39,945 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12304:latest...
+2025-04-04 10:27:43,385 - INFO - Image sweb.eval.x86_64.django__django-12304:latest removed.

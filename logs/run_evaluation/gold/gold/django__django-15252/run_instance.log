@@ -1,0 +1,61 @@
+2025-04-04 10:55:00,473 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15252
+Building instance image sweb.eval.x86_64.django__django-15252:latest for django__django-15252
+2025-04-04 10:56:25,013 - INFO - Creating container for django__django-15252...
+2025-04-04 10:56:25,309 - INFO - Container for django__django-15252 created: fa4fcae3b5d93da6f3864fd365e63edff1d3fc76ad5a8459b61029df7c5a30b8
+2025-04-04 10:56:25,971 - INFO - Container for django__django-15252 started: fa4fcae3b5d93da6f3864fd365e63edff1d3fc76ad5a8459b61029df7c5a30b8
+2025-04-04 10:56:25,974 - INFO - Intermediate patch for django__django-15252 written to logs/run_evaluation/gold/gold/django__django-15252/patch.diff, now applying to container...
+2025-04-04 10:56:26,308 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:56:26,379 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/executor.py
+
+2025-04-04 10:56:27,836 - INFO - Git diff before:
+diff --git a/django/db/migrations/executor.py b/django/db/migrations/executor.py
+index aa2fe0883b..89e9344a68 100644
+--- a/django/db/migrations/executor.py
++++ b/django/db/migrations/executor.py
+@@ -96,8 +96,12 @@ class MigrationExecutor:
+         (un)applied and in a second step run all the database operations.
+         """
+         # The django_migrations table must be present to record applied
+-        # migrations.
+-        self.recorder.ensure_schema()
++        # migrations, but don't create it if there are no migrations to apply.
++        if plan == []:
++            if not self.recorder.has_table():
++                return self._create_project_state(with_applied_migrations=False)
++        else:
++            self.recorder.ensure_schema()
+ 
+         if plan is None:
+             plan = self.migration_plan(targets)
+2025-04-04 10:56:27,837 - INFO - Eval script for django__django-15252 written to logs/run_evaluation/gold/gold/django__django-15252/eval.sh; copying to container...
+2025-04-04 10:56:41,408 - INFO - Test runtime: 13.38 seconds
+2025-04-04 10:56:41,408 - INFO - Test output for django__django-15252 written to logs/run_evaluation/gold/gold/django__django-15252/test_output.txt
+2025-04-04 10:56:41,526 - INFO - Git diff after:
+diff --git a/django/db/migrations/executor.py b/django/db/migrations/executor.py
+index aa2fe0883b..89e9344a68 100644
+--- a/django/db/migrations/executor.py
++++ b/django/db/migrations/executor.py
+@@ -96,8 +96,12 @@ class MigrationExecutor:
+         (un)applied and in a second step run all the database operations.
+         """
+         # The django_migrations table must be present to record applied
+-        # migrations.
+-        self.recorder.ensure_schema()
++        # migrations, but don't create it if there are no migrations to apply.
++        if plan == []:
++            if not self.recorder.has_table():
++                return self._create_project_state(with_applied_migrations=False)
++        else:
++            self.recorder.ensure_schema()
+ 
+         if plan is None:
+             plan = self.migration_plan(targets)
+2025-04-04 10:56:41,526 - INFO - Grading answer for django__django-15252...
+2025-04-04 10:56:41,526 - INFO - report: {'django__django-15252': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15252: resolved: False
+2025-04-04 10:56:41,527 - INFO - Attempting to stop container sweb.eval.django__django-15252.gold...
+2025-04-04 10:56:57,473 - INFO - Attempting to remove container sweb.eval.django__django-15252.gold...
+2025-04-04 10:56:57,607 - INFO - Container sweb.eval.django__django-15252.gold removed.
+2025-04-04 10:56:57,607 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15252:latest...
+2025-04-04 10:56:58,314 - INFO - Image sweb.eval.x86_64.django__django-15252:latest removed.

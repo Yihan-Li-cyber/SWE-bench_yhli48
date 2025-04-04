@@ -1,0 +1,67 @@
+2025-04-04 11:52:13,445 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-25311
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-25311:latest for matplotlib__matplotlib-25311
+2025-04-04 11:59:21,341 - INFO - Creating container for matplotlib__matplotlib-25311...
+2025-04-04 11:59:21,380 - INFO - Container for matplotlib__matplotlib-25311 created: b84a4048f1b7f3a8cc15ad5ad1b330e1a19992214e82e68c95ef1c94c5a06921
+2025-04-04 12:00:12,626 - INFO - Container for matplotlib__matplotlib-25311 started: b84a4048f1b7f3a8cc15ad5ad1b330e1a19992214e82e68c95ef1c94c5a06921
+2025-04-04 12:00:12,628 - INFO - Intermediate patch for matplotlib__matplotlib-25311 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25311/patch.diff, now applying to container...
+2025-04-04 12:00:13,026 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:00:13,101 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/offsetbox.py
+
+2025-04-04 12:00:15,139 - INFO - Git diff before:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 1dee8a23d9..a46b9cd431 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1505,7 +1505,6 @@ class DraggableBase:
+         if not ref_artist.pickable():
+             ref_artist.set_picker(True)
+         self.got_artist = False
+-        self.canvas = self.ref_artist.figure.canvas
+         self._use_blit = use_blit and self.canvas.supports_blit
+         self.cids = [
+             self.canvas.callbacks._connect_picklable(
+@@ -1514,6 +1513,9 @@ class DraggableBase:
+                 'button_release_event', self.on_release),
+         ]
+ 
++    # A property, not an attribute, to maintain picklability.
++    canvas = property(lambda self: self.ref_artist.figure.canvas)
++
+     def on_motion(self, evt):
+         if self._check_still_parented() and self.got_artist:
+             dx = evt.x - self.mouse_x
+2025-04-04 12:00:15,140 - INFO - Eval script for matplotlib__matplotlib-25311 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25311/eval.sh; copying to container...
+2025-04-04 12:02:26,130 - INFO - Test runtime: 130.69 seconds
+2025-04-04 12:02:26,130 - INFO - Test output for matplotlib__matplotlib-25311 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-25311/test_output.txt
+2025-04-04 12:02:26,237 - INFO - Git diff after:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index 1dee8a23d9..a46b9cd431 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1505,7 +1505,6 @@ class DraggableBase:
+         if not ref_artist.pickable():
+             ref_artist.set_picker(True)
+         self.got_artist = False
+-        self.canvas = self.ref_artist.figure.canvas
+         self._use_blit = use_blit and self.canvas.supports_blit
+         self.cids = [
+             self.canvas.callbacks._connect_picklable(
+@@ -1514,6 +1513,9 @@ class DraggableBase:
+                 'button_release_event', self.on_release),
+         ]
+ 
++    # A property, not an attribute, to maintain picklability.
++    canvas = property(lambda self: self.ref_artist.figure.canvas)
++
+     def on_motion(self, evt):
+         if self._check_still_parented() and self.got_artist:
+             dx = evt.x - self.mouse_x
+2025-04-04 12:02:26,237 - INFO - Grading answer for matplotlib__matplotlib-25311...
+2025-04-04 12:02:26,238 - INFO - report: {'matplotlib__matplotlib-25311': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-25311: resolved: False
+2025-04-04 12:02:26,238 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-25311.gold...
+2025-04-04 12:02:42,822 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-25311.gold...
+2025-04-04 12:02:42,857 - INFO - Container sweb.eval.matplotlib__matplotlib-25311.gold removed.
+2025-04-04 12:02:42,857 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-25311:latest...
+2025-04-04 12:02:55,303 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-25311:latest removed.

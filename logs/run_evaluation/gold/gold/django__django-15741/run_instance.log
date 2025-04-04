@@ -1,0 +1,47 @@
+2025-04-04 11:01:43,755 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-15741
+Building instance image sweb.eval.x86_64.django__django-15741:latest for django__django-15741
+2025-04-04 11:02:32,583 - INFO - Creating container for django__django-15741...
+2025-04-04 11:02:32,692 - INFO - Container for django__django-15741 created: a32b4718871cb1f5a9cf6239afce28d4d18ea9e1c0065a02f02707e771b1f92c
+2025-04-04 11:02:33,004 - INFO - Container for django__django-15741 started: a32b4718871cb1f5a9cf6239afce28d4d18ea9e1c0065a02f02707e771b1f92c
+2025-04-04 11:02:33,005 - INFO - Intermediate patch for django__django-15741 written to logs/run_evaluation/gold/gold/django__django-15741/patch.diff, now applying to container...
+2025-04-04 11:02:33,253 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:02:33,314 - INFO - >>>>> Applied Patch:
+patching file django/utils/formats.py
+
+2025-04-04 11:02:34,601 - INFO - Git diff before:
+diff --git a/django/utils/formats.py b/django/utils/formats.py
+index 3f38322d84..b0a66e4e25 100644
+--- a/django/utils/formats.py
++++ b/django/utils/formats.py
+@@ -113,6 +113,7 @@ def get_format(format_type, lang=None, use_l10n=None):
+             use_l10n = settings.USE_L10N
+     if use_l10n and lang is None:
+         lang = get_language()
++    format_type = str(format_type)  # format_type may be lazy.
+     cache_key = (format_type, lang)
+     try:
+         return _format_cache[cache_key]
+2025-04-04 11:02:34,602 - INFO - Eval script for django__django-15741 written to logs/run_evaluation/gold/gold/django__django-15741/eval.sh; copying to container...
+2025-04-04 11:02:46,850 - INFO - Test runtime: 12.01 seconds
+2025-04-04 11:02:46,851 - INFO - Test output for django__django-15741 written to logs/run_evaluation/gold/gold/django__django-15741/test_output.txt
+2025-04-04 11:02:46,955 - INFO - Git diff after:
+diff --git a/django/utils/formats.py b/django/utils/formats.py
+index 3f38322d84..b0a66e4e25 100644
+--- a/django/utils/formats.py
++++ b/django/utils/formats.py
+@@ -113,6 +113,7 @@ def get_format(format_type, lang=None, use_l10n=None):
+             use_l10n = settings.USE_L10N
+     if use_l10n and lang is None:
+         lang = get_language()
++    format_type = str(format_type)  # format_type may be lazy.
+     cache_key = (format_type, lang)
+     try:
+         return _format_cache[cache_key]
+2025-04-04 11:02:46,955 - INFO - Grading answer for django__django-15741...
+2025-04-04 11:02:46,956 - INFO - report: {'django__django-15741': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15741: resolved: False
+2025-04-04 11:02:46,956 - INFO - Attempting to stop container sweb.eval.django__django-15741.gold...
+2025-04-04 11:03:02,432 - INFO - Attempting to remove container sweb.eval.django__django-15741.gold...
+2025-04-04 11:03:02,557 - INFO - Container sweb.eval.django__django-15741.gold removed.
+2025-04-04 11:03:02,557 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15741:latest...
+2025-04-04 11:03:03,444 - INFO - Image sweb.eval.x86_64.django__django-15741:latest removed.

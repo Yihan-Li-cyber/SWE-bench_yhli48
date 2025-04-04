@@ -1,0 +1,47 @@
+2025-04-04 10:25:18,510 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12419
+Building instance image sweb.eval.x86_64.django__django-12419:latest for django__django-12419
+2025-04-04 10:26:09,867 - INFO - Creating container for django__django-12419...
+2025-04-04 10:26:10,196 - INFO - Container for django__django-12419 created: 3e7f6561ab38928b8d1a8c6409e8bce9247a82087ee6e88e068ccf51e4e389bc
+2025-04-04 10:27:08,858 - INFO - Container for django__django-12419 started: 3e7f6561ab38928b8d1a8c6409e8bce9247a82087ee6e88e068ccf51e4e389bc
+2025-04-04 10:27:08,859 - INFO - Intermediate patch for django__django-12419 written to logs/run_evaluation/gold/gold/django__django-12419/patch.diff, now applying to container...
+2025-04-04 10:27:09,182 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:27:09,264 - INFO - >>>>> Applied Patch:
+patching file django/conf/global_settings.py
+
+2025-04-04 10:27:10,880 - INFO - Git diff before:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index 09c9b95d26..8bb59a4037 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -637,6 +637,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+ SECURE_HSTS_PRELOAD = False
+ SECURE_HSTS_SECONDS = 0
+ SECURE_REDIRECT_EXEMPT = []
+-SECURE_REFERRER_POLICY = None
++SECURE_REFERRER_POLICY = 'same-origin'
+ SECURE_SSL_HOST = None
+ SECURE_SSL_REDIRECT = False
+2025-04-04 10:27:10,880 - INFO - Eval script for django__django-12419 written to logs/run_evaluation/gold/gold/django__django-12419/eval.sh; copying to container...
+2025-04-04 10:27:23,733 - INFO - Test runtime: 12.66 seconds
+2025-04-04 10:27:23,734 - INFO - Test output for django__django-12419 written to logs/run_evaluation/gold/gold/django__django-12419/test_output.txt
+2025-04-04 10:27:23,892 - INFO - Git diff after:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index 09c9b95d26..8bb59a4037 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -637,6 +637,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+ SECURE_HSTS_PRELOAD = False
+ SECURE_HSTS_SECONDS = 0
+ SECURE_REDIRECT_EXEMPT = []
+-SECURE_REFERRER_POLICY = None
++SECURE_REFERRER_POLICY = 'same-origin'
+ SECURE_SSL_HOST = None
+ SECURE_SSL_REDIRECT = False
+2025-04-04 10:27:23,892 - INFO - Grading answer for django__django-12419...
+2025-04-04 10:27:23,893 - INFO - report: {'django__django-12419': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12419: resolved: False
+2025-04-04 10:27:23,893 - INFO - Attempting to stop container sweb.eval.django__django-12419.gold...
+2025-04-04 10:27:39,587 - INFO - Attempting to remove container sweb.eval.django__django-12419.gold...
+2025-04-04 10:27:39,755 - INFO - Container sweb.eval.django__django-12419.gold removed.
+2025-04-04 10:27:39,755 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12419:latest...
+2025-04-04 10:27:42,853 - INFO - Image sweb.eval.x86_64.django__django-12419:latest removed.

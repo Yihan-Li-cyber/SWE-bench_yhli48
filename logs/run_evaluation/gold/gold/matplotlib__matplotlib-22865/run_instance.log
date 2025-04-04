@@ -1,0 +1,61 @@
+2025-04-04 11:25:43,978 - INFO - Environment image sweb.env.x86_64.7037e8c448a4b8ebfe9b13:latest found for matplotlib__matplotlib-22865
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-22865:latest for matplotlib__matplotlib-22865
+2025-04-04 11:32:42,889 - INFO - Creating container for matplotlib__matplotlib-22865...
+2025-04-04 11:32:43,261 - INFO - Container for matplotlib__matplotlib-22865 created: 1fcbd7684fd1c2a07618ef9f1dff293c1a6621d82724d2435ee2dd73606ac4a1
+2025-04-04 11:32:43,635 - INFO - Container for matplotlib__matplotlib-22865 started: 1fcbd7684fd1c2a07618ef9f1dff293c1a6621d82724d2435ee2dd73606ac4a1
+2025-04-04 11:32:43,635 - INFO - Intermediate patch for matplotlib__matplotlib-22865 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-22865/patch.diff, now applying to container...
+2025-04-04 11:32:43,942 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:32:44,038 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/colorbar.py
+
+2025-04-04 11:32:45,841 - INFO - Git diff before:
+diff --git a/lib/matplotlib/colorbar.py b/lib/matplotlib/colorbar.py
+index c59b0ac815..81467d0c79 100644
+--- a/lib/matplotlib/colorbar.py
++++ b/lib/matplotlib/colorbar.py
+@@ -651,8 +651,12 @@ class Colorbar:
+             if not self.drawedges:
+                 if len(self._y) >= self.n_rasterize:
+                     self.solids.set_rasterized(True)
+-        self.dividers.set_segments(
+-            np.dstack([X, Y])[1:-1] if self.drawedges else [])
++        if self.drawedges:
++            start_idx = 0 if self._extend_lower() else 1
++            end_idx = len(X) if self._extend_upper() else -1
++            self.dividers.set_segments(np.dstack([X, Y])[start_idx:end_idx])
++        else:
++            self.dividers.set_segments([])
+ 
+     def _add_solids_patches(self, X, Y, C, mappable):
+         hatches = mappable.hatches * len(C)  # Have enough hatches.
+2025-04-04 11:32:45,841 - INFO - Eval script for matplotlib__matplotlib-22865 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-22865/eval.sh; copying to container...
+2025-04-04 11:33:18,116 - INFO - Test runtime: 32.05 seconds
+2025-04-04 11:33:18,117 - INFO - Test output for matplotlib__matplotlib-22865 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-22865/test_output.txt
+2025-04-04 11:33:18,199 - INFO - Git diff after:
+diff --git a/lib/matplotlib/colorbar.py b/lib/matplotlib/colorbar.py
+index c59b0ac815..81467d0c79 100644
+--- a/lib/matplotlib/colorbar.py
++++ b/lib/matplotlib/colorbar.py
+@@ -651,8 +651,12 @@ class Colorbar:
+             if not self.drawedges:
+                 if len(self._y) >= self.n_rasterize:
+                     self.solids.set_rasterized(True)
+-        self.dividers.set_segments(
+-            np.dstack([X, Y])[1:-1] if self.drawedges else [])
++        if self.drawedges:
++            start_idx = 0 if self._extend_lower() else 1
++            end_idx = len(X) if self._extend_upper() else -1
++            self.dividers.set_segments(np.dstack([X, Y])[start_idx:end_idx])
++        else:
++            self.dividers.set_segments([])
+ 
+     def _add_solids_patches(self, X, Y, C, mappable):
+         hatches = mappable.hatches * len(C)  # Have enough hatches.
+2025-04-04 11:33:18,199 - INFO - Grading answer for matplotlib__matplotlib-22865...
+2025-04-04 11:33:18,200 - INFO - report: {'matplotlib__matplotlib-22865': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-22865: resolved: False
+2025-04-04 11:33:18,200 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-22865.gold...
+2025-04-04 11:34:03,652 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-22865.gold...
+2025-04-04 11:34:03,675 - INFO - Container sweb.eval.matplotlib__matplotlib-22865.gold removed.
+2025-04-04 11:34:03,676 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-22865:latest...
+2025-04-04 11:34:19,073 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-22865:latest removed.

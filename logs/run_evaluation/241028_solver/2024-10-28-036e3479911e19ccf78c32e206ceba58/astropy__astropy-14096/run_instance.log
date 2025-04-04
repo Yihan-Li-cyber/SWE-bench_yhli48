@@ -1,0 +1,76 @@
+2025-04-04 16:20:56,558 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14096
+Building instance image sweb.eval.x86_64.astropy__astropy-14096:latest for astropy__astropy-14096
+2025-04-04 16:31:29,736 - INFO - Creating container for astropy__astropy-14096...
+2025-04-04 16:31:29,850 - INFO - Container for astropy__astropy-14096 created: 34071746b62c92f718d2b2ce0aa7b9bcdd9df1d0166ee0ee49d18f861cf39d09
+2025-04-04 16:31:31,536 - INFO - Container for astropy__astropy-14096 started: 34071746b62c92f718d2b2ce0aa7b9bcdd9df1d0166ee0ee49d18f861cf39d09
+2025-04-04 16:31:31,537 - INFO - Intermediate patch for astropy__astropy-14096 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14096/patch.diff, now applying to container...
+2025-04-04 16:31:32,532 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 16:31:32,734 - INFO - >>>>> Applied Patch:
+patching file astropy/coordinates/sky_coordinate.py
+patching file test_skycoord.py
+
+2025-04-04 16:31:35,939 - INFO - Git diff before:
+diff --git a/astropy/coordinates/sky_coordinate.py b/astropy/coordinates/sky_coordinate.py
+index ab475f7d0d..22986b8afd 100644
+--- a/astropy/coordinates/sky_coordinate.py
++++ b/astropy/coordinates/sky_coordinate.py
+@@ -871,6 +871,10 @@ class SkyCoord(ShapedLikeNDArray):
+         Overrides getattr to return coordinates that this can be transformed
+         to, based on the alias attr in the primary transform graph.
+         """
++        # Check if the attribute exists in the class (e.g., as a property)
++        if attr in type(self).__dict__:
++            return object.__getattribute__(self, attr)
++
+         if "_sky_coord_frame" in self.__dict__:
+             if self._is_name(attr):
+                 return self  # Should this be a deepcopy of self?
+diff --git a/pyproject.toml b/pyproject.toml
+index 486d6b9b3b..1c5f74f3a1 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:31:35,943 - INFO - Eval script for astropy__astropy-14096 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14096/eval.sh; copying to container...
+2025-04-04 16:40:41,748 - INFO - Test runtime: 545.02 seconds
+2025-04-04 16:40:41,750 - INFO - Test output for astropy__astropy-14096 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14096/test_output.txt
+2025-04-04 16:40:41,956 - INFO - Git diff after:
+diff --git a/astropy/coordinates/sky_coordinate.py b/astropy/coordinates/sky_coordinate.py
+index ab475f7d0d..22986b8afd 100644
+--- a/astropy/coordinates/sky_coordinate.py
++++ b/astropy/coordinates/sky_coordinate.py
+@@ -871,6 +871,10 @@ class SkyCoord(ShapedLikeNDArray):
+         Overrides getattr to return coordinates that this can be transformed
+         to, based on the alias attr in the primary transform graph.
+         """
++        # Check if the attribute exists in the class (e.g., as a property)
++        if attr in type(self).__dict__:
++            return object.__getattribute__(self, attr)
++
+         if "_sky_coord_frame" in self.__dict__:
+             if self._is_name(attr):
+                 return self  # Should this be a deepcopy of self?
+diff --git a/pyproject.toml b/pyproject.toml
+index 486d6b9b3b..1c5f74f3a1 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 16:40:41,956 - INFO - Grading answer for astropy__astropy-14096...
+2025-04-04 16:40:41,962 - INFO - report: {'astropy__astropy-14096': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14096: resolved: False
+2025-04-04 16:40:41,962 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14096.241028_solver...
+2025-04-04 16:40:58,219 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14096.241028_solver...
+2025-04-04 16:40:58,337 - INFO - Container sweb.eval.astropy__astropy-14096.241028_solver removed.
+2025-04-04 16:40:58,338 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14096:latest...
+2025-04-04 16:40:58,944 - INFO - Image sweb.eval.x86_64.astropy__astropy-14096:latest removed.

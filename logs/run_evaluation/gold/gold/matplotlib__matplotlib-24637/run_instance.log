@@ -1,0 +1,61 @@
+2025-04-04 11:42:31,893 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24637
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-24637:latest for matplotlib__matplotlib-24637
+2025-04-04 11:49:12,102 - INFO - Creating container for matplotlib__matplotlib-24637...
+2025-04-04 11:49:12,142 - INFO - Container for matplotlib__matplotlib-24637 created: 90586bccc4ddd1dd9054e395229842327f27460abfe654e7f822bd4b5392d52a
+2025-04-04 11:49:12,486 - INFO - Container for matplotlib__matplotlib-24637 started: 90586bccc4ddd1dd9054e395229842327f27460abfe654e7f822bd4b5392d52a
+2025-04-04 11:49:12,487 - INFO - Intermediate patch for matplotlib__matplotlib-24637 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24637/patch.diff, now applying to container...
+2025-04-04 11:49:12,766 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:49:12,861 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/offsetbox.py
+Hunk #1 succeeded at 1452 (offset 6 lines).
+Hunk #2 succeeded at 1460 (offset 6 lines).
+
+2025-04-04 11:49:14,540 - INFO - Git diff before:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index efa34dd078..c295c42634 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1452,6 +1452,7 @@ or callable, default: value of *xycoords*
+             self._renderer = renderer
+         if not self.get_visible() or not self._check_xy(renderer):
+             return
++        renderer.open_group(self.__class__.__name__, gid=self.get_gid())
+         self.update_positions(renderer)
+         if self.arrow_patch is not None:
+             if self.arrow_patch.figure is None and self.figure is not None:
+@@ -1459,6 +1460,7 @@ or callable, default: value of *xycoords*
+             self.arrow_patch.draw(renderer)
+         self.patch.draw(renderer)
+         self.offsetbox.draw(renderer)
++        renderer.close_group(self.__class__.__name__)
+         self.stale = False
+2025-04-04 11:49:14,541 - INFO - Eval script for matplotlib__matplotlib-24637 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24637/eval.sh; copying to container...
+2025-04-04 11:51:23,815 - INFO - Test runtime: 129.08 seconds
+2025-04-04 11:51:23,816 - INFO - Test output for matplotlib__matplotlib-24637 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-24637/test_output.txt
+2025-04-04 11:51:23,907 - INFO - Git diff after:
+diff --git a/lib/matplotlib/offsetbox.py b/lib/matplotlib/offsetbox.py
+index efa34dd078..c295c42634 100644
+--- a/lib/matplotlib/offsetbox.py
++++ b/lib/matplotlib/offsetbox.py
+@@ -1452,6 +1452,7 @@ or callable, default: value of *xycoords*
+             self._renderer = renderer
+         if not self.get_visible() or not self._check_xy(renderer):
+             return
++        renderer.open_group(self.__class__.__name__, gid=self.get_gid())
+         self.update_positions(renderer)
+         if self.arrow_patch is not None:
+             if self.arrow_patch.figure is None and self.figure is not None:
+@@ -1459,6 +1460,7 @@ or callable, default: value of *xycoords*
+             self.arrow_patch.draw(renderer)
+         self.patch.draw(renderer)
+         self.offsetbox.draw(renderer)
++        renderer.close_group(self.__class__.__name__)
+         self.stale = False
+2025-04-04 11:51:23,908 - INFO - Grading answer for matplotlib__matplotlib-24637...
+2025-04-04 11:51:23,908 - INFO - report: {'matplotlib__matplotlib-24637': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-24637: resolved: False
+2025-04-04 11:51:23,908 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-24637.gold...
+2025-04-04 11:52:05,820 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-24637.gold...
+2025-04-04 11:52:09,504 - INFO - Container sweb.eval.matplotlib__matplotlib-24637.gold removed.
+2025-04-04 11:52:09,505 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-24637:latest...
+2025-04-04 11:52:13,617 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-24637:latest removed.

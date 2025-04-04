@@ -1,0 +1,77 @@
+2025-04-04 10:32:29,872 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13279
+Building instance image sweb.eval.x86_64.django__django-13279:latest for django__django-13279
+2025-04-04 10:33:12,724 - INFO - Creating container for django__django-13279...
+2025-04-04 10:33:12,841 - INFO - Container for django__django-13279 created: 446dc57281323ccd8ee0531f24188411ce5168a924b6d058bdbe018e64c4f564
+2025-04-04 10:33:13,280 - INFO - Container for django__django-13279 started: 446dc57281323ccd8ee0531f24188411ce5168a924b6d058bdbe018e64c4f564
+2025-04-04 10:33:13,281 - INFO - Intermediate patch for django__django-13279 written to logs/run_evaluation/gold/gold/django__django-13279/patch.diff, now applying to container...
+2025-04-04 10:33:13,601 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:33:13,677 - INFO - >>>>> Applied Patch:
+patching file django/contrib/sessions/backends/base.py
+
+2025-04-04 10:33:15,196 - INFO - Git diff before:
+diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index b5453160a5..187e14b1b7 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -108,6 +108,9 @@ class SessionBase:
+ 
+     def encode(self, session_dict):
+         "Return the given session dictionary serialized and encoded as a string."
++        # RemovedInDjango40Warning: DEFAULT_HASHING_ALGORITHM will be removed.
++        if settings.DEFAULT_HASHING_ALGORITHM == 'sha1':
++            return self._legacy_encode(session_dict)
+         return signing.dumps(
+             session_dict, salt=self.key_salt, serializer=self.serializer,
+             compress=True,
+@@ -121,6 +124,12 @@ class SessionBase:
+         except Exception:
+             return self._legacy_decode(session_data)
+ 
++    def _legacy_encode(self, session_dict):
++        # RemovedInDjango40Warning.
++        serialized = self.serializer().dumps(session_dict)
++        hash = self._hash(serialized)
++        return base64.b64encode(hash.encode() + b':' + serialized).decode('ascii')
++
+     def _legacy_decode(self, session_data):
+         # RemovedInDjango40Warning: pre-Django 3.1 format will be invalid.
+         encoded_data = base64.b64decode(session_data.encode('ascii'))
+2025-04-04 10:33:15,196 - INFO - Eval script for django__django-13279 written to logs/run_evaluation/gold/gold/django__django-13279/eval.sh; copying to container...
+2025-04-04 10:33:27,851 - INFO - Test runtime: 12.44 seconds
+2025-04-04 10:33:27,851 - INFO - Test output for django__django-13279 written to logs/run_evaluation/gold/gold/django__django-13279/test_output.txt
+2025-04-04 10:33:27,972 - INFO - Git diff after:
+diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index b5453160a5..187e14b1b7 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -108,6 +108,9 @@ class SessionBase:
+ 
+     def encode(self, session_dict):
+         "Return the given session dictionary serialized and encoded as a string."
++        # RemovedInDjango40Warning: DEFAULT_HASHING_ALGORITHM will be removed.
++        if settings.DEFAULT_HASHING_ALGORITHM == 'sha1':
++            return self._legacy_encode(session_dict)
+         return signing.dumps(
+             session_dict, salt=self.key_salt, serializer=self.serializer,
+             compress=True,
+@@ -121,6 +124,12 @@ class SessionBase:
+         except Exception:
+             return self._legacy_decode(session_data)
+ 
++    def _legacy_encode(self, session_dict):
++        # RemovedInDjango40Warning.
++        serialized = self.serializer().dumps(session_dict)
++        hash = self._hash(serialized)
++        return base64.b64encode(hash.encode() + b':' + serialized).decode('ascii')
++
+     def _legacy_decode(self, session_data):
+         # RemovedInDjango40Warning: pre-Django 3.1 format will be invalid.
+         encoded_data = base64.b64decode(session_data.encode('ascii'))
+2025-04-04 10:33:27,972 - INFO - Grading answer for django__django-13279...
+2025-04-04 10:33:27,973 - INFO - report: {'django__django-13279': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13279: resolved: False
+2025-04-04 10:33:27,973 - INFO - Attempting to stop container sweb.eval.django__django-13279.gold...
+2025-04-04 10:33:43,796 - INFO - Attempting to remove container sweb.eval.django__django-13279.gold...
+2025-04-04 10:33:43,849 - INFO - Container sweb.eval.django__django-13279.gold removed.
+2025-04-04 10:33:43,850 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13279:latest...
+2025-04-04 10:33:44,560 - INFO - Image sweb.eval.x86_64.django__django-13279:latest removed.

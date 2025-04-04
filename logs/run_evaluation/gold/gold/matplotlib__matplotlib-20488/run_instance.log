@@ -1,0 +1,57 @@
+2025-04-04 11:17:03,229 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20488
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-20488:latest for matplotlib__matplotlib-20488
+2025-04-04 11:23:56,098 - INFO - Creating container for matplotlib__matplotlib-20488...
+2025-04-04 11:23:56,148 - INFO - Container for matplotlib__matplotlib-20488 created: 5cac0cacc6779e2da37f17cd19111a5101a7671c9de9894ab824a893069df061
+2025-04-04 11:23:56,541 - INFO - Container for matplotlib__matplotlib-20488 started: 5cac0cacc6779e2da37f17cd19111a5101a7671c9de9894ab824a893069df061
+2025-04-04 11:23:56,542 - INFO - Intermediate patch for matplotlib__matplotlib-20488 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20488/patch.diff, now applying to container...
+2025-04-04 11:23:56,845 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:23:56,935 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/image.py
+
+2025-04-04 11:23:58,409 - INFO - Git diff before:
+diff --git a/lib/matplotlib/image.py b/lib/matplotlib/image.py
+index 95bb42d75c..b710e7ac09 100644
+--- a/lib/matplotlib/image.py
++++ b/lib/matplotlib/image.py
+@@ -532,9 +532,9 @@ class _ImageBase(martist.Artist, cm.ScalarMappable):
+                 # we have re-set the vmin/vmax to account for small errors
+                 # that may have moved input values in/out of range
+                 s_vmin, s_vmax = vrange
+-                if isinstance(self.norm, mcolors.LogNorm):
+-                    if s_vmin < 0:
+-                        s_vmin = max(s_vmin, np.finfo(scaled_dtype).eps)
++                if isinstance(self.norm, mcolors.LogNorm) and s_vmin <= 0:
++                    # Don't give 0 or negative values to LogNorm
++                    s_vmin = np.finfo(scaled_dtype).eps
+                 with cbook._setattr_cm(self.norm,
+                                        vmin=s_vmin,
+                                        vmax=s_vmax,
+2025-04-04 11:23:58,410 - INFO - Eval script for matplotlib__matplotlib-20488 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20488/eval.sh; copying to container...
+2025-04-04 11:24:37,503 - INFO - Test runtime: 38.92 seconds
+2025-04-04 11:24:37,504 - INFO - Test output for matplotlib__matplotlib-20488 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-20488/test_output.txt
+2025-04-04 11:24:37,594 - INFO - Git diff after:
+diff --git a/lib/matplotlib/image.py b/lib/matplotlib/image.py
+index 95bb42d75c..b710e7ac09 100644
+--- a/lib/matplotlib/image.py
++++ b/lib/matplotlib/image.py
+@@ -532,9 +532,9 @@ class _ImageBase(martist.Artist, cm.ScalarMappable):
+                 # we have re-set the vmin/vmax to account for small errors
+                 # that may have moved input values in/out of range
+                 s_vmin, s_vmax = vrange
+-                if isinstance(self.norm, mcolors.LogNorm):
+-                    if s_vmin < 0:
+-                        s_vmin = max(s_vmin, np.finfo(scaled_dtype).eps)
++                if isinstance(self.norm, mcolors.LogNorm) and s_vmin <= 0:
++                    # Don't give 0 or negative values to LogNorm
++                    s_vmin = np.finfo(scaled_dtype).eps
+                 with cbook._setattr_cm(self.norm,
+                                        vmin=s_vmin,
+                                        vmax=s_vmax,
+2025-04-04 11:24:37,594 - INFO - Grading answer for matplotlib__matplotlib-20488...
+2025-04-04 11:24:37,595 - INFO - report: {'matplotlib__matplotlib-20488': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-20488: resolved: False
+2025-04-04 11:24:37,595 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-20488.gold...
+2025-04-04 11:25:23,232 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-20488.gold...
+2025-04-04 11:25:23,307 - INFO - Container sweb.eval.matplotlib__matplotlib-20488.gold removed.
+2025-04-04 11:25:23,308 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-20488:latest...
+2025-04-04 11:25:43,966 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-20488:latest removed.

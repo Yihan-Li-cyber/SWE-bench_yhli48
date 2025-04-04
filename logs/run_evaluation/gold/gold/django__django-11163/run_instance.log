@@ -1,0 +1,49 @@
+2025-04-04 09:56:06,333 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11163
+Building instance image sweb.eval.x86_64.django__django-11163:latest for django__django-11163
+2025-04-04 09:56:47,952 - INFO - Creating container for django__django-11163...
+2025-04-04 09:56:48,047 - INFO - Container for django__django-11163 created: 549b86b182100f1251a594b13277b0469d60b48ef84e74529c124306e66ee294
+2025-04-04 09:56:48,435 - INFO - Container for django__django-11163 started: 549b86b182100f1251a594b13277b0469d60b48ef84e74529c124306e66ee294
+2025-04-04 09:56:48,436 - INFO - Intermediate patch for django__django-11163 written to logs/run_evaluation/gold/gold/django__django-11163/patch.diff, now applying to container...
+2025-04-04 09:56:48,782 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:56:48,865 - INFO - >>>>> Applied Patch:
+patching file django/forms/models.py
+
+2025-04-04 09:56:50,190 - INFO - Git diff before:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index d157c291ef..5edbbd376f 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -83,7 +83,7 @@ def model_to_dict(instance, fields=None, exclude=None):
+     for f in chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
+         if not getattr(f, 'editable', False):
+             continue
+-        if fields and f.name not in fields:
++        if fields is not None and f.name not in fields:
+             continue
+         if exclude and f.name in exclude:
+             continue
+2025-04-04 09:56:50,190 - INFO - Eval script for django__django-11163 written to logs/run_evaluation/gold/gold/django__django-11163/eval.sh; copying to container...
+2025-04-04 09:57:04,632 - INFO - Test runtime: 14.20 seconds
+2025-04-04 09:57:04,633 - INFO - Test output for django__django-11163 written to logs/run_evaluation/gold/gold/django__django-11163/test_output.txt
+2025-04-04 09:57:04,758 - INFO - Git diff after:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index d157c291ef..5edbbd376f 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -83,7 +83,7 @@ def model_to_dict(instance, fields=None, exclude=None):
+     for f in chain(opts.concrete_fields, opts.private_fields, opts.many_to_many):
+         if not getattr(f, 'editable', False):
+             continue
+-        if fields and f.name not in fields:
++        if fields is not None and f.name not in fields:
+             continue
+         if exclude and f.name in exclude:
+             continue
+2025-04-04 09:57:04,758 - INFO - Grading answer for django__django-11163...
+2025-04-04 09:57:04,758 - INFO - report: {'django__django-11163': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11163: resolved: False
+2025-04-04 09:57:04,759 - INFO - Attempting to stop container sweb.eval.django__django-11163.gold...
+2025-04-04 09:57:20,543 - INFO - Attempting to remove container sweb.eval.django__django-11163.gold...
+2025-04-04 09:57:20,603 - INFO - Container sweb.eval.django__django-11163.gold removed.
+2025-04-04 09:57:20,603 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11163:latest...
+2025-04-04 09:57:21,200 - INFO - Image sweb.eval.x86_64.django__django-11163:latest removed.

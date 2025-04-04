@@ -1,0 +1,77 @@
+2025-04-04 11:12:00,862 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16801
+Building instance image sweb.eval.x86_64.django__django-16801:latest for django__django-16801
+2025-04-04 11:13:16,279 - INFO - Creating container for django__django-16801...
+2025-04-04 11:13:16,313 - INFO - Container for django__django-16801 created: 46591f6e320d552d5ec76e4f91b44b17bc3d867642071df28e574878484892cd
+2025-04-04 11:13:16,726 - INFO - Container for django__django-16801 started: 46591f6e320d552d5ec76e4f91b44b17bc3d867642071df28e574878484892cd
+2025-04-04 11:13:16,727 - INFO - Intermediate patch for django__django-16801 written to logs/run_evaluation/gold/gold/django__django-16801/patch.diff, now applying to container...
+2025-04-04 11:13:16,986 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:13:17,046 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/files.py
+
+2025-04-04 11:13:18,397 - INFO - Git diff before:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index 7f8eb128e1..e10c8cd69a 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -441,7 +441,8 @@ class ImageField(FileField):
+         # after their corresponding image field don't stay cleared by
+         # Model.__init__, see bug #11196.
+         # Only run post-initialization dimension update on non-abstract models
+-        if not cls._meta.abstract:
++        # with width_field/height_field.
++        if not cls._meta.abstract and (self.width_field or self.height_field):
+             signals.post_init.connect(self.update_dimension_fields, sender=cls)
+ 
+     def update_dimension_fields(self, instance, force=False, *args, **kwargs):
+@@ -457,10 +458,8 @@ class ImageField(FileField):
+         Dimensions can be forced to update with force=True, which is how
+         ImageFileDescriptor.__set__ calls this method.
+         """
+-        # Nothing to update if the field doesn't have dimension fields or if
+-        # the field is deferred.
+-        has_dimension_fields = self.width_field or self.height_field
+-        if not has_dimension_fields or self.attname not in instance.__dict__:
++        # Nothing to update if the field is deferred.
++        if self.attname not in instance.__dict__:
+             return
+ 
+         # getattr will call the ImageFileDescriptor's __get__ method, which
+2025-04-04 11:13:18,398 - INFO - Eval script for django__django-16801 written to logs/run_evaluation/gold/gold/django__django-16801/eval.sh; copying to container...
+2025-04-04 11:13:29,971 - INFO - Test runtime: 11.35 seconds
+2025-04-04 11:13:29,971 - INFO - Test output for django__django-16801 written to logs/run_evaluation/gold/gold/django__django-16801/test_output.txt
+2025-04-04 11:13:30,073 - INFO - Git diff after:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index 7f8eb128e1..e10c8cd69a 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -441,7 +441,8 @@ class ImageField(FileField):
+         # after their corresponding image field don't stay cleared by
+         # Model.__init__, see bug #11196.
+         # Only run post-initialization dimension update on non-abstract models
+-        if not cls._meta.abstract:
++        # with width_field/height_field.
++        if not cls._meta.abstract and (self.width_field or self.height_field):
+             signals.post_init.connect(self.update_dimension_fields, sender=cls)
+ 
+     def update_dimension_fields(self, instance, force=False, *args, **kwargs):
+@@ -457,10 +458,8 @@ class ImageField(FileField):
+         Dimensions can be forced to update with force=True, which is how
+         ImageFileDescriptor.__set__ calls this method.
+         """
+-        # Nothing to update if the field doesn't have dimension fields or if
+-        # the field is deferred.
+-        has_dimension_fields = self.width_field or self.height_field
+-        if not has_dimension_fields or self.attname not in instance.__dict__:
++        # Nothing to update if the field is deferred.
++        if self.attname not in instance.__dict__:
+             return
+ 
+         # getattr will call the ImageFileDescriptor's __get__ method, which
+2025-04-04 11:13:30,073 - INFO - Grading answer for django__django-16801...
+2025-04-04 11:13:30,074 - INFO - report: {'django__django-16801': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16801: resolved: False
+2025-04-04 11:13:30,074 - INFO - Attempting to stop container sweb.eval.django__django-16801.gold...
+2025-04-04 11:13:45,649 - INFO - Attempting to remove container sweb.eval.django__django-16801.gold...
+2025-04-04 11:13:45,684 - INFO - Container sweb.eval.django__django-16801.gold removed.
+2025-04-04 11:13:45,684 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16801:latest...
+2025-04-04 11:13:46,960 - INFO - Image sweb.eval.x86_64.django__django-16801:latest removed.

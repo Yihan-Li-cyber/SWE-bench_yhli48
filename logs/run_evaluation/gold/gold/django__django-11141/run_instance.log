@@ -1,0 +1,87 @@
+2025-04-04 09:55:38,708 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11141
+Building instance image sweb.eval.x86_64.django__django-11141:latest for django__django-11141
+2025-04-04 09:56:21,055 - INFO - Creating container for django__django-11141...
+2025-04-04 09:56:21,157 - INFO - Container for django__django-11141 created: 0be4b8dc4b1f311b402c1b07d5bf385149fcd43a44e8d4c75a99705e9fcd27ba
+2025-04-04 09:56:21,596 - INFO - Container for django__django-11141 started: 0be4b8dc4b1f311b402c1b07d5bf385149fcd43a44e8d4c75a99705e9fcd27ba
+2025-04-04 09:56:21,597 - INFO - Intermediate patch for django__django-11141 written to logs/run_evaluation/gold/gold/django__django-11141/patch.diff, now applying to container...
+2025-04-04 09:56:21,898 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:56:21,988 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/loader.py
+
+2025-04-04 09:56:23,650 - INFO - Git diff before:
+diff --git a/django/db/migrations/loader.py b/django/db/migrations/loader.py
+index 8c308621d2..6be8048299 100644
+--- a/django/db/migrations/loader.py
++++ b/django/db/migrations/loader.py
+@@ -84,11 +84,6 @@ class MigrationLoader:
+                     continue
+                 raise
+             else:
+-                # Empty directories are namespaces.
+-                # getattr() needed on PY36 and older (replace w/attribute access).
+-                if getattr(module, '__file__', None) is None:
+-                    self.unmigrated_apps.add(app_config.label)
+-                    continue
+                 # Module is not a package (e.g. migrations.py).
+                 if not hasattr(module, '__path__'):
+                     self.unmigrated_apps.add(app_config.label)
+@@ -96,11 +91,14 @@ class MigrationLoader:
+                 # Force a reload if it's already loaded (tests need this)
+                 if was_loaded:
+                     reload(module)
+-            self.migrated_apps.add(app_config.label)
+             migration_names = {
+                 name for _, name, is_pkg in pkgutil.iter_modules(module.__path__)
+                 if not is_pkg and name[0] not in '_~'
+             }
++            if migration_names or self.ignore_no_migrations:
++                self.migrated_apps.add(app_config.label)
++            else:
++                self.unmigrated_apps.add(app_config.label)
+             # Load migrations
+             for migration_name in migration_names:
+                 migration_path = '%s.%s' % (module_name, migration_name)
+2025-04-04 09:56:23,650 - INFO - Eval script for django__django-11141 written to logs/run_evaluation/gold/gold/django__django-11141/eval.sh; copying to container...
+2025-04-04 09:56:35,911 - INFO - Test runtime: 11.99 seconds
+2025-04-04 09:56:35,912 - INFO - Test output for django__django-11141 written to logs/run_evaluation/gold/gold/django__django-11141/test_output.txt
+2025-04-04 09:56:36,064 - INFO - Git diff after:
+diff --git a/django/db/migrations/loader.py b/django/db/migrations/loader.py
+index 8c308621d2..6be8048299 100644
+--- a/django/db/migrations/loader.py
++++ b/django/db/migrations/loader.py
+@@ -84,11 +84,6 @@ class MigrationLoader:
+                     continue
+                 raise
+             else:
+-                # Empty directories are namespaces.
+-                # getattr() needed on PY36 and older (replace w/attribute access).
+-                if getattr(module, '__file__', None) is None:
+-                    self.unmigrated_apps.add(app_config.label)
+-                    continue
+                 # Module is not a package (e.g. migrations.py).
+                 if not hasattr(module, '__path__'):
+                     self.unmigrated_apps.add(app_config.label)
+@@ -96,11 +91,14 @@ class MigrationLoader:
+                 # Force a reload if it's already loaded (tests need this)
+                 if was_loaded:
+                     reload(module)
+-            self.migrated_apps.add(app_config.label)
+             migration_names = {
+                 name for _, name, is_pkg in pkgutil.iter_modules(module.__path__)
+                 if not is_pkg and name[0] not in '_~'
+             }
++            if migration_names or self.ignore_no_migrations:
++                self.migrated_apps.add(app_config.label)
++            else:
++                self.unmigrated_apps.add(app_config.label)
+             # Load migrations
+             for migration_name in migration_names:
+                 migration_path = '%s.%s' % (module_name, migration_name)
+2025-04-04 09:56:36,064 - INFO - Grading answer for django__django-11141...
+2025-04-04 09:56:36,064 - INFO - report: {'django__django-11141': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11141: resolved: False
+2025-04-04 09:56:36,064 - INFO - Attempting to stop container sweb.eval.django__django-11141.gold...
+2025-04-04 09:56:52,021 - INFO - Attempting to remove container sweb.eval.django__django-11141.gold...
+2025-04-04 09:56:52,136 - INFO - Container sweb.eval.django__django-11141.gold removed.
+2025-04-04 09:56:52,136 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11141:latest...
+2025-04-04 09:56:52,900 - INFO - Image sweb.eval.x86_64.django__django-11141:latest removed.

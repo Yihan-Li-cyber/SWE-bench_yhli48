@@ -1,0 +1,93 @@
+2025-04-04 09:49:10,913 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7166
+Building instance image sweb.eval.x86_64.astropy__astropy-7166:latest for astropy__astropy-7166
+2025-04-04 09:52:31,212 - INFO - Creating container for astropy__astropy-7166...
+2025-04-04 09:52:31,315 - INFO - Container for astropy__astropy-7166 created: 1a46f919f26620415e39f8caeb02036a0dca8325e11c59d36212d40f48b26960
+2025-04-04 09:52:31,921 - INFO - Container for astropy__astropy-7166 started: 1a46f919f26620415e39f8caeb02036a0dca8325e11c59d36212d40f48b26960
+2025-04-04 09:52:31,921 - INFO - Intermediate patch for astropy__astropy-7166 written to logs/run_evaluation/gold/gold/astropy__astropy-7166/patch.diff, now applying to container...
+2025-04-04 09:52:32,234 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:52:32,312 - INFO - >>>>> Applied Patch:
+patching file astropy/utils/misc.py
+
+2025-04-04 09:52:33,041 - INFO - Git diff before:
+diff --git a/astropy/utils/misc.py b/astropy/utils/misc.py
+index de3fb01d18..c3cbad4c78 100644
+--- a/astropy/utils/misc.py
++++ b/astropy/utils/misc.py
+@@ -4,9 +4,6 @@
+ A "grab bag" of relatively small general-purpose utilities that don't have
+ a clear module/package to live in.
+ """
+-
+-
+-
+ import abc
+ import contextlib
+ import difflib
+@@ -27,7 +24,6 @@ from contextlib import contextmanager
+ from collections import defaultdict, OrderedDict
+ 
+ 
+-
+ __all__ = ['isiterable', 'silence', 'format_exception', 'NumpyRNGContext',
+            'find_api_page', 'is_path_hidden', 'walk_skip_hidden',
+            'JsonCustomEncoder', 'indent', 'InheritDocstrings',
+@@ -528,9 +524,9 @@ class InheritDocstrings(type):
+                 not key.startswith('_'))
+ 
+         for key, val in dct.items():
+-            if (inspect.isfunction(val) and
+-                is_public_member(key) and
+-                val.__doc__ is None):
++            if ((inspect.isfunction(val) or inspect.isdatadescriptor(val)) and
++                    is_public_member(key) and
++                    val.__doc__ is None):
+                 for base in cls.__mro__[1:]:
+                     super_method = getattr(base, key, None)
+                     if super_method is not None:
+2025-04-04 09:52:33,041 - INFO - Eval script for astropy__astropy-7166 written to logs/run_evaluation/gold/gold/astropy__astropy-7166/eval.sh; copying to container...
+2025-04-04 09:52:42,919 - INFO - Test runtime: 9.63 seconds
+2025-04-04 09:52:42,919 - INFO - Test output for astropy__astropy-7166 written to logs/run_evaluation/gold/gold/astropy__astropy-7166/test_output.txt
+2025-04-04 09:52:43,005 - INFO - Git diff after:
+diff --git a/astropy/utils/misc.py b/astropy/utils/misc.py
+index de3fb01d18..c3cbad4c78 100644
+--- a/astropy/utils/misc.py
++++ b/astropy/utils/misc.py
+@@ -4,9 +4,6 @@
+ A "grab bag" of relatively small general-purpose utilities that don't have
+ a clear module/package to live in.
+ """
+-
+-
+-
+ import abc
+ import contextlib
+ import difflib
+@@ -27,7 +24,6 @@ from contextlib import contextmanager
+ from collections import defaultdict, OrderedDict
+ 
+ 
+-
+ __all__ = ['isiterable', 'silence', 'format_exception', 'NumpyRNGContext',
+            'find_api_page', 'is_path_hidden', 'walk_skip_hidden',
+            'JsonCustomEncoder', 'indent', 'InheritDocstrings',
+@@ -528,9 +524,9 @@ class InheritDocstrings(type):
+                 not key.startswith('_'))
+ 
+         for key, val in dct.items():
+-            if (inspect.isfunction(val) and
+-                is_public_member(key) and
+-                val.__doc__ is None):
++            if ((inspect.isfunction(val) or inspect.isdatadescriptor(val)) and
++                    is_public_member(key) and
++                    val.__doc__ is None):
+                 for base in cls.__mro__[1:]:
+                     super_method = getattr(base, key, None)
+                     if super_method is not None:
+2025-04-04 09:52:43,005 - INFO - Grading answer for astropy__astropy-7166...
+2025-04-04 09:52:43,005 - INFO - report: {'astropy__astropy-7166': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-7166: resolved: False
+2025-04-04 09:52:43,006 - INFO - Attempting to stop container sweb.eval.astropy__astropy-7166.gold...
+2025-04-04 09:52:58,583 - INFO - Attempting to remove container sweb.eval.astropy__astropy-7166.gold...
+2025-04-04 09:52:58,649 - INFO - Container sweb.eval.astropy__astropy-7166.gold removed.
+2025-04-04 09:52:58,649 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-7166:latest...
+2025-04-04 09:52:59,022 - INFO - Image sweb.eval.x86_64.astropy__astropy-7166:latest removed.

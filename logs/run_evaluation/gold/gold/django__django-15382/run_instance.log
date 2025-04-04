@@ -1,0 +1,83 @@
+2025-04-04 10:57:35,398 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15382
+Building instance image sweb.eval.x86_64.django__django-15382:latest for django__django-15382
+2025-04-04 10:58:35,970 - INFO - Creating container for django__django-15382...
+2025-04-04 10:58:36,043 - INFO - Container for django__django-15382 created: ad72da3ab5ff14a9f924ce76a576f15682047ebd47f9661c097ab9d26ed57f42
+2025-04-04 10:58:36,686 - INFO - Container for django__django-15382 started: ad72da3ab5ff14a9f924ce76a576f15682047ebd47f9661c097ab9d26ed57f42
+2025-04-04 10:58:36,686 - INFO - Intermediate patch for django__django-15382 written to logs/run_evaluation/gold/gold/django__django-15382/patch.diff, now applying to container...
+2025-04-04 10:58:36,975 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:58:37,044 - INFO - >>>>> Applied Patch:
+patching file django/db/models/expressions.py
+
+2025-04-04 10:58:38,484 - INFO - Git diff before:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 81f8f79c71..c71970636c 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1211,13 +1211,18 @@ class Exists(Subquery):
+ 
+     def as_sql(self, compiler, connection, template=None, **extra_context):
+         query = self.query.exists(using=connection.alias)
+-        sql, params = super().as_sql(
+-            compiler,
+-            connection,
+-            template=template,
+-            query=query,
+-            **extra_context,
+-        )
++        try:
++            sql, params = super().as_sql(
++                compiler,
++                connection,
++                template=template,
++                query=query,
++                **extra_context,
++            )
++        except EmptyResultSet:
++            if self.negated:
++                return '', ()
++            raise
+         if self.negated:
+             sql = 'NOT {}'.format(sql)
+         return sql, params
+2025-04-04 10:58:38,484 - INFO - Eval script for django__django-15382 written to logs/run_evaluation/gold/gold/django__django-15382/eval.sh; copying to container...
+2025-04-04 10:58:51,392 - INFO - Test runtime: 12.72 seconds
+2025-04-04 10:58:51,392 - INFO - Test output for django__django-15382 written to logs/run_evaluation/gold/gold/django__django-15382/test_output.txt
+2025-04-04 10:58:51,491 - INFO - Git diff after:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 81f8f79c71..c71970636c 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1211,13 +1211,18 @@ class Exists(Subquery):
+ 
+     def as_sql(self, compiler, connection, template=None, **extra_context):
+         query = self.query.exists(using=connection.alias)
+-        sql, params = super().as_sql(
+-            compiler,
+-            connection,
+-            template=template,
+-            query=query,
+-            **extra_context,
+-        )
++        try:
++            sql, params = super().as_sql(
++                compiler,
++                connection,
++                template=template,
++                query=query,
++                **extra_context,
++            )
++        except EmptyResultSet:
++            if self.negated:
++                return '', ()
++            raise
+         if self.negated:
+             sql = 'NOT {}'.format(sql)
+         return sql, params
+2025-04-04 10:58:51,491 - INFO - Grading answer for django__django-15382...
+2025-04-04 10:58:51,491 - INFO - report: {'django__django-15382': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15382: resolved: False
+2025-04-04 10:58:51,492 - INFO - Attempting to stop container sweb.eval.django__django-15382.gold...
+2025-04-04 10:59:07,232 - INFO - Attempting to remove container sweb.eval.django__django-15382.gold...
+2025-04-04 10:59:07,285 - INFO - Container sweb.eval.django__django-15382.gold removed.
+2025-04-04 10:59:07,285 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15382:latest...
+2025-04-04 10:59:07,952 - INFO - Image sweb.eval.x86_64.django__django-15382:latest removed.

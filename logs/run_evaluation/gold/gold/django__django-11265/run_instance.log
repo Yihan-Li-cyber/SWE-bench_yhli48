@@ -1,0 +1,81 @@
+2025-04-04 09:56:52,908 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11265
+Building instance image sweb.eval.x86_64.django__django-11265:latest for django__django-11265
+2025-04-04 09:57:37,443 - INFO - Creating container for django__django-11265...
+2025-04-04 09:57:37,482 - INFO - Container for django__django-11265 created: d2465c6e5eed351cc989c6aa3b4d6be3aaf5982b7b77f4d56570a36068429987
+2025-04-04 09:57:38,044 - INFO - Container for django__django-11265 started: d2465c6e5eed351cc989c6aa3b4d6be3aaf5982b7b77f4d56570a36068429987
+2025-04-04 09:57:38,045 - INFO - Intermediate patch for django__django-11265 written to logs/run_evaluation/gold/gold/django__django-11265/patch.diff, now applying to container...
+2025-04-04 09:57:38,491 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:57:38,598 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-04 09:57:40,104 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d69c24419b..08d7faf194 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1666,6 +1666,7 @@ class Query(BaseExpression):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
+         # Generate the inner query.
+         query = Query(self.model)
++        query._filtered_relations = self._filtered_relations
+         query.add_filter(filter_expr)
+         query.clear_ordering(True)
+         # Try to have as simple as possible subquery -> trim leading joins from
+@@ -2140,9 +2141,13 @@ class Query(BaseExpression):
+             join_field.foreign_related_fields[0].name)
+         trimmed_prefix = LOOKUP_SEP.join(trimmed_prefix)
+         # Lets still see if we can trim the first join from the inner query
+-        # (that is, self). We can't do this for LEFT JOINs because we would
+-        # miss those rows that have nothing on the outer side.
+-        if self.alias_map[lookup_tables[trimmed_paths + 1]].join_type != LOUTER:
++        # (that is, self). We can't do this for:
++        # - LEFT JOINs because we would miss those rows that have nothing on
++        #   the outer side,
++        # - INNER JOINs from filtered relations because we would miss their
++        #   filters.
++        first_join = self.alias_map[lookup_tables[trimmed_paths + 1]]
++        if first_join.join_type != LOUTER and not first_join.filtered_relation:
+             select_fields = [r[0] for r in join_field.related_fields]
+             select_alias = lookup_tables[trimmed_paths + 1]
+             self.unref_alias(lookup_tables[trimmed_paths])
+2025-04-04 09:57:40,104 - INFO - Eval script for django__django-11265 written to logs/run_evaluation/gold/gold/django__django-11265/eval.sh; copying to container...
+2025-04-04 09:57:51,270 - INFO - Test runtime: 10.89 seconds
+2025-04-04 09:57:51,270 - INFO - Test output for django__django-11265 written to logs/run_evaluation/gold/gold/django__django-11265/test_output.txt
+2025-04-04 09:57:51,465 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d69c24419b..08d7faf194 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1666,6 +1666,7 @@ class Query(BaseExpression):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
+         # Generate the inner query.
+         query = Query(self.model)
++        query._filtered_relations = self._filtered_relations
+         query.add_filter(filter_expr)
+         query.clear_ordering(True)
+         # Try to have as simple as possible subquery -> trim leading joins from
+@@ -2140,9 +2141,13 @@ class Query(BaseExpression):
+             join_field.foreign_related_fields[0].name)
+         trimmed_prefix = LOOKUP_SEP.join(trimmed_prefix)
+         # Lets still see if we can trim the first join from the inner query
+-        # (that is, self). We can't do this for LEFT JOINs because we would
+-        # miss those rows that have nothing on the outer side.
+-        if self.alias_map[lookup_tables[trimmed_paths + 1]].join_type != LOUTER:
++        # (that is, self). We can't do this for:
++        # - LEFT JOINs because we would miss those rows that have nothing on
++        #   the outer side,
++        # - INNER JOINs from filtered relations because we would miss their
++        #   filters.
++        first_join = self.alias_map[lookup_tables[trimmed_paths + 1]]
++        if first_join.join_type != LOUTER and not first_join.filtered_relation:
+             select_fields = [r[0] for r in join_field.related_fields]
+             select_alias = lookup_tables[trimmed_paths + 1]
+             self.unref_alias(lookup_tables[trimmed_paths])
+2025-04-04 09:57:51,465 - INFO - Grading answer for django__django-11265...
+2025-04-04 09:57:51,466 - INFO - report: {'django__django-11265': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11265: resolved: False
+2025-04-04 09:57:51,466 - INFO - Attempting to stop container sweb.eval.django__django-11265.gold...
+2025-04-04 09:58:08,372 - INFO - Attempting to remove container sweb.eval.django__django-11265.gold...
+2025-04-04 09:58:08,540 - INFO - Container sweb.eval.django__django-11265.gold removed.
+2025-04-04 09:58:08,540 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11265:latest...
+2025-04-04 09:58:09,208 - INFO - Image sweb.eval.x86_64.django__django-11265:latest removed.

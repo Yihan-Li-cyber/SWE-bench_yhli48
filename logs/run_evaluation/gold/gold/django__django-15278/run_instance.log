@@ -1,0 +1,71 @@
+2025-04-04 10:56:18,028 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15278
+Building instance image sweb.eval.x86_64.django__django-15278:latest for django__django-15278
+2025-04-04 10:56:59,898 - INFO - Creating container for django__django-15278...
+2025-04-04 10:56:59,934 - INFO - Container for django__django-15278 created: 5d256e6271ad187bbb34dd23747d2c505912870cfff2d4116bfe050d93d6bb4b
+2025-04-04 10:57:00,877 - INFO - Container for django__django-15278 started: 5d256e6271ad187bbb34dd23747d2c505912870cfff2d4116bfe050d93d6bb4b
+2025-04-04 10:57:00,877 - INFO - Intermediate patch for django__django-15278 written to logs/run_evaluation/gold/gold/django__django-15278/patch.diff, now applying to container...
+2025-04-04 10:57:01,150 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:57:01,216 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/sqlite3/schema.py
+
+2025-04-04 10:57:02,895 - INFO - Git diff before:
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index 6752a8e3c0..3ff0a3f7db 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -324,10 +324,15 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+ 
+     def add_field(self, model, field):
+         """Create a field on a model."""
+-        # Fields with default values cannot by handled by ALTER TABLE ADD
+-        # COLUMN statement because DROP DEFAULT is not supported in
+-        # ALTER TABLE.
+-        if not field.null or self.effective_default(field) is not None:
++        if (
++            # Primary keys and unique fields are not supported in ALTER TABLE
++            # ADD COLUMN.
++            field.primary_key or field.unique or
++            # Fields with default values cannot by handled by ALTER TABLE ADD
++            # COLUMN statement because DROP DEFAULT is not supported in
++            # ALTER TABLE.
++            not field.null or self.effective_default(field) is not None
++        ):
+             self._remake_table(model, create_field=field)
+         else:
+             super().add_field(model, field)
+2025-04-04 10:57:02,895 - INFO - Eval script for django__django-15278 written to logs/run_evaluation/gold/gold/django__django-15278/eval.sh; copying to container...
+2025-04-04 10:57:18,221 - INFO - Test runtime: 15.07 seconds
+2025-04-04 10:57:18,221 - INFO - Test output for django__django-15278 written to logs/run_evaluation/gold/gold/django__django-15278/test_output.txt
+2025-04-04 10:57:18,334 - INFO - Git diff after:
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index 6752a8e3c0..3ff0a3f7db 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -324,10 +324,15 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+ 
+     def add_field(self, model, field):
+         """Create a field on a model."""
+-        # Fields with default values cannot by handled by ALTER TABLE ADD
+-        # COLUMN statement because DROP DEFAULT is not supported in
+-        # ALTER TABLE.
+-        if not field.null or self.effective_default(field) is not None:
++        if (
++            # Primary keys and unique fields are not supported in ALTER TABLE
++            # ADD COLUMN.
++            field.primary_key or field.unique or
++            # Fields with default values cannot by handled by ALTER TABLE ADD
++            # COLUMN statement because DROP DEFAULT is not supported in
++            # ALTER TABLE.
++            not field.null or self.effective_default(field) is not None
++        ):
+             self._remake_table(model, create_field=field)
+         else:
+             super().add_field(model, field)
+2025-04-04 10:57:18,334 - INFO - Grading answer for django__django-15278...
+2025-04-04 10:57:18,335 - INFO - report: {'django__django-15278': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15278: resolved: False
+2025-04-04 10:57:18,335 - INFO - Attempting to stop container sweb.eval.django__django-15278.gold...
+2025-04-04 10:57:34,649 - INFO - Attempting to remove container sweb.eval.django__django-15278.gold...
+2025-04-04 10:57:34,704 - INFO - Container sweb.eval.django__django-15278.gold removed.
+2025-04-04 10:57:34,704 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15278:latest...
+2025-04-04 10:57:35,392 - INFO - Image sweb.eval.x86_64.django__django-15278:latest removed.

@@ -1,0 +1,53 @@
+2025-04-04 12:14:50,568 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-6028
+Building instance image sweb.eval.x86_64.psf__requests-6028:latest for psf__requests-6028
+2025-04-04 12:14:57,916 - INFO - Creating container for psf__requests-6028...
+2025-04-04 12:14:57,946 - INFO - Container for psf__requests-6028 created: e9b6a999dbf556779d96f3009b9d0b43b10d020f81a1b8fb55f849dcb87ad273
+2025-04-04 12:14:58,302 - INFO - Container for psf__requests-6028 started: e9b6a999dbf556779d96f3009b9d0b43b10d020f81a1b8fb55f849dcb87ad273
+2025-04-04 12:14:58,302 - INFO - Intermediate patch for psf__requests-6028 written to logs/run_evaluation/gold/gold/psf__requests-6028/patch.diff, now applying to container...
+2025-04-04 12:14:58,569 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:14:58,637 - INFO - >>>>> Applied Patch:
+patching file requests/utils.py
+
+2025-04-04 12:14:58,758 - INFO - Git diff before:
+diff --git a/requests/utils.py b/requests/utils.py
+index 1c2ae4e0..153776c7 100644
+--- a/requests/utils.py
++++ b/requests/utils.py
+@@ -974,6 +974,10 @@ def prepend_scheme_if_needed(url, new_scheme):
+     if not netloc:
+         netloc, path = path, netloc
+ 
++    if auth:
++        # parse_url doesn't provide the netloc with auth
++        # so we'll add it ourselves.
++        netloc = '@'.join([auth, netloc])
+     if scheme is None:
+         scheme = new_scheme
+     if path is None:
+2025-04-04 12:14:58,759 - INFO - Eval script for psf__requests-6028 written to logs/run_evaluation/gold/gold/psf__requests-6028/eval.sh; copying to container...
+2025-04-04 12:15:03,091 - INFO - Test runtime: 4.13 seconds
+2025-04-04 12:15:03,092 - INFO - Test output for psf__requests-6028 written to logs/run_evaluation/gold/gold/psf__requests-6028/test_output.txt
+2025-04-04 12:15:03,161 - INFO - Git diff after:
+diff --git a/requests/utils.py b/requests/utils.py
+index 1c2ae4e0..153776c7 100644
+--- a/requests/utils.py
++++ b/requests/utils.py
+@@ -974,6 +974,10 @@ def prepend_scheme_if_needed(url, new_scheme):
+     if not netloc:
+         netloc, path = path, netloc
+ 
++    if auth:
++        # parse_url doesn't provide the netloc with auth
++        # so we'll add it ourselves.
++        netloc = '@'.join([auth, netloc])
+     if scheme is None:
+         scheme = new_scheme
+     if path is None:
+2025-04-04 12:15:03,161 - INFO - Grading answer for psf__requests-6028...
+2025-04-04 12:15:03,161 - INFO - report: {'psf__requests-6028': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-6028: resolved: False
+2025-04-04 12:15:03,162 - INFO - Attempting to stop container sweb.eval.psf__requests-6028.gold...
+2025-04-04 12:15:18,499 - INFO - Attempting to remove container sweb.eval.psf__requests-6028.gold...
+2025-04-04 12:15:18,518 - INFO - Container sweb.eval.psf__requests-6028.gold removed.
+2025-04-04 12:15:18,518 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-6028:latest...
+2025-04-04 12:15:18,624 - INFO - Image sweb.eval.x86_64.psf__requests-6028:latest removed.

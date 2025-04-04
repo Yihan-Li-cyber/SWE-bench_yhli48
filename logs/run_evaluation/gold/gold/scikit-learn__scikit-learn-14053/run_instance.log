@@ -1,0 +1,49 @@
+2025-04-04 12:41:35,635 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-14053
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-14053:latest for scikit-learn__scikit-learn-14053
+2025-04-04 12:49:38,406 - INFO - Creating container for scikit-learn__scikit-learn-14053...
+2025-04-04 12:49:38,448 - INFO - Container for scikit-learn__scikit-learn-14053 created: 077aa07c0037687c0360d496d4c1933ab76ad9ce83b0f21dee543666c0114ce2
+2025-04-04 12:49:38,782 - INFO - Container for scikit-learn__scikit-learn-14053 started: 077aa07c0037687c0360d496d4c1933ab76ad9ce83b0f21dee543666c0114ce2
+2025-04-04 12:49:38,782 - INFO - Intermediate patch for scikit-learn__scikit-learn-14053 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14053/patch.diff, now applying to container...
+2025-04-04 12:49:39,037 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:49:39,105 - INFO - >>>>> Applied Patch:
+patching file sklearn/tree/export.py
+
+2025-04-04 12:49:39,495 - INFO - Git diff before:
+diff --git a/sklearn/tree/export.py b/sklearn/tree/export.py
+index 1fe11e596..2c9d21b7b 100644
+--- a/sklearn/tree/export.py
++++ b/sklearn/tree/export.py
+@@ -890,7 +890,8 @@ def export_text(decision_tree, feature_names=None, max_depth=10,
+         value_fmt = "{}{} value: {}\n"
+ 
+     if feature_names:
+-        feature_names_ = [feature_names[i] for i in tree_.feature]
++        feature_names_ = [feature_names[i] if i != _tree.TREE_UNDEFINED
++                          else None for i in tree_.feature]
+     else:
+         feature_names_ = ["feature_{}".format(i) for i in tree_.feature]
+2025-04-04 12:49:39,496 - INFO - Eval script for scikit-learn__scikit-learn-14053 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14053/eval.sh; copying to container...
+2025-04-04 12:49:47,374 - INFO - Test runtime: 7.69 seconds
+2025-04-04 12:49:47,374 - INFO - Test output for scikit-learn__scikit-learn-14053 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-14053/test_output.txt
+2025-04-04 12:49:47,450 - INFO - Git diff after:
+diff --git a/sklearn/tree/export.py b/sklearn/tree/export.py
+index 1fe11e596..2c9d21b7b 100644
+--- a/sklearn/tree/export.py
++++ b/sklearn/tree/export.py
+@@ -890,7 +890,8 @@ def export_text(decision_tree, feature_names=None, max_depth=10,
+         value_fmt = "{}{} value: {}\n"
+ 
+     if feature_names:
+-        feature_names_ = [feature_names[i] for i in tree_.feature]
++        feature_names_ = [feature_names[i] if i != _tree.TREE_UNDEFINED
++                          else None for i in tree_.feature]
+     else:
+         feature_names_ = ["feature_{}".format(i) for i in tree_.feature]
+2025-04-04 12:49:47,451 - INFO - Grading answer for scikit-learn__scikit-learn-14053...
+2025-04-04 12:49:47,451 - INFO - report: {'scikit-learn__scikit-learn-14053': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-14053: resolved: False
+2025-04-04 12:49:47,451 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-14053.gold...
+2025-04-04 12:50:02,793 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-14053.gold...
+2025-04-04 12:50:02,810 - INFO - Container sweb.eval.scikit-learn__scikit-learn-14053.gold removed.
+2025-04-04 12:50:02,811 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-14053:latest...
+2025-04-04 12:50:03,131 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-14053:latest removed.

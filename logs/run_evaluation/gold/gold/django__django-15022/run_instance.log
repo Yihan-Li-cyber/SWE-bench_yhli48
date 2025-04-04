@@ -1,0 +1,67 @@
+2025-04-04 10:52:44,312 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15022
+Building instance image sweb.eval.x86_64.django__django-15022:latest for django__django-15022
+2025-04-04 10:53:29,265 - INFO - Creating container for django__django-15022...
+2025-04-04 10:53:29,291 - INFO - Container for django__django-15022 created: fc9c9a0d686759910a4029796b6e04417631954e052f791dc14fe2c79d6b486a
+2025-04-04 10:53:29,608 - INFO - Container for django__django-15022 started: fc9c9a0d686759910a4029796b6e04417631954e052f791dc14fe2c79d6b486a
+2025-04-04 10:53:29,608 - INFO - Intermediate patch for django__django-15022 written to logs/run_evaluation/gold/gold/django__django-15022/patch.diff, now applying to container...
+2025-04-04 10:53:29,861 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:53:29,918 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-04 10:53:31,337 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 66f3396a6b..c5968a79ed 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1031,6 +1031,7 @@ class ModelAdmin(BaseModelAdmin):
+         if search_fields and search_term:
+             orm_lookups = [construct_search(str(search_field))
+                            for search_field in search_fields]
++            term_queries = []
+             for bit in smart_split(search_term):
+                 if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
+                     bit = unescape_string_literal(bit)
+@@ -1038,7 +1039,8 @@ class ModelAdmin(BaseModelAdmin):
+                     *((orm_lookup, bit) for orm_lookup in orm_lookups),
+                     _connector=models.Q.OR,
+                 )
+-                queryset = queryset.filter(or_queries)
++                term_queries.append(or_queries)
++            queryset = queryset.filter(models.Q(*term_queries))
+             may_have_duplicates |= any(
+                 lookup_spawns_duplicates(self.opts, search_spec)
+                 for search_spec in orm_lookups
+2025-04-04 10:53:31,337 - INFO - Eval script for django__django-15022 written to logs/run_evaluation/gold/gold/django__django-15022/eval.sh; copying to container...
+2025-04-04 10:53:44,095 - INFO - Test runtime: 12.56 seconds
+2025-04-04 10:53:44,095 - INFO - Test output for django__django-15022 written to logs/run_evaluation/gold/gold/django__django-15022/test_output.txt
+2025-04-04 10:53:44,365 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 66f3396a6b..c5968a79ed 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1031,6 +1031,7 @@ class ModelAdmin(BaseModelAdmin):
+         if search_fields and search_term:
+             orm_lookups = [construct_search(str(search_field))
+                            for search_field in search_fields]
++            term_queries = []
+             for bit in smart_split(search_term):
+                 if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
+                     bit = unescape_string_literal(bit)
+@@ -1038,7 +1039,8 @@ class ModelAdmin(BaseModelAdmin):
+                     *((orm_lookup, bit) for orm_lookup in orm_lookups),
+                     _connector=models.Q.OR,
+                 )
+-                queryset = queryset.filter(or_queries)
++                term_queries.append(or_queries)
++            queryset = queryset.filter(models.Q(*term_queries))
+             may_have_duplicates |= any(
+                 lookup_spawns_duplicates(self.opts, search_spec)
+                 for search_spec in orm_lookups
+2025-04-04 10:53:44,365 - INFO - Grading answer for django__django-15022...
+2025-04-04 10:53:44,366 - INFO - report: {'django__django-15022': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15022: resolved: False
+2025-04-04 10:53:44,371 - INFO - Attempting to stop container sweb.eval.django__django-15022.gold...
+2025-04-04 10:54:00,127 - INFO - Attempting to remove container sweb.eval.django__django-15022.gold...
+2025-04-04 10:54:00,166 - INFO - Container sweb.eval.django__django-15022.gold removed.
+2025-04-04 10:54:00,166 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15022:latest...
+2025-04-04 10:54:00,833 - INFO - Image sweb.eval.x86_64.django__django-15022:latest removed.

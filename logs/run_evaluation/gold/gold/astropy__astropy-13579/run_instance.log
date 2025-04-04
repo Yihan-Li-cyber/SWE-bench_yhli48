@@ -1,0 +1,89 @@
+2025-04-04 09:40:49,689 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-13579
+Building instance image sweb.eval.x86_64.astropy__astropy-13579:latest for astropy__astropy-13579
+2025-04-04 09:43:26,832 - INFO - Creating container for astropy__astropy-13579...
+2025-04-04 09:43:27,006 - INFO - Container for astropy__astropy-13579 created: 7e4a0159d003b8e7a21111ff22fb9961a9cb6076d1c874ecf8dd827181de9b16
+2025-04-04 09:43:27,721 - INFO - Container for astropy__astropy-13579 started: 7e4a0159d003b8e7a21111ff22fb9961a9cb6076d1c874ecf8dd827181de9b16
+2025-04-04 09:43:27,722 - INFO - Intermediate patch for astropy__astropy-13579 written to logs/run_evaluation/gold/gold/astropy__astropy-13579/patch.diff, now applying to container...
+2025-04-04 09:43:28,193 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:43:28,286 - INFO - >>>>> Applied Patch:
+patching file astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+
+2025-04-04 09:43:29,088 - INFO - Git diff before:
+diff --git a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+index d7605b078c..773663f6ec 100644
+--- a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
++++ b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+@@ -243,6 +243,8 @@ class SlicedLowLevelWCS(BaseWCSWrapper):
+         return world_arrays
+ 
+     def world_to_pixel_values(self, *world_arrays):
++        sliced_out_world_coords = self._pixel_to_world_values_all(*[0]*len(self._pixel_keep))
++
+         world_arrays = tuple(map(np.asanyarray, world_arrays))
+         world_arrays_new = []
+         iworld_curr = -1
+@@ -251,7 +253,7 @@ class SlicedLowLevelWCS(BaseWCSWrapper):
+                 iworld_curr += 1
+                 world_arrays_new.append(world_arrays[iworld_curr])
+             else:
+-                world_arrays_new.append(1.)
++                world_arrays_new.append(sliced_out_world_coords[iworld])
+ 
+         world_arrays_new = np.broadcast_arrays(*world_arrays_new)
+         pixel_arrays = list(self._wcs.world_to_pixel_values(*world_arrays_new))
+diff --git a/pyproject.toml b/pyproject.toml
+index 7a3b85fc92..83f08ed124 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:43:29,088 - INFO - Eval script for astropy__astropy-13579 written to logs/run_evaluation/gold/gold/astropy__astropy-13579/eval.sh; copying to container...
+2025-04-04 09:45:29,750 - INFO - Test runtime: 120.43 seconds
+2025-04-04 09:45:29,752 - INFO - Test output for astropy__astropy-13579 written to logs/run_evaluation/gold/gold/astropy__astropy-13579/test_output.txt
+2025-04-04 09:45:29,833 - INFO - Git diff after:
+diff --git a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+index d7605b078c..773663f6ec 100644
+--- a/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
++++ b/astropy/wcs/wcsapi/wrappers/sliced_wcs.py
+@@ -243,6 +243,8 @@ class SlicedLowLevelWCS(BaseWCSWrapper):
+         return world_arrays
+ 
+     def world_to_pixel_values(self, *world_arrays):
++        sliced_out_world_coords = self._pixel_to_world_values_all(*[0]*len(self._pixel_keep))
++
+         world_arrays = tuple(map(np.asanyarray, world_arrays))
+         world_arrays_new = []
+         iworld_curr = -1
+@@ -251,7 +253,7 @@ class SlicedLowLevelWCS(BaseWCSWrapper):
+                 iworld_curr += 1
+                 world_arrays_new.append(world_arrays[iworld_curr])
+             else:
+-                world_arrays_new.append(1.)
++                world_arrays_new.append(sliced_out_world_coords[iworld])
+ 
+         world_arrays_new = np.broadcast_arrays(*world_arrays_new)
+         pixel_arrays = list(self._wcs.world_to_pixel_values(*world_arrays_new))
+diff --git a/pyproject.toml b/pyproject.toml
+index 7a3b85fc92..83f08ed124 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.30",
+2025-04-04 09:45:29,834 - INFO - Grading answer for astropy__astropy-13579...
+2025-04-04 09:45:29,839 - INFO - report: {'astropy__astropy-13579': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-13579: resolved: False
+2025-04-04 09:45:29,839 - INFO - Attempting to stop container sweb.eval.astropy__astropy-13579.gold...
+2025-04-04 09:45:45,313 - INFO - Attempting to remove container sweb.eval.astropy__astropy-13579.gold...
+2025-04-04 09:45:45,363 - INFO - Container sweb.eval.astropy__astropy-13579.gold removed.
+2025-04-04 09:45:45,364 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-13579:latest...
+2025-04-04 09:45:45,716 - INFO - Image sweb.eval.x86_64.astropy__astropy-13579:latest removed.

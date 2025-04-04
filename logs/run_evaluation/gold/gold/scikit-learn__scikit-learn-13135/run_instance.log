@@ -1,0 +1,47 @@
+2025-04-04 12:33:36,793 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13135
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-13135:latest for scikit-learn__scikit-learn-13135
+2025-04-04 12:39:42,932 - INFO - Creating container for scikit-learn__scikit-learn-13135...
+2025-04-04 12:39:43,001 - INFO - Container for scikit-learn__scikit-learn-13135 created: d08da0e2099fb8b9b399f43fe569f627eb83ae1553030d58a9bf38e21ba58e3d
+2025-04-04 12:39:43,456 - INFO - Container for scikit-learn__scikit-learn-13135 started: d08da0e2099fb8b9b399f43fe569f627eb83ae1553030d58a9bf38e21ba58e3d
+2025-04-04 12:39:43,456 - INFO - Intermediate patch for scikit-learn__scikit-learn-13135 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13135/patch.diff, now applying to container...
+2025-04-04 12:39:43,734 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:39:43,833 - INFO - >>>>> Applied Patch:
+patching file sklearn/preprocessing/_discretization.py
+
+2025-04-04 12:39:44,254 - INFO - Git diff before:
+diff --git a/sklearn/preprocessing/_discretization.py b/sklearn/preprocessing/_discretization.py
+index dd969c12b..35d654399 100644
+--- a/sklearn/preprocessing/_discretization.py
++++ b/sklearn/preprocessing/_discretization.py
+@@ -172,6 +172,8 @@ class KBinsDiscretizer(BaseEstimator, TransformerMixin):
+                 # 1D k-means procedure
+                 km = KMeans(n_clusters=n_bins[jj], init=init, n_init=1)
+                 centers = km.fit(column[:, None]).cluster_centers_[:, 0]
++                # Must sort, centers may be unsorted even with sorted init
++                centers.sort()
+                 bin_edges[jj] = (centers[1:] + centers[:-1]) * 0.5
+                 bin_edges[jj] = np.r_[col_min, bin_edges[jj], col_max]
+2025-04-04 12:39:44,254 - INFO - Eval script for scikit-learn__scikit-learn-13135 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13135/eval.sh; copying to container...
+2025-04-04 12:39:51,705 - INFO - Test runtime: 7.28 seconds
+2025-04-04 12:39:51,706 - INFO - Test output for scikit-learn__scikit-learn-13135 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13135/test_output.txt
+2025-04-04 12:39:51,776 - INFO - Git diff after:
+diff --git a/sklearn/preprocessing/_discretization.py b/sklearn/preprocessing/_discretization.py
+index dd969c12b..35d654399 100644
+--- a/sklearn/preprocessing/_discretization.py
++++ b/sklearn/preprocessing/_discretization.py
+@@ -172,6 +172,8 @@ class KBinsDiscretizer(BaseEstimator, TransformerMixin):
+                 # 1D k-means procedure
+                 km = KMeans(n_clusters=n_bins[jj], init=init, n_init=1)
+                 centers = km.fit(column[:, None]).cluster_centers_[:, 0]
++                # Must sort, centers may be unsorted even with sorted init
++                centers.sort()
+                 bin_edges[jj] = (centers[1:] + centers[:-1]) * 0.5
+                 bin_edges[jj] = np.r_[col_min, bin_edges[jj], col_max]
+2025-04-04 12:39:51,776 - INFO - Grading answer for scikit-learn__scikit-learn-13135...
+2025-04-04 12:39:51,777 - INFO - report: {'scikit-learn__scikit-learn-13135': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-13135: resolved: False
+2025-04-04 12:39:51,777 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-13135.gold...
+2025-04-04 12:40:07,397 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-13135.gold...
+2025-04-04 12:40:07,419 - INFO - Container sweb.eval.scikit-learn__scikit-learn-13135.gold removed.
+2025-04-04 12:40:07,419 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-13135:latest...
+2025-04-04 12:40:07,626 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-13135:latest removed.

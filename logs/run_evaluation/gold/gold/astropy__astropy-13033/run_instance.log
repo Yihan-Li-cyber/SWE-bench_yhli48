@@ -1,0 +1,109 @@
+2025-04-04 09:40:49,686 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-13033
+Building instance image sweb.eval.x86_64.astropy__astropy-13033:latest for astropy__astropy-13033
+2025-04-04 09:43:27,454 - INFO - Creating container for astropy__astropy-13033...
+2025-04-04 09:43:27,602 - INFO - Container for astropy__astropy-13033 created: 965bab2cc8416509e5680514b4f2e9434ea0683ff770f6ff44e4e603581eae2c
+2025-04-04 09:43:28,154 - INFO - Container for astropy__astropy-13033 started: 965bab2cc8416509e5680514b4f2e9434ea0683ff770f6ff44e4e603581eae2c
+2025-04-04 09:43:28,154 - INFO - Intermediate patch for astropy__astropy-13033 written to logs/run_evaluation/gold/gold/astropy__astropy-13033/patch.diff, now applying to container...
+2025-04-04 09:43:28,495 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:43:28,557 - INFO - >>>>> Applied Patch:
+patching file astropy/timeseries/core.py
+
+2025-04-04 09:43:29,396 - INFO - Git diff before:
+diff --git a/astropy/timeseries/core.py b/astropy/timeseries/core.py
+index c279f35f87..9bf81a96c3 100644
+--- a/astropy/timeseries/core.py
++++ b/astropy/timeseries/core.py
+@@ -55,6 +55,13 @@ class BaseTimeSeries(QTable):
+     _required_columns_relax = False
+ 
+     def _check_required_columns(self):
++        def as_scalar_or_list_str(obj):
++            if not hasattr(obj, "__len__"):
++                return f"'{obj}'"
++            elif len(obj) == 1:
++                return f"'{obj[0]}'"
++            else:
++                return str(obj)
+ 
+         if not self._required_columns_enabled:
+             return
+@@ -76,9 +83,10 @@ class BaseTimeSeries(QTable):
+ 
+             elif self.colnames[:len(required_columns)] != required_columns:
+ 
+-                raise ValueError("{} object is invalid - expected '{}' "
+-                                 "as the first column{} but found '{}'"
+-                                 .format(self.__class__.__name__, required_columns[0], plural, self.colnames[0]))
++                raise ValueError("{} object is invalid - expected {} "
++                                 "as the first column{} but found {}"
++                                 .format(self.__class__.__name__, as_scalar_or_list_str(required_columns),
++                                            plural, as_scalar_or_list_str(self.colnames[:len(required_columns)])))
+ 
+             if (self._required_columns_relax
+                     and self._required_columns == self.colnames[:len(self._required_columns)]):
+diff --git a/pyproject.toml b/pyproject.toml
+index 32ebe645ce..6ebe80c7a6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 09:43:29,397 - INFO - Eval script for astropy__astropy-13033 written to logs/run_evaluation/gold/gold/astropy__astropy-13033/eval.sh; copying to container...
+2025-04-04 09:45:27,008 - INFO - Test runtime: 117.42 seconds
+2025-04-04 09:45:27,009 - INFO - Test output for astropy__astropy-13033 written to logs/run_evaluation/gold/gold/astropy__astropy-13033/test_output.txt
+2025-04-04 09:45:27,080 - INFO - Git diff after:
+diff --git a/astropy/timeseries/core.py b/astropy/timeseries/core.py
+index c279f35f87..9bf81a96c3 100644
+--- a/astropy/timeseries/core.py
++++ b/astropy/timeseries/core.py
+@@ -55,6 +55,13 @@ class BaseTimeSeries(QTable):
+     _required_columns_relax = False
+ 
+     def _check_required_columns(self):
++        def as_scalar_or_list_str(obj):
++            if not hasattr(obj, "__len__"):
++                return f"'{obj}'"
++            elif len(obj) == 1:
++                return f"'{obj[0]}'"
++            else:
++                return str(obj)
+ 
+         if not self._required_columns_enabled:
+             return
+@@ -76,9 +83,10 @@ class BaseTimeSeries(QTable):
+ 
+             elif self.colnames[:len(required_columns)] != required_columns:
+ 
+-                raise ValueError("{} object is invalid - expected '{}' "
+-                                 "as the first column{} but found '{}'"
+-                                 .format(self.__class__.__name__, required_columns[0], plural, self.colnames[0]))
++                raise ValueError("{} object is invalid - expected {} "
++                                 "as the first column{} but found {}"
++                                 .format(self.__class__.__name__, as_scalar_or_list_str(required_columns),
++                                            plural, as_scalar_or_list_str(self.colnames[:len(required_columns)])))
+ 
+             if (self._required_columns_relax
+                     and self._required_columns == self.colnames[:len(self._required_columns)]):
+diff --git a/pyproject.toml b/pyproject.toml
+index 32ebe645ce..6ebe80c7a6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 09:45:27,080 - INFO - Grading answer for astropy__astropy-13033...
+2025-04-04 09:45:27,084 - INFO - report: {'astropy__astropy-13033': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-13033: resolved: False
+2025-04-04 09:45:27,084 - INFO - Attempting to stop container sweb.eval.astropy__astropy-13033.gold...
+2025-04-04 09:45:42,451 - INFO - Attempting to remove container sweb.eval.astropy__astropy-13033.gold...
+2025-04-04 09:45:42,498 - INFO - Container sweb.eval.astropy__astropy-13033.gold removed.
+2025-04-04 09:45:42,498 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-13033:latest...
+2025-04-04 09:45:42,739 - INFO - Image sweb.eval.x86_64.astropy__astropy-13033:latest removed.

@@ -1,0 +1,83 @@
+2025-04-04 14:10:09,324 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-24562
+Building instance image sweb.eval.x86_64.sympy__sympy-24562:latest for sympy__sympy-24562
+2025-04-04 14:10:41,404 - INFO - Creating container for sympy__sympy-24562...
+2025-04-04 14:10:41,441 - INFO - Container for sympy__sympy-24562 created: 4256c68146cbbd83384521d3f91471a3d4abc619f23f214819b62cfc3b1696c5
+2025-04-04 14:10:41,991 - INFO - Container for sympy__sympy-24562 started: 4256c68146cbbd83384521d3f91471a3d4abc619f23f214819b62cfc3b1696c5
+2025-04-04 14:10:41,991 - INFO - Intermediate patch for sympy__sympy-24562 written to logs/run_evaluation/gold/gold/sympy__sympy-24562/patch.diff, now applying to container...
+2025-04-04 14:10:42,462 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:10:42,593 - INFO - >>>>> Applied Patch:
+patching file sympy/core/numbers.py
+
+2025-04-04 14:10:43,293 - INFO - Git diff before:
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 52f7ea45ad..d6458a9cda 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1624,10 +1624,11 @@ def __new__(cls, p, q=None, gcd=None):
+ 
+             q = 1
+             gcd = 1
++        Q = 1
+ 
+         if not isinstance(p, SYMPY_INTS):
+             p = Rational(p)
+-            q *= p.q
++            Q *= p.q
+             p = p.p
+         else:
+             p = int(p)
+@@ -1635,9 +1636,10 @@ def __new__(cls, p, q=None, gcd=None):
+         if not isinstance(q, SYMPY_INTS):
+             q = Rational(q)
+             p *= q.q
+-            q = q.p
++            Q *= q.p
+         else:
+-            q = int(q)
++            Q *= int(q)
++        q = Q
+ 
+         # p and q are now ints
+         if q == 0:
+2025-04-04 14:10:43,293 - INFO - Eval script for sympy__sympy-24562 written to logs/run_evaluation/gold/gold/sympy__sympy-24562/eval.sh; copying to container...
+2025-04-04 14:10:59,420 - INFO - Test runtime: 15.83 seconds
+2025-04-04 14:10:59,420 - INFO - Test output for sympy__sympy-24562 written to logs/run_evaluation/gold/gold/sympy__sympy-24562/test_output.txt
+2025-04-04 14:10:59,597 - INFO - Git diff after:
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 52f7ea45ad..d6458a9cda 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1624,10 +1624,11 @@ def __new__(cls, p, q=None, gcd=None):
+ 
+             q = 1
+             gcd = 1
++        Q = 1
+ 
+         if not isinstance(p, SYMPY_INTS):
+             p = Rational(p)
+-            q *= p.q
++            Q *= p.q
+             p = p.p
+         else:
+             p = int(p)
+@@ -1635,9 +1636,10 @@ def __new__(cls, p, q=None, gcd=None):
+         if not isinstance(q, SYMPY_INTS):
+             q = Rational(q)
+             p *= q.q
+-            q = q.p
++            Q *= q.p
+         else:
+-            q = int(q)
++            Q *= int(q)
++        q = Q
+ 
+         # p and q are now ints
+         if q == 0:
+2025-04-04 14:10:59,598 - INFO - Grading answer for sympy__sympy-24562...
+2025-04-04 14:10:59,598 - INFO - report: {'sympy__sympy-24562': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-24562: resolved: False
+2025-04-04 14:10:59,598 - INFO - Attempting to stop container sweb.eval.sympy__sympy-24562.gold...
+2025-04-04 14:11:44,890 - INFO - Attempting to remove container sweb.eval.sympy__sympy-24562.gold...
+2025-04-04 14:11:45,124 - INFO - Container sweb.eval.sympy__sympy-24562.gold removed.
+2025-04-04 14:11:45,124 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-24562:latest...
+2025-04-04 14:11:45,338 - INFO - Image sweb.eval.x86_64.sympy__sympy-24562:latest removed.

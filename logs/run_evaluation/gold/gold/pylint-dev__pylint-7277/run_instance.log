@@ -1,0 +1,57 @@
+2025-04-04 12:22:59,201 - INFO - Environment image sweb.env.x86_64.b649f0ff62fad147f7f073:latest found for pylint-dev__pylint-7277
+Building instance image sweb.eval.x86_64.pylint-dev__pylint-7277:latest for pylint-dev__pylint-7277
+2025-04-04 12:23:35,548 - INFO - Creating container for pylint-dev__pylint-7277...
+2025-04-04 12:23:35,614 - INFO - Container for pylint-dev__pylint-7277 created: fc84a12eb345526d8d13533048e56384e77f242a8b95fb06c70dce25cde79ed6
+2025-04-04 12:23:36,070 - INFO - Container for pylint-dev__pylint-7277 started: fc84a12eb345526d8d13533048e56384e77f242a8b95fb06c70dce25cde79ed6
+2025-04-04 12:23:36,071 - INFO - Intermediate patch for pylint-dev__pylint-7277 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-7277/patch.diff, now applying to container...
+2025-04-04 12:23:36,447 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:23:36,551 - INFO - >>>>> Applied Patch:
+patching file pylint/__init__.py
+
+2025-04-04 12:23:37,119 - INFO - Git diff before:
+diff --git a/pylint/__init__.py b/pylint/__init__.py
+index 9f3dd74e6..8f1eaebe0 100644
+--- a/pylint/__init__.py
++++ b/pylint/__init__.py
+@@ -96,9 +96,10 @@ def modify_sys_path() -> None:
+       if pylint is installed in an editable configuration (as the last item).
+       https://github.com/PyCQA/pylint/issues/4161
+     """
+-    sys.path.pop(0)
+-    env_pythonpath = os.environ.get("PYTHONPATH", "")
+     cwd = os.getcwd()
++    if sys.path[0] in ("", ".", cwd):
++        sys.path.pop(0)
++    env_pythonpath = os.environ.get("PYTHONPATH", "")
+     if env_pythonpath.startswith(":") and env_pythonpath not in (f":{cwd}", ":."):
+         sys.path.pop(0)
+     elif env_pythonpath.endswith(":") and env_pythonpath not in (f"{cwd}:", ".:"):
+2025-04-04 12:23:37,119 - INFO - Eval script for pylint-dev__pylint-7277 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-7277/eval.sh; copying to container...
+2025-04-04 12:24:37,850 - INFO - Test runtime: 60.44 seconds
+2025-04-04 12:24:37,850 - INFO - Test output for pylint-dev__pylint-7277 written to logs/run_evaluation/gold/gold/pylint-dev__pylint-7277/test_output.txt
+2025-04-04 12:24:37,947 - INFO - Git diff after:
+diff --git a/pylint/__init__.py b/pylint/__init__.py
+index 9f3dd74e6..8f1eaebe0 100644
+--- a/pylint/__init__.py
++++ b/pylint/__init__.py
+@@ -96,9 +96,10 @@ def modify_sys_path() -> None:
+       if pylint is installed in an editable configuration (as the last item).
+       https://github.com/PyCQA/pylint/issues/4161
+     """
+-    sys.path.pop(0)
+-    env_pythonpath = os.environ.get("PYTHONPATH", "")
+     cwd = os.getcwd()
++    if sys.path[0] in ("", ".", cwd):
++        sys.path.pop(0)
++    env_pythonpath = os.environ.get("PYTHONPATH", "")
+     if env_pythonpath.startswith(":") and env_pythonpath not in (f":{cwd}", ":."):
+         sys.path.pop(0)
+     elif env_pythonpath.endswith(":") and env_pythonpath not in (f"{cwd}:", ".:"):
+2025-04-04 12:24:37,947 - INFO - Grading answer for pylint-dev__pylint-7277...
+2025-04-04 12:24:37,948 - INFO - report: {'pylint-dev__pylint-7277': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pylint-dev__pylint-7277: resolved: False
+2025-04-04 12:24:37,948 - INFO - Attempting to stop container sweb.eval.pylint-dev__pylint-7277.gold...
+2025-04-04 12:25:20,359 - INFO - Attempting to remove container sweb.eval.pylint-dev__pylint-7277.gold...
+2025-04-04 12:25:20,625 - INFO - Container sweb.eval.pylint-dev__pylint-7277.gold removed.
+2025-04-04 12:25:20,625 - INFO - Attempting to remove image sweb.eval.x86_64.pylint-dev__pylint-7277:latest...
+2025-04-04 12:25:21,198 - INFO - Image sweb.eval.x86_64.pylint-dev__pylint-7277:latest removed.

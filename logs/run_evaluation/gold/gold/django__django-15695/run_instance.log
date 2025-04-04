@@ -1,0 +1,51 @@
+2025-04-04 11:00:58,907 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15695
+Building instance image sweb.eval.x86_64.django__django-15695:latest for django__django-15695
+2025-04-04 11:01:56,912 - INFO - Creating container for django__django-15695...
+2025-04-04 11:01:57,437 - INFO - Container for django__django-15695 created: f39287b9e697f340f3b82d99ed3042b65179523c3d7fc1ff03727f4d50dda3c6
+2025-04-04 11:01:58,003 - INFO - Container for django__django-15695 started: f39287b9e697f340f3b82d99ed3042b65179523c3d7fc1ff03727f4d50dda3c6
+2025-04-04 11:01:58,006 - INFO - Intermediate patch for django__django-15695 written to logs/run_evaluation/gold/gold/django__django-15695/patch.diff, now applying to container...
+2025-04-04 11:01:58,295 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:01:58,372 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+
+2025-04-04 11:01:59,777 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index d17232e4ec..75a3b8b030 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -960,6 +960,9 @@ class RenameIndex(IndexOperation):
+         else:
+             from_model_state = from_state.models[app_label, self.model_name_lower]
+             old_index = from_model_state.get_index_by_name(self.old_name)
++        # Don't alter when the index name is not changed.
++        if old_index.name == self.new_name:
++            return
+ 
+         to_model_state = to_state.models[app_label, self.model_name_lower]
+         new_index = to_model_state.get_index_by_name(self.new_name)
+2025-04-04 11:01:59,778 - INFO - Eval script for django__django-15695 written to logs/run_evaluation/gold/gold/django__django-15695/eval.sh; copying to container...
+2025-04-04 11:02:20,410 - INFO - Test runtime: 20.41 seconds
+2025-04-04 11:02:20,410 - INFO - Test output for django__django-15695 written to logs/run_evaluation/gold/gold/django__django-15695/test_output.txt
+2025-04-04 11:02:20,512 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index d17232e4ec..75a3b8b030 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -960,6 +960,9 @@ class RenameIndex(IndexOperation):
+         else:
+             from_model_state = from_state.models[app_label, self.model_name_lower]
+             old_index = from_model_state.get_index_by_name(self.old_name)
++        # Don't alter when the index name is not changed.
++        if old_index.name == self.new_name:
++            return
+ 
+         to_model_state = to_state.models[app_label, self.model_name_lower]
+         new_index = to_model_state.get_index_by_name(self.new_name)
+2025-04-04 11:02:20,512 - INFO - Grading answer for django__django-15695...
+2025-04-04 11:02:20,512 - INFO - report: {'django__django-15695': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15695: resolved: False
+2025-04-04 11:02:20,513 - INFO - Attempting to stop container sweb.eval.django__django-15695.gold...
+2025-04-04 11:02:36,040 - INFO - Attempting to remove container sweb.eval.django__django-15695.gold...
+2025-04-04 11:02:36,075 - INFO - Container sweb.eval.django__django-15695.gold removed.
+2025-04-04 11:02:36,075 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15695:latest...
+2025-04-04 11:02:36,892 - INFO - Image sweb.eval.x86_64.django__django-15695:latest removed.

@@ -1,0 +1,59 @@
+2025-04-04 10:35:45,259 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13417
+Building instance image sweb.eval.x86_64.django__django-13417:latest for django__django-13417
+2025-04-04 10:36:27,076 - INFO - Creating container for django__django-13417...
+2025-04-04 10:36:27,428 - INFO - Container for django__django-13417 created: 531ec01e942c9154fd6ee8a917e970ff3b2f2a0ca517e1757f881b1c34c229da
+2025-04-04 10:36:27,963 - INFO - Container for django__django-13417 started: 531ec01e942c9154fd6ee8a917e970ff3b2f2a0ca517e1757f881b1c34c229da
+2025-04-04 10:36:27,963 - INFO - Intermediate patch for django__django-13417 written to logs/run_evaluation/gold/gold/django__django-13417/patch.diff, now applying to container...
+2025-04-04 10:36:28,239 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:36:28,303 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+
+2025-04-04 10:36:29,942 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 85cd8311a7..67ffe7f000 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1224,7 +1224,12 @@ class QuerySet:
+             return True
+         if self.query.extra_order_by or self.query.order_by:
+             return True
+-        elif self.query.default_ordering and self.query.get_meta().ordering:
++        elif (
++            self.query.default_ordering and
++            self.query.get_meta().ordering and
++            # A default ordering doesn't affect GROUP BY queries.
++            not self.query.group_by
++        ):
+             return True
+         else:
+             return False
+2025-04-04 10:36:29,943 - INFO - Eval script for django__django-13417 written to logs/run_evaluation/gold/gold/django__django-13417/eval.sh; copying to container...
+2025-04-04 10:36:43,812 - INFO - Test runtime: 13.49 seconds
+2025-04-04 10:36:43,813 - INFO - Test output for django__django-13417 written to logs/run_evaluation/gold/gold/django__django-13417/test_output.txt
+2025-04-04 10:36:43,927 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 85cd8311a7..67ffe7f000 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1224,7 +1224,12 @@ class QuerySet:
+             return True
+         if self.query.extra_order_by or self.query.order_by:
+             return True
+-        elif self.query.default_ordering and self.query.get_meta().ordering:
++        elif (
++            self.query.default_ordering and
++            self.query.get_meta().ordering and
++            # A default ordering doesn't affect GROUP BY queries.
++            not self.query.group_by
++        ):
+             return True
+         else:
+             return False
+2025-04-04 10:36:43,927 - INFO - Grading answer for django__django-13417...
+2025-04-04 10:36:43,927 - INFO - report: {'django__django-13417': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13417: resolved: False
+2025-04-04 10:36:43,927 - INFO - Attempting to stop container sweb.eval.django__django-13417.gold...
+2025-04-04 10:37:00,013 - INFO - Attempting to remove container sweb.eval.django__django-13417.gold...
+2025-04-04 10:37:00,061 - INFO - Container sweb.eval.django__django-13417.gold removed.
+2025-04-04 10:37:00,061 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13417:latest...
+2025-04-04 10:37:00,622 - INFO - Image sweb.eval.x86_64.django__django-13417:latest removed.

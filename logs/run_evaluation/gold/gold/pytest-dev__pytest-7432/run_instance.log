@@ -1,0 +1,51 @@
+2025-04-04 12:26:10,392 - INFO - Environment image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest found for pytest-dev__pytest-7432
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-7432:latest for pytest-dev__pytest-7432
+2025-04-04 12:26:28,930 - INFO - Creating container for pytest-dev__pytest-7432...
+2025-04-04 12:26:29,062 - INFO - Container for pytest-dev__pytest-7432 created: edf32127cf49f1ff2455162e7fbf4491f7866efc7cf27044477bdfef1fae6ef6
+2025-04-04 12:26:29,434 - INFO - Container for pytest-dev__pytest-7432 started: edf32127cf49f1ff2455162e7fbf4491f7866efc7cf27044477bdfef1fae6ef6
+2025-04-04 12:26:29,434 - INFO - Intermediate patch for pytest-dev__pytest-7432 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7432/patch.diff, now applying to container...
+2025-04-04 12:26:29,733 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:26:29,805 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/skipping.py
+
+2025-04-04 12:26:30,031 - INFO - Git diff before:
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 7bd975e5a..591a65df9 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -291,7 +291,8 @@ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+             else:
+                 rep.outcome = "passed"
+                 rep.wasxfail = xfailed.reason
+-    elif (
++
++    if (
+         item._store.get(skipped_by_mark_key, True)
+         and rep.skipped
+         and type(rep.longrepr) is tuple
+2025-04-04 12:26:30,031 - INFO - Eval script for pytest-dev__pytest-7432 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7432/eval.sh; copying to container...
+2025-04-04 12:26:44,811 - INFO - Test runtime: 14.57 seconds
+2025-04-04 12:26:44,812 - INFO - Test output for pytest-dev__pytest-7432 written to logs/run_evaluation/gold/gold/pytest-dev__pytest-7432/test_output.txt
+2025-04-04 12:26:44,879 - INFO - Git diff after:
+diff --git a/src/_pytest/skipping.py b/src/_pytest/skipping.py
+index 7bd975e5a..591a65df9 100644
+--- a/src/_pytest/skipping.py
++++ b/src/_pytest/skipping.py
+@@ -291,7 +291,8 @@ def pytest_runtest_makereport(item: Item, call: CallInfo[None]):
+             else:
+                 rep.outcome = "passed"
+                 rep.wasxfail = xfailed.reason
+-    elif (
++
++    if (
+         item._store.get(skipped_by_mark_key, True)
+         and rep.skipped
+         and type(rep.longrepr) is tuple
+2025-04-04 12:26:44,879 - INFO - Grading answer for pytest-dev__pytest-7432...
+2025-04-04 12:26:44,879 - INFO - report: {'pytest-dev__pytest-7432': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-7432: resolved: False
+2025-04-04 12:26:44,880 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-7432.gold...
+2025-04-04 12:27:00,305 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-7432.gold...
+2025-04-04 12:27:00,403 - INFO - Container sweb.eval.pytest-dev__pytest-7432.gold removed.
+2025-04-04 12:27:00,404 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7432:latest...
+2025-04-04 12:27:00,484 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7432:latest removed.

@@ -1,0 +1,55 @@
+2025-04-04 11:12:09,726 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16819
+Building instance image sweb.eval.x86_64.django__django-16819:latest for django__django-16819
+2025-04-04 11:13:53,528 - INFO - Creating container for django__django-16819...
+2025-04-04 11:13:53,641 - INFO - Container for django__django-16819 created: 8c6b64f51891c687462760bd5d1296a7d80e83c39c148533476aa47c68f73148
+2025-04-04 11:13:54,140 - INFO - Container for django__django-16819 started: 8c6b64f51891c687462760bd5d1296a7d80e83c39c148533476aa47c68f73148
+2025-04-04 11:13:54,140 - INFO - Intermediate patch for django__django-16819 written to logs/run_evaluation/gold/gold/django__django-16819/patch.diff, now applying to container...
+2025-04-04 11:13:54,421 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:13:54,491 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+
+2025-04-04 11:13:56,136 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 967a91fdc8..b89b6b511b 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -861,6 +861,11 @@ class AddIndex(IndexOperation):
+     def migration_name_fragment(self):
+         return "%s_%s" % (self.model_name_lower, self.index.name.lower())
+ 
++    def reduce(self, operation, app_label):
++        if isinstance(operation, RemoveIndex) and self.index.name == operation.name:
++            return []
++        return super().reduce(operation, app_label)
++
+ 
+ class RemoveIndex(IndexOperation):
+     """Remove an index from a model."""
+2025-04-04 11:13:56,136 - INFO - Eval script for django__django-16819 written to logs/run_evaluation/gold/gold/django__django-16819/eval.sh; copying to container...
+2025-04-04 11:14:07,805 - INFO - Test runtime: 11.46 seconds
+2025-04-04 11:14:07,806 - INFO - Test output for django__django-16819 written to logs/run_evaluation/gold/gold/django__django-16819/test_output.txt
+2025-04-04 11:14:07,929 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index 967a91fdc8..b89b6b511b 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -861,6 +861,11 @@ class AddIndex(IndexOperation):
+     def migration_name_fragment(self):
+         return "%s_%s" % (self.model_name_lower, self.index.name.lower())
+ 
++    def reduce(self, operation, app_label):
++        if isinstance(operation, RemoveIndex) and self.index.name == operation.name:
++            return []
++        return super().reduce(operation, app_label)
++
+ 
+ class RemoveIndex(IndexOperation):
+     """Remove an index from a model."""
+2025-04-04 11:14:07,929 - INFO - Grading answer for django__django-16819...
+2025-04-04 11:14:07,929 - INFO - report: {'django__django-16819': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16819: resolved: False
+2025-04-04 11:14:07,930 - INFO - Attempting to stop container sweb.eval.django__django-16819.gold...
+2025-04-04 11:14:23,890 - INFO - Attempting to remove container sweb.eval.django__django-16819.gold...
+2025-04-04 11:14:23,938 - INFO - Container sweb.eval.django__django-16819.gold removed.
+2025-04-04 11:14:23,938 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16819:latest...
+2025-04-04 11:14:24,929 - INFO - Image sweb.eval.x86_64.django__django-16819:latest removed.

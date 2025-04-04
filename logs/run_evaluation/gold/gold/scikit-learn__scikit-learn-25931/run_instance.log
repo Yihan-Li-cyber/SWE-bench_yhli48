@@ -1,0 +1,113 @@
+2025-04-04 13:24:08,552 - INFO - Environment image sweb.env.x86_64.3a59860bcd0dab8bbfb2ff:latest found for scikit-learn__scikit-learn-25931
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-25931:latest for scikit-learn__scikit-learn-25931
+2025-04-04 13:36:37,472 - INFO - Creating container for scikit-learn__scikit-learn-25931...
+2025-04-04 13:36:37,499 - INFO - Container for scikit-learn__scikit-learn-25931 created: 7e835dd2aca356ca2aa42238d3072920f28dce28c1a13fbfbee2a717ea23fc1b
+2025-04-04 13:36:37,900 - INFO - Container for scikit-learn__scikit-learn-25931 started: 7e835dd2aca356ca2aa42238d3072920f28dce28c1a13fbfbee2a717ea23fc1b
+2025-04-04 13:36:37,901 - INFO - Intermediate patch for scikit-learn__scikit-learn-25931 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-25931/patch.diff, now applying to container...
+2025-04-04 13:36:38,196 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:36:38,303 - INFO - >>>>> Applied Patch:
+patching file sklearn/ensemble/_iforest.py
+
+2025-04-04 13:36:38,879 - INFO - Git diff before:
+diff --git a/sklearn/ensemble/_iforest.py b/sklearn/ensemble/_iforest.py
+index 4d6c1c3f0..cc0f3cf09 100644
+--- a/sklearn/ensemble/_iforest.py
++++ b/sklearn/ensemble/_iforest.py
+@@ -344,8 +344,10 @@ class IsolationForest(OutlierMixin, BaseBagging):
+             self.offset_ = -0.5
+             return self
+ 
+-        # else, define offset_ wrt contamination parameter
+-        self.offset_ = np.percentile(self.score_samples(X), 100.0 * self.contamination)
++        # Else, define offset_ wrt contamination parameter
++        # To avoid performing input validation a second time we call
++        # _score_samples rather than score_samples
++        self.offset_ = np.percentile(self._score_samples(X), 100.0 * self.contamination)
+ 
+         return self
+ 
+@@ -428,15 +430,21 @@ class IsolationForest(OutlierMixin, BaseBagging):
+             The anomaly score of the input samples.
+             The lower, the more abnormal.
+         """
+-        # code structure from ForestClassifier/predict_proba
+-
+-        check_is_fitted(self)
+-
+         # Check data
+         X = self._validate_data(X, accept_sparse="csr", dtype=np.float32, reset=False)
+ 
+-        # Take the opposite of the scores as bigger is better (here less
+-        # abnormal)
++        return self._score_samples(X)
++
++    def _score_samples(self, X):
++        """Private version of score_samples without input validation.
++
++        Input validation would remove feature names, so we disable it.
++        """
++        # Code structure from ForestClassifier/predict_proba
++
++        check_is_fitted(self)
++
++        # Take the opposite of the scores as bigger is better (here less abnormal)
+         return -self._compute_chunked_score_samples(X)
+ 
+     def _compute_chunked_score_samples(self, X):
+2025-04-04 13:36:38,879 - INFO - Eval script for scikit-learn__scikit-learn-25931 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-25931/eval.sh; copying to container...
+2025-04-04 13:36:55,907 - INFO - Test runtime: 16.80 seconds
+2025-04-04 13:36:55,908 - INFO - Test output for scikit-learn__scikit-learn-25931 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-25931/test_output.txt
+2025-04-04 13:36:56,036 - INFO - Git diff after:
+diff --git a/sklearn/ensemble/_iforest.py b/sklearn/ensemble/_iforest.py
+index 4d6c1c3f0..cc0f3cf09 100644
+--- a/sklearn/ensemble/_iforest.py
++++ b/sklearn/ensemble/_iforest.py
+@@ -344,8 +344,10 @@ class IsolationForest(OutlierMixin, BaseBagging):
+             self.offset_ = -0.5
+             return self
+ 
+-        # else, define offset_ wrt contamination parameter
+-        self.offset_ = np.percentile(self.score_samples(X), 100.0 * self.contamination)
++        # Else, define offset_ wrt contamination parameter
++        # To avoid performing input validation a second time we call
++        # _score_samples rather than score_samples
++        self.offset_ = np.percentile(self._score_samples(X), 100.0 * self.contamination)
+ 
+         return self
+ 
+@@ -428,15 +430,21 @@ class IsolationForest(OutlierMixin, BaseBagging):
+             The anomaly score of the input samples.
+             The lower, the more abnormal.
+         """
+-        # code structure from ForestClassifier/predict_proba
+-
+-        check_is_fitted(self)
+-
+         # Check data
+         X = self._validate_data(X, accept_sparse="csr", dtype=np.float32, reset=False)
+ 
+-        # Take the opposite of the scores as bigger is better (here less
+-        # abnormal)
++        return self._score_samples(X)
++
++    def _score_samples(self, X):
++        """Private version of score_samples without input validation.
++
++        Input validation would remove feature names, so we disable it.
++        """
++        # Code structure from ForestClassifier/predict_proba
++
++        check_is_fitted(self)
++
++        # Take the opposite of the scores as bigger is better (here less abnormal)
+         return -self._compute_chunked_score_samples(X)
+ 
+     def _compute_chunked_score_samples(self, X):
+2025-04-04 13:36:56,037 - INFO - Grading answer for scikit-learn__scikit-learn-25931...
+2025-04-04 13:36:56,038 - INFO - report: {'scikit-learn__scikit-learn-25931': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-25931: resolved: False
+2025-04-04 13:36:56,039 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-25931.gold...
+2025-04-04 13:37:11,609 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-25931.gold...
+2025-04-04 13:37:11,673 - INFO - Container sweb.eval.scikit-learn__scikit-learn-25931.gold removed.
+2025-04-04 13:37:11,673 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-25931:latest...
+2025-04-04 13:37:11,982 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-25931:latest removed.

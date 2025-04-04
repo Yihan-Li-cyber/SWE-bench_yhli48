@@ -1,0 +1,45 @@
+2025-04-04 11:07:54,409 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16333
+Building instance image sweb.eval.x86_64.django__django-16333:latest for django__django-16333
+2025-04-04 11:09:01,807 - INFO - Creating container for django__django-16333...
+2025-04-04 11:09:01,852 - INFO - Container for django__django-16333 created: 54af700d35c98160ad46b44a4c5fa08476e4c318aa2fc33ab698166e5a851621
+2025-04-04 11:09:09,071 - INFO - Container for django__django-16333 started: 54af700d35c98160ad46b44a4c5fa08476e4c318aa2fc33ab698166e5a851621
+2025-04-04 11:09:09,072 - INFO - Intermediate patch for django__django-16333 written to logs/run_evaluation/gold/gold/django__django-16333/patch.diff, now applying to container...
+2025-04-04 11:09:09,326 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:09:09,400 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/forms.py
+
+2025-04-04 11:09:10,752 - INFO - Git diff before:
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+index d73d1c8495..63420af94e 100644
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -141,6 +141,8 @@ class UserCreationForm(forms.ModelForm):
+         user.set_password(self.cleaned_data["password1"])
+         if commit:
+             user.save()
++            if hasattr(self, "save_m2m"):
++                self.save_m2m()
+         return user
+2025-04-04 11:09:10,753 - INFO - Eval script for django__django-16333 written to logs/run_evaluation/gold/gold/django__django-16333/eval.sh; copying to container...
+2025-04-04 11:09:22,811 - INFO - Test runtime: 11.86 seconds
+2025-04-04 11:09:22,812 - INFO - Test output for django__django-16333 written to logs/run_evaluation/gold/gold/django__django-16333/test_output.txt
+2025-04-04 11:09:22,927 - INFO - Git diff after:
+diff --git a/django/contrib/auth/forms.py b/django/contrib/auth/forms.py
+index d73d1c8495..63420af94e 100644
+--- a/django/contrib/auth/forms.py
++++ b/django/contrib/auth/forms.py
+@@ -141,6 +141,8 @@ class UserCreationForm(forms.ModelForm):
+         user.set_password(self.cleaned_data["password1"])
+         if commit:
+             user.save()
++            if hasattr(self, "save_m2m"):
++                self.save_m2m()
+         return user
+2025-04-04 11:09:22,927 - INFO - Grading answer for django__django-16333...
+2025-04-04 11:09:22,927 - INFO - report: {'django__django-16333': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16333: resolved: False
+2025-04-04 11:09:22,928 - INFO - Attempting to stop container sweb.eval.django__django-16333.gold...
+2025-04-04 11:09:38,717 - INFO - Attempting to remove container sweb.eval.django__django-16333.gold...
+2025-04-04 11:09:38,764 - INFO - Container sweb.eval.django__django-16333.gold removed.
+2025-04-04 11:09:38,765 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16333:latest...
+2025-04-04 11:09:39,490 - INFO - Image sweb.eval.x86_64.django__django-16333:latest removed.

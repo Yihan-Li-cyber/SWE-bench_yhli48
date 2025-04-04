@@ -1,0 +1,47 @@
+2025-04-04 10:03:21,557 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12209
+Building instance image sweb.eval.x86_64.django__django-12209:latest for django__django-12209
+2025-04-04 10:04:15,141 - INFO - Creating container for django__django-12209...
+2025-04-04 10:04:15,254 - INFO - Container for django__django-12209 created: 5190a0024f9ff5a24d7087bb0585101bf5ded5247ab26a3684c1cd1cbf12477a
+2025-04-04 10:04:16,633 - INFO - Container for django__django-12209 started: 5190a0024f9ff5a24d7087bb0585101bf5ded5247ab26a3684c1cd1cbf12477a
+2025-04-04 10:04:16,633 - INFO - Intermediate patch for django__django-12209 written to logs/run_evaluation/gold/gold/django__django-12209/patch.diff, now applying to container...
+2025-04-04 10:04:16,993 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:04:17,054 - INFO - >>>>> Applied Patch:
+patching file django/db/models/base.py
+
+2025-04-04 10:04:18,605 - INFO - Git diff before:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index e3b14a41a0..844c01e95e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -849,6 +849,7 @@ class Model(metaclass=ModelBase):
+         updated = False
+         # Skip an UPDATE when adding an instance and primary key has a default.
+         if (
++            not raw and
+             not force_insert and
+             self._state.adding and
+             self._meta.pk.default and
+2025-04-04 10:04:18,605 - INFO - Eval script for django__django-12209 written to logs/run_evaluation/gold/gold/django__django-12209/eval.sh; copying to container...
+2025-04-04 10:04:31,672 - INFO - Test runtime: 12.81 seconds
+2025-04-04 10:04:31,673 - INFO - Test output for django__django-12209 written to logs/run_evaluation/gold/gold/django__django-12209/test_output.txt
+2025-04-04 10:04:31,804 - INFO - Git diff after:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index e3b14a41a0..844c01e95e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -849,6 +849,7 @@ class Model(metaclass=ModelBase):
+         updated = False
+         # Skip an UPDATE when adding an instance and primary key has a default.
+         if (
++            not raw and
+             not force_insert and
+             self._state.adding and
+             self._meta.pk.default and
+2025-04-04 10:04:31,805 - INFO - Grading answer for django__django-12209...
+2025-04-04 10:04:31,805 - INFO - report: {'django__django-12209': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12209: resolved: False
+2025-04-04 10:04:31,805 - INFO - Attempting to stop container sweb.eval.django__django-12209.gold...
+2025-04-04 10:04:48,110 - INFO - Attempting to remove container sweb.eval.django__django-12209.gold...
+2025-04-04 10:04:48,307 - INFO - Container sweb.eval.django__django-12209.gold removed.
+2025-04-04 10:04:48,307 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12209:latest...
+2025-04-04 10:04:49,643 - INFO - Image sweb.eval.x86_64.django__django-12209:latest removed.

@@ -1,0 +1,77 @@
+2025-04-04 11:06:02,850 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16145
+Building instance image sweb.eval.x86_64.django__django-16145:latest for django__django-16145
+2025-04-04 11:06:50,603 - INFO - Creating container for django__django-16145...
+2025-04-04 11:06:50,674 - INFO - Container for django__django-16145 created: d7f9e5cd2b33dea3d778c0e64b1bd017d41318ac38e2b8d7571170267d9d6c2c
+2025-04-04 11:06:51,034 - INFO - Container for django__django-16145 started: d7f9e5cd2b33dea3d778c0e64b1bd017d41318ac38e2b8d7571170267d9d6c2c
+2025-04-04 11:06:51,035 - INFO - Intermediate patch for django__django-16145 written to logs/run_evaluation/gold/gold/django__django-16145/patch.diff, now applying to container...
+2025-04-04 11:06:51,339 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:06:51,404 - INFO - >>>>> Applied Patch:
+patching file django/core/management/commands/runserver.py
+
+2025-04-04 11:06:52,735 - INFO - Git diff before:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index 3c39f57e4d..2b91feb375 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -129,6 +129,13 @@ class Command(BaseCommand):
+         shutdown_message = options.get("shutdown_message", "")
+         quit_command = "CTRL-BREAK" if sys.platform == "win32" else "CONTROL-C"
+ 
++        if self._raw_ipv6:
++            addr = f"[{self.addr}]"
++        elif self.addr == "0":
++            addr = "0.0.0.0"
++        else:
++            addr = self.addr
++
+         if not options["skip_checks"]:
+             self.stdout.write("Performing system checks...\n\n")
+             self.check(display_num_errors=True)
+@@ -147,7 +154,7 @@ class Command(BaseCommand):
+                 "version": self.get_version(),
+                 "settings": settings.SETTINGS_MODULE,
+                 "protocol": self.protocol,
+-                "addr": "[%s]" % self.addr if self._raw_ipv6 else self.addr,
++                "addr": addr,
+                 "port": self.port,
+                 "quit_command": quit_command,
+             }
+2025-04-04 11:06:52,736 - INFO - Eval script for django__django-16145 written to logs/run_evaluation/gold/gold/django__django-16145/eval.sh; copying to container...
+2025-04-04 11:08:29,900 - INFO - Test runtime: 96.97 seconds
+2025-04-04 11:08:29,901 - INFO - Test output for django__django-16145 written to logs/run_evaluation/gold/gold/django__django-16145/test_output.txt
+2025-04-04 11:08:30,004 - INFO - Git diff after:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index 3c39f57e4d..2b91feb375 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -129,6 +129,13 @@ class Command(BaseCommand):
+         shutdown_message = options.get("shutdown_message", "")
+         quit_command = "CTRL-BREAK" if sys.platform == "win32" else "CONTROL-C"
+ 
++        if self._raw_ipv6:
++            addr = f"[{self.addr}]"
++        elif self.addr == "0":
++            addr = "0.0.0.0"
++        else:
++            addr = self.addr
++
+         if not options["skip_checks"]:
+             self.stdout.write("Performing system checks...\n\n")
+             self.check(display_num_errors=True)
+@@ -147,7 +154,7 @@ class Command(BaseCommand):
+                 "version": self.get_version(),
+                 "settings": settings.SETTINGS_MODULE,
+                 "protocol": self.protocol,
+-                "addr": "[%s]" % self.addr if self._raw_ipv6 else self.addr,
++                "addr": addr,
+                 "port": self.port,
+                 "quit_command": quit_command,
+             }
+2025-04-04 11:08:30,006 - INFO - Grading answer for django__django-16145...
+2025-04-04 11:08:30,006 - INFO - report: {'django__django-16145': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16145: resolved: False
+2025-04-04 11:08:30,007 - INFO - Attempting to stop container sweb.eval.django__django-16145.gold...
+2025-04-04 11:09:09,015 - INFO - Attempting to remove container sweb.eval.django__django-16145.gold...
+2025-04-04 11:09:09,652 - INFO - Container sweb.eval.django__django-16145.gold removed.
+2025-04-04 11:09:09,652 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16145:latest...
+2025-04-04 11:09:12,048 - INFO - Image sweb.eval.x86_64.django__django-16145:latest removed.

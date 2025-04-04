@@ -1,0 +1,67 @@
+2025-04-04 14:06:27,789 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-21847
+Building instance image sweb.eval.x86_64.sympy__sympy-21847:latest for sympy__sympy-21847
+2025-04-04 14:07:28,576 - INFO - Creating container for sympy__sympy-21847...
+2025-04-04 14:07:28,651 - INFO - Container for sympy__sympy-21847 created: 9d7d84e8dbd04e04ebc671396e51fde0a57b4587f5d54431db7aece2e1c76240
+2025-04-04 14:07:54,946 - INFO - Container for sympy__sympy-21847 started: 9d7d84e8dbd04e04ebc671396e51fde0a57b4587f5d54431db7aece2e1c76240
+2025-04-04 14:07:54,949 - INFO - Intermediate patch for sympy__sympy-21847 written to logs/run_evaluation/gold/gold/sympy__sympy-21847/patch.diff, now applying to container...
+2025-04-04 14:07:55,437 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:07:55,546 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/monomials.py
+
+2025-04-04 14:07:56,366 - INFO - Git diff before:
+diff --git a/sympy/polys/monomials.py b/sympy/polys/monomials.py
+index 0e84403307..d2cd3451e5 100644
+--- a/sympy/polys/monomials.py
++++ b/sympy/polys/monomials.py
+@@ -127,7 +127,7 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                if sum(powers.values()) >= min_degree:
+                     monomials_list_comm.append(Mul(*item))
+             yield from set(monomials_list_comm)
+         else:
+@@ -139,7 +139,7 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                if sum(powers.values()) >= min_degree:
+                     monomials_list_non_comm.append(Mul(*item))
+             yield from set(monomials_list_non_comm)
+     else:
+2025-04-04 14:07:56,369 - INFO - Eval script for sympy__sympy-21847 written to logs/run_evaluation/gold/gold/sympy__sympy-21847/eval.sh; copying to container...
+2025-04-04 14:08:03,733 - INFO - Test runtime: 6.92 seconds
+2025-04-04 14:08:03,733 - INFO - Test output for sympy__sympy-21847 written to logs/run_evaluation/gold/gold/sympy__sympy-21847/test_output.txt
+2025-04-04 14:08:03,870 - INFO - Git diff after:
+diff --git a/sympy/polys/monomials.py b/sympy/polys/monomials.py
+index 0e84403307..d2cd3451e5 100644
+--- a/sympy/polys/monomials.py
++++ b/sympy/polys/monomials.py
+@@ -127,7 +127,7 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                if sum(powers.values()) >= min_degree:
+                     monomials_list_comm.append(Mul(*item))
+             yield from set(monomials_list_comm)
+         else:
+@@ -139,7 +139,7 @@ def itermonomials(variables, max_degrees, min_degrees=None):
+                 for variable in item:
+                     if variable != 1:
+                         powers[variable] += 1
+-                if max(powers.values()) >= min_degree:
++                if sum(powers.values()) >= min_degree:
+                     monomials_list_non_comm.append(Mul(*item))
+             yield from set(monomials_list_non_comm)
+     else:
+2025-04-04 14:08:03,870 - INFO - Grading answer for sympy__sympy-21847...
+2025-04-04 14:08:03,870 - INFO - report: {'sympy__sympy-21847': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-21847: resolved: False
+2025-04-04 14:08:03,871 - INFO - Attempting to stop container sweb.eval.sympy__sympy-21847.gold...
+2025-04-04 14:08:19,390 - INFO - Attempting to remove container sweb.eval.sympy__sympy-21847.gold...
+2025-04-04 14:08:19,429 - INFO - Container sweb.eval.sympy__sympy-21847.gold removed.
+2025-04-04 14:08:19,430 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-21847:latest...
+2025-04-04 14:08:19,701 - INFO - Image sweb.eval.x86_64.sympy__sympy-21847:latest removed.

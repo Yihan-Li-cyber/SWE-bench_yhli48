@@ -1,0 +1,51 @@
+2025-04-04 12:34:36,918 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13328
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-13328:latest for scikit-learn__scikit-learn-13328
+2025-04-04 12:42:00,915 - INFO - Creating container for scikit-learn__scikit-learn-13328...
+2025-04-04 12:42:00,979 - INFO - Container for scikit-learn__scikit-learn-13328 created: d5c483bcaf951692fc2d5d26314559aef7a74c6d0772d8249ad9bc94133f1f78
+2025-04-04 12:42:01,490 - INFO - Container for scikit-learn__scikit-learn-13328 started: d5c483bcaf951692fc2d5d26314559aef7a74c6d0772d8249ad9bc94133f1f78
+2025-04-04 12:42:01,490 - INFO - Intermediate patch for scikit-learn__scikit-learn-13328 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13328/patch.diff, now applying to container...
+2025-04-04 12:42:01,797 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:42:01,875 - INFO - >>>>> Applied Patch:
+patching file sklearn/linear_model/huber.py
+
+2025-04-04 12:42:02,363 - INFO - Git diff before:
+diff --git a/sklearn/linear_model/huber.py b/sklearn/linear_model/huber.py
+index 65c686400..285913684 100644
+--- a/sklearn/linear_model/huber.py
++++ b/sklearn/linear_model/huber.py
+@@ -251,7 +251,8 @@ class HuberRegressor(LinearModel, RegressorMixin, BaseEstimator):
+         self : object
+         """
+         X, y = check_X_y(
+-            X, y, copy=False, accept_sparse=['csr'], y_numeric=True)
++            X, y, copy=False, accept_sparse=['csr'], y_numeric=True,
++            dtype=[np.float64, np.float32])
+         if sample_weight is not None:
+             sample_weight = np.array(sample_weight)
+             check_consistent_length(y, sample_weight)
+2025-04-04 12:42:02,364 - INFO - Eval script for scikit-learn__scikit-learn-13328 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13328/eval.sh; copying to container...
+2025-04-04 12:42:10,527 - INFO - Test runtime: 7.96 seconds
+2025-04-04 12:42:10,527 - INFO - Test output for scikit-learn__scikit-learn-13328 written to logs/run_evaluation/gold/gold/scikit-learn__scikit-learn-13328/test_output.txt
+2025-04-04 12:42:10,621 - INFO - Git diff after:
+diff --git a/sklearn/linear_model/huber.py b/sklearn/linear_model/huber.py
+index 65c686400..285913684 100644
+--- a/sklearn/linear_model/huber.py
++++ b/sklearn/linear_model/huber.py
+@@ -251,7 +251,8 @@ class HuberRegressor(LinearModel, RegressorMixin, BaseEstimator):
+         self : object
+         """
+         X, y = check_X_y(
+-            X, y, copy=False, accept_sparse=['csr'], y_numeric=True)
++            X, y, copy=False, accept_sparse=['csr'], y_numeric=True,
++            dtype=[np.float64, np.float32])
+         if sample_weight is not None:
+             sample_weight = np.array(sample_weight)
+             check_consistent_length(y, sample_weight)
+2025-04-04 12:42:10,621 - INFO - Grading answer for scikit-learn__scikit-learn-13328...
+2025-04-04 12:42:10,622 - INFO - report: {'scikit-learn__scikit-learn-13328': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-13328: resolved: False
+2025-04-04 12:42:10,622 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-13328.gold...
+2025-04-04 12:42:55,885 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-13328.gold...
+2025-04-04 12:42:55,910 - INFO - Container sweb.eval.scikit-learn__scikit-learn-13328.gold removed.
+2025-04-04 12:42:55,910 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-13328:latest...
+2025-04-04 12:42:56,127 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-13328:latest removed.

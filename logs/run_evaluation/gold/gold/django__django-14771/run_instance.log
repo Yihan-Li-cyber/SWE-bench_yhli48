@@ -1,0 +1,55 @@
+2025-04-04 10:50:44,695 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-14771
+Building instance image sweb.eval.x86_64.django__django-14771:latest for django__django-14771
+2025-04-04 10:52:01,472 - INFO - Creating container for django__django-14771...
+2025-04-04 10:52:01,508 - INFO - Container for django__django-14771 created: 808a2fa58fd86b6ee54ed3fad031115bd664116756e81afb4f16573c12995606
+2025-04-04 10:52:12,112 - INFO - Container for django__django-14771 started: 808a2fa58fd86b6ee54ed3fad031115bd664116756e81afb4f16573c12995606
+2025-04-04 10:52:12,113 - INFO - Intermediate patch for django__django-14771 written to logs/run_evaluation/gold/gold/django__django-14771/patch.diff, now applying to container...
+2025-04-04 10:52:12,387 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:52:12,454 - INFO - >>>>> Applied Patch:
+patching file django/utils/autoreload.py
+
+2025-04-04 10:52:13,958 - INFO - Git diff before:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index cc65c043ab..583c2be647 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -220,6 +220,11 @@ def get_child_arguments():
+     py_script = Path(sys.argv[0])
+ 
+     args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions]
++    if sys.implementation.name == 'cpython':
++        args.extend(
++            f'-X{key}' if value is True else f'-X{key}={value}'
++            for key, value in sys._xoptions.items()
++        )
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+2025-04-04 10:52:13,958 - INFO - Eval script for django__django-14771 written to logs/run_evaluation/gold/gold/django__django-14771/eval.sh; copying to container...
+2025-04-04 10:52:27,243 - INFO - Test runtime: 13.06 seconds
+2025-04-04 10:52:27,244 - INFO - Test output for django__django-14771 written to logs/run_evaluation/gold/gold/django__django-14771/test_output.txt
+2025-04-04 10:52:27,416 - INFO - Git diff after:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index cc65c043ab..583c2be647 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -220,6 +220,11 @@ def get_child_arguments():
+     py_script = Path(sys.argv[0])
+ 
+     args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions]
++    if sys.implementation.name == 'cpython':
++        args.extend(
++            f'-X{key}' if value is True else f'-X{key}={value}'
++            for key, value in sys._xoptions.items()
++        )
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+2025-04-04 10:52:27,416 - INFO - Grading answer for django__django-14771...
+2025-04-04 10:52:27,417 - INFO - report: {'django__django-14771': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14771: resolved: False
+2025-04-04 10:52:27,417 - INFO - Attempting to stop container sweb.eval.django__django-14771.gold...
+2025-04-04 10:52:43,660 - INFO - Attempting to remove container sweb.eval.django__django-14771.gold...
+2025-04-04 10:52:43,744 - INFO - Container sweb.eval.django__django-14771.gold removed.
+2025-04-04 10:52:43,744 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14771:latest...
+2025-04-04 10:52:44,307 - INFO - Image sweb.eval.x86_64.django__django-14771:latest removed.

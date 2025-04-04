@@ -1,0 +1,69 @@
+2025-04-04 10:27:43,996 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12774
+Building instance image sweb.eval.x86_64.django__django-12774:latest for django__django-12774
+2025-04-04 10:28:33,203 - INFO - Creating container for django__django-12774...
+2025-04-04 10:28:33,351 - INFO - Container for django__django-12774 created: 88a195a36a1a8fad2ccfa0113dcc6aaf0d9c75d693c5cba9f41fa8b0db35406b
+2025-04-04 10:28:34,077 - INFO - Container for django__django-12774 started: 88a195a36a1a8fad2ccfa0113dcc6aaf0d9c75d693c5cba9f41fa8b0db35406b
+2025-04-04 10:28:34,079 - INFO - Intermediate patch for django__django-12774 written to logs/run_evaluation/gold/gold/django__django-12774/patch.diff, now applying to container...
+2025-04-04 10:28:34,398 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:28:34,468 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+
+2025-04-04 10:28:36,131 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index d9c9b0db04..c1aa352701 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -689,7 +689,17 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot use 'limit' or 'offset' with in_bulk"
+-        if field_name != 'pk' and not self.model._meta.get_field(field_name).unique:
++        opts = self.model._meta
++        unique_fields = [
++            constraint.fields[0]
++            for constraint in opts.total_unique_constraints
++            if len(constraint.fields) == 1
++        ]
++        if (
++            field_name != 'pk' and
++            not opts.get_field(field_name).unique and
++            field_name not in unique_fields
++        ):
+             raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
+         if id_list is not None:
+             if not id_list:
+2025-04-04 10:28:36,134 - INFO - Eval script for django__django-12774 written to logs/run_evaluation/gold/gold/django__django-12774/eval.sh; copying to container...
+2025-04-04 10:28:47,748 - INFO - Test runtime: 11.39 seconds
+2025-04-04 10:28:47,749 - INFO - Test output for django__django-12774 written to logs/run_evaluation/gold/gold/django__django-12774/test_output.txt
+2025-04-04 10:28:47,839 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index d9c9b0db04..c1aa352701 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -689,7 +689,17 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot use 'limit' or 'offset' with in_bulk"
+-        if field_name != 'pk' and not self.model._meta.get_field(field_name).unique:
++        opts = self.model._meta
++        unique_fields = [
++            constraint.fields[0]
++            for constraint in opts.total_unique_constraints
++            if len(constraint.fields) == 1
++        ]
++        if (
++            field_name != 'pk' and
++            not opts.get_field(field_name).unique and
++            field_name not in unique_fields
++        ):
+             raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
+         if id_list is not None:
+             if not id_list:
+2025-04-04 10:28:47,840 - INFO - Grading answer for django__django-12774...
+2025-04-04 10:28:47,840 - INFO - report: {'django__django-12774': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12774: resolved: False
+2025-04-04 10:28:47,840 - INFO - Attempting to stop container sweb.eval.django__django-12774.gold...
+2025-04-04 10:29:03,436 - INFO - Attempting to remove container sweb.eval.django__django-12774.gold...
+2025-04-04 10:29:03,478 - INFO - Container sweb.eval.django__django-12774.gold removed.
+2025-04-04 10:29:03,479 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12774:latest...
+2025-04-04 10:29:06,248 - INFO - Image sweb.eval.x86_64.django__django-12774:latest removed.

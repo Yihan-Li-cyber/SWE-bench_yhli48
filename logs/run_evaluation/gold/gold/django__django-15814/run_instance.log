@@ -1,0 +1,47 @@
+2025-04-04 11:02:23,691 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-15814
+Building instance image sweb.eval.x86_64.django__django-15814:latest for django__django-15814
+2025-04-04 11:03:10,050 - INFO - Creating container for django__django-15814...
+2025-04-04 11:03:10,097 - INFO - Container for django__django-15814 created: 83309e2ffd6db2d78d58d5f0e6cc60aa035da22212390957dca9362d79d3a54f
+2025-04-04 11:03:10,477 - INFO - Container for django__django-15814 started: 83309e2ffd6db2d78d58d5f0e6cc60aa035da22212390957dca9362d79d3a54f
+2025-04-04 11:03:10,477 - INFO - Intermediate patch for django__django-15814 written to logs/run_evaluation/gold/gold/django__django-15814/patch.diff, now applying to container...
+2025-04-04 11:03:10,761 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:03:10,850 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-04 11:03:12,249 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 33cc636b22..cf7566d771 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -748,6 +748,7 @@ class Query(BaseExpression):
+                     cur_model = source.related_model
+                 else:
+                     cur_model = source.remote_field.model
++                cur_model = cur_model._meta.concrete_model
+                 opts = cur_model._meta
+                 # Even if we're "just passing through" this model, we must add
+                 # both the current model's pk and the related reference field
+2025-04-04 11:03:12,250 - INFO - Eval script for django__django-15814 written to logs/run_evaluation/gold/gold/django__django-15814/eval.sh; copying to container...
+2025-04-04 11:03:25,321 - INFO - Test runtime: 12.87 seconds
+2025-04-04 11:03:25,321 - INFO - Test output for django__django-15814 written to logs/run_evaluation/gold/gold/django__django-15814/test_output.txt
+2025-04-04 11:03:25,445 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 33cc636b22..cf7566d771 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -748,6 +748,7 @@ class Query(BaseExpression):
+                     cur_model = source.related_model
+                 else:
+                     cur_model = source.remote_field.model
++                cur_model = cur_model._meta.concrete_model
+                 opts = cur_model._meta
+                 # Even if we're "just passing through" this model, we must add
+                 # both the current model's pk and the related reference field
+2025-04-04 11:03:25,445 - INFO - Grading answer for django__django-15814...
+2025-04-04 11:03:25,445 - INFO - report: {'django__django-15814': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15814: resolved: False
+2025-04-04 11:03:25,446 - INFO - Attempting to stop container sweb.eval.django__django-15814.gold...
+2025-04-04 11:04:10,959 - INFO - Attempting to remove container sweb.eval.django__django-15814.gold...
+2025-04-04 11:04:10,999 - INFO - Container sweb.eval.django__django-15814.gold removed.
+2025-04-04 11:04:10,999 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15814:latest...
+2025-04-04 11:04:36,570 - INFO - Image sweb.eval.x86_64.django__django-15814:latest removed.

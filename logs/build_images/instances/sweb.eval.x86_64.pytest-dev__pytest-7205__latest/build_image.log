@@ -1,0 +1,214 @@
+2025-04-04 12:26:04,013 - INFO - Building image sweb.eval.x86_64.pytest-dev__pytest-7205:latest
+Using dockerfile:
+FROM --platform=linux/x86_64 sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
+
+COPY ./setup_repo.sh /root/
+RUN sed -i -e 's/\r$//' /root/setup_repo.sh
+RUN /bin/bash /root/setup_repo.sh
+
+WORKDIR /testbed/
+
+Adding (1) setup scripts to image build repo
+2025-04-04 12:26:04,014 - INFO - [SETUP SCRIPT] setup_repo.sh:
+#!/bin/bash
+set -euxo pipefail
+git clone -o origin https://github.com/pytest-dev/pytest.git /testbed
+chmod -R 777 /testbed
+cd /testbed
+git reset --hard 5e7f1ab4bf58e473e5d7f878eb2b499d7deabd29
+git remote remove origin
+source /opt/miniconda3/bin/activate
+conda activate testbed
+echo "Current environment: $CONDA_DEFAULT_ENV"
+python -m pip install -e .
+
+2025-04-04 12:26:04,014 - INFO - Building docker image sweb.eval.x86_64.pytest-dev__pytest-7205:latest in logs/build_images/instances/sweb.eval.x86_64.pytest-dev__pytest-7205__latest with platform linux/x86_64
+2025-04-04 12:26:04,026 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
+2025-04-04 12:26:04,026 - INFO - 
+2025-04-04 12:26:04,027 - INFO - ---> ec2c4483d188
+2025-04-04 12:26:04,027 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
+2025-04-04 12:26:04,027 - INFO - 
+2025-04-04 12:26:04,074 - INFO - ---> dc008e3aa43b
+2025-04-04 12:26:04,074 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
+2025-04-04 12:26:04,074 - INFO - 
+2025-04-04 12:26:04,110 - INFO - ---> Running in a2e55fc190f6
+2025-04-04 12:26:04,944 - INFO - ---> Removed intermediate container a2e55fc190f6
+2025-04-04 12:26:04,945 - INFO - ---> bde579c07845
+2025-04-04 12:26:04,945 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
+2025-04-04 12:26:04,945 - INFO - 
+2025-04-04 12:26:05,062 - INFO - ---> Running in 94c7327be29b
+2025-04-04 12:26:05,501 - INFO - + git clone -o origin https://github.com/pytest-dev/pytest.git /testbed
+2025-04-04 12:26:05,508 - INFO - Cloning into '/testbed'...
+2025-04-04 12:26:10,277 - INFO - + chmod -R 777 /testbed
+2025-04-04 12:26:10,296 - INFO - + cd /testbed
++ git reset --hard 5e7f1ab4bf58e473e5d7f878eb2b499d7deabd29
+2025-04-04 12:26:10,466 - INFO - HEAD is now at 5e7f1ab4b Merge pull request #7201 from nicoddemus/bruno-tidelift
+2025-04-04 12:26:10,470 - INFO - + git remote remove origin
+2025-04-04 12:26:10,495 - INFO - + source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
+++ . /opt/miniconda3/etc/profile.d/conda.sh
+2025-04-04 12:26:10,495 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-04 12:26:10,496 - INFO - +++ '[' -z '' ']'
++++ export CONDA_SHLVL=0
++++ CONDA_SHLVL=0
++++ '[' -n '' ']'
+2025-04-04 12:26:10,496 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-04 12:26:10,497 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-04 12:26:10,499 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH
++++ '[' -z '' ']'
++++ PS1=
+2025-04-04 12:26:10,499 - INFO - ++ conda activate
+++ local cmd=activate
+++ case "$cmd" in
+++ __conda_activate activate
+++ '[' -n '' ']'
+++ local ask_conda
+2025-04-04 12:26:10,500 - INFO - +++ PS1=
++++ __conda_exe shell.posix activate
+2025-04-04 12:26:10,501 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-04 12:26:10,744 - INFO - ++ ask_conda='PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ eval 'PS1='\''(base) '\''
+export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3'\''
+export CONDA_SHLVL='\''1'\''
+export CONDA_DEFAULT_ENV='\''base'\''
+export CONDA_PROMPT_MODIFIER='\''(base) '\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
++++ CONDA_PREFIX=/opt/miniconda3
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
++++ CONDA_DEFAULT_ENV=base
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ CONDA_PROMPT_MODIFIER='(base) '
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ CONDA_EXE=/opt/miniconda3/bin/conda
++++ export _CE_M=
++++ _CE_M=
++++ export _CE_CONDA=
++++ _CE_CONDA=
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ __conda_hashr
+++ '[' -n '' ']'
+++ '[' -n '' ']'
+++ hash -r
++ conda activate testbed
++ local cmd=activate
+2025-04-04 12:26:10,745 - INFO - + case "$cmd" in
++ __conda_activate activate testbed
++ '[' -n '' ']'
++ local ask_conda
+2025-04-04 12:26:10,745 - INFO - ++ PS1='(base) '
+++ __conda_exe shell.posix activate testbed
+2025-04-04 12:26:10,745 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-04 12:26:10,949 - INFO - + ask_conda='PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++ eval 'PS1='\''(testbed) '\''
+export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
+export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
+export CONDA_SHLVL='\''2'\''
+export CONDA_DEFAULT_ENV='\''testbed'\''
+export CONDA_PROMPT_MODIFIER='\''(testbed) '\''
+export CONDA_PREFIX_1='\''/opt/miniconda3'\''
+export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
+export _CE_M='\'''\''
+export _CE_CONDA='\'''\''
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+++ PS1='(testbed) '
+++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ export CONDA_SHLVL=2
+++ CONDA_SHLVL=2
+++ export CONDA_DEFAULT_ENV=testbed
+++ CONDA_DEFAULT_ENV=testbed
+++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_PROMPT_MODIFIER='(testbed) '
+++ export CONDA_PREFIX_1=/opt/miniconda3
+++ CONDA_PREFIX_1=/opt/miniconda3
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ CONDA_EXE=/opt/miniconda3/bin/conda
+++ export _CE_M=
+++ _CE_M=
+++ export _CE_CONDA=
+++ _CE_CONDA=
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++ __conda_hashr
+2025-04-04 12:26:10,950 - INFO - + '[' -n '' ']'
++ '[' -n '' ']'
++ hash -r
+2025-04-04 12:26:10,950 - INFO - + echo 'Current environment: testbed'
++ python -m pip install -e .
+2025-04-04 12:26:10,950 - INFO - Current environment: testbed
+2025-04-04 12:26:12,104 - INFO - Obtaining file:///testbed
+2025-04-04 12:26:12,118 - INFO - Installing build dependencies: started
+2025-04-04 12:26:15,710 - INFO - Installing build dependencies: finished with status 'done'
+2025-04-04 12:26:15,713 - INFO - Checking if build backend supports build_editable: started
+2025-04-04 12:26:16,016 - INFO - Checking if build backend supports build_editable: finished with status 'done'
+2025-04-04 12:26:16,019 - INFO - Getting requirements to build editable: started
+2025-04-04 12:26:16,301 - INFO - Getting requirements to build editable: finished with status 'done'
+2025-04-04 12:26:16,308 - INFO - Preparing editable metadata (pyproject.toml): started
+2025-04-04 12:26:17,062 - INFO - Preparing editable metadata (pyproject.toml): finished with status 'done'
+2025-04-04 12:26:17,097 - INFO - Requirement already satisfied: py>=1.5.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev262+g5e7f1ab4b) (1.11.0)
+2025-04-04 12:26:17,098 - INFO - Requirement already satisfied: packaging in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev262+g5e7f1ab4b) (23.1)
+2025-04-04 12:26:17,099 - INFO - Requirement already satisfied: attrs>=17.4.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev262+g5e7f1ab4b) (23.1.0)
+2025-04-04 12:26:17,104 - INFO - Requirement already satisfied: more-itertools>=4.0.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev262+g5e7f1ab4b) (10.1.0)
+2025-04-04 12:26:17,104 - INFO - Requirement already satisfied: pluggy<1.0,>=0.12 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pytest==5.4.1.dev262+g5e7f1ab4b) (0.13.1)
+2025-04-04 12:26:17,191 - INFO - Collecting wcwidth (from pytest==5.4.1.dev262+g5e7f1ab4b)
+2025-04-04 12:26:17,216 - INFO - Downloading wcwidth-0.2.13-py2.py3-none-any.whl.metadata (14 kB)
+2025-04-04 12:26:17,327 - INFO - Downloading wcwidth-0.2.13-py2.py3-none-any.whl (34 kB)
+2025-04-04 12:26:17,388 - INFO - Building wheels for collected packages: pytest
+2025-04-04 12:26:17,391 - INFO - Building editable for pytest (pyproject.toml): started
+2025-04-04 12:26:18,233 - INFO - Building editable for pytest (pyproject.toml): finished with status 'done'
+2025-04-04 12:26:18,239 - INFO - Created wheel for pytest: filename=pytest-5.4.1.dev262+g5e7f1ab4b-0.editable-py3-none-any.whl size=7978 sha256=56158cc127dd4e12378be9913c6417bd47e24307efea46098c8af7030cb8967f
+  Stored in directory: /tmp/pip-ephem-wheel-cache-ymexztqb/wheels/7d/66/67/70d1ee2124ccf21d601c352e25cdca10f611f7c8b3f9ffb9e4
+2025-04-04 12:26:18,250 - INFO - Successfully built pytest
+2025-04-04 12:26:18,305 - INFO - Installing collected packages: wcwidth, pytest
+2025-04-04 12:26:18,408 - INFO - Successfully installed pytest-5.4.1.dev262+g5e7f1ab4b wcwidth-0.2.13
+2025-04-04 12:26:18,409 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-04 12:26:19,864 - INFO - ---> Removed intermediate container 94c7327be29b
+2025-04-04 12:26:19,864 - INFO - ---> f80a2c4cbc71
+2025-04-04 12:26:19,864 - INFO - Step 5/5 : WORKDIR /testbed/
+2025-04-04 12:26:19,865 - INFO - 
+2025-04-04 12:26:19,889 - INFO - ---> Running in 3059bc185ab7
+2025-04-04 12:26:20,031 - INFO - ---> Removed intermediate container 3059bc185ab7
+2025-04-04 12:26:20,032 - INFO - ---> 2787b5619874
+2025-04-04 12:26:20,032 - INFO - Successfully built 2787b5619874
+2025-04-04 12:26:20,035 - INFO - Successfully tagged sweb.eval.x86_64.pytest-dev__pytest-7205:latest
+2025-04-04 12:26:20,035 - INFO - Image built successfully!

@@ -1,0 +1,107 @@
+2025-04-04 13:58:21,354 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-16792
+Building instance image sweb.eval.x86_64.sympy__sympy-16792:latest for sympy__sympy-16792
+2025-04-04 13:59:23,541 - INFO - Creating container for sympy__sympy-16792...
+2025-04-04 13:59:23,621 - INFO - Container for sympy__sympy-16792 created: 94de18f4d538a16faa506df7daecd0ce18b79bc7f64543eae0cc73755dd7741e
+2025-04-04 13:59:46,917 - INFO - Container for sympy__sympy-16792 started: 94de18f4d538a16faa506df7daecd0ce18b79bc7f64543eae0cc73755dd7741e
+2025-04-04 13:59:46,920 - INFO - Intermediate patch for sympy__sympy-16792 written to logs/run_evaluation/gold/gold/sympy__sympy-16792/patch.diff, now applying to container...
+2025-04-04 13:59:47,436 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:59:47,538 - INFO - >>>>> Applied Patch:
+patching file sympy/utilities/codegen.py
+
+2025-04-04 13:59:48,182 - INFO - Git diff before:
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd7..194aafc376 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -695,6 +695,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+         arg_list = []
+ 
+         # setup input argument list
++
++        # helper to get dimensions for data for array-like args
++        def dimensions(s):
++            return [(S.Zero, dim - 1) for dim in s.shape]
++
+         array_symbols = {}
+         for array in expressions.atoms(Indexed) | local_expressions.atoms(Indexed):
+             array_symbols[array.base.label] = array
+@@ -703,11 +708,8 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+ 
+         for symbol in sorted(symbols, key=str):
+             if symbol in array_symbols:
+-                dims = []
+                 array = array_symbols[symbol]
+-                for dim in array.shape:
+-                    dims.append((S.Zero, dim - 1))
+-                metadata = {'dimensions': dims}
++                metadata = {'dimensions': dimensions(array)}
+             else:
+                 metadata = {}
+ 
+@@ -739,7 +741,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+                 try:
+                     new_args.append(name_arg_dict[symbol])
+                 except KeyError:
+-                    new_args.append(InputArgument(symbol))
++                    if isinstance(symbol, (IndexedBase, MatrixSymbol)):
++                        metadata = {'dimensions': dimensions(symbol)}
++                    else:
++                        metadata = {}
++                    new_args.append(InputArgument(symbol, **metadata))
+             arg_list = new_args
+ 
+         return Routine(name, arg_list, return_val, local_vars, global_vars)
+2025-04-04 13:59:48,182 - INFO - Eval script for sympy__sympy-16792 written to logs/run_evaluation/gold/gold/sympy__sympy-16792/eval.sh; copying to container...
+2025-04-04 13:59:57,536 - INFO - Test runtime: 9.02 seconds
+2025-04-04 13:59:57,537 - INFO - Test output for sympy__sympy-16792 written to logs/run_evaluation/gold/gold/sympy__sympy-16792/test_output.txt
+2025-04-04 13:59:57,645 - INFO - Git diff after:
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd7..194aafc376 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -695,6 +695,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+         arg_list = []
+ 
+         # setup input argument list
++
++        # helper to get dimensions for data for array-like args
++        def dimensions(s):
++            return [(S.Zero, dim - 1) for dim in s.shape]
++
+         array_symbols = {}
+         for array in expressions.atoms(Indexed) | local_expressions.atoms(Indexed):
+             array_symbols[array.base.label] = array
+@@ -703,11 +708,8 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+ 
+         for symbol in sorted(symbols, key=str):
+             if symbol in array_symbols:
+-                dims = []
+                 array = array_symbols[symbol]
+-                for dim in array.shape:
+-                    dims.append((S.Zero, dim - 1))
+-                metadata = {'dimensions': dims}
++                metadata = {'dimensions': dimensions(array)}
+             else:
+                 metadata = {}
+ 
+@@ -739,7 +741,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+                 try:
+                     new_args.append(name_arg_dict[symbol])
+                 except KeyError:
+-                    new_args.append(InputArgument(symbol))
++                    if isinstance(symbol, (IndexedBase, MatrixSymbol)):
++                        metadata = {'dimensions': dimensions(symbol)}
++                    else:
++                        metadata = {}
++                    new_args.append(InputArgument(symbol, **metadata))
+             arg_list = new_args
+ 
+         return Routine(name, arg_list, return_val, local_vars, global_vars)
+2025-04-04 13:59:57,645 - INFO - Grading answer for sympy__sympy-16792...
+2025-04-04 13:59:57,645 - INFO - report: {'sympy__sympy-16792': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-16792: resolved: False
+2025-04-04 13:59:57,645 - INFO - Attempting to stop container sweb.eval.sympy__sympy-16792.gold...
+2025-04-04 14:00:13,185 - INFO - Attempting to remove container sweb.eval.sympy__sympy-16792.gold...
+2025-04-04 14:00:13,219 - INFO - Container sweb.eval.sympy__sympy-16792.gold removed.
+2025-04-04 14:00:13,219 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-16792:latest...
+2025-04-04 14:00:13,636 - INFO - Image sweb.eval.x86_64.sympy__sympy-16792:latest removed.

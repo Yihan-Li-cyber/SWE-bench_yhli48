@@ -1,0 +1,189 @@
+2025-04-04 13:44:24,134 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-8265
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-8265:latest for sphinx-doc__sphinx-8265
+2025-04-04 13:45:15,236 - INFO - Creating container for sphinx-doc__sphinx-8265...
+2025-04-04 13:45:15,292 - INFO - Container for sphinx-doc__sphinx-8265 created: 27f8e8386e83ec05d5075328aa504e95bc1efac1b2f2ae825a3713d41d50c9e7
+2025-04-04 13:45:15,743 - INFO - Container for sphinx-doc__sphinx-8265 started: 27f8e8386e83ec05d5075328aa504e95bc1efac1b2f2ae825a3713d41d50c9e7
+2025-04-04 13:45:15,743 - INFO - Intermediate patch for sphinx-doc__sphinx-8265 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-8265/patch.diff, now applying to container...
+2025-04-04 13:45:16,151 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 13:45:16,258 - INFO - >>>>> Applied Patch:
+patching file sphinx/pycode/ast.py
+
+2025-04-04 13:45:16,716 - INFO - Git diff before:
+diff --git a/setup.py b/setup.py
+index a404f1fa5..2c6848797 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/pycode/ast.py b/sphinx/pycode/ast.py
+index 9bafff11c..2583448d5 100644
+--- a/sphinx/pycode/ast.py
++++ b/sphinx/pycode/ast.py
+@@ -166,14 +166,28 @@ class _UnparseVisitor(ast.NodeVisitor):
+         return "{" + ", ".join(self.visit(e) for e in node.elts) + "}"
+ 
+     def visit_Subscript(self, node: ast.Subscript) -> str:
+-        return "%s[%s]" % (self.visit(node.value), self.visit(node.slice))
++        def is_simple_tuple(value: ast.AST) -> bool:
++            return (
++                isinstance(value, ast.Tuple) and
++                bool(value.elts) and
++                not any(isinstance(elt, ast.Starred) for elt in value.elts)
++            )
++
++        if is_simple_tuple(node.slice):
++            elts = ", ".join(self.visit(e) for e in node.slice.elts)  # type: ignore
++            return "%s[%s]" % (self.visit(node.value), elts)
++        elif isinstance(node.slice, ast.Index) and is_simple_tuple(node.slice.value):
++            elts = ", ".join(self.visit(e) for e in node.slice.value.elts)  # type: ignore
++            return "%s[%s]" % (self.visit(node.value), elts)
++        else:
++            return "%s[%s]" % (self.visit(node.value), self.visit(node.slice))
+ 
+     def visit_UnaryOp(self, node: ast.UnaryOp) -> str:
+         return "%s %s" % (self.visit(node.op), self.visit(node.operand))
+ 
+     def visit_Tuple(self, node: ast.Tuple) -> str:
+         if node.elts:
+-            return ", ".join(self.visit(e) for e in node.elts)
++            return "(" + ", ".join(self.visit(e) for e in node.elts) + ")"
+         else:
+             return "()"
+ 
+diff --git a/tox.ini b/tox.ini
+index a61299979..e2baccc07 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+     PYTEST_ADDOPTS = --color yes
+ commands=
+-    pytest --durations 25 {posargs}
++    pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-04 13:45:16,717 - INFO - Eval script for sphinx-doc__sphinx-8265 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-8265/eval.sh; copying to container...
+2025-04-04 13:45:23,601 - INFO - Test runtime: 6.50 seconds
+2025-04-04 13:45:23,601 - INFO - Test output for sphinx-doc__sphinx-8265 written to logs/run_evaluation/gold/gold/sphinx-doc__sphinx-8265/test_output.txt
+2025-04-04 13:45:23,712 - INFO - Git diff after:
+diff --git a/setup.py b/setup.py
+index a404f1fa5..2c6848797 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/pycode/ast.py b/sphinx/pycode/ast.py
+index 9bafff11c..2583448d5 100644
+--- a/sphinx/pycode/ast.py
++++ b/sphinx/pycode/ast.py
+@@ -166,14 +166,28 @@ class _UnparseVisitor(ast.NodeVisitor):
+         return "{" + ", ".join(self.visit(e) for e in node.elts) + "}"
+ 
+     def visit_Subscript(self, node: ast.Subscript) -> str:
+-        return "%s[%s]" % (self.visit(node.value), self.visit(node.slice))
++        def is_simple_tuple(value: ast.AST) -> bool:
++            return (
++                isinstance(value, ast.Tuple) and
++                bool(value.elts) and
++                not any(isinstance(elt, ast.Starred) for elt in value.elts)
++            )
++
++        if is_simple_tuple(node.slice):
++            elts = ", ".join(self.visit(e) for e in node.slice.elts)  # type: ignore
++            return "%s[%s]" % (self.visit(node.value), elts)
++        elif isinstance(node.slice, ast.Index) and is_simple_tuple(node.slice.value):
++            elts = ", ".join(self.visit(e) for e in node.slice.value.elts)  # type: ignore
++            return "%s[%s]" % (self.visit(node.value), elts)
++        else:
++            return "%s[%s]" % (self.visit(node.value), self.visit(node.slice))
+ 
+     def visit_UnaryOp(self, node: ast.UnaryOp) -> str:
+         return "%s %s" % (self.visit(node.op), self.visit(node.operand))
+ 
+     def visit_Tuple(self, node: ast.Tuple) -> str:
+         if node.elts:
+-            return ", ".join(self.visit(e) for e in node.elts)
++            return "(" + ", ".join(self.visit(e) for e in node.elts) + ")"
+         else:
+             return "()"
+ 
+diff --git a/tox.ini b/tox.ini
+index a61299979..e2baccc07 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+     PYTEST_ADDOPTS = --color yes
+ commands=
+-    pytest --durations 25 {posargs}
++    pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-04 13:45:23,712 - INFO - Grading answer for sphinx-doc__sphinx-8265...
+2025-04-04 13:45:23,713 - INFO - report: {'sphinx-doc__sphinx-8265': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-8265: resolved: False
+2025-04-04 13:45:23,713 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-8265.gold...
+2025-04-04 13:45:39,558 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-8265.gold...
+2025-04-04 13:45:39,618 - INFO - Container sweb.eval.sphinx-doc__sphinx-8265.gold removed.
+2025-04-04 13:45:39,618 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-8265:latest...
+2025-04-04 13:45:40,076 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-8265:latest removed.

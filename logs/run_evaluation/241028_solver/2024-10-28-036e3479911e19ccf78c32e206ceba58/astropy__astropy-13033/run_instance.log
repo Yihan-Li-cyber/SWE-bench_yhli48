@@ -1,0 +1,120 @@
+2025-04-04 15:32:37,870 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-13033
+Building instance image sweb.eval.x86_64.astropy__astropy-13033:latest for astropy__astropy-13033
+2025-04-04 15:42:02,950 - INFO - Creating container for astropy__astropy-13033...
+2025-04-04 15:42:03,243 - INFO - Container for astropy__astropy-13033 created: 02c5978d24d6d438bcd5dfd8a169fe4bd9691c6aa9541883aaef86495ed26179
+2025-04-04 15:42:04,540 - INFO - Container for astropy__astropy-13033 started: 02c5978d24d6d438bcd5dfd8a169fe4bd9691c6aa9541883aaef86495ed26179
+2025-04-04 15:42:04,540 - INFO - Intermediate patch for astropy__astropy-13033 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13033/patch.diff, now applying to container...
+2025-04-04 15:42:05,558 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 15:42:05,841 - INFO - >>>>> Applied Patch:
+patching file astropy/timeseries/core.py
+patching file astropy/timeseries/tests/test_common.py
+
+2025-04-04 15:42:08,751 - INFO - Git diff before:
+diff --git a/astropy/timeseries/core.py b/astropy/timeseries/core.py
+index c279f35f87..fc90953a96 100644
+--- a/astropy/timeseries/core.py
++++ b/astropy/timeseries/core.py
+@@ -75,10 +75,15 @@ class BaseTimeSeries(QTable):
+                                  .format(self.__class__.__name__, required_columns[0], plural))
+ 
+             elif self.colnames[:len(required_columns)] != required_columns:
+-
+-                raise ValueError("{} object is invalid - expected '{}' "
+-                                 "as the first column{} but found '{}'"
+-                                 .format(self.__class__.__name__, required_columns[0], plural, self.colnames[0]))
++                missing_columns = [col for col in required_columns if col not in self.colnames]
++                if missing_columns:
++                    raise ValueError("{} object is invalid - missing required column{}: {}"
++                                   .format(self.__class__.__name__, 
++                                         's' if len(missing_columns) > 1 else '',
++                                         ', '.join(repr(col) for col in missing_columns)))
++                else:
++                    raise ValueError("{} object is invalid - columns must be in order: {}"
++                                   .format(self.__class__.__name__, ', '.join(repr(col) for col in required_columns)))
+ 
+             if (self._required_columns_relax
+                     and self._required_columns == self.colnames[:len(self._required_columns)]):
+diff --git a/astropy/timeseries/tests/test_common.py b/astropy/timeseries/tests/test_common.py
+index c873ac6550..9d1e28cd31 100644
+--- a/astropy/timeseries/tests/test_common.py
++++ b/astropy/timeseries/tests/test_common.py
+@@ -58,7 +58,7 @@ class CommonTimeSeriesTests:
+         ts = vstack([self.series, self.series])
+         with pytest.raises(ValueError) as exc:
+             ts.remove_columns(ts.colnames)
+-        assert 'TimeSeries object is invalid' in exc.value.args[0]
++        assert 'missing required column' in exc.value.args[0]
+ 
+     def test_join(self):
+         ts_other = self.series.copy()
+diff --git a/pyproject.toml b/pyproject.toml
+index 32ebe645ce..6ebe80c7a6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 15:42:08,753 - INFO - Eval script for astropy__astropy-13033 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13033/eval.sh; copying to container...
+2025-04-04 15:49:33,050 - INFO - Test runtime: 443.59 seconds
+2025-04-04 15:49:33,052 - INFO - Test output for astropy__astropy-13033 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-13033/test_output.txt
+2025-04-04 15:49:33,262 - INFO - Git diff after:
+diff --git a/astropy/timeseries/core.py b/astropy/timeseries/core.py
+index c279f35f87..fc90953a96 100644
+--- a/astropy/timeseries/core.py
++++ b/astropy/timeseries/core.py
+@@ -75,10 +75,15 @@ class BaseTimeSeries(QTable):
+                                  .format(self.__class__.__name__, required_columns[0], plural))
+ 
+             elif self.colnames[:len(required_columns)] != required_columns:
+-
+-                raise ValueError("{} object is invalid - expected '{}' "
+-                                 "as the first column{} but found '{}'"
+-                                 .format(self.__class__.__name__, required_columns[0], plural, self.colnames[0]))
++                missing_columns = [col for col in required_columns if col not in self.colnames]
++                if missing_columns:
++                    raise ValueError("{} object is invalid - missing required column{}: {}"
++                                   .format(self.__class__.__name__, 
++                                         's' if len(missing_columns) > 1 else '',
++                                         ', '.join(repr(col) for col in missing_columns)))
++                else:
++                    raise ValueError("{} object is invalid - columns must be in order: {}"
++                                   .format(self.__class__.__name__, ', '.join(repr(col) for col in required_columns)))
+ 
+             if (self._required_columns_relax
+                     and self._required_columns == self.colnames[:len(self._required_columns)]):
+diff --git a/astropy/timeseries/tests/test_common.py b/astropy/timeseries/tests/test_common.py
+index c873ac6550..9d1e28cd31 100644
+--- a/astropy/timeseries/tests/test_common.py
++++ b/astropy/timeseries/tests/test_common.py
+@@ -58,7 +58,7 @@ class CommonTimeSeriesTests:
+         ts = vstack([self.series, self.series])
+         with pytest.raises(ValueError) as exc:
+             ts.remove_columns(ts.colnames)
+-        assert 'TimeSeries object is invalid' in exc.value.args[0]
++        assert 'missing required column' in exc.value.args[0]
+ 
+     def test_join(self):
+         ts_other = self.series.copy()
+diff --git a/pyproject.toml b/pyproject.toml
+index 32ebe645ce..6ebe80c7a6 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "wheel",
+             "cython==0.29.22",
+2025-04-04 15:49:33,263 - INFO - Grading answer for astropy__astropy-13033...
+2025-04-04 15:49:33,266 - INFO - report: {'astropy__astropy-13033': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-13033: resolved: False
+2025-04-04 15:49:33,267 - INFO - Attempting to stop container sweb.eval.astropy__astropy-13033.241028_solver...
+2025-04-04 15:49:49,240 - INFO - Attempting to remove container sweb.eval.astropy__astropy-13033.241028_solver...
+2025-04-04 15:49:49,359 - INFO - Container sweb.eval.astropy__astropy-13033.241028_solver removed.
+2025-04-04 15:49:49,359 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-13033:latest...
+2025-04-04 15:49:50,047 - INFO - Image sweb.eval.x86_64.astropy__astropy-13033:latest removed.

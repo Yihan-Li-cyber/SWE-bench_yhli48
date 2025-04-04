@@ -1,0 +1,49 @@
+2025-04-04 11:04:36,583 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-15987
+Building instance image sweb.eval.x86_64.django__django-15987:latest for django__django-15987
+2025-04-04 11:05:30,455 - INFO - Creating container for django__django-15987...
+2025-04-04 11:05:30,585 - INFO - Container for django__django-15987 created: 96155e5c35a875364786c6281f3606c9e4b08ba91e0b455e84a9fd0d5aff1be4
+2025-04-04 11:05:31,105 - INFO - Container for django__django-15987 started: 96155e5c35a875364786c6281f3606c9e4b08ba91e0b455e84a9fd0d5aff1be4
+2025-04-04 11:05:31,106 - INFO - Intermediate patch for django__django-15987 written to logs/run_evaluation/gold/gold/django__django-15987/patch.diff, now applying to container...
+2025-04-04 11:05:31,467 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:05:31,546 - INFO - >>>>> Applied Patch:
+patching file django/core/management/commands/loaddata.py
+
+2025-04-04 11:05:32,912 - INFO - Git diff before:
+diff --git a/django/core/management/commands/loaddata.py b/django/core/management/commands/loaddata.py
+index ac97f13161..6fae255407 100644
+--- a/django/core/management/commands/loaddata.py
++++ b/django/core/management/commands/loaddata.py
+@@ -367,7 +367,7 @@ class Command(BaseCommand):
+         for app_config in apps.get_app_configs():
+             app_label = app_config.label
+             app_dir = os.path.join(app_config.path, "fixtures")
+-            if app_dir in fixture_dirs:
++            if app_dir in [str(d) for d in fixture_dirs]:
+                 raise ImproperlyConfigured(
+                     "'%s' is a default fixture directory for the '%s' app "
+                     "and cannot be listed in settings.FIXTURE_DIRS."
+2025-04-04 11:05:32,912 - INFO - Eval script for django__django-15987 written to logs/run_evaluation/gold/gold/django__django-15987/eval.sh; copying to container...
+2025-04-04 11:05:45,897 - INFO - Test runtime: 12.75 seconds
+2025-04-04 11:05:45,898 - INFO - Test output for django__django-15987 written to logs/run_evaluation/gold/gold/django__django-15987/test_output.txt
+2025-04-04 11:05:46,005 - INFO - Git diff after:
+diff --git a/django/core/management/commands/loaddata.py b/django/core/management/commands/loaddata.py
+index ac97f13161..6fae255407 100644
+--- a/django/core/management/commands/loaddata.py
++++ b/django/core/management/commands/loaddata.py
+@@ -367,7 +367,7 @@ class Command(BaseCommand):
+         for app_config in apps.get_app_configs():
+             app_label = app_config.label
+             app_dir = os.path.join(app_config.path, "fixtures")
+-            if app_dir in fixture_dirs:
++            if app_dir in [str(d) for d in fixture_dirs]:
+                 raise ImproperlyConfigured(
+                     "'%s' is a default fixture directory for the '%s' app "
+                     "and cannot be listed in settings.FIXTURE_DIRS."
+2025-04-04 11:05:46,005 - INFO - Grading answer for django__django-15987...
+2025-04-04 11:05:46,006 - INFO - report: {'django__django-15987': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15987: resolved: False
+2025-04-04 11:05:46,006 - INFO - Attempting to stop container sweb.eval.django__django-15987.gold...
+2025-04-04 11:06:01,539 - INFO - Attempting to remove container sweb.eval.django__django-15987.gold...
+2025-04-04 11:06:02,184 - INFO - Container sweb.eval.django__django-15987.gold removed.
+2025-04-04 11:06:02,184 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15987:latest...
+2025-04-04 11:06:02,841 - INFO - Image sweb.eval.x86_64.django__django-15987:latest removed.

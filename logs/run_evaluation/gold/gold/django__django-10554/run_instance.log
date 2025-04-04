@@ -1,0 +1,90 @@
+2025-04-04 09:51:00,512 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-10554
+Building instance image sweb.eval.x86_64.django__django-10554:latest for django__django-10554
+2025-04-04 09:52:07,306 - INFO - Creating container for django__django-10554...
+2025-04-04 09:52:07,428 - INFO - Container for django__django-10554 created: 31e6da057d0855a5680e90341a51ab84bd69cd4e32fd48385840c0e792b96218
+2025-04-04 09:52:07,759 - INFO - Container for django__django-10554 started: 31e6da057d0855a5680e90341a51ab84bd69cd4e32fd48385840c0e792b96218
+2025-04-04 09:52:07,759 - INFO - Intermediate patch for django__django-10554 written to logs/run_evaluation/gold/gold/django__django-10554/patch.diff, now applying to container...
+2025-04-04 09:52:08,048 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:52:08,113 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+patching file django/db/models/sql/query.py
+
+2025-04-04 09:52:09,684 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a791908caf..a14f1254aa 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -356,7 +356,12 @@ class SQLCompiler:
+                         resolved.set_source_expressions([RawSQL('%d' % (idx + 1), ())])
+                         break
+                 else:
+-                    raise DatabaseError('ORDER BY term does not match any column in the result set.')
++                    if col_alias:
++                        raise DatabaseError('ORDER BY term does not match any column in the result set.')
++                    # Add column used in ORDER BY clause without an alias to
++                    # the selected columns.
++                    self.query.add_select_col(src)
++                    resolved.set_source_expressions([RawSQL('%d' % len(self.query.select), ())])
+             sql, params = self.compile(resolved)
+             # Don't add the same column twice, but the order direction is
+             # not taken into account so we strip it. When this entire method
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 08d7faf194..fc08442193 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1774,6 +1774,10 @@ class Query(BaseExpression):
+         self.select = ()
+         self.values_select = ()
+ 
++    def add_select_col(self, col):
++        self.select += col,
++        self.values_select += col.output_field.name,
++
+     def set_select(self, cols):
+         self.default_cols = False
+         self.select = tuple(cols)
+2025-04-04 09:52:09,684 - INFO - Eval script for django__django-10554 written to logs/run_evaluation/gold/gold/django__django-10554/eval.sh; copying to container...
+2025-04-04 09:52:21,966 - INFO - Test runtime: 12.07 seconds
+2025-04-04 09:52:21,966 - INFO - Test output for django__django-10554 written to logs/run_evaluation/gold/gold/django__django-10554/test_output.txt
+2025-04-04 09:52:22,085 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index a791908caf..a14f1254aa 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -356,7 +356,12 @@ class SQLCompiler:
+                         resolved.set_source_expressions([RawSQL('%d' % (idx + 1), ())])
+                         break
+                 else:
+-                    raise DatabaseError('ORDER BY term does not match any column in the result set.')
++                    if col_alias:
++                        raise DatabaseError('ORDER BY term does not match any column in the result set.')
++                    # Add column used in ORDER BY clause without an alias to
++                    # the selected columns.
++                    self.query.add_select_col(src)
++                    resolved.set_source_expressions([RawSQL('%d' % len(self.query.select), ())])
+             sql, params = self.compile(resolved)
+             # Don't add the same column twice, but the order direction is
+             # not taken into account so we strip it. When this entire method
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 08d7faf194..fc08442193 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1774,6 +1774,10 @@ class Query(BaseExpression):
+         self.select = ()
+         self.values_select = ()
+ 
++    def add_select_col(self, col):
++        self.select += col,
++        self.values_select += col.output_field.name,
++
+     def set_select(self, cols):
+         self.default_cols = False
+         self.select = tuple(cols)
+2025-04-04 09:52:22,085 - INFO - Grading answer for django__django-10554...
+2025-04-04 09:52:22,085 - INFO - report: {'django__django-10554': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-10554: resolved: False
+2025-04-04 09:52:22,085 - INFO - Attempting to stop container sweb.eval.django__django-10554.gold...
+2025-04-04 09:52:37,608 - INFO - Attempting to remove container sweb.eval.django__django-10554.gold...
+2025-04-04 09:52:37,656 - INFO - Container sweb.eval.django__django-10554.gold removed.
+2025-04-04 09:52:37,656 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-10554:latest...
+2025-04-04 09:52:38,233 - INFO - Image sweb.eval.x86_64.django__django-10554:latest removed.

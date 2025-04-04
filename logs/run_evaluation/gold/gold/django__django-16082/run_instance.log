@@ -1,0 +1,47 @@
+2025-04-04 11:05:08,002 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16082
+Building instance image sweb.eval.x86_64.django__django-16082:latest for django__django-16082
+2025-04-04 11:05:55,129 - INFO - Creating container for django__django-16082...
+2025-04-04 11:05:55,166 - INFO - Container for django__django-16082 created: 30ad5aeec32cae6e6f8d9de5b6f397807f56c95a9ddbbe319c3adb83dd4a56df
+2025-04-04 11:05:55,572 - INFO - Container for django__django-16082 started: 30ad5aeec32cae6e6f8d9de5b6f397807f56c95a9ddbbe319c3adb83dd4a56df
+2025-04-04 11:05:55,573 - INFO - Intermediate patch for django__django-16082 written to logs/run_evaluation/gold/gold/django__django-16082/patch.diff, now applying to container...
+2025-04-04 11:05:55,836 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:05:55,896 - INFO - >>>>> Applied Patch:
+patching file django/db/models/expressions.py
+
+2025-04-04 11:05:57,258 - INFO - Git diff before:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 5e3c7cab82..cbf4fd8296 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -533,6 +533,7 @@ _connector_combinations = [
+             Combinable.SUB,
+             Combinable.MUL,
+             Combinable.DIV,
++            Combinable.MOD,
+         )
+     },
+     # Bitwise operators.
+2025-04-04 11:05:57,259 - INFO - Eval script for django__django-16082 written to logs/run_evaluation/gold/gold/django__django-16082/eval.sh; copying to container...
+2025-04-04 11:06:10,198 - INFO - Test runtime: 12.76 seconds
+2025-04-04 11:06:10,199 - INFO - Test output for django__django-16082 written to logs/run_evaluation/gold/gold/django__django-16082/test_output.txt
+2025-04-04 11:06:10,309 - INFO - Git diff after:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 5e3c7cab82..cbf4fd8296 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -533,6 +533,7 @@ _connector_combinations = [
+             Combinable.SUB,
+             Combinable.MUL,
+             Combinable.DIV,
++            Combinable.MOD,
+         )
+     },
+     # Bitwise operators.
+2025-04-04 11:06:10,309 - INFO - Grading answer for django__django-16082...
+2025-04-04 11:06:10,310 - INFO - report: {'django__django-16082': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16082: resolved: False
+2025-04-04 11:06:10,310 - INFO - Attempting to stop container sweb.eval.django__django-16082.gold...
+2025-04-04 11:06:26,103 - INFO - Attempting to remove container sweb.eval.django__django-16082.gold...
+2025-04-04 11:06:26,139 - INFO - Container sweb.eval.django__django-16082.gold removed.
+2025-04-04 11:06:26,140 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16082:latest...
+2025-04-04 11:06:26,752 - INFO - Image sweb.eval.x86_64.django__django-16082:latest removed.

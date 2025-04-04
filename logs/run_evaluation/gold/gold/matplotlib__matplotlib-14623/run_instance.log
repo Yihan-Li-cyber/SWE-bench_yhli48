@@ -1,0 +1,193 @@
+2025-04-04 11:15:43,117 - INFO - Environment image sweb.env.x86_64.15374367de368534f261e3:latest found for matplotlib__matplotlib-14623
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest for matplotlib__matplotlib-14623
+2025-04-04 11:22:18,241 - INFO - Creating container for matplotlib__matplotlib-14623...
+2025-04-04 11:22:18,464 - INFO - Container for matplotlib__matplotlib-14623 created: 15b09fa5762e8a90335370e604a1e2061ebcd600a5c67b8514e2952b6e18fe5a
+2025-04-04 11:22:18,824 - INFO - Container for matplotlib__matplotlib-14623 started: 15b09fa5762e8a90335370e604a1e2061ebcd600a5c67b8514e2952b6e18fe5a
+2025-04-04 11:22:18,826 - INFO - Intermediate patch for matplotlib__matplotlib-14623 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-14623/patch.diff, now applying to container...
+2025-04-04 11:22:19,196 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 11:22:19,303 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/axes/_base.py
+Hunk #1 succeeded at 3264 (offset 2 lines).
+Hunk #2 succeeded at 3647 (offset 2 lines).
+patching file lib/matplotlib/ticker.py
+patching file lib/mpl_toolkits/mplot3d/axes3d.py
+
+2025-04-04 11:22:21,075 - INFO - Git diff before:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index da2dea6f57..6a20b99be0 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -3264,8 +3264,11 @@ class _AxesBase(martist.Artist):
+             cbook._warn_external(
+                 f"Attempting to set identical left == right == {left} results "
+                 f"in singular transformations; automatically expanding.")
++        swapped = left > right
+         left, right = self.xaxis.get_major_locator().nonsingular(left, right)
+         left, right = self.xaxis.limit_range_for_scale(left, right)
++        if swapped:
++            left, right = right, left
+ 
+         self.viewLim.intervalx = (left, right)
+         if auto is not None:
+@@ -3644,8 +3647,11 @@ class _AxesBase(martist.Artist):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.yaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.yaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+ 
+         self.viewLim.intervaly = (bottom, top)
+         if auto is not None:
+diff --git a/lib/matplotlib/ticker.py b/lib/matplotlib/ticker.py
+index 209a3f92ce..3f61301648 100644
+--- a/lib/matplotlib/ticker.py
++++ b/lib/matplotlib/ticker.py
+@@ -1521,8 +1521,8 @@ class Locator(TickHelper):
+         return locs
+ 
+     def nonsingular(self, v0, v1):
+-        """Modify the endpoints of a range as needed to avoid singularities."""
+-        return mtransforms.nonsingular(v0, v1, increasing=False, expander=.05)
++        """Expand a range as needed to avoid singularities."""
++        return mtransforms.nonsingular(v0, v1, expander=.05)
+ 
+     def view_limits(self, vmin, vmax):
+         """
+diff --git a/lib/mpl_toolkits/mplot3d/axes3d.py b/lib/mpl_toolkits/mplot3d/axes3d.py
+index 145f231697..f6dff2bb93 100644
+--- a/lib/mpl_toolkits/mplot3d/axes3d.py
++++ b/lib/mpl_toolkits/mplot3d/axes3d.py
+@@ -623,8 +623,11 @@ class Axes3D(Axes):
+             cbook._warn_external(
+                 f"Attempting to set identical left == right == {left} results "
+                 f"in singular transformations; automatically expanding.")
++        swapped = left > right
+         left, right = self.xaxis.get_major_locator().nonsingular(left, right)
+         left, right = self.xaxis.limit_range_for_scale(left, right)
++        if swapped:
++            left, right = right, left
+         self.xy_viewLim.intervalx = (left, right)
+ 
+         if auto is not None:
+@@ -681,8 +684,11 @@ class Axes3D(Axes):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.yaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.yaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+         self.xy_viewLim.intervaly = (bottom, top)
+ 
+         if auto is not None:
+@@ -739,8 +745,11 @@ class Axes3D(Axes):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.zaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.zaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+         self.zz_viewLim.intervalx = (bottom, top)
+ 
+         if auto is not None:
+2025-04-04 11:22:21,076 - INFO - Eval script for matplotlib__matplotlib-14623 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-14623/eval.sh; copying to container...
+2025-04-04 11:24:39,844 - INFO - Test runtime: 138.59 seconds
+2025-04-04 11:24:39,845 - INFO - Test output for matplotlib__matplotlib-14623 written to logs/run_evaluation/gold/gold/matplotlib__matplotlib-14623/test_output.txt
+2025-04-04 11:24:39,944 - INFO - Git diff after:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index da2dea6f57..6a20b99be0 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -3264,8 +3264,11 @@ class _AxesBase(martist.Artist):
+             cbook._warn_external(
+                 f"Attempting to set identical left == right == {left} results "
+                 f"in singular transformations; automatically expanding.")
++        swapped = left > right
+         left, right = self.xaxis.get_major_locator().nonsingular(left, right)
+         left, right = self.xaxis.limit_range_for_scale(left, right)
++        if swapped:
++            left, right = right, left
+ 
+         self.viewLim.intervalx = (left, right)
+         if auto is not None:
+@@ -3644,8 +3647,11 @@ class _AxesBase(martist.Artist):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.yaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.yaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+ 
+         self.viewLim.intervaly = (bottom, top)
+         if auto is not None:
+diff --git a/lib/matplotlib/ticker.py b/lib/matplotlib/ticker.py
+index 209a3f92ce..3f61301648 100644
+--- a/lib/matplotlib/ticker.py
++++ b/lib/matplotlib/ticker.py
+@@ -1521,8 +1521,8 @@ class Locator(TickHelper):
+         return locs
+ 
+     def nonsingular(self, v0, v1):
+-        """Modify the endpoints of a range as needed to avoid singularities."""
+-        return mtransforms.nonsingular(v0, v1, increasing=False, expander=.05)
++        """Expand a range as needed to avoid singularities."""
++        return mtransforms.nonsingular(v0, v1, expander=.05)
+ 
+     def view_limits(self, vmin, vmax):
+         """
+diff --git a/lib/mpl_toolkits/mplot3d/axes3d.py b/lib/mpl_toolkits/mplot3d/axes3d.py
+index 145f231697..f6dff2bb93 100644
+--- a/lib/mpl_toolkits/mplot3d/axes3d.py
++++ b/lib/mpl_toolkits/mplot3d/axes3d.py
+@@ -623,8 +623,11 @@ class Axes3D(Axes):
+             cbook._warn_external(
+                 f"Attempting to set identical left == right == {left} results "
+                 f"in singular transformations; automatically expanding.")
++        swapped = left > right
+         left, right = self.xaxis.get_major_locator().nonsingular(left, right)
+         left, right = self.xaxis.limit_range_for_scale(left, right)
++        if swapped:
++            left, right = right, left
+         self.xy_viewLim.intervalx = (left, right)
+ 
+         if auto is not None:
+@@ -681,8 +684,11 @@ class Axes3D(Axes):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.yaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.yaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+         self.xy_viewLim.intervaly = (bottom, top)
+ 
+         if auto is not None:
+@@ -739,8 +745,11 @@ class Axes3D(Axes):
+                 f"Attempting to set identical bottom == top == {bottom} "
+                 f"results in singular transformations; automatically "
+                 f"expanding.")
++        swapped = bottom > top
+         bottom, top = self.zaxis.get_major_locator().nonsingular(bottom, top)
+         bottom, top = self.zaxis.limit_range_for_scale(bottom, top)
++        if swapped:
++            bottom, top = top, bottom
+         self.zz_viewLim.intervalx = (bottom, top)
+ 
+         if auto is not None:
+2025-04-04 11:24:39,944 - INFO - Grading answer for matplotlib__matplotlib-14623...
+2025-04-04 11:24:39,948 - INFO - report: {'matplotlib__matplotlib-14623': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-14623: resolved: False
+2025-04-04 11:24:39,948 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-14623.gold...
+2025-04-04 11:25:25,200 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-14623.gold...
+2025-04-04 11:25:25,270 - INFO - Container sweb.eval.matplotlib__matplotlib-14623.gold removed.
+2025-04-04 11:25:25,270 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest...
+2025-04-04 11:25:43,971 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest removed.

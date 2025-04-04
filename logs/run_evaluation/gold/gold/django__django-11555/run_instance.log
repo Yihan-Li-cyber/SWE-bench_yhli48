@@ -1,0 +1,51 @@
+2025-04-04 09:59:05,924 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11555
+Building instance image sweb.eval.x86_64.django__django-11555:latest for django__django-11555
+2025-04-04 09:59:51,785 - INFO - Creating container for django__django-11555...
+2025-04-04 09:59:51,830 - INFO - Container for django__django-11555 created: a28bb3a762e1c670eb311fcb2c2af71a36c5c40cef81bb5a87d200ae481eb78b
+2025-04-04 09:59:52,572 - INFO - Container for django__django-11555 started: a28bb3a762e1c670eb311fcb2c2af71a36c5c40cef81bb5a87d200ae481eb78b
+2025-04-04 09:59:52,572 - INFO - Intermediate patch for django__django-11555 written to logs/run_evaluation/gold/gold/django__django-11555/patch.diff, now applying to container...
+2025-04-04 09:59:52,953 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:59:53,062 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-04 09:59:54,584 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index eaccc96d7d..3cab405d2d 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -722,6 +722,9 @@ class SQLCompiler:
+ 
+             results = []
+             for item in opts.ordering:
++                if isinstance(item, OrderBy):
++                    results.append((item, False))
++                    continue
+                 results.extend(self.find_ordering_name(item, opts, alias,
+                                                        order, already_seen))
+             return results
+2025-04-04 09:59:54,584 - INFO - Eval script for django__django-11555 written to logs/run_evaluation/gold/gold/django__django-11555/eval.sh; copying to container...
+2025-04-04 10:00:07,257 - INFO - Test runtime: 12.45 seconds
+2025-04-04 10:00:07,257 - INFO - Test output for django__django-11555 written to logs/run_evaluation/gold/gold/django__django-11555/test_output.txt
+2025-04-04 10:00:07,383 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index eaccc96d7d..3cab405d2d 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -722,6 +722,9 @@ class SQLCompiler:
+ 
+             results = []
+             for item in opts.ordering:
++                if isinstance(item, OrderBy):
++                    results.append((item, False))
++                    continue
+                 results.extend(self.find_ordering_name(item, opts, alias,
+                                                        order, already_seen))
+             return results
+2025-04-04 10:00:07,383 - INFO - Grading answer for django__django-11555...
+2025-04-04 10:00:07,384 - INFO - report: {'django__django-11555': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11555: resolved: False
+2025-04-04 10:00:07,384 - INFO - Attempting to stop container sweb.eval.django__django-11555.gold...
+2025-04-04 10:00:23,829 - INFO - Attempting to remove container sweb.eval.django__django-11555.gold...
+2025-04-04 10:00:23,886 - INFO - Container sweb.eval.django__django-11555.gold removed.
+2025-04-04 10:00:23,886 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11555:latest...
+2025-04-04 10:00:24,610 - INFO - Image sweb.eval.x86_64.django__django-11555:latest removed.

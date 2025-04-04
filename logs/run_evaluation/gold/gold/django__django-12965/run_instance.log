@@ -1,0 +1,49 @@
+2025-04-04 10:29:06,256 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-12965
+Building instance image sweb.eval.x86_64.django__django-12965:latest for django__django-12965
+2025-04-04 10:29:58,067 - INFO - Creating container for django__django-12965...
+2025-04-04 10:29:58,134 - INFO - Container for django__django-12965 created: 7d4aa8e4b302438fded42977140ead7a287a142457abc2414be311fb3b65eb09
+2025-04-04 10:29:58,635 - INFO - Container for django__django-12965 started: 7d4aa8e4b302438fded42977140ead7a287a142457abc2414be311fb3b65eb09
+2025-04-04 10:29:58,637 - INFO - Intermediate patch for django__django-12965 written to logs/run_evaluation/gold/gold/django__django-12965/patch.diff, now applying to container...
+2025-04-04 10:29:58,916 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:29:58,994 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-04 10:30:00,609 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 29e33c075f..a1487c4f95 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1407,6 +1407,8 @@ class SQLInsertCompiler(SQLCompiler):
+ class SQLDeleteCompiler(SQLCompiler):
+     @cached_property
+     def single_alias(self):
++        # Ensure base table is in aliases.
++        self.query.get_initial_alias()
+         return sum(self.query.alias_refcount[t] > 0 for t in self.query.alias_map) == 1
+ 
+     def _as_sql(self, query):
+2025-04-04 10:30:00,609 - INFO - Eval script for django__django-12965 written to logs/run_evaluation/gold/gold/django__django-12965/eval.sh; copying to container...
+2025-04-04 10:30:16,395 - INFO - Test runtime: 15.60 seconds
+2025-04-04 10:30:16,395 - INFO - Test output for django__django-12965 written to logs/run_evaluation/gold/gold/django__django-12965/test_output.txt
+2025-04-04 10:30:16,504 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index 29e33c075f..a1487c4f95 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1407,6 +1407,8 @@ class SQLInsertCompiler(SQLCompiler):
+ class SQLDeleteCompiler(SQLCompiler):
+     @cached_property
+     def single_alias(self):
++        # Ensure base table is in aliases.
++        self.query.get_initial_alias()
+         return sum(self.query.alias_refcount[t] > 0 for t in self.query.alias_map) == 1
+ 
+     def _as_sql(self, query):
+2025-04-04 10:30:16,504 - INFO - Grading answer for django__django-12965...
+2025-04-04 10:30:16,504 - INFO - report: {'django__django-12965': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12965: resolved: False
+2025-04-04 10:30:16,504 - INFO - Attempting to stop container sweb.eval.django__django-12965.gold...
+2025-04-04 10:31:02,052 - INFO - Attempting to remove container sweb.eval.django__django-12965.gold...
+2025-04-04 10:31:02,110 - INFO - Container sweb.eval.django__django-12965.gold removed.
+2025-04-04 10:31:02,110 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12965:latest...
+2025-04-04 10:31:13,552 - INFO - Image sweb.eval.x86_64.django__django-12965:latest removed.

@@ -1,0 +1,65 @@
+2025-04-04 10:33:44,566 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13363
+Building instance image sweb.eval.x86_64.django__django-13363:latest for django__django-13363
+2025-04-04 10:35:06,648 - INFO - Creating container for django__django-13363...
+2025-04-04 10:35:06,763 - INFO - Container for django__django-13363 created: c55522ed7f1b933756d05226f5ee7aa421382c11bd1a4eb20a36abc70decc1c7
+2025-04-04 10:35:16,625 - INFO - Container for django__django-13363 started: c55522ed7f1b933756d05226f5ee7aa421382c11bd1a4eb20a36abc70decc1c7
+2025-04-04 10:35:16,628 - INFO - Intermediate patch for django__django-13363 written to logs/run_evaluation/gold/gold/django__django-13363/patch.diff, now applying to container...
+2025-04-04 10:35:16,935 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:35:17,007 - INFO - >>>>> Applied Patch:
+patching file django/db/models/functions/datetime.py
+
+2025-04-04 10:35:18,453 - INFO - Git diff before:
+diff --git a/django/db/models/functions/datetime.py b/django/db/models/functions/datetime.py
+index b6594b043b..6828980733 100644
+--- a/django/db/models/functions/datetime.py
++++ b/django/db/models/functions/datetime.py
+@@ -292,7 +292,7 @@ class TruncDate(TruncBase):
+     def as_sql(self, compiler, connection):
+         # Cast to date rather than truncate to date.
+         lhs, lhs_params = compiler.compile(self.lhs)
+-        tzname = timezone.get_current_timezone_name() if settings.USE_TZ else None
++        tzname = self.get_tzname()
+         sql = connection.ops.datetime_cast_date_sql(lhs, tzname)
+         return sql, lhs_params
+ 
+@@ -305,7 +305,7 @@ class TruncTime(TruncBase):
+     def as_sql(self, compiler, connection):
+         # Cast to time rather than truncate to time.
+         lhs, lhs_params = compiler.compile(self.lhs)
+-        tzname = timezone.get_current_timezone_name() if settings.USE_TZ else None
++        tzname = self.get_tzname()
+         sql = connection.ops.datetime_cast_time_sql(lhs, tzname)
+         return sql, lhs_params
+2025-04-04 10:35:18,453 - INFO - Eval script for django__django-13363 written to logs/run_evaluation/gold/gold/django__django-13363/eval.sh; copying to container...
+2025-04-04 10:35:30,203 - INFO - Test runtime: 11.47 seconds
+2025-04-04 10:35:30,203 - INFO - Test output for django__django-13363 written to logs/run_evaluation/gold/gold/django__django-13363/test_output.txt
+2025-04-04 10:35:30,304 - INFO - Git diff after:
+diff --git a/django/db/models/functions/datetime.py b/django/db/models/functions/datetime.py
+index b6594b043b..6828980733 100644
+--- a/django/db/models/functions/datetime.py
++++ b/django/db/models/functions/datetime.py
+@@ -292,7 +292,7 @@ class TruncDate(TruncBase):
+     def as_sql(self, compiler, connection):
+         # Cast to date rather than truncate to date.
+         lhs, lhs_params = compiler.compile(self.lhs)
+-        tzname = timezone.get_current_timezone_name() if settings.USE_TZ else None
++        tzname = self.get_tzname()
+         sql = connection.ops.datetime_cast_date_sql(lhs, tzname)
+         return sql, lhs_params
+ 
+@@ -305,7 +305,7 @@ class TruncTime(TruncBase):
+     def as_sql(self, compiler, connection):
+         # Cast to time rather than truncate to time.
+         lhs, lhs_params = compiler.compile(self.lhs)
+-        tzname = timezone.get_current_timezone_name() if settings.USE_TZ else None
++        tzname = self.get_tzname()
+         sql = connection.ops.datetime_cast_time_sql(lhs, tzname)
+         return sql, lhs_params
+2025-04-04 10:35:30,304 - INFO - Grading answer for django__django-13363...
+2025-04-04 10:35:30,305 - INFO - report: {'django__django-13363': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13363: resolved: False
+2025-04-04 10:35:30,306 - INFO - Attempting to stop container sweb.eval.django__django-13363.gold...
+2025-04-04 10:35:46,017 - INFO - Attempting to remove container sweb.eval.django__django-13363.gold...
+2025-04-04 10:35:46,075 - INFO - Container sweb.eval.django__django-13363.gold removed.
+2025-04-04 10:35:46,075 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13363:latest...
+2025-04-04 10:35:48,562 - INFO - Image sweb.eval.x86_64.django__django-13363:latest removed.

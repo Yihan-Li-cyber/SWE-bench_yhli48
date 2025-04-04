@@ -1,0 +1,83 @@
+2025-04-04 10:35:48,572 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13449
+Building instance image sweb.eval.x86_64.django__django-13449:latest for django__django-13449
+2025-04-04 10:36:40,313 - INFO - Creating container for django__django-13449...
+2025-04-04 10:36:40,377 - INFO - Container for django__django-13449 created: 747a0488566602242c05e13973a5a74f911fbc059ee86eed3922c922ed5ed3a9
+2025-04-04 10:36:40,784 - INFO - Container for django__django-13449 started: 747a0488566602242c05e13973a5a74f911fbc059ee86eed3922c922ed5ed3a9
+2025-04-04 10:36:40,785 - INFO - Intermediate patch for django__django-13449 written to logs/run_evaluation/gold/gold/django__django-13449/patch.diff, now applying to container...
+2025-04-04 10:36:41,031 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:36:41,091 - INFO - >>>>> Applied Patch:
+patching file django/db/models/expressions.py
+
+2025-04-04 10:36:42,639 - INFO - Git diff before:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 90d90119d0..bf5ed49719 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1253,7 +1253,7 @@ class OrderBy(BaseExpression):
+         self.descending = True
+ 
+ 
+-class Window(Expression):
++class Window(SQLiteNumericMixin, Expression):
+     template = '%(expression)s OVER (%(window)s)'
+     # Although the main expression may either be an aggregate or an
+     # expression with an aggregate function, the GROUP BY that will
+@@ -1332,6 +1332,16 @@ class Window(Expression):
+             'window': ''.join(window_sql).strip()
+         }, params
+ 
++    def as_sqlite(self, compiler, connection):
++        if isinstance(self.output_field, fields.DecimalField):
++            # Casting to numeric must be outside of the window expression.
++            copy = self.copy()
++            source_expressions = copy.get_source_expressions()
++            source_expressions[0].output_field = fields.FloatField()
++            copy.set_source_expressions(source_expressions)
++            return super(Window, copy).as_sqlite(compiler, connection)
++        return self.as_sql(compiler, connection)
++
+     def __str__(self):
+         return '{} OVER ({}{}{})'.format(
+             str(self.source_expression),
+2025-04-04 10:36:42,639 - INFO - Eval script for django__django-13449 written to logs/run_evaluation/gold/gold/django__django-13449/eval.sh; copying to container...
+2025-04-04 10:36:53,629 - INFO - Test runtime: 10.79 seconds
+2025-04-04 10:36:53,629 - INFO - Test output for django__django-13449 written to logs/run_evaluation/gold/gold/django__django-13449/test_output.txt
+2025-04-04 10:36:53,716 - INFO - Git diff after:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 90d90119d0..bf5ed49719 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1253,7 +1253,7 @@ class OrderBy(BaseExpression):
+         self.descending = True
+ 
+ 
+-class Window(Expression):
++class Window(SQLiteNumericMixin, Expression):
+     template = '%(expression)s OVER (%(window)s)'
+     # Although the main expression may either be an aggregate or an
+     # expression with an aggregate function, the GROUP BY that will
+@@ -1332,6 +1332,16 @@ class Window(Expression):
+             'window': ''.join(window_sql).strip()
+         }, params
+ 
++    def as_sqlite(self, compiler, connection):
++        if isinstance(self.output_field, fields.DecimalField):
++            # Casting to numeric must be outside of the window expression.
++            copy = self.copy()
++            source_expressions = copy.get_source_expressions()
++            source_expressions[0].output_field = fields.FloatField()
++            copy.set_source_expressions(source_expressions)
++            return super(Window, copy).as_sqlite(compiler, connection)
++        return self.as_sql(compiler, connection)
++
+     def __str__(self):
+         return '{} OVER ({}{}{})'.format(
+             str(self.source_expression),
+2025-04-04 10:36:53,716 - INFO - Grading answer for django__django-13449...
+2025-04-04 10:36:53,716 - INFO - report: {'django__django-13449': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13449: resolved: False
+2025-04-04 10:36:53,717 - INFO - Attempting to stop container sweb.eval.django__django-13449.gold...
+2025-04-04 10:37:09,414 - INFO - Attempting to remove container sweb.eval.django__django-13449.gold...
+2025-04-04 10:37:09,488 - INFO - Container sweb.eval.django__django-13449.gold removed.
+2025-04-04 10:37:09,488 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13449:latest...
+2025-04-04 10:37:10,454 - INFO - Image sweb.eval.x86_64.django__django-13449:latest removed.

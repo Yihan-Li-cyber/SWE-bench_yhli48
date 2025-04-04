@@ -1,0 +1,63 @@
+2025-04-04 10:29:07,643 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13089
+Building instance image sweb.eval.x86_64.django__django-13089:latest for django__django-13089
+2025-04-04 10:29:57,865 - INFO - Creating container for django__django-13089...
+2025-04-04 10:29:58,023 - INFO - Container for django__django-13089 created: e8d1a42f31801edf6a547366cb45c31ad17203d1bfdadfe4e7d0f7cf1f782987
+2025-04-04 10:29:58,377 - INFO - Container for django__django-13089 started: e8d1a42f31801edf6a547366cb45c31ad17203d1bfdadfe4e7d0f7cf1f782987
+2025-04-04 10:29:58,377 - INFO - Intermediate patch for django__django-13089 written to logs/run_evaluation/gold/gold/django__django-13089/patch.diff, now applying to container...
+2025-04-04 10:29:58,702 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:29:58,769 - INFO - >>>>> Applied Patch:
+patching file django/core/cache/backends/db.py
+
+2025-04-04 10:30:00,268 - INFO - Git diff before:
+diff --git a/django/core/cache/backends/db.py b/django/core/cache/backends/db.py
+index 33c79c5a14..acbe702255 100644
+--- a/django/core/cache/backends/db.py
++++ b/django/core/cache/backends/db.py
+@@ -267,9 +267,12 @@ class DatabaseCache(BaseDatabaseCache):
+                 cursor.execute(
+                     connection.ops.cache_key_culling_sql() % table,
+                     [cull_num])
+-                cursor.execute("DELETE FROM %s "
+-                               "WHERE cache_key < %%s" % table,
+-                               [cursor.fetchone()[0]])
++                last_cache_key = cursor.fetchone()
++                if last_cache_key:
++                    cursor.execute(
++                        'DELETE FROM %s WHERE cache_key < %%s' % table,
++                        [last_cache_key[0]],
++                    )
+ 
+     def clear(self):
+         db = router.db_for_write(self.cache_model_class)
+2025-04-04 10:30:00,269 - INFO - Eval script for django__django-13089 written to logs/run_evaluation/gold/gold/django__django-13089/eval.sh; copying to container...
+2025-04-04 10:31:27,074 - INFO - Test runtime: 86.59 seconds
+2025-04-04 10:31:27,075 - INFO - Test output for django__django-13089 written to logs/run_evaluation/gold/gold/django__django-13089/test_output.txt
+2025-04-04 10:31:27,198 - INFO - Git diff after:
+diff --git a/django/core/cache/backends/db.py b/django/core/cache/backends/db.py
+index 33c79c5a14..acbe702255 100644
+--- a/django/core/cache/backends/db.py
++++ b/django/core/cache/backends/db.py
+@@ -267,9 +267,12 @@ class DatabaseCache(BaseDatabaseCache):
+                 cursor.execute(
+                     connection.ops.cache_key_culling_sql() % table,
+                     [cull_num])
+-                cursor.execute("DELETE FROM %s "
+-                               "WHERE cache_key < %%s" % table,
+-                               [cursor.fetchone()[0]])
++                last_cache_key = cursor.fetchone()
++                if last_cache_key:
++                    cursor.execute(
++                        'DELETE FROM %s WHERE cache_key < %%s' % table,
++                        [last_cache_key[0]],
++                    )
+ 
+     def clear(self):
+         db = router.db_for_write(self.cache_model_class)
+2025-04-04 10:31:27,198 - INFO - Grading answer for django__django-13089...
+2025-04-04 10:31:27,200 - INFO - report: {'django__django-13089': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13089: resolved: False
+2025-04-04 10:31:27,200 - INFO - Attempting to stop container sweb.eval.django__django-13089.gold...
+2025-04-04 10:31:43,870 - INFO - Attempting to remove container sweb.eval.django__django-13089.gold...
+2025-04-04 10:31:43,949 - INFO - Container sweb.eval.django__django-13089.gold removed.
+2025-04-04 10:31:43,949 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13089:latest...
+2025-04-04 10:31:45,848 - INFO - Image sweb.eval.x86_64.django__django-13089:latest removed.

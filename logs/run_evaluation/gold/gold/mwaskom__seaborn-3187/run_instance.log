@@ -1,0 +1,92 @@
+2025-04-04 12:10:15,580 - INFO - Environment image sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest found for mwaskom__seaborn-3187
+Building instance image sweb.eval.x86_64.mwaskom__seaborn-3187:latest for mwaskom__seaborn-3187
+2025-04-04 12:11:01,899 - INFO - Creating container for mwaskom__seaborn-3187...
+2025-04-04 12:11:02,051 - INFO - Container for mwaskom__seaborn-3187 created: 0eb2f17190f762a06cede329f3f80d63e0f962e51824a0a6c9b6e03a8fc1788d
+2025-04-04 12:11:02,428 - INFO - Container for mwaskom__seaborn-3187 started: 0eb2f17190f762a06cede329f3f80d63e0f962e51824a0a6c9b6e03a8fc1788d
+2025-04-04 12:11:02,429 - INFO - Intermediate patch for mwaskom__seaborn-3187 written to logs/run_evaluation/gold/gold/mwaskom__seaborn-3187/patch.diff, now applying to container...
+2025-04-04 12:11:02,756 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:11:02,831 - INFO - >>>>> Applied Patch:
+patching file seaborn/_core/scales.py
+patching file seaborn/utils.py
+
+2025-04-04 12:11:02,984 - INFO - Git diff before:
+diff --git a/seaborn/_core/scales.py b/seaborn/_core/scales.py
+index 55874bf2..c91f6fdc 100644
+--- a/seaborn/_core/scales.py
++++ b/seaborn/_core/scales.py
+@@ -378,6 +378,14 @@ class ContinuousBase(Scale):
+             axis.set_view_interval(vmin, vmax)
+             locs = axis.major.locator()
+             locs = locs[(vmin <= locs) & (locs <= vmax)]
++            # Avoid having an offset / scientific notation in a legend
++            # as we don't represent that anywhere so it ends up incorrect.
++            # This could become an option (e.g. Continuous.label(offset=True))
++            # in which case we would need to figure out how to show it.
++            if hasattr(axis.major.formatter, "set_useOffset"):
++                axis.major.formatter.set_useOffset(False)
++            if hasattr(axis.major.formatter, "set_scientific"):
++                axis.major.formatter.set_scientific(False)
+             labels = axis.major.formatter.format_ticks(locs)
+             new._legend = list(locs), list(labels)
+ 
+diff --git a/seaborn/utils.py b/seaborn/utils.py
+index 2407853c..3cf01755 100644
+--- a/seaborn/utils.py
++++ b/seaborn/utils.py
+@@ -699,6 +699,10 @@ def locator_to_legend_entries(locator, limits, dtype):
+         formatter = mpl.ticker.LogFormatter()
+     else:
+         formatter = mpl.ticker.ScalarFormatter()
++        # Avoid having an offset/scientific notation which we don't currently
++        # have any way of representing in the legend
++        formatter.set_useOffset(False)
++        formatter.set_scientific(False)
+     formatter.axis = dummy_axis()
+ 
+     # TODO: The following two lines should be replaced
+2025-04-04 12:11:02,985 - INFO - Eval script for mwaskom__seaborn-3187 written to logs/run_evaluation/gold/gold/mwaskom__seaborn-3187/eval.sh; copying to container...
+2025-04-04 12:12:46,990 - INFO - Test runtime: 103.75 seconds
+2025-04-04 12:12:46,991 - INFO - Test output for mwaskom__seaborn-3187 written to logs/run_evaluation/gold/gold/mwaskom__seaborn-3187/test_output.txt
+2025-04-04 12:12:47,072 - INFO - Git diff after:
+diff --git a/seaborn/_core/scales.py b/seaborn/_core/scales.py
+index 55874bf2..c91f6fdc 100644
+--- a/seaborn/_core/scales.py
++++ b/seaborn/_core/scales.py
+@@ -378,6 +378,14 @@ class ContinuousBase(Scale):
+             axis.set_view_interval(vmin, vmax)
+             locs = axis.major.locator()
+             locs = locs[(vmin <= locs) & (locs <= vmax)]
++            # Avoid having an offset / scientific notation in a legend
++            # as we don't represent that anywhere so it ends up incorrect.
++            # This could become an option (e.g. Continuous.label(offset=True))
++            # in which case we would need to figure out how to show it.
++            if hasattr(axis.major.formatter, "set_useOffset"):
++                axis.major.formatter.set_useOffset(False)
++            if hasattr(axis.major.formatter, "set_scientific"):
++                axis.major.formatter.set_scientific(False)
+             labels = axis.major.formatter.format_ticks(locs)
+             new._legend = list(locs), list(labels)
+ 
+diff --git a/seaborn/utils.py b/seaborn/utils.py
+index 2407853c..3cf01755 100644
+--- a/seaborn/utils.py
++++ b/seaborn/utils.py
+@@ -699,6 +699,10 @@ def locator_to_legend_entries(locator, limits, dtype):
+         formatter = mpl.ticker.LogFormatter()
+     else:
+         formatter = mpl.ticker.ScalarFormatter()
++        # Avoid having an offset/scientific notation which we don't currently
++        # have any way of representing in the legend
++        formatter.set_useOffset(False)
++        formatter.set_scientific(False)
+     formatter.axis = dummy_axis()
+ 
+     # TODO: The following two lines should be replaced
+2025-04-04 12:12:47,072 - INFO - Grading answer for mwaskom__seaborn-3187...
+2025-04-04 12:12:47,072 - INFO - report: {'mwaskom__seaborn-3187': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for mwaskom__seaborn-3187: resolved: False
+2025-04-04 12:12:47,073 - INFO - Attempting to stop container sweb.eval.mwaskom__seaborn-3187.gold...
+2025-04-04 12:13:06,306 - INFO - Attempting to remove container sweb.eval.mwaskom__seaborn-3187.gold...
+2025-04-04 12:13:06,340 - INFO - Container sweb.eval.mwaskom__seaborn-3187.gold removed.
+2025-04-04 12:13:06,340 - INFO - Attempting to remove image sweb.eval.x86_64.mwaskom__seaborn-3187:latest...
+2025-04-04 12:13:06,681 - INFO - Image sweb.eval.x86_64.mwaskom__seaborn-3187:latest removed.

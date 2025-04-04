@@ -1,0 +1,87 @@
+2025-04-04 12:19:43,180 - INFO - Environment image sweb.env.x86_64.62bfc5a3a7fdf6d9876424:latest found for pydata__xarray-6744
+Building instance image sweb.eval.x86_64.pydata__xarray-6744:latest for pydata__xarray-6744
+2025-04-04 12:19:57,937 - INFO - Creating container for pydata__xarray-6744...
+2025-04-04 12:19:57,967 - INFO - Container for pydata__xarray-6744 created: 288f8140e4827ee47db1664124081a502624c291a67236c1c23e87bb710f7ac8
+2025-04-04 12:19:58,358 - INFO - Container for pydata__xarray-6744 started: 288f8140e4827ee47db1664124081a502624c291a67236c1c23e87bb710f7ac8
+2025-04-04 12:19:58,359 - INFO - Intermediate patch for pydata__xarray-6744 written to logs/run_evaluation/gold/gold/pydata__xarray-6744/patch.diff, now applying to container...
+2025-04-04 12:19:58,612 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:19:58,663 - INFO - >>>>> Applied Patch:
+patching file xarray/core/rolling.py
+
+2025-04-04 12:19:58,852 - INFO - Git diff before:
+diff --git a/xarray/core/rolling.py b/xarray/core/rolling.py
+index aef290f6..43a941b9 100644
+--- a/xarray/core/rolling.py
++++ b/xarray/core/rolling.py
+@@ -267,16 +267,21 @@ class DataArrayRolling(Rolling["DataArray"]):
+         # TODO legacy attribute
+         self.window_labels = self.obj[self.dim[0]]
+ 
+-    def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
++    def __iter__(self) -> Iterator[tuple[DataArray, DataArray]]:
+         if self.ndim > 1:
+             raise ValueError("__iter__ is only supported for 1d-rolling")
+-        stops = np.arange(1, len(self.window_labels) + 1)
+-        starts = stops - int(self.window[0])
+-        starts[: int(self.window[0])] = 0
++
++        dim0 = self.dim[0]
++        window0 = int(self.window[0])
++        offset = (window0 + 1) // 2 if self.center[0] else 1
++        stops = np.arange(offset, self.obj.sizes[dim0] + offset)
++        starts = stops - window0
++        starts[: window0 - offset] = 0
++
+         for (label, start, stop) in zip(self.window_labels, starts, stops):
+-            window = self.obj.isel({self.dim[0]: slice(start, stop)})
++            window = self.obj.isel({dim0: slice(start, stop)})
+ 
+-            counts = window.count(dim=self.dim[0])
++            counts = window.count(dim=dim0)
+             window = window.where(counts >= self.min_periods)
+ 
+             yield (label, window)
+2025-04-04 12:19:58,852 - INFO - Eval script for pydata__xarray-6744 written to logs/run_evaluation/gold/gold/pydata__xarray-6744/eval.sh; copying to container...
+2025-04-04 12:22:23,247 - INFO - Test runtime: 144.18 seconds
+2025-04-04 12:22:23,248 - INFO - Test output for pydata__xarray-6744 written to logs/run_evaluation/gold/gold/pydata__xarray-6744/test_output.txt
+2025-04-04 12:22:23,336 - INFO - Git diff after:
+diff --git a/xarray/core/rolling.py b/xarray/core/rolling.py
+index aef290f6..43a941b9 100644
+--- a/xarray/core/rolling.py
++++ b/xarray/core/rolling.py
+@@ -267,16 +267,21 @@ class DataArrayRolling(Rolling["DataArray"]):
+         # TODO legacy attribute
+         self.window_labels = self.obj[self.dim[0]]
+ 
+-    def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
++    def __iter__(self) -> Iterator[tuple[DataArray, DataArray]]:
+         if self.ndim > 1:
+             raise ValueError("__iter__ is only supported for 1d-rolling")
+-        stops = np.arange(1, len(self.window_labels) + 1)
+-        starts = stops - int(self.window[0])
+-        starts[: int(self.window[0])] = 0
++
++        dim0 = self.dim[0]
++        window0 = int(self.window[0])
++        offset = (window0 + 1) // 2 if self.center[0] else 1
++        stops = np.arange(offset, self.obj.sizes[dim0] + offset)
++        starts = stops - window0
++        starts[: window0 - offset] = 0
++
+         for (label, start, stop) in zip(self.window_labels, starts, stops):
+-            window = self.obj.isel({self.dim[0]: slice(start, stop)})
++            window = self.obj.isel({dim0: slice(start, stop)})
+ 
+-            counts = window.count(dim=self.dim[0])
++            counts = window.count(dim=dim0)
+             window = window.where(counts >= self.min_periods)
+ 
+             yield (label, window)
+2025-04-04 12:22:23,336 - INFO - Grading answer for pydata__xarray-6744...
+2025-04-04 12:22:23,341 - INFO - report: {'pydata__xarray-6744': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-6744: resolved: False
+2025-04-04 12:22:23,341 - INFO - Attempting to stop container sweb.eval.pydata__xarray-6744.gold...
+2025-04-04 12:22:38,767 - INFO - Attempting to remove container sweb.eval.pydata__xarray-6744.gold...
+2025-04-04 12:22:38,895 - INFO - Container sweb.eval.pydata__xarray-6744.gold removed.
+2025-04-04 12:22:38,895 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-6744:latest...
+2025-04-04 12:22:39,079 - INFO - Image sweb.eval.x86_64.pydata__xarray-6744:latest removed.

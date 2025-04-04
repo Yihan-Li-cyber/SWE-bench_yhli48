@@ -1,0 +1,55 @@
+2025-04-04 10:37:00,628 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13568
+Building instance image sweb.eval.x86_64.django__django-13568:latest for django__django-13568
+2025-04-04 10:37:40,236 - INFO - Creating container for django__django-13568...
+2025-04-04 10:37:40,279 - INFO - Container for django__django-13568 created: 5bf1b7a55d1fa5373937eb667c2468b7751920230c4645aa47e63481d4a9bbb6
+2025-04-04 10:37:40,596 - INFO - Container for django__django-13568 started: 5bf1b7a55d1fa5373937eb667c2468b7751920230c4645aa47e63481d4a9bbb6
+2025-04-04 10:37:40,597 - INFO - Intermediate patch for django__django-13568 written to logs/run_evaluation/gold/gold/django__django-13568/patch.diff, now applying to container...
+2025-04-04 10:37:40,840 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 10:37:40,898 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/checks.py
+
+2025-04-04 10:37:42,325 - INFO - Git diff before:
+diff --git a/django/contrib/auth/checks.py b/django/contrib/auth/checks.py
+index 65fc266f7e..c08ed8a49a 100644
+--- a/django/contrib/auth/checks.py
++++ b/django/contrib/auth/checks.py
+@@ -52,7 +52,10 @@ def check_user_model(app_configs=None, **kwargs):
+         )
+ 
+     # Check that the username field is unique
+-    if not cls._meta.get_field(cls.USERNAME_FIELD).unique:
++    if not cls._meta.get_field(cls.USERNAME_FIELD).unique and not any(
++        constraint.fields == (cls.USERNAME_FIELD,)
++        for constraint in cls._meta.total_unique_constraints
++    ):
+         if (settings.AUTHENTICATION_BACKENDS ==
+                 ['django.contrib.auth.backends.ModelBackend']):
+             errors.append(
+2025-04-04 10:37:42,325 - INFO - Eval script for django__django-13568 written to logs/run_evaluation/gold/gold/django__django-13568/eval.sh; copying to container...
+2025-04-04 10:37:53,677 - INFO - Test runtime: 11.15 seconds
+2025-04-04 10:37:53,677 - INFO - Test output for django__django-13568 written to logs/run_evaluation/gold/gold/django__django-13568/test_output.txt
+2025-04-04 10:37:53,786 - INFO - Git diff after:
+diff --git a/django/contrib/auth/checks.py b/django/contrib/auth/checks.py
+index 65fc266f7e..c08ed8a49a 100644
+--- a/django/contrib/auth/checks.py
++++ b/django/contrib/auth/checks.py
+@@ -52,7 +52,10 @@ def check_user_model(app_configs=None, **kwargs):
+         )
+ 
+     # Check that the username field is unique
+-    if not cls._meta.get_field(cls.USERNAME_FIELD).unique:
++    if not cls._meta.get_field(cls.USERNAME_FIELD).unique and not any(
++        constraint.fields == (cls.USERNAME_FIELD,)
++        for constraint in cls._meta.total_unique_constraints
++    ):
+         if (settings.AUTHENTICATION_BACKENDS ==
+                 ['django.contrib.auth.backends.ModelBackend']):
+             errors.append(
+2025-04-04 10:37:53,786 - INFO - Grading answer for django__django-13568...
+2025-04-04 10:37:53,787 - INFO - report: {'django__django-13568': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13568: resolved: False
+2025-04-04 10:37:53,787 - INFO - Attempting to stop container sweb.eval.django__django-13568.gold...
+2025-04-04 10:38:10,505 - INFO - Attempting to remove container sweb.eval.django__django-13568.gold...
+2025-04-04 10:38:10,550 - INFO - Container sweb.eval.django__django-13568.gold removed.
+2025-04-04 10:38:10,550 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13568:latest...
+2025-04-04 10:38:11,348 - INFO - Image sweb.eval.x86_64.django__django-13568:latest removed.

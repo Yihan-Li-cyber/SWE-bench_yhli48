@@ -1,0 +1,49 @@
+2025-04-04 14:02:05,178 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18763
+Building instance image sweb.eval.x86_64.sympy__sympy-18763:latest for sympy__sympy-18763
+2025-04-04 14:02:36,140 - INFO - Creating container for sympy__sympy-18763...
+2025-04-04 14:02:36,201 - INFO - Container for sympy__sympy-18763 created: 08a845a0000c1c44a65f246a4a00206318b6b9bd72e4f4454f1680d94edbc9e3
+2025-04-04 14:02:36,738 - INFO - Container for sympy__sympy-18763 started: 08a845a0000c1c44a65f246a4a00206318b6b9bd72e4f4454f1680d94edbc9e3
+2025-04-04 14:02:36,739 - INFO - Intermediate patch for sympy__sympy-18763 written to logs/run_evaluation/gold/gold/sympy__sympy-18763/patch.diff, now applying to container...
+2025-04-04 14:02:37,338 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:02:37,449 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/latex.py
+
+2025-04-04 14:02:38,221 - INFO - Git diff before:
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 8743723ea0..f6ed0d350e 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -703,7 +703,7 @@ def _print_Subs(self, subs):
+         latex_new = (self._print(e) for e in new)
+         latex_subs = r'\\ '.join(
+             e[0] + '=' + e[1] for e in zip(latex_old, latex_new))
+-        return r'\left. %s \right|_{\substack{ %s }}' % (latex_expr,
++        return r'\left. \left(%s\right) \right|_{\substack{ %s }}' % (latex_expr,
+                                                          latex_subs)
+ 
+     def _print_Integral(self, expr):
+2025-04-04 14:02:38,221 - INFO - Eval script for sympy__sympy-18763 written to logs/run_evaluation/gold/gold/sympy__sympy-18763/eval.sh; copying to container...
+2025-04-04 14:02:52,018 - INFO - Test runtime: 13.37 seconds
+2025-04-04 14:02:52,019 - INFO - Test output for sympy__sympy-18763 written to logs/run_evaluation/gold/gold/sympy__sympy-18763/test_output.txt
+2025-04-04 14:02:52,152 - INFO - Git diff after:
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 8743723ea0..f6ed0d350e 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -703,7 +703,7 @@ def _print_Subs(self, subs):
+         latex_new = (self._print(e) for e in new)
+         latex_subs = r'\\ '.join(
+             e[0] + '=' + e[1] for e in zip(latex_old, latex_new))
+-        return r'\left. %s \right|_{\substack{ %s }}' % (latex_expr,
++        return r'\left. \left(%s\right) \right|_{\substack{ %s }}' % (latex_expr,
+                                                          latex_subs)
+ 
+     def _print_Integral(self, expr):
+2025-04-04 14:02:52,152 - INFO - Grading answer for sympy__sympy-18763...
+2025-04-04 14:02:52,152 - INFO - report: {'sympy__sympy-18763': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-18763: resolved: False
+2025-04-04 14:02:52,153 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18763.gold...
+2025-04-04 14:03:37,392 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18763.gold...
+2025-04-04 14:03:37,442 - INFO - Container sweb.eval.sympy__sympy-18763.gold removed.
+2025-04-04 14:03:37,442 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-18763:latest...
+2025-04-04 14:03:50,213 - INFO - Image sweb.eval.x86_64.sympy__sympy-18763:latest removed.

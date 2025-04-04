@@ -1,0 +1,47 @@
+2025-04-04 12:15:59,310 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-3677
+Building instance image sweb.eval.x86_64.pydata__xarray-3677:latest for pydata__xarray-3677
+2025-04-04 12:16:47,852 - INFO - Creating container for pydata__xarray-3677...
+2025-04-04 12:16:47,882 - INFO - Container for pydata__xarray-3677 created: 336b761bebef805e571abf7832560ed2eac8117f27637433395dc4e703cc789b
+2025-04-04 12:17:08,912 - INFO - Container for pydata__xarray-3677 started: 336b761bebef805e571abf7832560ed2eac8117f27637433395dc4e703cc789b
+2025-04-04 12:17:08,913 - INFO - Intermediate patch for pydata__xarray-3677 written to logs/run_evaluation/gold/gold/pydata__xarray-3677/patch.diff, now applying to container...
+2025-04-04 12:17:09,195 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 12:17:09,260 - INFO - >>>>> Applied Patch:
+patching file xarray/core/dataset.py
+
+2025-04-04 12:17:09,400 - INFO - Git diff before:
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index ac0a923d..d597ec8c 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3604,6 +3604,7 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             If any variables conflict (see ``compat``).
+         """
+         _check_inplace(inplace)
++        other = other.to_dataset() if isinstance(other, xr.DataArray) else other
+         merge_result = dataset_merge_method(
+             self,
+             other,
+2025-04-04 12:17:09,400 - INFO - Eval script for pydata__xarray-3677 written to logs/run_evaluation/gold/gold/pydata__xarray-3677/eval.sh; copying to container...
+2025-04-04 12:17:22,128 - INFO - Test runtime: 12.53 seconds
+2025-04-04 12:17:22,129 - INFO - Test output for pydata__xarray-3677 written to logs/run_evaluation/gold/gold/pydata__xarray-3677/test_output.txt
+2025-04-04 12:17:22,198 - INFO - Git diff after:
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index ac0a923d..d597ec8c 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -3604,6 +3604,7 @@ class Dataset(Mapping, ImplementsDatasetReduce, DataWithCoords):
+             If any variables conflict (see ``compat``).
+         """
+         _check_inplace(inplace)
++        other = other.to_dataset() if isinstance(other, xr.DataArray) else other
+         merge_result = dataset_merge_method(
+             self,
+             other,
+2025-04-04 12:17:22,198 - INFO - Grading answer for pydata__xarray-3677...
+2025-04-04 12:17:22,198 - INFO - report: {'pydata__xarray-3677': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-3677: resolved: False
+2025-04-04 12:17:22,199 - INFO - Attempting to stop container sweb.eval.pydata__xarray-3677.gold...
+2025-04-04 12:17:37,672 - INFO - Attempting to remove container sweb.eval.pydata__xarray-3677.gold...
+2025-04-04 12:17:37,693 - INFO - Container sweb.eval.pydata__xarray-3677.gold removed.
+2025-04-04 12:17:37,694 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-3677:latest...
+2025-04-04 12:17:37,761 - INFO - Image sweb.eval.x86_64.pydata__xarray-3677:latest removed.

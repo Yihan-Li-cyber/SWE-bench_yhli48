@@ -1,0 +1,47 @@
+2025-04-04 14:09:01,076 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-23534
+Building instance image sweb.eval.x86_64.sympy__sympy-23534:latest for sympy__sympy-23534
+2025-04-04 14:09:35,745 - INFO - Creating container for sympy__sympy-23534...
+2025-04-04 14:09:35,819 - INFO - Container for sympy__sympy-23534 created: bf40e2c54a58ad55d33edfd3f78b1cd8521ee277a74096485bc29ea78f3424a7
+2025-04-04 14:09:36,535 - INFO - Container for sympy__sympy-23534 started: bf40e2c54a58ad55d33edfd3f78b1cd8521ee277a74096485bc29ea78f3424a7
+2025-04-04 14:09:36,536 - INFO - Intermediate patch for sympy__sympy-23534 written to logs/run_evaluation/gold/gold/sympy__sympy-23534/patch.diff, now applying to container...
+2025-04-04 14:09:36,993 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 14:09:37,142 - INFO - >>>>> Applied Patch:
+patching file sympy/core/symbol.py
+
+2025-04-04 14:09:38,033 - INFO - Git diff before:
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..2aca8bab27 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -791,7 +791,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+2025-04-04 14:09:38,034 - INFO - Eval script for sympy__sympy-23534 written to logs/run_evaluation/gold/gold/sympy__sympy-23534/eval.sh; copying to container...
+2025-04-04 14:09:45,580 - INFO - Test runtime: 7.08 seconds
+2025-04-04 14:09:45,581 - INFO - Test output for sympy__sympy-23534 written to logs/run_evaluation/gold/gold/sympy__sympy-23534/test_output.txt
+2025-04-04 14:09:45,687 - INFO - Git diff after:
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..2aca8bab27 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -791,7 +791,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+2025-04-04 14:09:45,687 - INFO - Grading answer for sympy__sympy-23534...
+2025-04-04 14:09:45,687 - INFO - report: {'sympy__sympy-23534': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-23534: resolved: False
+2025-04-04 14:09:45,688 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23534.gold...
+2025-04-04 14:10:01,383 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23534.gold...
+2025-04-04 14:10:01,514 - INFO - Container sweb.eval.sympy__sympy-23534.gold removed.
+2025-04-04 14:10:01,514 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-23534:latest...
+2025-04-04 14:10:01,821 - INFO - Image sweb.eval.x86_64.sympy__sympy-23534:latest removed.

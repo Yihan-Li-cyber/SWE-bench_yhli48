@@ -1,0 +1,47 @@
+2025-04-04 09:56:08,347 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11179
+Building instance image sweb.eval.x86_64.django__django-11179:latest for django__django-11179
+2025-04-04 09:57:19,271 - INFO - Creating container for django__django-11179...
+2025-04-04 09:57:19,334 - INFO - Container for django__django-11179 created: 80a5e70d4b2c41d5bd48ced9f9b4b882338e98a0f0c27e7ddc0c29fbe6af4171
+2025-04-04 09:57:19,798 - INFO - Container for django__django-11179 started: 80a5e70d4b2c41d5bd48ced9f9b4b882338e98a0f0c27e7ddc0c29fbe6af4171
+2025-04-04 09:57:19,798 - INFO - Intermediate patch for django__django-11179 written to logs/run_evaluation/gold/gold/django__django-11179/patch.diff, now applying to container...
+2025-04-04 09:57:20,126 - INFO - Failed to apply patch to container, trying again...
+2025-04-04 09:57:20,214 - INFO - >>>>> Applied Patch:
+patching file django/db/models/deletion.py
+
+2025-04-04 09:57:21,815 - INFO - Git diff before:
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 92fe4affb9..3a462f1c4c 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -277,6 +277,7 @@ class Collector:
+             if self.can_fast_delete(instance):
+                 with transaction.mark_for_rollback_on_error():
+                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
++                setattr(instance, model._meta.pk.attname, None)
+                 return count, {model._meta.label: count}
+ 
+         with transaction.atomic(using=self.using, savepoint=False):
+2025-04-04 09:57:21,817 - INFO - Eval script for django__django-11179 written to logs/run_evaluation/gold/gold/django__django-11179/eval.sh; copying to container...
+2025-04-04 09:57:34,998 - INFO - Test runtime: 12.88 seconds
+2025-04-04 09:57:35,003 - INFO - Test output for django__django-11179 written to logs/run_evaluation/gold/gold/django__django-11179/test_output.txt
+2025-04-04 09:57:35,130 - INFO - Git diff after:
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 92fe4affb9..3a462f1c4c 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -277,6 +277,7 @@ class Collector:
+             if self.can_fast_delete(instance):
+                 with transaction.mark_for_rollback_on_error():
+                     count = sql.DeleteQuery(model).delete_batch([instance.pk], self.using)
++                setattr(instance, model._meta.pk.attname, None)
+                 return count, {model._meta.label: count}
+ 
+         with transaction.atomic(using=self.using, savepoint=False):
+2025-04-04 09:57:35,130 - INFO - Grading answer for django__django-11179...
+2025-04-04 09:57:35,130 - INFO - report: {'django__django-11179': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11179: resolved: False
+2025-04-04 09:57:35,131 - INFO - Attempting to stop container sweb.eval.django__django-11179.gold...
+2025-04-04 09:57:50,986 - INFO - Attempting to remove container sweb.eval.django__django-11179.gold...
+2025-04-04 09:57:51,052 - INFO - Container sweb.eval.django__django-11179.gold removed.
+2025-04-04 09:57:51,052 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11179:latest...
+2025-04-04 09:57:51,673 - INFO - Image sweb.eval.x86_64.django__django-11179:latest removed.
