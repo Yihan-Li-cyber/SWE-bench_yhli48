@@ -1,0 +1,49 @@
+2025-04-05 10:03:24,926 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-10880
+Building instance image sweb.eval.x86_64.django__django-10880:latest for django__django-10880
+2025-04-05 10:05:28,633 - INFO - Creating container for django__django-10880...
+2025-04-05 10:05:28,732 - INFO - Container for django__django-10880 created: 145a5a8537fa18b385edf3863dd8a1ef21ad02b5dc06e1d55325250c3043ae1b
+2025-04-05 10:05:29,647 - INFO - Container for django__django-10880 started: 145a5a8537fa18b385edf3863dd8a1ef21ad02b5dc06e1d55325250c3043ae1b
+2025-04-05 10:05:29,648 - INFO - Intermediate patch for django__django-10880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-10880/patch.diff, now applying to container...
+2025-04-05 10:05:30,333 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:05:30,532 - INFO - >>>>> Applied Patch:
+patching file django/db/models/aggregates.py
+
+2025-04-05 10:05:35,324 - INFO - Git diff before:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index ac0b62d0bf..ea88c54b0d 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -68,7 +68,7 @@ class Aggregate(Func):
+         return []
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+-        extra_context['distinct'] = 'DISTINCT' if self.distinct else ''
++        extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)
+2025-04-05 10:05:35,325 - INFO - Eval script for django__django-10880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-10880/eval.sh; copying to container...
+2025-04-05 10:06:13,025 - INFO - Test runtime: 37.19 seconds
+2025-04-05 10:06:13,025 - INFO - Test output for django__django-10880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-10880/test_output.txt
+2025-04-05 10:06:13,238 - INFO - Git diff after:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index ac0b62d0bf..ea88c54b0d 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -68,7 +68,7 @@ class Aggregate(Func):
+         return []
+ 
+     def as_sql(self, compiler, connection, **extra_context):
+-        extra_context['distinct'] = 'DISTINCT' if self.distinct else ''
++        extra_context['distinct'] = 'DISTINCT ' if self.distinct else ''
+         if self.filter:
+             if connection.features.supports_aggregate_filter_clause:
+                 filter_sql, filter_params = self.filter.as_sql(compiler, connection)
+2025-04-05 10:06:13,238 - INFO - Grading answer for django__django-10880...
+2025-04-05 10:06:13,240 - INFO - report: {'django__django-10880': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-10880: resolved: False
+2025-04-05 10:06:13,240 - INFO - Attempting to stop container sweb.eval.django__django-10880.241028_solver...
+2025-04-05 10:06:29,222 - INFO - Attempting to remove container sweb.eval.django__django-10880.241028_solver...
+2025-04-05 10:06:29,329 - INFO - Container sweb.eval.django__django-10880.241028_solver removed.
+2025-04-05 10:06:29,329 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-10880:latest...
+2025-04-05 10:06:31,046 - INFO - Image sweb.eval.x86_64.django__django-10880:latest removed.

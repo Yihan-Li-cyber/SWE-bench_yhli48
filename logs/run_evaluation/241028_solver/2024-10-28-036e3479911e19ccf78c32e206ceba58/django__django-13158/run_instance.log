@@ -1,0 +1,95 @@
+2025-04-05 11:03:17,241 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13158
+Building instance image sweb.eval.x86_64.django__django-13158:latest for django__django-13158
+2025-04-05 11:06:01,102 - INFO - Creating container for django__django-13158...
+2025-04-05 11:06:01,240 - INFO - Container for django__django-13158 created: 1e72cd667d2d478b2400049fc8c840176defc1924085497d6046e1c8696fe371
+2025-04-05 11:06:04,232 - INFO - Container for django__django-13158 started: 1e72cd667d2d478b2400049fc8c840176defc1924085497d6046e1c8696fe371
+2025-04-05 11:06:04,233 - INFO - Intermediate patch for django__django-13158 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13158/patch.diff, now applying to container...
+2025-04-05 11:06:05,534 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:06:05,740 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+
+2025-04-05 11:06:11,536 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 07d6ffd4ca..17bab3e7c3 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -997,24 +997,24 @@ class QuerySet:
+         return clone
+ 
+     def union(self, *other_qs, all=False):
+-        # If the query is an EmptyQuerySet, combine all nonempty querysets.
+-        if isinstance(self, EmptyQuerySet):
+-            qs = [q for q in other_qs if not isinstance(q, EmptyQuerySet)]
++        # If the query is empty (either EmptyQuerySet or none()), combine all nonempty querysets.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
++            qs = [q for q in other_qs if not (isinstance(q, EmptyQuerySet) or q.query.is_empty())]
+             return qs[0]._combinator_query('union', *qs[1:], all=all) if qs else self
+         return self._combinator_query('union', *other_qs, all=all)
+ 
+     def intersection(self, *other_qs):
+-        # If any query is an EmptyQuerySet, return it.
+-        if isinstance(self, EmptyQuerySet):
++        # If any query is empty (either EmptyQuerySet or none()), return it.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
+             return self
+         for other in other_qs:
+-            if isinstance(other, EmptyQuerySet):
++            if isinstance(other, EmptyQuerySet) or other.query.is_empty():
+                 return other
+         return self._combinator_query('intersection', *other_qs)
+ 
+     def difference(self, *other_qs):
+-        # If the query is an EmptyQuerySet, return it.
+-        if isinstance(self, EmptyQuerySet):
++        # If the query is empty (either EmptyQuerySet or none()), return it.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
+             return self
+         return self._combinator_query('difference', *other_qs)
+2025-04-05 11:06:11,537 - INFO - Eval script for django__django-13158 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13158/eval.sh; copying to container...
+2025-04-05 11:06:55,741 - INFO - Test runtime: 43.50 seconds
+2025-04-05 11:06:55,742 - INFO - Test output for django__django-13158 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13158/test_output.txt
+2025-04-05 11:06:56,046 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 07d6ffd4ca..17bab3e7c3 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -997,24 +997,24 @@ class QuerySet:
+         return clone
+ 
+     def union(self, *other_qs, all=False):
+-        # If the query is an EmptyQuerySet, combine all nonempty querysets.
+-        if isinstance(self, EmptyQuerySet):
+-            qs = [q for q in other_qs if not isinstance(q, EmptyQuerySet)]
++        # If the query is empty (either EmptyQuerySet or none()), combine all nonempty querysets.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
++            qs = [q for q in other_qs if not (isinstance(q, EmptyQuerySet) or q.query.is_empty())]
+             return qs[0]._combinator_query('union', *qs[1:], all=all) if qs else self
+         return self._combinator_query('union', *other_qs, all=all)
+ 
+     def intersection(self, *other_qs):
+-        # If any query is an EmptyQuerySet, return it.
+-        if isinstance(self, EmptyQuerySet):
++        # If any query is empty (either EmptyQuerySet or none()), return it.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
+             return self
+         for other in other_qs:
+-            if isinstance(other, EmptyQuerySet):
++            if isinstance(other, EmptyQuerySet) or other.query.is_empty():
+                 return other
+         return self._combinator_query('intersection', *other_qs)
+ 
+     def difference(self, *other_qs):
+-        # If the query is an EmptyQuerySet, return it.
+-        if isinstance(self, EmptyQuerySet):
++        # If the query is empty (either EmptyQuerySet or none()), return it.
++        if isinstance(self, EmptyQuerySet) or self.query.is_empty():
+             return self
+         return self._combinator_query('difference', *other_qs)
+2025-04-05 11:06:56,047 - INFO - Grading answer for django__django-13158...
+2025-04-05 11:06:56,047 - INFO - report: {'django__django-13158': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13158: resolved: False
+2025-04-05 11:06:56,047 - INFO - Attempting to stop container sweb.eval.django__django-13158.241028_solver...
+2025-04-05 11:07:12,440 - INFO - Attempting to remove container sweb.eval.django__django-13158.241028_solver...
+2025-04-05 11:07:13,363 - INFO - Container sweb.eval.django__django-13158.241028_solver removed.
+2025-04-05 11:07:13,363 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13158:latest...
+2025-04-05 11:07:16,330 - INFO - Image sweb.eval.x86_64.django__django-13158:latest removed.

@@ -1,0 +1,254 @@
+2025-04-05 12:09:10,317 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15268
+Building instance image sweb.eval.x86_64.django__django-15268:latest for django__django-15268
+2025-04-05 12:12:39,523 - INFO - Creating container for django__django-15268...
+2025-04-05 12:12:39,630 - INFO - Container for django__django-15268 created: 883b723fa5dd56ef6522dff519b4d33bdd1a7b048c530b983e65ce8cb9225ae7
+2025-04-05 12:12:40,835 - INFO - Container for django__django-15268 started: 883b723fa5dd56ef6522dff519b4d33bdd1a7b048c530b983e65ce8cb9225ae7
+2025-04-05 12:12:40,835 - INFO - Intermediate patch for django__django-15268 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15268/patch.diff, now applying to container...
+2025-04-05 12:12:41,740 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:12:41,941 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+patching file tests/migrations/test_optimizer.py
+
+2025-04-05 12:12:47,927 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index c120f5d32d..aad4b91c6e 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -528,7 +528,18 @@ class AlterTogetherOptionOperation(ModelOptionOperation):
+     def migration_name_fragment(self):
+         return 'alter_%s_%s' % (self.name_lower, self.option_name)
+ 
+-
++    def reduce(self, operation, app_label):
++        if (
++            isinstance(operation, AlterTogetherOptionOperation) and
++            self.name_lower == operation.name_lower and
++            self.option_name == operation.option_name
++        ):
++            if self.option_value == set():
++                if operation.option_value != set():
++                    return [operation]
++                if operation.option_value == set():
++                    return []
++        return super().reduce(operation, app_label)
+ class AlterUniqueTogether(AlterTogetherOptionOperation):
+     """
+     Change the value of unique_together to the target one.
+diff --git a/tests/migrations/test_optimizer.py b/tests/migrations/test_optimizer.py
+index 0caaf66f9e..25e356c88f 100644
+--- a/tests/migrations/test_optimizer.py
++++ b/tests/migrations/test_optimizer.py
+@@ -98,6 +98,86 @@ class OptimizerTests(SimpleTestCase):
+         """
+         RenameModels should absorb themselves.
+         """
++
++    def test_alter_together_optimization(self):
++        """
++        AlterUniqueTogether/AlterIndexTogether with an empty set followed by a non-empty set
++        should optimize to just the non-empty set.
++        """
++        # AlterUniqueTogether
++        self.assertOptimizesTo(
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together={('foo', 'bar')},
++                ),
++            ],
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together={('foo', 'bar')},
++                ),
++            ],
++        )
++        # AlterIndexTogether
++        self.assertOptimizesTo(
++            [
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together=set(),
++                ),
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together={('foo', 'bar')},
++                ),
++            ],
++            [
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together={('foo', 'bar')},
++                ),
++            ],
++        )
++        # Should not optimize if names don't match
++        self.assertDoesNotOptimize([
++            migrations.AlterUniqueTogether(
++                name='model1',
++                unique_together=set(),
++            ),
++            migrations.AlterUniqueTogether(
++                name='model2',
++                unique_together={('foo', 'bar')},
++            ),
++        ])
++        # Should not optimize if option_names don't match
++        self.assertDoesNotOptimize([
++            migrations.AlterUniqueTogether(
++                name='model',
++                unique_together=set(),
++            ),
++            migrations.AlterIndexTogether(
++                name='model',
++                index_together={('foo', 'bar')},
++            ),
++        ])
++        # Two empty sets should optimize to nothing
++        self.assertOptimizesTo(
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++            ],
++            []
++        )
+         self.assertOptimizesTo(
+             [
+                 migrations.RenameModel("Foo", "Baa"),
+2025-04-05 12:12:47,927 - INFO - Eval script for django__django-15268 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15268/eval.sh; copying to container...
+2025-04-05 12:13:38,028 - INFO - Test runtime: 49.50 seconds
+2025-04-05 12:13:38,029 - INFO - Test output for django__django-15268 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15268/test_output.txt
+2025-04-05 12:13:38,430 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index c120f5d32d..aad4b91c6e 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -528,7 +528,18 @@ class AlterTogetherOptionOperation(ModelOptionOperation):
+     def migration_name_fragment(self):
+         return 'alter_%s_%s' % (self.name_lower, self.option_name)
+ 
+-
++    def reduce(self, operation, app_label):
++        if (
++            isinstance(operation, AlterTogetherOptionOperation) and
++            self.name_lower == operation.name_lower and
++            self.option_name == operation.option_name
++        ):
++            if self.option_value == set():
++                if operation.option_value != set():
++                    return [operation]
++                if operation.option_value == set():
++                    return []
++        return super().reduce(operation, app_label)
+ class AlterUniqueTogether(AlterTogetherOptionOperation):
+     """
+     Change the value of unique_together to the target one.
+diff --git a/tests/migrations/test_optimizer.py b/tests/migrations/test_optimizer.py
+index 0caaf66f9e..25e356c88f 100644
+--- a/tests/migrations/test_optimizer.py
++++ b/tests/migrations/test_optimizer.py
+@@ -98,6 +98,86 @@ class OptimizerTests(SimpleTestCase):
+         """
+         RenameModels should absorb themselves.
+         """
++
++    def test_alter_together_optimization(self):
++        """
++        AlterUniqueTogether/AlterIndexTogether with an empty set followed by a non-empty set
++        should optimize to just the non-empty set.
++        """
++        # AlterUniqueTogether
++        self.assertOptimizesTo(
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together={('foo', 'bar')},
++                ),
++            ],
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together={('foo', 'bar')},
++                ),
++            ],
++        )
++        # AlterIndexTogether
++        self.assertOptimizesTo(
++            [
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together=set(),
++                ),
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together={('foo', 'bar')},
++                ),
++            ],
++            [
++                migrations.AlterIndexTogether(
++                    name='model',
++                    index_together={('foo', 'bar')},
++                ),
++            ],
++        )
++        # Should not optimize if names don't match
++        self.assertDoesNotOptimize([
++            migrations.AlterUniqueTogether(
++                name='model1',
++                unique_together=set(),
++            ),
++            migrations.AlterUniqueTogether(
++                name='model2',
++                unique_together={('foo', 'bar')},
++            ),
++        ])
++        # Should not optimize if option_names don't match
++        self.assertDoesNotOptimize([
++            migrations.AlterUniqueTogether(
++                name='model',
++                unique_together=set(),
++            ),
++            migrations.AlterIndexTogether(
++                name='model',
++                index_together={('foo', 'bar')},
++            ),
++        ])
++        # Two empty sets should optimize to nothing
++        self.assertOptimizesTo(
++            [
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++                migrations.AlterUniqueTogether(
++                    name='model',
++                    unique_together=set(),
++                ),
++            ],
++            []
++        )
+         self.assertOptimizesTo(
+             [
+                 migrations.RenameModel("Foo", "Baa"),
+2025-04-05 12:13:38,430 - INFO - Grading answer for django__django-15268...
+2025-04-05 12:13:38,431 - INFO - report: {'django__django-15268': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15268: resolved: False
+2025-04-05 12:13:38,431 - INFO - Attempting to stop container sweb.eval.django__django-15268.241028_solver...
+2025-04-05 12:13:54,823 - INFO - Attempting to remove container sweb.eval.django__django-15268.241028_solver...
+2025-04-05 12:13:54,920 - INFO - Container sweb.eval.django__django-15268.241028_solver removed.
+2025-04-05 12:13:54,920 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15268:latest...
+2025-04-05 12:13:57,036 - INFO - Image sweb.eval.x86_64.django__django-15268:latest removed.

@@ -1,2 +1,51 @@
-2025-04-04 16:40:59,020 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7336
+2025-04-05 09:46:34,947 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7336
 Building instance image sweb.eval.x86_64.astropy__astropy-7336:latest for astropy__astropy-7336
+2025-04-05 09:58:49,637 - INFO - Creating container for astropy__astropy-7336...
+2025-04-05 09:58:49,743 - INFO - Container for astropy__astropy-7336 created: bc113d96ca094ab573766a69a5b853b200e20fc7ca3f061ea6e1c2bebea4cd51
+2025-04-05 09:58:51,042 - INFO - Container for astropy__astropy-7336 started: bc113d96ca094ab573766a69a5b853b200e20fc7ca3f061ea6e1c2bebea4cd51
+2025-04-05 09:58:51,042 - INFO - Intermediate patch for astropy__astropy-7336 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7336/patch.diff, now applying to container...
+2025-04-05 09:58:51,833 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 09:58:52,034 - INFO - >>>>> Applied Patch:
+patching file astropy/units/decorators.py
+
+2025-04-05 09:58:54,643 - INFO - Git diff before:
+diff --git a/astropy/units/decorators.py b/astropy/units/decorators.py
+index 8bece5a850..57c884fa9e 100644
+--- a/astropy/units/decorators.py
++++ b/astropy/units/decorators.py
+@@ -220,7 +220,8 @@ class QuantityInput:
+             # Call the original function with any equivalencies in force.
+             with add_enabled_equivalencies(self.equivalencies):
+                 return_ = wrapped_function(*func_args, **func_kwargs)
+-            if wrapped_signature.return_annotation is not inspect.Signature.empty:
++            if (wrapped_signature.return_annotation is not inspect.Signature.empty and
++                    wrapped_signature.return_annotation is not None):
+                 return return_.to(wrapped_signature.return_annotation)
+             else:
+                 return return_
+2025-04-05 09:58:54,644 - INFO - Eval script for astropy__astropy-7336 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7336/eval.sh; copying to container...
+2025-04-05 09:59:32,219 - INFO - Test runtime: 36.88 seconds
+2025-04-05 09:59:32,220 - INFO - Test output for astropy__astropy-7336 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7336/test_output.txt
+2025-04-05 09:59:32,535 - INFO - Git diff after:
+diff --git a/astropy/units/decorators.py b/astropy/units/decorators.py
+index 8bece5a850..57c884fa9e 100644
+--- a/astropy/units/decorators.py
++++ b/astropy/units/decorators.py
+@@ -220,7 +220,8 @@ class QuantityInput:
+             # Call the original function with any equivalencies in force.
+             with add_enabled_equivalencies(self.equivalencies):
+                 return_ = wrapped_function(*func_args, **func_kwargs)
+-            if wrapped_signature.return_annotation is not inspect.Signature.empty:
++            if (wrapped_signature.return_annotation is not inspect.Signature.empty and
++                    wrapped_signature.return_annotation is not None):
+                 return return_.to(wrapped_signature.return_annotation)
+             else:
+                 return return_
+2025-04-05 09:59:32,536 - INFO - Grading answer for astropy__astropy-7336...
+2025-04-05 09:59:32,536 - INFO - report: {'astropy__astropy-7336': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-7336: resolved: False
+2025-04-05 09:59:32,536 - INFO - Attempting to stop container sweb.eval.astropy__astropy-7336.241028_solver...
+2025-04-05 09:59:49,236 - INFO - Attempting to remove container sweb.eval.astropy__astropy-7336.241028_solver...
+2025-04-05 09:59:49,328 - INFO - Container sweb.eval.astropy__astropy-7336.241028_solver removed.
+2025-04-05 09:59:49,328 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-7336:latest...
+2025-04-05 09:59:50,428 - INFO - Image sweb.eval.x86_64.astropy__astropy-7336:latest removed.

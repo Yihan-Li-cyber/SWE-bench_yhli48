@@ -1,0 +1,73 @@
+2025-04-05 10:13:01,277 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11087
+Building instance image sweb.eval.x86_64.django__django-11087:latest for django__django-11087
+2025-04-05 10:15:18,046 - INFO - Creating container for django__django-11087...
+2025-04-05 10:15:18,139 - INFO - Container for django__django-11087 created: 33c5ac9c2718527feef62983ba1cc3ba6ab4a621e6228410dbbfc28a3ba8c134
+2025-04-05 10:15:19,036 - INFO - Container for django__django-11087 started: 33c5ac9c2718527feef62983ba1cc3ba6ab4a621e6228410dbbfc28a3ba8c134
+2025-04-05 10:15:19,036 - INFO - Intermediate patch for django__django-11087 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11087/patch.diff, now applying to container...
+2025-04-05 10:15:19,935 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:15:20,136 - INFO - >>>>> Applied Patch:
+patching file django/db/models/deletion.py
+
+2025-04-05 10:15:24,863 - INFO - Git diff before:
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 3a462f1c4c..26f4ce5688 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -231,10 +231,18 @@ class Collector:
+     def related_objects(self, related, objs):
+         """
+         Get a QuerySet of objects related to `objs` via the relation `related`.
++        Only fetches the primary key and fields needed for cascade deletion.
+         """
+-        return related.related_model._base_manager.using(self.using).filter(
+-            **{"%s__in" % related.field.name: objs}
++        model = related.related_model
++        # Get PK and any FK fields needed for deletion cascade
++        fields = [model._meta.pk.name]
++        fields.extend(
++            f.name for f in model._meta.fields 
++            if f.is_relation and f.remote_field.on_delete not in (DO_NOTHING, SET_NULL)
+         )
++        return model._base_manager.using(self.using).filter(
++            **{"%s__in" % related.field.name: objs}
++        ).only(*fields)
+ 
+     def instances_with_model(self):
+         for model, instances in self.data.items():
+2025-04-05 10:15:24,863 - INFO - Eval script for django__django-11087 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11087/eval.sh; copying to container...
+2025-04-05 10:16:09,627 - INFO - Test runtime: 44.30 seconds
+2025-04-05 10:16:09,628 - INFO - Test output for django__django-11087 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11087/test_output.txt
+2025-04-05 10:16:09,939 - INFO - Git diff after:
+diff --git a/django/db/models/deletion.py b/django/db/models/deletion.py
+index 3a462f1c4c..26f4ce5688 100644
+--- a/django/db/models/deletion.py
++++ b/django/db/models/deletion.py
+@@ -231,10 +231,18 @@ class Collector:
+     def related_objects(self, related, objs):
+         """
+         Get a QuerySet of objects related to `objs` via the relation `related`.
++        Only fetches the primary key and fields needed for cascade deletion.
+         """
+-        return related.related_model._base_manager.using(self.using).filter(
+-            **{"%s__in" % related.field.name: objs}
++        model = related.related_model
++        # Get PK and any FK fields needed for deletion cascade
++        fields = [model._meta.pk.name]
++        fields.extend(
++            f.name for f in model._meta.fields 
++            if f.is_relation and f.remote_field.on_delete not in (DO_NOTHING, SET_NULL)
+         )
++        return model._base_manager.using(self.using).filter(
++            **{"%s__in" % related.field.name: objs}
++        ).only(*fields)
+ 
+     def instances_with_model(self):
+         for model, instances in self.data.items():
+2025-04-05 10:16:09,939 - INFO - Grading answer for django__django-11087...
+2025-04-05 10:16:09,940 - INFO - report: {'django__django-11087': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11087: resolved: False
+2025-04-05 10:16:09,940 - INFO - Attempting to stop container sweb.eval.django__django-11087.241028_solver...
+2025-04-05 10:16:26,223 - INFO - Attempting to remove container sweb.eval.django__django-11087.241028_solver...
+2025-04-05 10:16:26,332 - INFO - Container sweb.eval.django__django-11087.241028_solver removed.
+2025-04-05 10:16:26,332 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11087:latest...
+2025-04-05 10:16:28,732 - INFO - Image sweb.eval.x86_64.django__django-11087:latest removed.

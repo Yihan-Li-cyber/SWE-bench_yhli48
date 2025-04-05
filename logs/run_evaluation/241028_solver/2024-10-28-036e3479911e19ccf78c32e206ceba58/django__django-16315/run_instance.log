@@ -1,0 +1,72 @@
+2025-04-05 15:07:04,741 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16315
+Building instance image sweb.eval.x86_64.django__django-16315:latest for django__django-16315
+2025-04-05 15:09:25,946 - INFO - Creating container for django__django-16315...
+2025-04-05 15:09:26,073 - INFO - Container for django__django-16315 created: 81a61c8d082029896176fc139f104dff752bd8e404febf50716ba56cac86eb78
+2025-04-05 15:09:26,991 - INFO - Container for django__django-16315 started: 81a61c8d082029896176fc139f104dff752bd8e404febf50716ba56cac86eb78
+2025-04-05 15:09:26,992 - INFO - Intermediate patch for django__django-16315 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16315/patch.diff, now applying to container...
+2025-04-05 15:09:27,743 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:09:27,941 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/postgresql/operations.py
+patching file test_bulk_create.py
+
+2025-04-05 15:09:33,542 - INFO - Git diff before:
+diff --git a/django/db/backends/postgresql/operations.py b/django/db/backends/postgresql/operations.py
+index 62273fc43c..6ebd025739 100644
+--- a/django/db/backends/postgresql/operations.py
++++ b/django/db/backends/postgresql/operations.py
+@@ -353,12 +353,16 @@ class DatabaseOperations(BaseDatabaseOperations):
+         if on_conflict == OnConflict.IGNORE:
+             return "ON CONFLICT DO NOTHING"
+         if on_conflict == OnConflict.UPDATE:
++            # Get the actual column names from the model fields
++            field_map = {f.name: f.get_attname_column()[1] for f in fields}
++            unique_columns = [field_map[name] for name in unique_fields]
++            update_columns = [field_map[name] for name in update_fields]
+             return "ON CONFLICT(%s) DO UPDATE SET %s" % (
+-                ", ".join(map(self.quote_name, unique_fields)),
++                ", ".join(map(self.quote_name, unique_columns)),
+                 ", ".join(
+                     [
+-                        f"{field} = EXCLUDED.{field}"
+-                        for field in map(self.quote_name, update_fields)
++                        f"{self.quote_name(col)} = EXCLUDED.{self.quote_name(col)}"
++                        for col in update_columns
+                     ]
+                 ),
+             )
+2025-04-05 15:09:33,542 - INFO - Eval script for django__django-16315 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16315/eval.sh; copying to container...
+2025-04-05 15:10:21,529 - INFO - Test runtime: 47.40 seconds
+2025-04-05 15:10:21,529 - INFO - Test output for django__django-16315 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16315/test_output.txt
+2025-04-05 15:10:21,838 - INFO - Git diff after:
+diff --git a/django/db/backends/postgresql/operations.py b/django/db/backends/postgresql/operations.py
+index 62273fc43c..6ebd025739 100644
+--- a/django/db/backends/postgresql/operations.py
++++ b/django/db/backends/postgresql/operations.py
+@@ -353,12 +353,16 @@ class DatabaseOperations(BaseDatabaseOperations):
+         if on_conflict == OnConflict.IGNORE:
+             return "ON CONFLICT DO NOTHING"
+         if on_conflict == OnConflict.UPDATE:
++            # Get the actual column names from the model fields
++            field_map = {f.name: f.get_attname_column()[1] for f in fields}
++            unique_columns = [field_map[name] for name in unique_fields]
++            update_columns = [field_map[name] for name in update_fields]
+             return "ON CONFLICT(%s) DO UPDATE SET %s" % (
+-                ", ".join(map(self.quote_name, unique_fields)),
++                ", ".join(map(self.quote_name, unique_columns)),
+                 ", ".join(
+                     [
+-                        f"{field} = EXCLUDED.{field}"
+-                        for field in map(self.quote_name, update_fields)
++                        f"{self.quote_name(col)} = EXCLUDED.{self.quote_name(col)}"
++                        for col in update_columns
+                     ]
+                 ),
+             )
+2025-04-05 15:10:21,839 - INFO - Grading answer for django__django-16315...
+2025-04-05 15:10:21,839 - INFO - report: {'django__django-16315': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16315: resolved: False
+2025-04-05 15:10:21,839 - INFO - Attempting to stop container sweb.eval.django__django-16315.241028_solver...
+2025-04-05 15:10:37,919 - INFO - Attempting to remove container sweb.eval.django__django-16315.241028_solver...
+2025-04-05 15:10:38,032 - INFO - Container sweb.eval.django__django-16315.241028_solver removed.
+2025-04-05 15:10:38,033 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16315:latest...
+2025-04-05 15:10:40,545 - INFO - Image sweb.eval.x86_64.django__django-16315:latest removed.

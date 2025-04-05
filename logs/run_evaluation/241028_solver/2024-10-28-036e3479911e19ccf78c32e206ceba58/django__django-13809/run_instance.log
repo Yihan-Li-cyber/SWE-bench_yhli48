@@ -1,0 +1,89 @@
+2025-04-05 11:24:14,627 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13809
+Building instance image sweb.eval.x86_64.django__django-13809:latest for django__django-13809
+2025-04-05 11:27:18,530 - INFO - Creating container for django__django-13809...
+2025-04-05 11:27:18,638 - INFO - Container for django__django-13809 created: 9a8dca5d89090d9aeba57fee56521e5c0b1c6843b57dbadb7b02f3f94ba3f336
+2025-04-05 11:27:20,322 - INFO - Container for django__django-13809 started: 9a8dca5d89090d9aeba57fee56521e5c0b1c6843b57dbadb7b02f3f94ba3f336
+2025-04-05 11:27:20,323 - INFO - Intermediate patch for django__django-13809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13809/patch.diff, now applying to container...
+2025-04-05 11:27:21,234 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:27:21,428 - INFO - >>>>> Applied Patch:
+patching file django/core/management/commands/runserver.py
+
+2025-04-05 11:27:27,245 - INFO - Git diff before:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index d9fb088350..e6de2908ac 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -39,6 +39,10 @@ class Command(BaseCommand):
+             'addrport', nargs='?',
+             help='Optional port number, or ipaddr:port'
+         )
++        parser.add_argument(
++            '--skip-checks', action='store_true',
++            help='Skip system checks.',
++        )
+         parser.add_argument(
+             '--ipv6', '-6', action='store_true', dest='use_ipv6',
+             help='Tells Django to use an IPv6 address.',
+@@ -114,11 +118,12 @@ class Command(BaseCommand):
+         shutdown_message = options.get('shutdown_message', '')
+         quit_command = 'CTRL-BREAK' if sys.platform == 'win32' else 'CONTROL-C'
+ 
+-        self.stdout.write("Performing system checks...\n\n")
+-        self.check(display_num_errors=True)
+-        # Need to check migrations here, so can't use the
+-        # requires_migrations_check attribute.
+-        self.check_migrations()
++        if not options.get('skip_checks'):
++            self.stdout.write("Performing system checks...\n\n")
++            self.check(display_num_errors=True)
++            # Need to check migrations here, so can't use the
++            # requires_migrations_check attribute.
++            self.check_migrations()
+         now = datetime.now().strftime('%B %d, %Y - %X')
+         self.stdout.write(now)
+         self.stdout.write((
+2025-04-05 11:27:27,245 - INFO - Eval script for django__django-13809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13809/eval.sh; copying to container...
+2025-04-05 11:34:21,421 - INFO - Test runtime: 413.58 seconds
+2025-04-05 11:34:21,421 - INFO - Test output for django__django-13809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13809/test_output.txt
+2025-04-05 11:34:21,918 - INFO - Git diff after:
+diff --git a/django/core/management/commands/runserver.py b/django/core/management/commands/runserver.py
+index d9fb088350..e6de2908ac 100644
+--- a/django/core/management/commands/runserver.py
++++ b/django/core/management/commands/runserver.py
+@@ -39,6 +39,10 @@ class Command(BaseCommand):
+             'addrport', nargs='?',
+             help='Optional port number, or ipaddr:port'
+         )
++        parser.add_argument(
++            '--skip-checks', action='store_true',
++            help='Skip system checks.',
++        )
+         parser.add_argument(
+             '--ipv6', '-6', action='store_true', dest='use_ipv6',
+             help='Tells Django to use an IPv6 address.',
+@@ -114,11 +118,12 @@ class Command(BaseCommand):
+         shutdown_message = options.get('shutdown_message', '')
+         quit_command = 'CTRL-BREAK' if sys.platform == 'win32' else 'CONTROL-C'
+ 
+-        self.stdout.write("Performing system checks...\n\n")
+-        self.check(display_num_errors=True)
+-        # Need to check migrations here, so can't use the
+-        # requires_migrations_check attribute.
+-        self.check_migrations()
++        if not options.get('skip_checks'):
++            self.stdout.write("Performing system checks...\n\n")
++            self.check(display_num_errors=True)
++            # Need to check migrations here, so can't use the
++            # requires_migrations_check attribute.
++            self.check_migrations()
+         now = datetime.now().strftime('%B %d, %Y - %X')
+         self.stdout.write(now)
+         self.stdout.write((
+2025-04-05 11:34:21,919 - INFO - Grading answer for django__django-13809...
+2025-04-05 11:34:21,919 - INFO - report: {'django__django-13809': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13809: resolved: False
+2025-04-05 11:34:21,919 - INFO - Attempting to stop container sweb.eval.django__django-13809.241028_solver...
+2025-04-05 11:34:39,715 - INFO - Attempting to remove container sweb.eval.django__django-13809.241028_solver...
+2025-04-05 11:34:39,921 - INFO - Container sweb.eval.django__django-13809.241028_solver removed.
+2025-04-05 11:34:39,922 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13809:latest...
+2025-04-05 11:34:42,433 - INFO - Image sweb.eval.x86_64.django__django-13809:latest removed.

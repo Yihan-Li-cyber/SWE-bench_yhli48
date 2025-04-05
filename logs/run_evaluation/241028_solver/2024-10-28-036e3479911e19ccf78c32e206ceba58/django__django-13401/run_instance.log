@@ -1,0 +1,92 @@
+2025-04-05 11:11:57,232 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13401
+Building instance image sweb.eval.x86_64.django__django-13401:latest for django__django-13401
+2025-04-05 11:14:46,147 - INFO - Creating container for django__django-13401...
+2025-04-05 11:14:46,343 - INFO - Container for django__django-13401 created: 14fed9212db83db5a33d7373b75d36196e919c1b7d1b00d0dd3270843d5de7af
+2025-04-05 11:14:48,136 - INFO - Container for django__django-13401 started: 14fed9212db83db5a33d7373b75d36196e919c1b7d1b00d0dd3270843d5de7af
+2025-04-05 11:14:48,136 - INFO - Intermediate patch for django__django-13401 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13401/patch.diff, now applying to container...
+2025-04-05 11:14:49,143 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:14:49,346 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/__init__.py
+patching file test_fields.py
+
+2025-04-05 11:14:55,434 - INFO - Git diff before:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 28374272f4..f081b2481e 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -516,17 +516,27 @@ class Field(RegisterLookupMixin):
+     def __eq__(self, other):
+         # Needed for @total_ordering
+         if isinstance(other, Field):
++            if hasattr(self, 'model') and hasattr(other, 'model'):
++                if self.model != other.model:
++                    return False
+             return self.creation_counter == other.creation_counter
+         return NotImplemented
+ 
+     def __lt__(self, other):
+         # This is needed because bisect does not take a comparison function.
+         if isinstance(other, Field):
+-            return self.creation_counter < other.creation_counter
++            # Maintain creation_counter as primary sort key for compatibility
++            if self.creation_counter != other.creation_counter:
++                return self.creation_counter < other.creation_counter
++            # Use model name as secondary sort key if available
++            if hasattr(self, 'model') and hasattr(other, 'model'):
++                return self.model._meta.label < other.model._meta.label
++            return False
+         return NotImplemented
+ 
+     def __hash__(self):
+-        return hash(self.creation_counter)
++        model_hash = hash(self.model._meta.label) if hasattr(self, 'model') else 0
++        return hash((self.creation_counter, model_hash))
+ 
+     def __deepcopy__(self, memodict):
+         # We don't have to deepcopy very much here, since most things are not
+2025-04-05 11:14:55,435 - INFO - Eval script for django__django-13401 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13401/eval.sh; copying to container...
+2025-04-05 11:15:38,433 - INFO - Test runtime: 42.39 seconds
+2025-04-05 11:15:38,434 - INFO - Test output for django__django-13401 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13401/test_output.txt
+2025-04-05 11:15:38,743 - INFO - Git diff after:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index 28374272f4..f081b2481e 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -516,17 +516,27 @@ class Field(RegisterLookupMixin):
+     def __eq__(self, other):
+         # Needed for @total_ordering
+         if isinstance(other, Field):
++            if hasattr(self, 'model') and hasattr(other, 'model'):
++                if self.model != other.model:
++                    return False
+             return self.creation_counter == other.creation_counter
+         return NotImplemented
+ 
+     def __lt__(self, other):
+         # This is needed because bisect does not take a comparison function.
+         if isinstance(other, Field):
+-            return self.creation_counter < other.creation_counter
++            # Maintain creation_counter as primary sort key for compatibility
++            if self.creation_counter != other.creation_counter:
++                return self.creation_counter < other.creation_counter
++            # Use model name as secondary sort key if available
++            if hasattr(self, 'model') and hasattr(other, 'model'):
++                return self.model._meta.label < other.model._meta.label
++            return False
+         return NotImplemented
+ 
+     def __hash__(self):
+-        return hash(self.creation_counter)
++        model_hash = hash(self.model._meta.label) if hasattr(self, 'model') else 0
++        return hash((self.creation_counter, model_hash))
+ 
+     def __deepcopy__(self, memodict):
+         # We don't have to deepcopy very much here, since most things are not
+2025-04-05 11:15:38,744 - INFO - Grading answer for django__django-13401...
+2025-04-05 11:15:38,744 - INFO - report: {'django__django-13401': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13401: resolved: False
+2025-04-05 11:15:38,744 - INFO - Attempting to stop container sweb.eval.django__django-13401.241028_solver...
+2025-04-05 11:15:55,425 - INFO - Attempting to remove container sweb.eval.django__django-13401.241028_solver...
+2025-04-05 11:15:56,334 - INFO - Container sweb.eval.django__django-13401.241028_solver removed.
+2025-04-05 11:15:56,334 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13401:latest...
+2025-04-05 11:16:00,836 - INFO - Image sweb.eval.x86_64.django__django-13401:latest removed.

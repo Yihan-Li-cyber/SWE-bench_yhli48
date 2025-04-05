@@ -1,0 +1,55 @@
+2025-04-05 10:17:12,250 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11141
+Building instance image sweb.eval.x86_64.django__django-11141:latest for django__django-11141
+2025-04-05 10:19:28,237 - INFO - Creating container for django__django-11141...
+2025-04-05 10:19:28,342 - INFO - Container for django__django-11141 created: 6c8b83a1ddbc1ef72b789683a4ff7d1882824c99287747051d120c57ca61bcd3
+2025-04-05 10:19:29,253 - INFO - Container for django__django-11141 started: 6c8b83a1ddbc1ef72b789683a4ff7d1882824c99287747051d120c57ca61bcd3
+2025-04-05 10:19:29,254 - INFO - Intermediate patch for django__django-11141 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11141/patch.diff, now applying to container...
+2025-04-05 10:19:29,963 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:19:30,136 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/loader.py
+
+2025-04-05 10:19:35,623 - INFO - Git diff before:
+diff --git a/django/db/migrations/loader.py b/django/db/migrations/loader.py
+index 8c308621d2..d075fcc5df 100644
+--- a/django/db/migrations/loader.py
++++ b/django/db/migrations/loader.py
+@@ -84,11 +84,6 @@ class MigrationLoader:
+                     continue
+                 raise
+             else:
+-                # Empty directories are namespaces.
+-                # getattr() needed on PY36 and older (replace w/attribute access).
+-                if getattr(module, '__file__', None) is None:
+-                    self.unmigrated_apps.add(app_config.label)
+-                    continue
+                 # Module is not a package (e.g. migrations.py).
+                 if not hasattr(module, '__path__'):
+                     self.unmigrated_apps.add(app_config.label)
+2025-04-05 10:19:35,624 - INFO - Eval script for django__django-11141 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11141/eval.sh; copying to container...
+2025-04-05 10:20:13,139 - INFO - Test runtime: 36.99 seconds
+2025-04-05 10:20:13,140 - INFO - Test output for django__django-11141 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11141/test_output.txt
+2025-04-05 10:20:13,449 - INFO - Git diff after:
+diff --git a/django/db/migrations/loader.py b/django/db/migrations/loader.py
+index 8c308621d2..d075fcc5df 100644
+--- a/django/db/migrations/loader.py
++++ b/django/db/migrations/loader.py
+@@ -84,11 +84,6 @@ class MigrationLoader:
+                     continue
+                 raise
+             else:
+-                # Empty directories are namespaces.
+-                # getattr() needed on PY36 and older (replace w/attribute access).
+-                if getattr(module, '__file__', None) is None:
+-                    self.unmigrated_apps.add(app_config.label)
+-                    continue
+                 # Module is not a package (e.g. migrations.py).
+                 if not hasattr(module, '__path__'):
+                     self.unmigrated_apps.add(app_config.label)
+2025-04-05 10:20:13,449 - INFO - Grading answer for django__django-11141...
+2025-04-05 10:20:13,450 - INFO - report: {'django__django-11141': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11141: resolved: False
+2025-04-05 10:20:13,450 - INFO - Attempting to stop container sweb.eval.django__django-11141.241028_solver...
+2025-04-05 10:20:29,831 - INFO - Attempting to remove container sweb.eval.django__django-11141.241028_solver...
+2025-04-05 10:20:30,027 - INFO - Container sweb.eval.django__django-11141.241028_solver removed.
+2025-04-05 10:20:30,027 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11141:latest...
+2025-04-05 10:20:32,048 - INFO - Image sweb.eval.x86_64.django__django-11141:latest removed.

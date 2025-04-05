@@ -1,0 +1,74 @@
+2025-04-05 11:07:18,738 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13343
+Building instance image sweb.eval.x86_64.django__django-13343:latest for django__django-13343
+2025-04-05 11:10:12,050 - INFO - Creating container for django__django-13343...
+2025-04-05 11:10:12,145 - INFO - Container for django__django-13343 created: 1c7ad2e8f3faa8bd15a5f50c0d53ced86b25e92b1b04a11b0123cc9c6a273e9b
+2025-04-05 11:10:16,724 - INFO - Container for django__django-13343 started: 1c7ad2e8f3faa8bd15a5f50c0d53ced86b25e92b1b04a11b0123cc9c6a273e9b
+2025-04-05 11:10:16,725 - INFO - Intermediate patch for django__django-13343 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13343/patch.diff, now applying to container...
+2025-04-05 11:10:17,642 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:10:17,928 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/files.py
+patching file tests/test_filefield_callable_storage.py
+
+2025-04-05 11:10:23,835 - INFO - Git diff before:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index e10a5bb6d9..2c7f07fd6b 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -227,7 +227,8 @@ class FileField(Field):
+     def __init__(self, verbose_name=None, name=None, upload_to='', storage=None, **kwargs):
+         self._primary_key_set_explicitly = 'primary_key' in kwargs
+ 
+-        self.storage = storage or default_storage
++        self._storage_parameter = storage or default_storage
++        self.storage = self._storage_parameter
+         if callable(self.storage):
+             self.storage = self.storage()
+             if not isinstance(self.storage, Storage):
+@@ -278,8 +279,8 @@ class FileField(Field):
+         if kwargs.get("max_length") == 100:
+             del kwargs["max_length"]
+         kwargs['upload_to'] = self.upload_to
+-        if self.storage is not default_storage:
+-            kwargs['storage'] = self.storage
++        if self._storage_parameter is not default_storage:
++            kwargs['storage'] = self._storage_parameter
+         return name, path, args, kwargs
+ 
+     def get_internal_type(self):
+2025-04-05 11:10:23,835 - INFO - Eval script for django__django-13343 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13343/eval.sh; copying to container...
+2025-04-05 11:11:06,844 - INFO - Test runtime: 42.22 seconds
+2025-04-05 11:11:06,844 - INFO - Test output for django__django-13343 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13343/test_output.txt
+2025-04-05 11:11:07,327 - INFO - Git diff after:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index e10a5bb6d9..2c7f07fd6b 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -227,7 +227,8 @@ class FileField(Field):
+     def __init__(self, verbose_name=None, name=None, upload_to='', storage=None, **kwargs):
+         self._primary_key_set_explicitly = 'primary_key' in kwargs
+ 
+-        self.storage = storage or default_storage
++        self._storage_parameter = storage or default_storage
++        self.storage = self._storage_parameter
+         if callable(self.storage):
+             self.storage = self.storage()
+             if not isinstance(self.storage, Storage):
+@@ -278,8 +279,8 @@ class FileField(Field):
+         if kwargs.get("max_length") == 100:
+             del kwargs["max_length"]
+         kwargs['upload_to'] = self.upload_to
+-        if self.storage is not default_storage:
+-            kwargs['storage'] = self.storage
++        if self._storage_parameter is not default_storage:
++            kwargs['storage'] = self._storage_parameter
+         return name, path, args, kwargs
+ 
+     def get_internal_type(self):
+2025-04-05 11:11:07,327 - INFO - Grading answer for django__django-13343...
+2025-04-05 11:11:07,328 - INFO - report: {'django__django-13343': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13343: resolved: False
+2025-04-05 11:11:07,328 - INFO - Attempting to stop container sweb.eval.django__django-13343.241028_solver...
+2025-04-05 11:11:23,636 - INFO - Attempting to remove container sweb.eval.django__django-13343.241028_solver...
+2025-04-05 11:11:23,934 - INFO - Container sweb.eval.django__django-13343.241028_solver removed.
+2025-04-05 11:11:23,934 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13343:latest...
+2025-04-05 11:11:26,238 - INFO - Image sweb.eval.x86_64.django__django-13343:latest removed.

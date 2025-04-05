@@ -1,0 +1,83 @@
+2025-04-05 11:51:25,434 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14608
+Building instance image sweb.eval.x86_64.django__django-14608:latest for django__django-14608
+2025-04-05 11:54:10,333 - INFO - Creating container for django__django-14608...
+2025-04-05 11:54:10,817 - INFO - Container for django__django-14608 created: ebf43cc7b9dd91601b5076662679bf1650872b2b062610dc857f3dd779c3eb60
+2025-04-05 11:54:12,731 - INFO - Container for django__django-14608 started: ebf43cc7b9dd91601b5076662679bf1650872b2b062610dc857f3dd779c3eb60
+2025-04-05 11:54:12,732 - INFO - Intermediate patch for django__django-14608 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14608/patch.diff, now applying to container...
+2025-04-05 11:54:14,812 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:54:15,027 - INFO - >>>>> Applied Patch:
+patching file django/forms/formsets.py
+
+2025-04-05 11:54:21,709 - INFO - Git diff before:
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index a89c35599f..21d6324a48 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -1,12 +1,12 @@
++from functools import partial
+ from django.core.exceptions import ValidationError
+ from django.forms import Form
+-from django.forms.fields import BooleanField, IntegerField
+-from django.forms.utils import ErrorList
++from django.forms.fields import FileField
++from django.forms.utils import ErrorDict, ErrorList
+ from django.forms.widgets import HiddenInput, NumberInput
+ from django.utils.functional import cached_property
+ from django.utils.html import html_safe
+-from django.utils.safestring import mark_safe
+-from django.utils.translation import gettext_lazy as _, ngettext
++from django.utils.translation import gettext as _
+ 
+ __all__ = ('BaseFormSet', 'formset_factory', 'all_valid')
+ 
+@@ -76,6 +76,8 @@ class BaseFormSet:
+         self.error_class = error_class
+         self._errors = None
+         self._non_form_errors = None
++        if self.error_class == ErrorList:
++            self.error_class = partial(ErrorList, error_class='nonform')
+ 
+         messages = {}
+         for cls in reversed(type(self).__mro__):
+2025-04-05 11:54:21,709 - INFO - Eval script for django__django-14608 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14608/eval.sh; copying to container...
+2025-04-05 11:55:02,517 - INFO - Test runtime: 39.91 seconds
+2025-04-05 11:55:02,518 - INFO - Test output for django__django-14608 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14608/test_output.txt
+2025-04-05 11:55:02,815 - INFO - Git diff after:
+diff --git a/django/forms/formsets.py b/django/forms/formsets.py
+index a89c35599f..21d6324a48 100644
+--- a/django/forms/formsets.py
++++ b/django/forms/formsets.py
+@@ -1,12 +1,12 @@
++from functools import partial
+ from django.core.exceptions import ValidationError
+ from django.forms import Form
+-from django.forms.fields import BooleanField, IntegerField
+-from django.forms.utils import ErrorList
++from django.forms.fields import FileField
++from django.forms.utils import ErrorDict, ErrorList
+ from django.forms.widgets import HiddenInput, NumberInput
+ from django.utils.functional import cached_property
+ from django.utils.html import html_safe
+-from django.utils.safestring import mark_safe
+-from django.utils.translation import gettext_lazy as _, ngettext
++from django.utils.translation import gettext as _
+ 
+ __all__ = ('BaseFormSet', 'formset_factory', 'all_valid')
+ 
+@@ -76,6 +76,8 @@ class BaseFormSet:
+         self.error_class = error_class
+         self._errors = None
+         self._non_form_errors = None
++        if self.error_class == ErrorList:
++            self.error_class = partial(ErrorList, error_class='nonform')
+ 
+         messages = {}
+         for cls in reversed(type(self).__mro__):
+2025-04-05 11:55:02,815 - INFO - Grading answer for django__django-14608...
+2025-04-05 11:55:02,815 - INFO - report: {'django__django-14608': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14608: resolved: False
+2025-04-05 11:55:02,816 - INFO - Attempting to stop container sweb.eval.django__django-14608.241028_solver...
+2025-04-05 11:55:29,518 - INFO - Attempting to remove container sweb.eval.django__django-14608.241028_solver...
+2025-04-05 11:55:29,542 - INFO - Container sweb.eval.django__django-14608.241028_solver removed.
+2025-04-05 11:55:29,542 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14608:latest...
+2025-04-05 11:55:37,116 - INFO - Image sweb.eval.x86_64.django__django-14608:latest removed.

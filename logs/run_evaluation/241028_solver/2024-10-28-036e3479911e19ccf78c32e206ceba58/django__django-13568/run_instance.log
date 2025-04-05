@@ -1,0 +1,83 @@
+2025-04-05 11:18:44,630 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13568
+Building instance image sweb.eval.x86_64.django__django-13568:latest for django__django-13568
+2025-04-05 11:21:55,838 - INFO - Creating container for django__django-13568...
+2025-04-05 11:21:56,041 - INFO - Container for django__django-13568 created: 3c4e9f67edcaddf5a5dfa0a7894d08f12d24da0372962de16c8a54d9e4b6123b
+2025-04-05 11:22:42,339 - INFO - Container for django__django-13568 started: 3c4e9f67edcaddf5a5dfa0a7894d08f12d24da0372962de16c8a54d9e4b6123b
+2025-04-05 11:22:42,340 - INFO - Intermediate patch for django__django-13568 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13568/patch.diff, now applying to container...
+2025-04-05 11:22:43,446 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:22:43,734 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/checks.py
+
+2025-04-05 11:22:50,138 - INFO - Git diff before:
+diff --git a/django/contrib/auth/checks.py b/django/contrib/auth/checks.py
+index 65fc266f7e..f939f47e72 100644
+--- a/django/contrib/auth/checks.py
++++ b/django/contrib/auth/checks.py
+@@ -4,6 +4,7 @@ from types import MethodType
+ from django.apps import apps
+ from django.conf import settings
+ from django.core import checks
++from django.db import models
+ 
+ from .management import _get_builtin_permissions
+ 
+@@ -52,7 +53,16 @@ def check_user_model(app_configs=None, **kwargs):
+         )
+ 
+     # Check that the username field is unique
+-    if not cls._meta.get_field(cls.USERNAME_FIELD).unique:
++    field_unique = cls._meta.get_field(cls.USERNAME_FIELD).unique
++    # Check if any UniqueConstraint makes the field unique
++    has_unique_constraint = any(
++        isinstance(constraint, models.UniqueConstraint) and
++        len(constraint.fields) == 1 and
++        constraint.fields[0] == cls.USERNAME_FIELD
++        for constraint in cls._meta.constraints
++    )
++
++    if not (field_unique or has_unique_constraint):
+         if (settings.AUTHENTICATION_BACKENDS ==
+                 ['django.contrib.auth.backends.ModelBackend']):
+             errors.append(
+2025-04-05 11:22:50,139 - INFO - Eval script for django__django-13568 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13568/eval.sh; copying to container...
+2025-04-05 11:23:30,548 - INFO - Test runtime: 39.60 seconds
+2025-04-05 11:23:30,548 - INFO - Test output for django__django-13568 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13568/test_output.txt
+2025-04-05 11:23:30,838 - INFO - Git diff after:
+diff --git a/django/contrib/auth/checks.py b/django/contrib/auth/checks.py
+index 65fc266f7e..f939f47e72 100644
+--- a/django/contrib/auth/checks.py
++++ b/django/contrib/auth/checks.py
+@@ -4,6 +4,7 @@ from types import MethodType
+ from django.apps import apps
+ from django.conf import settings
+ from django.core import checks
++from django.db import models
+ 
+ from .management import _get_builtin_permissions
+ 
+@@ -52,7 +53,16 @@ def check_user_model(app_configs=None, **kwargs):
+         )
+ 
+     # Check that the username field is unique
+-    if not cls._meta.get_field(cls.USERNAME_FIELD).unique:
++    field_unique = cls._meta.get_field(cls.USERNAME_FIELD).unique
++    # Check if any UniqueConstraint makes the field unique
++    has_unique_constraint = any(
++        isinstance(constraint, models.UniqueConstraint) and
++        len(constraint.fields) == 1 and
++        constraint.fields[0] == cls.USERNAME_FIELD
++        for constraint in cls._meta.constraints
++    )
++
++    if not (field_unique or has_unique_constraint):
+         if (settings.AUTHENTICATION_BACKENDS ==
+                 ['django.contrib.auth.backends.ModelBackend']):
+             errors.append(
+2025-04-05 11:23:30,838 - INFO - Grading answer for django__django-13568...
+2025-04-05 11:23:30,838 - INFO - report: {'django__django-13568': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13568: resolved: False
+2025-04-05 11:23:30,839 - INFO - Attempting to stop container sweb.eval.django__django-13568.241028_solver...
+2025-04-05 11:23:46,527 - INFO - Attempting to remove container sweb.eval.django__django-13568.241028_solver...
+2025-04-05 11:23:46,639 - INFO - Container sweb.eval.django__django-13568.241028_solver removed.
+2025-04-05 11:23:46,639 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13568:latest...
+2025-04-05 11:23:48,446 - INFO - Image sweb.eval.x86_64.django__django-13568:latest removed.

@@ -1,0 +1,47 @@
+2025-04-05 15:10:40,549 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16429
+Building instance image sweb.eval.x86_64.django__django-16429:latest for django__django-16429
+2025-04-05 15:13:01,919 - INFO - Creating container for django__django-16429...
+2025-04-05 15:13:02,135 - INFO - Container for django__django-16429 created: 5c516b939a820ebb7fadd9e8b385eb68965c0c386e9386156e333f09969cd91f
+2025-04-05 15:13:03,127 - INFO - Container for django__django-16429 started: 5c516b939a820ebb7fadd9e8b385eb68965c0c386e9386156e333f09969cd91f
+2025-04-05 15:13:03,127 - INFO - Intermediate patch for django__django-16429 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16429/patch.diff, now applying to container...
+2025-04-05 15:13:03,949 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:13:04,235 - INFO - >>>>> Applied Patch:
+patching file django/utils/timesince.py
+
+2025-04-05 15:13:09,646 - INFO - Git diff before:
+diff --git a/django/utils/timesince.py b/django/utils/timesince.py
+index 701c49bab9..f582d0e4f2 100644
+--- a/django/utils/timesince.py
++++ b/django/utils/timesince.py
+@@ -97,6 +97,7 @@ def timesince(d, now=None, reversed=False, time_strings=None, depth=2):
+             d.hour,
+             d.minute,
+             d.second,
++            tzinfo=d.tzinfo,
+         )
+     else:
+         pivot = d
+2025-04-05 15:13:09,647 - INFO - Eval script for django__django-16429 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16429/eval.sh; copying to container...
+2025-04-05 15:13:53,626 - INFO - Test runtime: 43.39 seconds
+2025-04-05 15:13:53,626 - INFO - Test output for django__django-16429 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16429/test_output.txt
+2025-04-05 15:13:53,936 - INFO - Git diff after:
+diff --git a/django/utils/timesince.py b/django/utils/timesince.py
+index 701c49bab9..f582d0e4f2 100644
+--- a/django/utils/timesince.py
++++ b/django/utils/timesince.py
+@@ -97,6 +97,7 @@ def timesince(d, now=None, reversed=False, time_strings=None, depth=2):
+             d.hour,
+             d.minute,
+             d.second,
++            tzinfo=d.tzinfo,
+         )
+     else:
+         pivot = d
+2025-04-05 15:13:53,936 - INFO - Grading answer for django__django-16429...
+2025-04-05 15:13:53,937 - INFO - report: {'django__django-16429': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16429: resolved: False
+2025-04-05 15:13:53,937 - INFO - Attempting to stop container sweb.eval.django__django-16429.241028_solver...
+2025-04-05 15:14:09,849 - INFO - Attempting to remove container sweb.eval.django__django-16429.241028_solver...
+2025-04-05 15:14:09,925 - INFO - Container sweb.eval.django__django-16429.241028_solver removed.
+2025-04-05 15:14:09,925 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16429:latest...
+2025-04-05 15:14:12,038 - INFO - Image sweb.eval.x86_64.django__django-16429:latest removed.

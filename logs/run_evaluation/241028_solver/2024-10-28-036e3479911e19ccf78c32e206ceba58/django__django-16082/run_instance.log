@@ -1,0 +1,150 @@
+2025-04-05 14:48:19,244 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16082
+Building instance image sweb.eval.x86_64.django__django-16082:latest for django__django-16082
+2025-04-05 14:50:37,136 - INFO - Creating container for django__django-16082...
+2025-04-05 14:50:37,236 - INFO - Container for django__django-16082 created: bd0aa75b271f30f07d6358ba932592d8689af15b785e422d1c16160165de21ca
+2025-04-05 14:50:37,961 - INFO - Container for django__django-16082 started: bd0aa75b271f30f07d6358ba932592d8689af15b785e422d1c16160165de21ca
+2025-04-05 14:50:37,961 - INFO - Intermediate patch for django__django-16082 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16082/patch.diff, now applying to container...
+2025-04-05 14:50:38,723 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 14:50:38,919 - INFO - >>>>> Applied Patch:
+patching file django/db/models/functions/math.py
+patching file tests/db_functions/math/test_mod.py
+
+2025-04-05 14:50:43,942 - INFO - Git diff before:
+diff --git a/django/db/models/functions/math.py b/django/db/models/functions/math.py
+index 8b5fd79c3a..359dbfe6a8 100644
+--- a/django/db/models/functions/math.py
++++ b/django/db/models/functions/math.py
+@@ -1,10 +1,12 @@
+ import math
+ 
+-from django.db.models.expressions import Func, Value
+-from django.db.models.fields import FloatField, IntegerField
++from django.db.models.expressions import Func
++from django.db.models.fields import DecimalField, FloatField, IntegerField
++from django.db.models.fields.json import JSONField
+ from django.db.models.functions import Cast
+ from django.db.models.functions.mixins import (
+     FixDecimalInputMixin,
++    FixDurationInputMixin,
+     NumericOutputFieldMixin,
+ )
+ from django.db.models.lookups import Transform
+@@ -125,6 +127,12 @@ class Mod(FixDecimalInputMixin, NumericOutputFieldMixin, Func):
+     function = "MOD"
+     arity = 2
+ 
++    def _resolve_output_field(self):
++        source_fields = self.get_source_fields()
++        if any(isinstance(s, DecimalField) for s in source_fields):
++            # If any input is Decimal, cast both inputs and output to Decimal
++            return DecimalField()
++        return super()._resolve_output_field()
+ 
+ class Pi(NumericOutputFieldMixin, Func):
+     function = "PI"
+diff --git a/tests/db_functions/math/test_mod.py b/tests/db_functions/math/test_mod.py
+index 919b9419d2..5644ebf896 100644
+--- a/tests/db_functions/math/test_mod.py
++++ b/tests/db_functions/math/test_mod.py
+@@ -1,12 +1,12 @@
+ import math
+ from decimal import Decimal
+ 
++from django.db.models import Value, IntegerField
+ from django.db.models.functions import Mod
+ from django.test import TestCase
+ 
+ from ..models import DecimalModel, FloatModel, IntegerModel
+ 
+-
+ class ModTests(TestCase):
+     def test_null(self):
+         IntegerModel.objects.create(big=100)
+@@ -42,3 +42,12 @@ class ModTests(TestCase):
+         self.assertEqual(obj.small_mod, math.fmod(obj.small, obj.normal))
+         self.assertEqual(obj.normal_mod, math.fmod(obj.normal, obj.big))
+         self.assertEqual(obj.big_mod, math.fmod(obj.big, obj.small))
++
++    def test_mixed_decimal_integer(self):
++        DecimalModel.objects.create(n1=Decimal("10.5"), n2=Decimal("2"))
++        # Test Decimal field with integer value
++        obj = DecimalModel.objects.annotate(
++            n_mod_integer=Mod("n1", Value(2, output_field=IntegerField())),
++        ).first()
++        self.assertIsInstance(obj.n_mod_integer, Decimal)
++        self.assertEqual(obj.n_mod_integer, Decimal("0.5"))
+2025-04-05 14:50:43,943 - INFO - Eval script for django__django-16082 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16082/eval.sh; copying to container...
+2025-04-05 14:51:27,697 - INFO - Test runtime: 43.27 seconds
+2025-04-05 14:51:27,698 - INFO - Test output for django__django-16082 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16082/test_output.txt
+2025-04-05 14:51:28,019 - INFO - Git diff after:
+diff --git a/django/db/models/functions/math.py b/django/db/models/functions/math.py
+index 8b5fd79c3a..359dbfe6a8 100644
+--- a/django/db/models/functions/math.py
++++ b/django/db/models/functions/math.py
+@@ -1,10 +1,12 @@
+ import math
+ 
+-from django.db.models.expressions import Func, Value
+-from django.db.models.fields import FloatField, IntegerField
++from django.db.models.expressions import Func
++from django.db.models.fields import DecimalField, FloatField, IntegerField
++from django.db.models.fields.json import JSONField
+ from django.db.models.functions import Cast
+ from django.db.models.functions.mixins import (
+     FixDecimalInputMixin,
++    FixDurationInputMixin,
+     NumericOutputFieldMixin,
+ )
+ from django.db.models.lookups import Transform
+@@ -125,6 +127,12 @@ class Mod(FixDecimalInputMixin, NumericOutputFieldMixin, Func):
+     function = "MOD"
+     arity = 2
+ 
++    def _resolve_output_field(self):
++        source_fields = self.get_source_fields()
++        if any(isinstance(s, DecimalField) for s in source_fields):
++            # If any input is Decimal, cast both inputs and output to Decimal
++            return DecimalField()
++        return super()._resolve_output_field()
+ 
+ class Pi(NumericOutputFieldMixin, Func):
+     function = "PI"
+diff --git a/tests/db_functions/math/test_mod.py b/tests/db_functions/math/test_mod.py
+index 919b9419d2..5644ebf896 100644
+--- a/tests/db_functions/math/test_mod.py
++++ b/tests/db_functions/math/test_mod.py
+@@ -1,12 +1,12 @@
+ import math
+ from decimal import Decimal
+ 
++from django.db.models import Value, IntegerField
+ from django.db.models.functions import Mod
+ from django.test import TestCase
+ 
+ from ..models import DecimalModel, FloatModel, IntegerModel
+ 
+-
+ class ModTests(TestCase):
+     def test_null(self):
+         IntegerModel.objects.create(big=100)
+@@ -42,3 +42,12 @@ class ModTests(TestCase):
+         self.assertEqual(obj.small_mod, math.fmod(obj.small, obj.normal))
+         self.assertEqual(obj.normal_mod, math.fmod(obj.normal, obj.big))
+         self.assertEqual(obj.big_mod, math.fmod(obj.big, obj.small))
++
++    def test_mixed_decimal_integer(self):
++        DecimalModel.objects.create(n1=Decimal("10.5"), n2=Decimal("2"))
++        # Test Decimal field with integer value
++        obj = DecimalModel.objects.annotate(
++            n_mod_integer=Mod("n1", Value(2, output_field=IntegerField())),
++        ).first()
++        self.assertIsInstance(obj.n_mod_integer, Decimal)
++        self.assertEqual(obj.n_mod_integer, Decimal("0.5"))
+2025-04-05 14:51:28,020 - INFO - Grading answer for django__django-16082...
+2025-04-05 14:51:28,020 - INFO - report: {'django__django-16082': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16082: resolved: False
+2025-04-05 14:51:28,020 - INFO - Attempting to stop container sweb.eval.django__django-16082.241028_solver...
+2025-04-05 14:51:44,169 - INFO - Attempting to remove container sweb.eval.django__django-16082.241028_solver...
+2025-04-05 14:51:44,327 - INFO - Container sweb.eval.django__django-16082.241028_solver removed.
+2025-04-05 14:51:44,327 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16082:latest...
+2025-04-05 14:51:46,237 - INFO - Image sweb.eval.x86_64.django__django-16082:latest removed.

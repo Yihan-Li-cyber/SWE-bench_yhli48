@@ -1,0 +1,52 @@
+2025-04-05 10:23:39,239 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11265
+Building instance image sweb.eval.x86_64.django__django-11265:latest for django__django-11265
+2025-04-05 10:26:19,451 - INFO - Creating container for django__django-11265...
+2025-04-05 10:26:19,635 - INFO - Container for django__django-11265 created: 639f55b92d86b9130f2ae3116d184ec898180ceff6dc887b5610cdcc7ce6fc21
+2025-04-05 10:26:22,029 - INFO - Container for django__django-11265 started: 639f55b92d86b9130f2ae3116d184ec898180ceff6dc887b5610cdcc7ce6fc21
+2025-04-05 10:26:22,029 - INFO - Intermediate patch for django__django-11265 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11265/patch.diff, now applying to container...
+2025-04-05 10:26:23,043 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:26:23,335 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+patching file tests/filtered_relation/test_exclude.py
+
+2025-04-05 10:26:29,139 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d69c24419b..d33faa669f 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1666,6 +1666,9 @@ class Query(BaseExpression):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
+         # Generate the inner query.
+         query = Query(self.model)
++        # Copy annotations and filtered relations from parent query
++        query.annotations = self.annotations.copy()
++        query._filtered_relations = self._filtered_relations.copy()
+         query.add_filter(filter_expr)
+         query.clear_ordering(True)
+         # Try to have as simple as possible subquery -> trim leading joins from
+2025-04-05 10:26:29,139 - INFO - Eval script for django__django-11265 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11265/eval.sh; copying to container...
+2025-04-05 10:27:08,354 - INFO - Test runtime: 38.42 seconds
+2025-04-05 10:27:08,354 - INFO - Test output for django__django-11265 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11265/test_output.txt
+2025-04-05 10:27:08,634 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index d69c24419b..d33faa669f 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1666,6 +1666,9 @@ class Query(BaseExpression):
+             filter_expr = (filter_lhs, OuterRef(filter_rhs.name))
+         # Generate the inner query.
+         query = Query(self.model)
++        # Copy annotations and filtered relations from parent query
++        query.annotations = self.annotations.copy()
++        query._filtered_relations = self._filtered_relations.copy()
+         query.add_filter(filter_expr)
+         query.clear_ordering(True)
+         # Try to have as simple as possible subquery -> trim leading joins from
+2025-04-05 10:27:08,634 - INFO - Grading answer for django__django-11265...
+2025-04-05 10:27:08,634 - INFO - report: {'django__django-11265': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11265: resolved: False
+2025-04-05 10:27:08,635 - INFO - Attempting to stop container sweb.eval.django__django-11265.241028_solver...
+2025-04-05 10:27:24,637 - INFO - Attempting to remove container sweb.eval.django__django-11265.241028_solver...
+2025-04-05 10:27:26,244 - INFO - Container sweb.eval.django__django-11265.241028_solver removed.
+2025-04-05 10:27:26,244 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11265:latest...
+2025-04-05 10:27:30,039 - INFO - Image sweb.eval.x86_64.django__django-11265:latest removed.

@@ -1,4 +1,4 @@
-2025-04-04 10:19:10,018 - INFO - Building image sweb.env.x86_64.1c1a6945f732f9391228c5:latest
+2025-04-05 08:16:44,345 - INFO - Building image sweb.env.x86_64.1c1a6945f732f9391228c5:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-04 10:19:10,019 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-05 08:16:44,345 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,29 +21,30 @@ conda create -n testbed python=3.9  -y
 conda activate testbed
 python -m pip install atomicwrites==1.4.1 attrs==23.1.0 more-itertools==10.1.0 packaging==23.1 pluggy==0.13.1 py==1.11.0 wcwidth==0.2.6
 
-2025-04-04 10:19:10,028 - INFO - Building docker image sweb.env.x86_64.1c1a6945f732f9391228c5:latest in logs/build_images/env/sweb.env.x86_64.1c1a6945f732f9391228c5__latest with platform linux/x86_64
-2025-04-04 10:19:10,093 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-04 10:19:10,093 - INFO - 
-2025-04-04 10:19:10,093 - INFO - ---> 7652b8eed4b5
-2025-04-04 10:19:10,093 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-04 10:19:10,094 - INFO - 
-2025-04-04 10:19:10,100 - INFO - ---> Using cache
-2025-04-04 10:19:10,100 - INFO - ---> ec1d33e28dc5
-2025-04-04 10:19:10,101 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-04 10:19:10,101 - INFO - 
-2025-04-04 10:19:10,101 - INFO - ---> Using cache
-2025-04-04 10:19:10,102 - INFO - ---> 2e9448622c8c
-2025-04-04 10:19:10,102 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-04 10:19:10,102 - INFO - 
-2025-04-04 10:19:10,103 - INFO - ---> Using cache
-2025-04-04 10:19:10,103 - INFO - ---> 07c7f333689f
-2025-04-04 10:19:10,103 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-04 10:19:10,103 - INFO - 
-2025-04-04 10:19:10,315 - INFO - ---> Running in 14892f938231
-2025-04-04 10:19:11,183 - INFO - + source /opt/miniconda3/bin/activate
-2025-04-04 10:19:11,184 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-05 08:16:44,346 - INFO - Building docker image sweb.env.x86_64.1c1a6945f732f9391228c5:latest in logs/build_images/env/sweb.env.x86_64.1c1a6945f732f9391228c5__latest with platform linux/x86_64
+2025-04-05 08:16:44,427 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-05 08:16:44,428 - INFO - 
+2025-04-05 08:16:44,428 - INFO - ---> bb912b738013
+2025-04-05 08:16:44,428 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-05 08:16:44,428 - INFO - 
+2025-04-05 08:16:44,726 - INFO - ---> 392f53b4fe2d
+2025-04-05 08:16:44,727 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-05 08:16:44,727 - INFO - 
+2025-04-05 08:16:44,935 - INFO - ---> Running in ed316ec7061d
+2025-04-05 08:16:47,039 - INFO - ---> Removed intermediate container ed316ec7061d
+2025-04-05 08:16:47,039 - INFO - ---> 5cf9d20e1a10
+2025-04-05 08:16:47,039 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-05 08:16:47,040 - INFO - 
+2025-04-05 08:16:47,140 - INFO - ---> Running in 6574f245e2bd
+2025-04-05 08:16:49,036 - INFO - ---> Removed intermediate container 6574f245e2bd
+2025-04-05 08:16:49,036 - INFO - ---> e3528736eace
+2025-04-05 08:16:49,036 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-05 08:16:49,036 - INFO - 
+2025-04-05 08:16:49,135 - INFO - ---> Running in 4b8fab3be6a5
+2025-04-05 08:16:50,067 - INFO - + source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
-+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-05 08:16:50,068 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
@@ -55,11 +56,11 @@ python -m pip install atomicwrites==1.4.1 attrs==23.1.0 more-itertools==10.1.0 p
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-04 10:19:11,185 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 10:19:11,187 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 10:19:11,189 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-05 08:16:50,068 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-05 08:16:50,124 - INFO - ++++ dirname /opt/miniconda3/bin
++++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
-2025-04-04 10:19:11,189 - INFO - +++ '[' -z '' ']'
++++ '[' -z '' ']'
 +++ PS1=
 ++ conda activate
 ++ local cmd=activate
@@ -67,10 +68,10 @@ python -m pip install atomicwrites==1.4.1 attrs==23.1.0 more-itertools==10.1.0 p
 ++ __conda_activate activate
 ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 10:19:11,192 - INFO - +++ PS1=
++++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 10:19:11,192 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 10:19:11,402 - INFO - ++ ask_conda='PS1='\''(base) '\''
++++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-05 08:16:50,942 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -101,7 +102,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ CONDA_DEFAULT_ENV=base
 +++ export 'CONDA_PROMPT_MODIFIER=(base) '
 +++ CONDA_PROMPT_MODIFIER='(base) '
-+++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-05 08:16:50,942 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
@@ -110,23 +111,23 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
-2025-04-04 10:19:11,403 - INFO - ++ '[' -n '' ']'
+2025-04-05 08:16:50,943 - INFO - ++ '[' -n '' ']'
 ++ '[' -n '' ']'
 ++ hash -r
-+ conda create -n testbed python=3.9 -y
+2025-04-05 08:16:50,943 - INFO - + conda create -n testbed python=3.9 -y
 + local cmd=create
 + case "$cmd" in
-+ __conda_exe create -n testbed python=3.9 -y
-2025-04-04 10:19:11,403 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
-2025-04-04 10:19:12,620 - INFO - Channels:
+2025-04-05 08:16:50,943 - INFO - + __conda_exe create -n testbed python=3.9 -y
++ /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
+2025-04-05 08:16:55,244 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
 Collecting package metadata (repodata.json): ...working...
-2025-04-04 10:20:46,710 - INFO - done
-2025-04-04 10:20:46,757 - INFO - Solving environment: ...working...
-2025-04-04 10:20:49,383 - INFO - done
-2025-04-04 10:20:59,226 - INFO - ## Package Plan ##
+2025-04-05 08:21:46,756 - INFO - done
+Solving environment: ...working...
+2025-04-05 08:21:54,730 - INFO - done
+2025-04-05 08:22:12,049 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -181,12 +182,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-04 10:20:59,981 - INFO - done
-2025-04-04 10:20:59,981 - INFO - Verifying transaction: ...working...
-2025-04-04 10:21:04,074 - INFO - done
-2025-04-04 10:21:04,128 - INFO - Executing transaction: ...working...
-2025-04-04 10:21:20,730 - INFO - done
-2025-04-04 10:21:20,836 - INFO - #
+2025-04-05 08:22:13,551 - INFO - done
+Verifying transaction: ...working...
+2025-04-05 08:22:21,238 - INFO - done
+2025-04-05 08:22:21,239 - INFO - Executing transaction: ...working...
+2025-04-05 08:22:30,347 - INFO - done
+2025-04-05 08:22:30,736 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -194,16 +195,16 @@ Preparing transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-04 10:21:21,775 - INFO - + conda activate testbed
-2025-04-04 10:21:21,776 - INFO - + local cmd=activate
+2025-04-05 08:22:31,653 - INFO - + conda activate testbed
++ local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
-2025-04-04 10:21:21,776 - INFO - + '[' -n '' ']'
++ '[' -n '' ']'
 + local ask_conda
-2025-04-04 10:21:21,778 - INFO - ++ PS1='(base) '
+2025-04-05 08:22:31,653 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 10:21:21,779 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 10:21:22,047 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-05 08:22:31,730 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-05 08:22:32,440 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -238,7 +239,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ CONDA_PROMPT_MODIFIER='(testbed) '
 ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
-++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-05 08:22:32,441 - INFO - ++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
 ++ export _CE_M=
 ++ _CE_M=
@@ -247,53 +248,53 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 + __conda_hashr
-2025-04-04 10:21:22,047 - INFO - + '[' -n '' ']'
+2025-04-05 08:22:32,441 - INFO - + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
 + python -m pip install atomicwrites==1.4.1 attrs==23.1.0 more-itertools==10.1.0 packaging==23.1 pluggy==0.13.1 py==1.11.0 wcwidth==0.2.6
-2025-04-04 10:21:23,346 - INFO - Collecting atomicwrites==1.4.1
-2025-04-04 10:21:23,362 - INFO - Downloading atomicwrites-1.4.1.tar.gz (14 kB)
-2025-04-04 10:21:23,382 - INFO - Preparing metadata (setup.py): started
-2025-04-04 10:21:23,763 - INFO - Preparing metadata (setup.py): finished with status 'done'
-2025-04-04 10:21:24,023 - INFO - Collecting attrs==23.1.0
-2025-04-04 10:21:24,058 - INFO - Downloading attrs-23.1.0-py3-none-any.whl.metadata (11 kB)
-2025-04-04 10:21:24,380 - INFO - Collecting more-itertools==10.1.0
-2025-04-04 10:21:24,426 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl.metadata (33 kB)
-2025-04-04 10:21:25,121 - INFO - Collecting packaging==23.1
-2025-04-04 10:21:25,132 - INFO - Downloading packaging-23.1-py3-none-any.whl.metadata (3.1 kB)
-2025-04-04 10:21:25,590 - INFO - Collecting pluggy==0.13.1
-2025-04-04 10:21:25,601 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl.metadata (15 kB)
-2025-04-04 10:21:25,714 - INFO - Collecting py==1.11.0
-2025-04-04 10:21:25,719 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
-2025-04-04 10:21:25,825 - INFO - Collecting wcwidth==0.2.6
-2025-04-04 10:21:25,836 - INFO - Downloading wcwidth-0.2.6-py2.py3-none-any.whl.metadata (11 kB)
-2025-04-04 10:21:25,863 - INFO - Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
-2025-04-04 10:21:25,874 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl (55 kB)
-2025-04-04 10:21:25,887 - INFO - Downloading packaging-23.1-py3-none-any.whl (48 kB)
-2025-04-04 10:21:25,903 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
-2025-04-04 10:21:26,009 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
-2025-04-04 10:21:26,026 - INFO - Downloading wcwidth-0.2.6-py2.py3-none-any.whl (29 kB)
-2025-04-04 10:21:26,056 - INFO - Building wheels for collected packages: atomicwrites
-2025-04-04 10:21:26,057 - INFO - Building wheel for atomicwrites (setup.py): started
-2025-04-04 10:21:26,504 - INFO - Building wheel for atomicwrites (setup.py): finished with status 'done'
-2025-04-04 10:21:26,520 - INFO - Created wheel for atomicwrites: filename=atomicwrites-1.4.1-py2.py3-none-any.whl size=6991 sha256=0c933f71cc0e5b41667ea69cc22f0268deee3a9d8a9db21ed7ec9cbac165d8fc
-2025-04-04 10:21:26,520 - INFO - Stored in directory: /root/.cache/pip/wheels/2a/b5/06/d2f34584f352e4af7d1d7ac1baf38b5d24142c8044cd024fd5
-2025-04-04 10:21:26,525 - INFO - Successfully built atomicwrites
-2025-04-04 10:21:26,560 - INFO - Installing collected packages: wcwidth, py, pluggy, packaging, more-itertools, attrs, atomicwrites
-2025-04-04 10:21:27,448 - INFO - Successfully installed atomicwrites-1.4.1 attrs-23.1.0 more-itertools-10.1.0 packaging-23.1 pluggy-0.13.1 py-1.11.0 wcwidth-0.2.6
-2025-04-04 10:21:27,449 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 10:21:52,948 - INFO - ---> Removed intermediate container 14892f938231
-2025-04-04 10:21:52,949 - INFO - ---> 32decd31cc6d
-2025-04-04 10:21:52,949 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-04 10:21:52,949 - INFO - 
-2025-04-04 10:21:53,968 - INFO - ---> Running in e664f779751a
-2025-04-04 10:21:54,233 - INFO - ---> Removed intermediate container e664f779751a
-2025-04-04 10:21:54,233 - INFO - ---> 2d1492a2f496
-2025-04-04 10:21:54,233 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-04 10:21:54,234 - INFO - 
-2025-04-04 10:21:54,375 - INFO - ---> Running in a43b86d93f24
-2025-04-04 10:21:56,259 - INFO - ---> Removed intermediate container a43b86d93f24
-2025-04-04 10:21:56,260 - INFO - ---> 701226b447fc
-2025-04-04 10:21:56,260 - INFO - Successfully built 701226b447fc
-2025-04-04 10:21:56,267 - INFO - Successfully tagged sweb.env.x86_64.1c1a6945f732f9391228c5:latest
-2025-04-04 10:21:56,267 - INFO - Image built successfully!
+2025-04-05 08:22:34,858 - INFO - Collecting atomicwrites==1.4.1
+2025-04-05 08:22:34,942 - INFO - Downloading atomicwrites-1.4.1.tar.gz (14 kB)
+2025-04-05 08:22:34,962 - INFO - Preparing metadata (setup.py): started
+2025-04-05 08:22:36,040 - INFO - Preparing metadata (setup.py): finished with status 'done'
+2025-04-05 08:22:36,067 - INFO - Collecting attrs==23.1.0
+2025-04-05 08:22:36,134 - INFO - Downloading attrs-23.1.0-py3-none-any.whl.metadata (11 kB)
+2025-04-05 08:22:36,254 - INFO - Collecting more-itertools==10.1.0
+2025-04-05 08:22:36,333 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl.metadata (33 kB)
+2025-04-05 08:22:36,435 - INFO - Collecting packaging==23.1
+2025-04-05 08:22:36,441 - INFO - Downloading packaging-23.1-py3-none-any.whl.metadata (3.1 kB)
+2025-04-05 08:22:36,540 - INFO - Collecting pluggy==0.13.1
+2025-04-05 08:22:36,546 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl.metadata (15 kB)
+2025-04-05 08:22:36,733 - INFO - Collecting py==1.11.0
+2025-04-05 08:22:36,740 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+2025-04-05 08:22:36,943 - INFO - Collecting wcwidth==0.2.6
+2025-04-05 08:22:36,948 - INFO - Downloading wcwidth-0.2.6-py2.py3-none-any.whl.metadata (11 kB)
+2025-04-05 08:22:37,044 - INFO - Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
+2025-04-05 08:22:37,054 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl (55 kB)
+2025-04-05 08:22:37,132 - INFO - Downloading packaging-23.1-py3-none-any.whl (48 kB)
+2025-04-05 08:22:37,143 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
+2025-04-05 08:22:37,152 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+2025-04-05 08:22:37,164 - INFO - Downloading wcwidth-0.2.6-py2.py3-none-any.whl (29 kB)
+2025-04-05 08:22:37,249 - INFO - Building wheels for collected packages: atomicwrites
+2025-04-05 08:22:37,250 - INFO - Building wheel for atomicwrites (setup.py): started
+2025-04-05 08:22:38,535 - INFO - Building wheel for atomicwrites (setup.py): finished with status 'done'
+2025-04-05 08:22:38,536 - INFO - Created wheel for atomicwrites: filename=atomicwrites-1.4.1-py2.py3-none-any.whl size=6991 sha256=5056c4caf26ab5d4ea7059cb95401cc498969ca5bf718be752d439267d7b0a5f
+2025-04-05 08:22:38,537 - INFO - Stored in directory: /root/.cache/pip/wheels/2a/b5/06/d2f34584f352e4af7d1d7ac1baf38b5d24142c8044cd024fd5
+2025-04-05 08:22:38,541 - INFO - Successfully built atomicwrites
+2025-04-05 08:22:38,644 - INFO - Installing collected packages: wcwidth, py, pluggy, packaging, more-itertools, attrs, atomicwrites
+2025-04-05 08:22:39,848 - INFO - Successfully installed atomicwrites-1.4.1 attrs-23.1.0 more-itertools-10.1.0 packaging-23.1 pluggy-0.13.1 py-1.11.0 wcwidth-0.2.6
+2025-04-05 08:22:39,848 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-05 08:23:22,748 - INFO - ---> Removed intermediate container 4b8fab3be6a5
+2025-04-05 08:23:22,748 - INFO - ---> b5f3aa8a30ba
+2025-04-05 08:23:22,748 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-05 08:23:22,748 - INFO - 
+2025-04-05 08:23:22,944 - INFO - ---> Running in 172de2605007
+2025-04-05 08:23:23,041 - INFO - ---> Removed intermediate container 172de2605007
+2025-04-05 08:23:23,042 - INFO - ---> 119e7b4182ee
+2025-04-05 08:23:23,042 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-05 08:23:23,042 - INFO - 
+2025-04-05 08:23:23,137 - INFO - ---> Running in 2998b6dd9331
+2025-04-05 08:23:24,845 - INFO - ---> Removed intermediate container 2998b6dd9331
+2025-04-05 08:23:24,846 - INFO - ---> 64c71d21b2b2
+2025-04-05 08:23:24,846 - INFO - Successfully built 64c71d21b2b2
+2025-04-05 08:23:24,849 - INFO - Successfully tagged sweb.env.x86_64.1c1a6945f732f9391228c5:latest
+2025-04-05 08:23:24,849 - INFO - Image built successfully!

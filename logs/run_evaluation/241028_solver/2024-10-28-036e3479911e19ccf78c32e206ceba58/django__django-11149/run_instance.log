@@ -1,0 +1,165 @@
+2025-04-05 10:19:22,043 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11149
+Building instance image sweb.eval.x86_64.django__django-11149:latest for django__django-11149
+2025-04-05 10:22:16,139 - INFO - Creating container for django__django-11149...
+2025-04-05 10:22:16,246 - INFO - Container for django__django-11149 created: a1708fa78c29b62e81b2cd576123b83ec4185dc4050aece9cd9a009b85420f25
+2025-04-05 10:22:17,437 - INFO - Container for django__django-11149 started: a1708fa78c29b62e81b2cd576123b83ec4185dc4050aece9cd9a009b85420f25
+2025-04-05 10:22:17,438 - INFO - Intermediate patch for django__django-11149 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11149/patch.diff, now applying to container...
+2025-04-05 10:22:19,025 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:22:19,245 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-05 10:22:24,735 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 880a2cc17b..d2e109cc49 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -2113,40 +2113,44 @@ class InlineModelAdmin(BaseModelAdmin):
+ 
+     def has_add_permission(self, request, obj):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('add', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_add_permission(request)
+ 
+     def has_change_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('change', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_change_permission(request)
+ 
+     def has_delete_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('delete', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_delete_permission(request, obj)
+ 
++    def _get_related_model_opts(self):
++        """
++        Get the options for the target model of an auto-created many-to-many relationship.
++        """
++        opts = self.opts
++        for field in opts.fields:
++            if field.remote_field and field.remote_field.model != self.parent_model:
++                return field.remote_field.model._meta
++        return opts
++
+     def has_view_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            opts = self.opts
+-            # The model was auto-created as intermediary for a many-to-many
+-            # Many-relationship; find the target model.
+-            for field in opts.fields:
+-                if field.remote_field and field.remote_field.model != self.parent_model:
+-                    opts = field.remote_field.model._meta
+-                    break
++            opts = self._get_related_model_opts()
+             return (
+                 request.user.has_perm('%s.%s' % (opts.app_label, get_permission_codename('view', opts))) or
+                 request.user.has_perm('%s.%s' % (opts.app_label, get_permission_codename('change', opts)))
+2025-04-05 10:22:24,735 - INFO - Eval script for django__django-11149 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11149/eval.sh; copying to container...
+2025-04-05 10:23:23,050 - INFO - Test runtime: 57.62 seconds
+2025-04-05 10:23:23,051 - INFO - Test output for django__django-11149 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11149/test_output.txt
+2025-04-05 10:23:23,339 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 880a2cc17b..d2e109cc49 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -2113,40 +2113,44 @@ class InlineModelAdmin(BaseModelAdmin):
+ 
+     def has_add_permission(self, request, obj):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('add', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_add_permission(request)
+ 
+     def has_change_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('change', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_change_permission(request)
+ 
+     def has_delete_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            # We're checking the rights to an auto-created intermediate model,
+-            # which doesn't have its own individual permissions. The user needs
+-            # to have the view permission for the related model in order to
+-            # be able to do anything with the intermediate model.
+-            return self.has_view_permission(request, obj)
++            # The model was auto-created for a many-to-many relationship.
++            # Find the target model and check its permissions.
++            opts = self._get_related_model_opts()
++            codename = get_permission_codename('delete', opts)
++            return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+         return super().has_delete_permission(request, obj)
+ 
++    def _get_related_model_opts(self):
++        """
++        Get the options for the target model of an auto-created many-to-many relationship.
++        """
++        opts = self.opts
++        for field in opts.fields:
++            if field.remote_field and field.remote_field.model != self.parent_model:
++                return field.remote_field.model._meta
++        return opts
++
+     def has_view_permission(self, request, obj=None):
+         if self.opts.auto_created:
+-            opts = self.opts
+-            # The model was auto-created as intermediary for a many-to-many
+-            # Many-relationship; find the target model.
+-            for field in opts.fields:
+-                if field.remote_field and field.remote_field.model != self.parent_model:
+-                    opts = field.remote_field.model._meta
+-                    break
++            opts = self._get_related_model_opts()
+             return (
+                 request.user.has_perm('%s.%s' % (opts.app_label, get_permission_codename('view', opts))) or
+                 request.user.has_perm('%s.%s' % (opts.app_label, get_permission_codename('change', opts)))
+2025-04-05 10:23:23,340 - INFO - Grading answer for django__django-11149...
+2025-04-05 10:23:23,340 - INFO - report: {'django__django-11149': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11149: resolved: False
+2025-04-05 10:23:23,340 - INFO - Attempting to stop container sweb.eval.django__django-11149.241028_solver...
+2025-04-05 10:23:39,223 - INFO - Attempting to remove container sweb.eval.django__django-11149.241028_solver...
+2025-04-05 10:23:39,334 - INFO - Container sweb.eval.django__django-11149.241028_solver removed.
+2025-04-05 10:23:39,334 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11149:latest...
+2025-04-05 10:23:44,820 - INFO - Image sweb.eval.x86_64.django__django-11149:latest removed.

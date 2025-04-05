@@ -1,0 +1,58 @@
+2025-04-05 10:31:35,231 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11532
+Building instance image sweb.eval.x86_64.django__django-11532:latest for django__django-11532
+2025-04-05 10:34:34,150 - INFO - Creating container for django__django-11532...
+2025-04-05 10:34:34,253 - INFO - Container for django__django-11532 created: 2062e71d701e8458123e815f80859e91d7339bb8a21025f04c4282575155af71
+2025-04-05 10:34:35,546 - INFO - Container for django__django-11532 started: 2062e71d701e8458123e815f80859e91d7339bb8a21025f04c4282575155af71
+2025-04-05 10:34:35,547 - INFO - Intermediate patch for django__django-11532 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11532/patch.diff, now applying to container...
+2025-04-05 10:34:36,548 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:34:36,737 - INFO - >>>>> Applied Patch:
+patching file django/core/mail/utils.py
+patching file test_email_encoding.py
+
+2025-04-05 10:34:42,734 - INFO - Git diff before:
+diff --git a/django/core/mail/utils.py b/django/core/mail/utils.py
+index d18dfe4667..db8dbfa6c4 100644
+--- a/django/core/mail/utils.py
++++ b/django/core/mail/utils.py
+@@ -9,7 +9,11 @@ import socket
+ # seconds, which slows down the restart of the server.
+ class CachedDnsName:
+     def __str__(self):
+-        return self.get_fqdn()
++        fqdn = self.get_fqdn()
++        try:
++            return fqdn.encode('ascii').decode('ascii')
++        except UnicodeEncodeError:
++            return fqdn.encode('idna').decode('ascii')
+ 
+     def get_fqdn(self):
+         if not hasattr(self, '_fqdn'):
+2025-04-05 10:34:42,736 - INFO - Eval script for django__django-11532 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11532/eval.sh; copying to container...
+2025-04-05 10:35:25,729 - INFO - Test runtime: 42.19 seconds
+2025-04-05 10:35:25,729 - INFO - Test output for django__django-11532 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11532/test_output.txt
+2025-04-05 10:35:26,137 - INFO - Git diff after:
+diff --git a/django/core/mail/utils.py b/django/core/mail/utils.py
+index d18dfe4667..db8dbfa6c4 100644
+--- a/django/core/mail/utils.py
++++ b/django/core/mail/utils.py
+@@ -9,7 +9,11 @@ import socket
+ # seconds, which slows down the restart of the server.
+ class CachedDnsName:
+     def __str__(self):
+-        return self.get_fqdn()
++        fqdn = self.get_fqdn()
++        try:
++            return fqdn.encode('ascii').decode('ascii')
++        except UnicodeEncodeError:
++            return fqdn.encode('idna').decode('ascii')
+ 
+     def get_fqdn(self):
+         if not hasattr(self, '_fqdn'):
+2025-04-05 10:35:26,137 - INFO - Grading answer for django__django-11532...
+2025-04-05 10:35:26,138 - INFO - report: {'django__django-11532': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11532: resolved: False
+2025-04-05 10:35:26,138 - INFO - Attempting to stop container sweb.eval.django__django-11532.241028_solver...
+2025-04-05 10:35:42,325 - INFO - Attempting to remove container sweb.eval.django__django-11532.241028_solver...
+2025-04-05 10:35:44,047 - INFO - Container sweb.eval.django__django-11532.241028_solver removed.
+2025-04-05 10:35:44,048 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11532:latest...
+2025-04-05 10:35:46,050 - INFO - Image sweb.eval.x86_64.django__django-11532:latest removed.

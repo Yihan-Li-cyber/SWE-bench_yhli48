@@ -1,0 +1,128 @@
+2025-04-05 11:29:19,434 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13933
+Building instance image sweb.eval.x86_64.django__django-13933:latest for django__django-13933
+2025-04-05 11:31:40,030 - INFO - Creating container for django__django-13933...
+2025-04-05 11:31:40,134 - INFO - Container for django__django-13933 created: 3bb9e093a44e29bd380964173ef671a05d96f36a419660e44128af1b1c1d7337
+2025-04-05 11:32:27,821 - INFO - Container for django__django-13933 started: 3bb9e093a44e29bd380964173ef671a05d96f36a419660e44128af1b1c1d7337
+2025-04-05 11:32:27,821 - INFO - Intermediate patch for django__django-13933 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13933/patch.diff, now applying to container...
+2025-04-05 11:32:28,624 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:32:28,822 - INFO - >>>>> Applied Patch:
+patching file django/forms/models.py
+patching file tests/model_forms/test_modelchoicefield.py
+
+2025-04-05 11:32:34,222 - INFO - Git diff before:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 422bc5d178..e03a3803cd 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -1188,7 +1188,7 @@ class ModelChoiceField(ChoiceField):
+     # This class is a subclass of ChoiceField for purity, but it doesn't
+     # actually use any of ChoiceField's implementation.
+     default_error_messages = {
+-        'invalid_choice': _('Select a valid choice. That choice is not one of'
++        'invalid_choice': _('Select a valid choice. %(value)s is not one of'
+                             ' the available choices.'),
+     }
+     iterator = ModelChoiceIterator
+@@ -1284,7 +1284,11 @@ class ModelChoiceField(ChoiceField):
+                 value = getattr(value, key)
+             value = self.queryset.get(**{key: value})
+         except (ValueError, TypeError, self.queryset.model.DoesNotExist):
+-            raise ValidationError(self.error_messages['invalid_choice'], code='invalid_choice')
++            raise ValidationError(
++                self.error_messages['invalid_choice'],
++                code='invalid_choice',
++                params={'value': value},
++            )
+         return value
+ 
+     def validate(self, value):
+diff --git a/tests/model_forms/test_modelchoicefield.py b/tests/model_forms/test_modelchoicefield.py
+index 8f41ce9c40..ffda40f1ff 100644
+--- a/tests/model_forms/test_modelchoicefield.py
++++ b/tests/model_forms/test_modelchoicefield.py
+@@ -51,7 +51,7 @@ class ModelChoiceFieldTests(TestCase):
+         # instantiated. This proves clean() checks the database during clean()
+         # rather than caching it at instantiation time.
+         Category.objects.get(url='4th').delete()
+-        msg = "['Select a valid choice. That choice is not one of the available choices.']"
++        msg = "['Select a valid choice. %s is not one of the available choices.']" % c4.id
+         with self.assertRaisesMessage(ValidationError, msg):
+             f.clean(c4.id)
+ 
+@@ -59,9 +59,10 @@ class ModelChoiceFieldTests(TestCase):
+         f = forms.ModelChoiceField(Category.objects.all())
+         self.assertEqual(f.clean(self.c1), self.c1)
+         # An instance of incorrect model.
+-        msg = "['Select a valid choice. That choice is not one of the available choices.']"
++        book = Book.objects.create()
++        msg = "['Select a valid choice. %s is not one of the available choices.']" % book.pk
+         with self.assertRaisesMessage(ValidationError, msg):
+-            f.clean(Book.objects.create())
++            f.clean(book)
+ 
+     def test_clean_to_field_name(self):
+         f = forms.ModelChoiceField(Category.objects.all(), to_field_name='slug')
+2025-04-05 11:32:34,223 - INFO - Eval script for django__django-13933 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13933/eval.sh; copying to container...
+2025-04-05 11:33:00,139 - INFO - Test runtime: 25.31 seconds
+2025-04-05 11:33:00,139 - INFO - Test output for django__django-13933 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13933/test_output.txt
+2025-04-05 11:33:00,547 - INFO - Git diff after:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 422bc5d178..e03a3803cd 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -1188,7 +1188,7 @@ class ModelChoiceField(ChoiceField):
+     # This class is a subclass of ChoiceField for purity, but it doesn't
+     # actually use any of ChoiceField's implementation.
+     default_error_messages = {
+-        'invalid_choice': _('Select a valid choice. That choice is not one of'
++        'invalid_choice': _('Select a valid choice. %(value)s is not one of'
+                             ' the available choices.'),
+     }
+     iterator = ModelChoiceIterator
+@@ -1284,7 +1284,11 @@ class ModelChoiceField(ChoiceField):
+                 value = getattr(value, key)
+             value = self.queryset.get(**{key: value})
+         except (ValueError, TypeError, self.queryset.model.DoesNotExist):
+-            raise ValidationError(self.error_messages['invalid_choice'], code='invalid_choice')
++            raise ValidationError(
++                self.error_messages['invalid_choice'],
++                code='invalid_choice',
++                params={'value': value},
++            )
+         return value
+ 
+     def validate(self, value):
+diff --git a/tests/model_forms/test_modelchoicefield.py b/tests/model_forms/test_modelchoicefield.py
+index 8f41ce9c40..ffda40f1ff 100644
+--- a/tests/model_forms/test_modelchoicefield.py
++++ b/tests/model_forms/test_modelchoicefield.py
+@@ -51,7 +51,7 @@ class ModelChoiceFieldTests(TestCase):
+         # instantiated. This proves clean() checks the database during clean()
+         # rather than caching it at instantiation time.
+         Category.objects.get(url='4th').delete()
+-        msg = "['Select a valid choice. That choice is not one of the available choices.']"
++        msg = "['Select a valid choice. %s is not one of the available choices.']" % c4.id
+         with self.assertRaisesMessage(ValidationError, msg):
+             f.clean(c4.id)
+ 
+@@ -59,9 +59,10 @@ class ModelChoiceFieldTests(TestCase):
+         f = forms.ModelChoiceField(Category.objects.all())
+         self.assertEqual(f.clean(self.c1), self.c1)
+         # An instance of incorrect model.
+-        msg = "['Select a valid choice. That choice is not one of the available choices.']"
++        book = Book.objects.create()
++        msg = "['Select a valid choice. %s is not one of the available choices.']" % book.pk
+         with self.assertRaisesMessage(ValidationError, msg):
+-            f.clean(Book.objects.create())
++            f.clean(book)
+ 
+     def test_clean_to_field_name(self):
+         f = forms.ModelChoiceField(Category.objects.all(), to_field_name='slug')
+2025-04-05 11:33:00,547 - INFO - Grading answer for django__django-13933...
+2025-04-05 11:33:00,548 - INFO - report: {'django__django-13933': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13933: resolved: False
+2025-04-05 11:33:00,548 - INFO - Attempting to stop container sweb.eval.django__django-13933.241028_solver...
+2025-04-05 11:33:17,323 - INFO - Attempting to remove container sweb.eval.django__django-13933.241028_solver...
+2025-04-05 11:33:17,431 - INFO - Container sweb.eval.django__django-13933.241028_solver removed.
+2025-04-05 11:33:17,431 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13933:latest...
+2025-04-05 11:33:19,827 - INFO - Image sweb.eval.x86_64.django__django-13933:latest removed.

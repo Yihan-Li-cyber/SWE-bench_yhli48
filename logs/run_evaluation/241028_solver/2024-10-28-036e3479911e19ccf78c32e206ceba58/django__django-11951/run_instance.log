@@ -1,0 +1,51 @@
+2025-04-05 10:39:57,856 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11951
+Building instance image sweb.eval.x86_64.django__django-11951:latest for django__django-11951
+2025-04-05 10:42:57,450 - INFO - Creating container for django__django-11951...
+2025-04-05 10:42:57,625 - INFO - Container for django__django-11951 created: 5b0b0ceb319136b0b19416fff4337b21885590058335dadfe725082c4401bcf7
+2025-04-05 10:42:58,937 - INFO - Container for django__django-11951 started: 5b0b0ceb319136b0b19416fff4337b21885590058335dadfe725082c4401bcf7
+2025-04-05 10:42:58,938 - INFO - Intermediate patch for django__django-11951 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11951/patch.diff, now applying to container...
+2025-04-05 10:42:59,738 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:42:59,937 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+
+2025-04-05 10:43:05,731 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 794e0faae7..92349cd0c5 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1209,7 +1209,8 @@ class QuerySet:
+         if ignore_conflicts and not connections[self.db].features.supports_ignore_conflicts:
+             raise NotSupportedError('This database backend does not support ignoring conflicts.')
+         ops = connections[self.db].ops
+-        batch_size = (batch_size or max(ops.bulk_batch_size(fields, objs), 1))
++        max_batch_size = max(ops.bulk_batch_size(fields, objs), 1)
++        batch_size = min(batch_size, max_batch_size) if batch_size else max_batch_size
+         inserted_rows = []
+         bulk_return = connections[self.db].features.can_return_rows_from_bulk_insert
+         for item in [objs[i:i + batch_size] for i in range(0, len(objs), batch_size)]:
+2025-04-05 10:43:05,732 - INFO - Eval script for django__django-11951 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11951/eval.sh; copying to container...
+2025-04-05 10:43:45,540 - INFO - Test runtime: 39.10 seconds
+2025-04-05 10:43:45,541 - INFO - Test output for django__django-11951 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11951/test_output.txt
+2025-04-05 10:43:45,848 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 794e0faae7..92349cd0c5 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1209,7 +1209,8 @@ class QuerySet:
+         if ignore_conflicts and not connections[self.db].features.supports_ignore_conflicts:
+             raise NotSupportedError('This database backend does not support ignoring conflicts.')
+         ops = connections[self.db].ops
+-        batch_size = (batch_size or max(ops.bulk_batch_size(fields, objs), 1))
++        max_batch_size = max(ops.bulk_batch_size(fields, objs), 1)
++        batch_size = min(batch_size, max_batch_size) if batch_size else max_batch_size
+         inserted_rows = []
+         bulk_return = connections[self.db].features.can_return_rows_from_bulk_insert
+         for item in [objs[i:i + batch_size] for i in range(0, len(objs), batch_size)]:
+2025-04-05 10:43:45,849 - INFO - Grading answer for django__django-11951...
+2025-04-05 10:43:45,849 - INFO - report: {'django__django-11951': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11951: resolved: False
+2025-04-05 10:43:45,849 - INFO - Attempting to stop container sweb.eval.django__django-11951.241028_solver...
+2025-04-05 10:44:02,329 - INFO - Attempting to remove container sweb.eval.django__django-11951.241028_solver...
+2025-04-05 10:44:04,646 - INFO - Container sweb.eval.django__django-11951.241028_solver removed.
+2025-04-05 10:44:04,646 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11951:latest...
+2025-04-05 10:44:07,158 - INFO - Image sweb.eval.x86_64.django__django-11951:latest removed.

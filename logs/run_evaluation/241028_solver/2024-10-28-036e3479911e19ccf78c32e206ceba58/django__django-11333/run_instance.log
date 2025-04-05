@@ -1,0 +1,57 @@
+2025-04-05 10:27:28,233 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11333
+Building instance image sweb.eval.x86_64.django__django-11333:latest for django__django-11333
+2025-04-05 10:30:19,646 - INFO - Creating container for django__django-11333...
+2025-04-05 10:30:19,850 - INFO - Container for django__django-11333 created: 6d9fb2bd7f78bcbd3c05ac75905684d7a8afcdee4e3131eaef5cf41b75cfd6a8
+2025-04-05 10:30:21,438 - INFO - Container for django__django-11333 started: 6d9fb2bd7f78bcbd3c05ac75905684d7a8afcdee4e3131eaef5cf41b75cfd6a8
+2025-04-05 10:30:21,439 - INFO - Intermediate patch for django__django-11333 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11333/patch.diff, now applying to container...
+2025-04-05 10:30:22,441 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:30:22,744 - INFO - >>>>> Applied Patch:
+patching file django/urls/resolvers.py
+
+2025-04-05 10:30:28,454 - INFO - Git diff before:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 247e3680c0..b6fddd5a4f 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -63,10 +63,13 @@ class ResolverMatch:
+         )
+ 
+ 
+-@functools.lru_cache(maxsize=None)
+ def get_resolver(urlconf=None):
+     if urlconf is None:
+         urlconf = settings.ROOT_URLCONF
++    return _get_resolver(urlconf)
++
++@functools.lru_cache(maxsize=None)
++def _get_resolver(urlconf):
+     return URLResolver(RegexPattern(r'^/'), urlconf)
+2025-04-05 10:30:28,455 - INFO - Eval script for django__django-11333 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11333/eval.sh; copying to container...
+2025-04-05 10:31:07,227 - INFO - Test runtime: 37.90 seconds
+2025-04-05 10:31:07,228 - INFO - Test output for django__django-11333 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11333/test_output.txt
+2025-04-05 10:31:07,624 - INFO - Git diff after:
+diff --git a/django/urls/resolvers.py b/django/urls/resolvers.py
+index 247e3680c0..b6fddd5a4f 100644
+--- a/django/urls/resolvers.py
++++ b/django/urls/resolvers.py
+@@ -63,10 +63,13 @@ class ResolverMatch:
+         )
+ 
+ 
+-@functools.lru_cache(maxsize=None)
+ def get_resolver(urlconf=None):
+     if urlconf is None:
+         urlconf = settings.ROOT_URLCONF
++    return _get_resolver(urlconf)
++
++@functools.lru_cache(maxsize=None)
++def _get_resolver(urlconf):
+     return URLResolver(RegexPattern(r'^/'), urlconf)
+2025-04-05 10:31:07,624 - INFO - Grading answer for django__django-11333...
+2025-04-05 10:31:07,625 - INFO - report: {'django__django-11333': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11333: resolved: False
+2025-04-05 10:31:07,625 - INFO - Attempting to stop container sweb.eval.django__django-11333.241028_solver...
+2025-04-05 10:31:23,525 - INFO - Attempting to remove container sweb.eval.django__django-11333.241028_solver...
+2025-04-05 10:31:23,634 - INFO - Container sweb.eval.django__django-11333.241028_solver removed.
+2025-04-05 10:31:23,634 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11333:latest...
+2025-04-05 10:31:25,541 - INFO - Image sweb.eval.x86_64.django__django-11333:latest removed.

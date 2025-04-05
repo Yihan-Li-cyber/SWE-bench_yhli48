@@ -1,0 +1,53 @@
+2025-04-05 12:14:51,335 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15467
+Building instance image sweb.eval.x86_64.django__django-15467:latest for django__django-15467
+2025-04-05 12:18:09,141 - INFO - Creating container for django__django-15467...
+2025-04-05 12:18:09,403 - INFO - Container for django__django-15467 created: 9763488c08aa93aa30166131babaebb1b4d74fd30632f67bcd69f84d77739ea6
+2025-04-05 12:18:10,849 - INFO - Container for django__django-15467 started: 9763488c08aa93aa30166131babaebb1b4d74fd30632f67bcd69f84d77739ea6
+2025-04-05 12:18:10,849 - INFO - Intermediate patch for django__django-15467 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15467/patch.diff, now applying to container...
+2025-04-05 12:18:11,739 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:18:12,032 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-05 12:18:18,025 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 64be087bf1..b153d51671 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -269,8 +269,8 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+                         "class": get_ul_class(self.radio_fields[db_field.name]),
+                     }
+                 )
+-                kwargs["empty_label"] = _("None") if db_field.blank else None
+-
++                if "empty_label" not in kwargs:
++                    kwargs["empty_label"] = _("None") if db_field.blank else None
+         if "queryset" not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+             if queryset is not None:
+2025-04-05 12:18:18,026 - INFO - Eval script for django__django-15467 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15467/eval.sh; copying to container...
+2025-04-05 12:19:07,428 - INFO - Test runtime: 48.80 seconds
+2025-04-05 12:19:07,428 - INFO - Test output for django__django-15467 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15467/test_output.txt
+2025-04-05 12:19:07,734 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 64be087bf1..b153d51671 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -269,8 +269,8 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+                         "class": get_ul_class(self.radio_fields[db_field.name]),
+                     }
+                 )
+-                kwargs["empty_label"] = _("None") if db_field.blank else None
+-
++                if "empty_label" not in kwargs:
++                    kwargs["empty_label"] = _("None") if db_field.blank else None
+         if "queryset" not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+             if queryset is not None:
+2025-04-05 12:19:07,734 - INFO - Grading answer for django__django-15467...
+2025-04-05 12:19:07,734 - INFO - report: {'django__django-15467': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15467: resolved: False
+2025-04-05 12:19:07,735 - INFO - Attempting to stop container sweb.eval.django__django-15467.241028_solver...
+2025-04-05 12:19:24,521 - INFO - Attempting to remove container sweb.eval.django__django-15467.241028_solver...
+2025-04-05 12:19:24,629 - INFO - Container sweb.eval.django__django-15467.241028_solver removed.
+2025-04-05 12:19:24,630 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15467:latest...
+2025-04-05 12:19:29,340 - INFO - Image sweb.eval.x86_64.django__django-15467:latest removed.

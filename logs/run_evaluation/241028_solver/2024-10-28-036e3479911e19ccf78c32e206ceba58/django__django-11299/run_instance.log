@@ -1,0 +1,55 @@
+2025-04-05 10:23:58,423 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11299
+Building instance image sweb.eval.x86_64.django__django-11299:latest for django__django-11299
+2025-04-05 10:26:34,335 - INFO - Creating container for django__django-11299...
+2025-04-05 10:26:34,438 - INFO - Container for django__django-11299 created: a4f2e005ac6e2670b45193dc981cd7bb2346f1c7e4f4b92db175f37ca3e7c9ef
+2025-04-05 10:26:35,450 - INFO - Container for django__django-11299 started: a4f2e005ac6e2670b45193dc981cd7bb2346f1c7e4f4b92db175f37ca3e7c9ef
+2025-04-05 10:26:35,451 - INFO - Intermediate patch for django__django-11299 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11299/patch.diff, now applying to container...
+2025-04-05 10:26:36,333 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:26:36,530 - INFO - >>>>> Applied Patch:
+patching file django/db/models/constraints.py
+
+2025-04-05 10:26:41,434 - INFO - Git diff before:
+diff --git a/django/db/models/constraints.py b/django/db/models/constraints.py
+index e7f81d3ee9..e2ad0ee77e 100644
+--- a/django/db/models/constraints.py
++++ b/django/db/models/constraints.py
+@@ -37,7 +37,10 @@ class CheckConstraint(BaseConstraint):
+         where = query.build_where(self.check)
+         compiler = query.get_compiler(connection=schema_editor.connection)
+         sql, params = where.as_sql(compiler, schema_editor.connection)
+-        return sql % tuple(schema_editor.quote_value(p) for p in params)
++        sql = sql % tuple(schema_editor.quote_value(p) for p in params)
++        # Remove table name qualification from the SQL
++        table_name = schema_editor.quote_name(model._meta.db_table)
++        return sql.replace(f"{table_name}.", "")
+ 
+     def constraint_sql(self, model, schema_editor):
+         check = self._get_check_sql(model, schema_editor)
+2025-04-05 10:26:41,434 - INFO - Eval script for django__django-11299 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11299/eval.sh; copying to container...
+2025-04-05 10:27:29,351 - INFO - Test runtime: 47.33 seconds
+2025-04-05 10:27:29,351 - INFO - Test output for django__django-11299 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11299/test_output.txt
+2025-04-05 10:27:29,634 - INFO - Git diff after:
+diff --git a/django/db/models/constraints.py b/django/db/models/constraints.py
+index e7f81d3ee9..e2ad0ee77e 100644
+--- a/django/db/models/constraints.py
++++ b/django/db/models/constraints.py
+@@ -37,7 +37,10 @@ class CheckConstraint(BaseConstraint):
+         where = query.build_where(self.check)
+         compiler = query.get_compiler(connection=schema_editor.connection)
+         sql, params = where.as_sql(compiler, schema_editor.connection)
+-        return sql % tuple(schema_editor.quote_value(p) for p in params)
++        sql = sql % tuple(schema_editor.quote_value(p) for p in params)
++        # Remove table name qualification from the SQL
++        table_name = schema_editor.quote_name(model._meta.db_table)
++        return sql.replace(f"{table_name}.", "")
+ 
+     def constraint_sql(self, model, schema_editor):
+         check = self._get_check_sql(model, schema_editor)
+2025-04-05 10:27:29,635 - INFO - Grading answer for django__django-11299...
+2025-04-05 10:27:29,636 - INFO - report: {'django__django-11299': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11299: resolved: False
+2025-04-05 10:27:29,636 - INFO - Attempting to stop container sweb.eval.django__django-11299.241028_solver...
+2025-04-05 10:27:45,733 - INFO - Attempting to remove container sweb.eval.django__django-11299.241028_solver...
+2025-04-05 10:27:45,924 - INFO - Container sweb.eval.django__django-11299.241028_solver removed.
+2025-04-05 10:27:45,924 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11299:latest...
+2025-04-05 10:27:48,145 - INFO - Image sweb.eval.x86_64.django__django-11299:latest removed.

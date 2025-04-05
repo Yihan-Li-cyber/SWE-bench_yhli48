@@ -1,0 +1,60 @@
+2025-04-05 11:07:00,737 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13279
+Building instance image sweb.eval.x86_64.django__django-13279:latest for django__django-13279
+2025-04-05 11:10:40,442 - INFO - Creating container for django__django-13279...
+2025-04-05 11:10:40,547 - INFO - Container for django__django-13279 created: 5915186361dd080869446d19eb4de5980a542e9b46a373cd09c87b5d6c20ee20
+2025-04-05 11:10:42,244 - INFO - Container for django__django-13279 started: 5915186361dd080869446d19eb4de5980a542e9b46a373cd09c87b5d6c20ee20
+2025-04-05 11:10:42,245 - INFO - Intermediate patch for django__django-13279 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13279/patch.diff, now applying to container...
+2025-04-05 11:10:43,150 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:10:43,437 - INFO - >>>>> Applied Patch:
+patching file django/contrib/sessions/backends/base.py
+patching file test_sessions.py
+
+2025-04-05 11:10:49,149 - INFO - Git diff before:
+diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index b5453160a5..d475d8625e 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -108,6 +108,13 @@ class SessionBase:
+ 
+     def encode(self, session_dict):
+         "Return the given session dictionary serialized and encoded as a string."
++        if settings.DEFAULT_HASHING_ALGORITHM == 'sha1':
++            # Use legacy encoding for sha1 to support transition
++            serialized = self.serializer().dumps(session_dict)
++            if not isinstance(serialized, bytes):
++                serialized = serialized.encode('ascii')
++            hash = self._hash(serialized)
++            return base64.b64encode(hash.encode() + b':' + serialized).decode('ascii')
+         return signing.dumps(
+             session_dict, salt=self.key_salt, serializer=self.serializer,
+             compress=True,
+2025-04-05 11:10:49,149 - INFO - Eval script for django__django-13279 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13279/eval.sh; copying to container...
+2025-04-05 11:11:33,130 - INFO - Test runtime: 43.21 seconds
+2025-04-05 11:11:33,130 - INFO - Test output for django__django-13279 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13279/test_output.txt
+2025-04-05 11:11:33,526 - INFO - Git diff after:
+diff --git a/django/contrib/sessions/backends/base.py b/django/contrib/sessions/backends/base.py
+index b5453160a5..d475d8625e 100644
+--- a/django/contrib/sessions/backends/base.py
++++ b/django/contrib/sessions/backends/base.py
+@@ -108,6 +108,13 @@ class SessionBase:
+ 
+     def encode(self, session_dict):
+         "Return the given session dictionary serialized and encoded as a string."
++        if settings.DEFAULT_HASHING_ALGORITHM == 'sha1':
++            # Use legacy encoding for sha1 to support transition
++            serialized = self.serializer().dumps(session_dict)
++            if not isinstance(serialized, bytes):
++                serialized = serialized.encode('ascii')
++            hash = self._hash(serialized)
++            return base64.b64encode(hash.encode() + b':' + serialized).decode('ascii')
+         return signing.dumps(
+             session_dict, salt=self.key_salt, serializer=self.serializer,
+             compress=True,
+2025-04-05 11:11:33,526 - INFO - Grading answer for django__django-13279...
+2025-04-05 11:11:33,526 - INFO - report: {'django__django-13279': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13279: resolved: False
+2025-04-05 11:11:33,526 - INFO - Attempting to stop container sweb.eval.django__django-13279.241028_solver...
+2025-04-05 11:11:50,225 - INFO - Attempting to remove container sweb.eval.django__django-13279.241028_solver...
+2025-04-05 11:11:50,342 - INFO - Container sweb.eval.django__django-13279.241028_solver removed.
+2025-04-05 11:11:50,342 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13279:latest...
+2025-04-05 11:11:57,234 - INFO - Image sweb.eval.x86_64.django__django-13279:latest removed.

@@ -1,0 +1,51 @@
+2025-04-05 11:36:36,235 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14089
+Building instance image sweb.eval.x86_64.django__django-14089:latest for django__django-14089
+2025-04-05 11:39:22,121 - INFO - Creating container for django__django-14089...
+2025-04-05 11:39:22,327 - INFO - Container for django__django-14089 created: 3bdc45ad5057ac51f60f65112d44ac13d9ef260f4f5c06081ee21b49fea54041
+2025-04-05 11:39:23,651 - INFO - Container for django__django-14089 started: 3bdc45ad5057ac51f60f65112d44ac13d9ef260f4f5c06081ee21b49fea54041
+2025-04-05 11:39:23,651 - INFO - Intermediate patch for django__django-14089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14089/patch.diff, now applying to container...
+2025-04-05 11:39:24,625 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:39:24,917 - INFO - >>>>> Applied Patch:
+patching file django/utils/datastructures.py
+
+2025-04-05 11:39:31,421 - INFO - Git diff before:
+diff --git a/django/utils/datastructures.py b/django/utils/datastructures.py
+index 871b016715..3ec0de43e2 100644
+--- a/django/utils/datastructures.py
++++ b/django/utils/datastructures.py
+@@ -34,6 +34,9 @@ class OrderedSet:
+     def __len__(self):
+         return len(self.dict)
+ 
++    def __reversed__(self):
++        return reversed(list(self.dict))
++
+ 
+ class MultiValueDictKeyError(KeyError):
+     pass
+2025-04-05 11:39:31,422 - INFO - Eval script for django__django-14089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14089/eval.sh; copying to container...
+2025-04-05 11:40:18,513 - INFO - Test runtime: 46.29 seconds
+2025-04-05 11:40:18,513 - INFO - Test output for django__django-14089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14089/test_output.txt
+2025-04-05 11:40:19,016 - INFO - Git diff after:
+diff --git a/django/utils/datastructures.py b/django/utils/datastructures.py
+index 871b016715..3ec0de43e2 100644
+--- a/django/utils/datastructures.py
++++ b/django/utils/datastructures.py
+@@ -34,6 +34,9 @@ class OrderedSet:
+     def __len__(self):
+         return len(self.dict)
+ 
++    def __reversed__(self):
++        return reversed(list(self.dict))
++
+ 
+ class MultiValueDictKeyError(KeyError):
+     pass
+2025-04-05 11:40:19,016 - INFO - Grading answer for django__django-14089...
+2025-04-05 11:40:19,017 - INFO - report: {'django__django-14089': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14089: resolved: False
+2025-04-05 11:40:19,017 - INFO - Attempting to stop container sweb.eval.django__django-14089.241028_solver...
+2025-04-05 11:40:41,122 - INFO - Attempting to remove container sweb.eval.django__django-14089.241028_solver...
+2025-04-05 11:40:41,234 - INFO - Container sweb.eval.django__django-14089.241028_solver removed.
+2025-04-05 11:40:41,234 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14089:latest...
+2025-04-05 11:40:46,116 - INFO - Image sweb.eval.x86_64.django__django-14089:latest removed.

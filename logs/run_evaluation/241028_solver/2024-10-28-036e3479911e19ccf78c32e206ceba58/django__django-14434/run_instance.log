@@ -1,0 +1,49 @@
+2025-04-05 11:44:55,822 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14434
+Building instance image sweb.eval.x86_64.django__django-14434:latest for django__django-14434
+2025-04-05 11:47:45,812 - INFO - Creating container for django__django-14434...
+2025-04-05 11:47:45,926 - INFO - Container for django__django-14434 created: 276dd1eaced89971dbd6454d3370b4c24c8b1a3a3e18535a72b98b3c6bca8f51
+2025-04-05 11:47:47,415 - INFO - Container for django__django-14434 started: 276dd1eaced89971dbd6454d3370b4c24c8b1a3a3e18535a72b98b3c6bca8f51
+2025-04-05 11:47:47,415 - INFO - Intermediate patch for django__django-14434 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14434/patch.diff, now applying to container...
+2025-04-05 11:47:48,530 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:47:48,815 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/schema.py
+
+2025-04-05 11:47:55,315 - INFO - Git diff before:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index ad2f5a7da1..e3e30ee036 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1066,6 +1066,8 @@ class BaseDatabaseSchemaEditor:
+         )
+ 
+     def _index_columns(self, table, columns, col_suffixes, opclasses):
++        if isinstance(table, Table):
++            table = table.table
+         return Columns(table, columns, self.quote_name, col_suffixes=col_suffixes)
+ 
+     def _model_indexes_sql(self, model):
+2025-04-05 11:47:55,316 - INFO - Eval script for django__django-14434 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14434/eval.sh; copying to container...
+2025-04-05 11:48:54,116 - INFO - Test runtime: 58.00 seconds
+2025-04-05 11:48:54,117 - INFO - Test output for django__django-14434 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14434/test_output.txt
+2025-04-05 11:48:54,513 - INFO - Git diff after:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index ad2f5a7da1..e3e30ee036 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1066,6 +1066,8 @@ class BaseDatabaseSchemaEditor:
+         )
+ 
+     def _index_columns(self, table, columns, col_suffixes, opclasses):
++        if isinstance(table, Table):
++            table = table.table
+         return Columns(table, columns, self.quote_name, col_suffixes=col_suffixes)
+ 
+     def _model_indexes_sql(self, model):
+2025-04-05 11:48:54,513 - INFO - Grading answer for django__django-14434...
+2025-04-05 11:48:54,513 - INFO - report: {'django__django-14434': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14434: resolved: False
+2025-04-05 11:48:54,514 - INFO - Attempting to stop container sweb.eval.django__django-14434.241028_solver...
+2025-04-05 11:49:11,319 - INFO - Attempting to remove container sweb.eval.django__django-14434.241028_solver...
+2025-04-05 11:49:11,429 - INFO - Container sweb.eval.django__django-14434.241028_solver removed.
+2025-04-05 11:49:11,429 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14434:latest...
+2025-04-05 11:49:14,213 - INFO - Image sweb.eval.x86_64.django__django-14434:latest removed.

@@ -1,0 +1,85 @@
+2025-04-05 11:32:36,224 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14007
+Building instance image sweb.eval.x86_64.django__django-14007:latest for django__django-14007
+2025-04-05 11:35:24,239 - INFO - Creating container for django__django-14007...
+2025-04-05 11:35:24,420 - INFO - Container for django__django-14007 created: 66dfb2f6e36bbb8b0111b92b83aa64f786cae2302c54eedc2fcfaacea75de0bc
+2025-04-05 11:35:26,039 - INFO - Container for django__django-14007 started: 66dfb2f6e36bbb8b0111b92b83aa64f786cae2302c54eedc2fcfaacea75de0bc
+2025-04-05 11:35:26,041 - INFO - Intermediate patch for django__django-14007 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14007/patch.diff, now applying to container...
+2025-04-05 11:35:27,037 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:35:27,340 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-05 11:35:33,938 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index f02199d97c..2a46923be9 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1412,13 +1412,20 @@ class SQLInsertCompiler(SQLCompiler):
+             if not self.returning_fields:
+                 return []
+             if self.connection.features.can_return_rows_from_bulk_insert and len(self.query.objs) > 1:
+-                return self.connection.ops.fetch_returned_insert_rows(cursor)
+-            if self.connection.features.can_return_columns_from_insert:
++                rows = self.connection.ops.fetch_returned_insert_rows(cursor)
++            elif self.connection.features.can_return_columns_from_insert:
+                 assert len(self.query.objs) == 1
+-                return [self.connection.ops.fetch_returned_insert_columns(cursor, self.returning_params)]
+-            return [(self.connection.ops.last_insert_id(
+-                cursor, self.query.get_meta().db_table, self.query.get_meta().pk.column
+-            ),)]
++                rows = [self.connection.ops.fetch_returned_insert_columns(cursor, self.returning_params)]
++            else:
++                rows = [(self.connection.ops.last_insert_id(
++                    cursor, self.query.get_meta().db_table, self.query.get_meta().pk.column
++                ),)]
++            
++            if self.returning_fields:
++                converters = self.get_converters(self.returning_fields)
++                if converters:
++                    rows = list(self.apply_converters(rows, converters))
++            return rows
+ 
+ 
+ class SQLDeleteCompiler(SQLCompiler):
+2025-04-05 11:35:33,939 - INFO - Eval script for django__django-14007 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14007/eval.sh; copying to container...
+2025-04-05 11:36:19,537 - INFO - Test runtime: 44.72 seconds
+2025-04-05 11:36:19,537 - INFO - Test output for django__django-14007 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14007/test_output.txt
+2025-04-05 11:36:20,015 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index f02199d97c..2a46923be9 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -1412,13 +1412,20 @@ class SQLInsertCompiler(SQLCompiler):
+             if not self.returning_fields:
+                 return []
+             if self.connection.features.can_return_rows_from_bulk_insert and len(self.query.objs) > 1:
+-                return self.connection.ops.fetch_returned_insert_rows(cursor)
+-            if self.connection.features.can_return_columns_from_insert:
++                rows = self.connection.ops.fetch_returned_insert_rows(cursor)
++            elif self.connection.features.can_return_columns_from_insert:
+                 assert len(self.query.objs) == 1
+-                return [self.connection.ops.fetch_returned_insert_columns(cursor, self.returning_params)]
+-            return [(self.connection.ops.last_insert_id(
+-                cursor, self.query.get_meta().db_table, self.query.get_meta().pk.column
+-            ),)]
++                rows = [self.connection.ops.fetch_returned_insert_columns(cursor, self.returning_params)]
++            else:
++                rows = [(self.connection.ops.last_insert_id(
++                    cursor, self.query.get_meta().db_table, self.query.get_meta().pk.column
++                ),)]
++            
++            if self.returning_fields:
++                converters = self.get_converters(self.returning_fields)
++                if converters:
++                    rows = list(self.apply_converters(rows, converters))
++            return rows
+ 
+ 
+ class SQLDeleteCompiler(SQLCompiler):
+2025-04-05 11:36:20,015 - INFO - Grading answer for django__django-14007...
+2025-04-05 11:36:20,016 - INFO - report: {'django__django-14007': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14007: resolved: False
+2025-04-05 11:36:20,017 - INFO - Attempting to stop container sweb.eval.django__django-14007.241028_solver...
+2025-04-05 11:36:36,135 - INFO - Attempting to remove container sweb.eval.django__django-14007.241028_solver...
+2025-04-05 11:36:36,328 - INFO - Container sweb.eval.django__django-14007.241028_solver removed.
+2025-04-05 11:36:36,328 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14007:latest...
+2025-04-05 11:36:38,626 - INFO - Image sweb.eval.x86_64.django__django-14007:latest removed.

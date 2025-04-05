@@ -1,0 +1,61 @@
+2025-04-05 10:35:39,850 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11740
+Building instance image sweb.eval.x86_64.django__django-11740:latest for django__django-11740
+2025-04-05 10:38:46,950 - INFO - Creating container for django__django-11740...
+2025-04-05 10:38:47,132 - INFO - Container for django__django-11740 created: 87f14983f2ed497df422f65fc6620b5f8ceb234dec6178d04a1a7ad8b790cb21
+2025-04-05 10:38:48,236 - INFO - Container for django__django-11740 started: 87f14983f2ed497df422f65fc6620b5f8ceb234dec6178d04a1a7ad8b790cb21
+2025-04-05 10:38:48,236 - INFO - Intermediate patch for django__django-11740 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11740/patch.diff, now applying to container...
+2025-04-05 10:38:49,240 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:38:49,442 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/autodetector.py
+
+2025-04-05 10:38:55,145 - INFO - Git diff before:
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 0dc1c77c53..7e05f281b0 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -951,7 +951,13 @@ class MigrationAutodetector:
+             if old_field_dec != new_field_dec:
+                 both_m2m = old_field.many_to_many and new_field.many_to_many
+                 neither_m2m = not old_field.many_to_many and not new_field.many_to_many
+-                if both_m2m or neither_m2m:
++                # Special case: changing to/from a ForeignKey requires remove+add to handle dependencies
++                adding_fk = not hasattr(old_field, 'remote_field') and hasattr(new_field, 'remote_field') and new_field.remote_field
++                removing_fk = hasattr(old_field, 'remote_field') and old_field.remote_field and not hasattr(new_field, 'remote_field')
++                if adding_fk or removing_fk:
++                    self._generate_removed_field(app_label, model_name, field_name)
++                    self._generate_added_field(app_label, model_name, field_name)
++                elif both_m2m or neither_m2m:
+                     # Either both fields are m2m or neither is
+                     preserve_default = True
+                     if (old_field.null and not new_field.null and not new_field.has_default() and
+2025-04-05 10:38:55,146 - INFO - Eval script for django__django-11740 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11740/eval.sh; copying to container...
+2025-04-05 10:39:37,151 - INFO - Test runtime: 41.22 seconds
+2025-04-05 10:39:37,151 - INFO - Test output for django__django-11740 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11740/test_output.txt
+2025-04-05 10:39:37,439 - INFO - Git diff after:
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 0dc1c77c53..7e05f281b0 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -951,7 +951,13 @@ class MigrationAutodetector:
+             if old_field_dec != new_field_dec:
+                 both_m2m = old_field.many_to_many and new_field.many_to_many
+                 neither_m2m = not old_field.many_to_many and not new_field.many_to_many
+-                if both_m2m or neither_m2m:
++                # Special case: changing to/from a ForeignKey requires remove+add to handle dependencies
++                adding_fk = not hasattr(old_field, 'remote_field') and hasattr(new_field, 'remote_field') and new_field.remote_field
++                removing_fk = hasattr(old_field, 'remote_field') and old_field.remote_field and not hasattr(new_field, 'remote_field')
++                if adding_fk or removing_fk:
++                    self._generate_removed_field(app_label, model_name, field_name)
++                    self._generate_added_field(app_label, model_name, field_name)
++                elif both_m2m or neither_m2m:
+                     # Either both fields are m2m or neither is
+                     preserve_default = True
+                     if (old_field.null and not new_field.null and not new_field.has_default() and
+2025-04-05 10:39:37,439 - INFO - Grading answer for django__django-11740...
+2025-04-05 10:39:37,439 - INFO - report: {'django__django-11740': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11740: resolved: False
+2025-04-05 10:39:37,439 - INFO - Attempting to stop container sweb.eval.django__django-11740.241028_solver...
+2025-04-05 10:39:53,828 - INFO - Attempting to remove container sweb.eval.django__django-11740.241028_solver...
+2025-04-05 10:39:53,938 - INFO - Container sweb.eval.django__django-11740.241028_solver removed.
+2025-04-05 10:39:53,938 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11740:latest...
+2025-04-05 10:39:55,863 - INFO - Image sweb.eval.x86_64.django__django-11740:latest removed.

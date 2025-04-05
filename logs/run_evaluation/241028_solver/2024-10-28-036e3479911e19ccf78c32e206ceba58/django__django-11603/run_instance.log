@@ -1,0 +1,63 @@
+2025-04-05 10:31:45,344 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11603
+Building instance image sweb.eval.x86_64.django__django-11603:latest for django__django-11603
+2025-04-05 10:34:34,338 - INFO - Creating container for django__django-11603...
+2025-04-05 10:34:34,453 - INFO - Container for django__django-11603 created: b3cb94e688c31f943c83194bbbcf350f8809471d1ebd5cbd22364b08232c8b64
+2025-04-05 10:34:35,850 - INFO - Container for django__django-11603 started: b3cb94e688c31f943c83194bbbcf350f8809471d1ebd5cbd22364b08232c8b64
+2025-04-05 10:34:35,850 - INFO - Intermediate patch for django__django-11603 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11603/patch.diff, now applying to container...
+2025-04-05 10:34:36,850 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:34:37,137 - INFO - >>>>> Applied Patch:
+patching file django/db/models/aggregates.py
+
+2025-04-05 10:34:42,736 - INFO - Git diff before:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index da4ff928aa..8b10829eb8 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -99,6 +99,7 @@ class Aggregate(Func):
+ class Avg(FixDurationInputMixin, NumericOutputFieldMixin, Aggregate):
+     function = 'AVG'
+     name = 'Avg'
++    allow_distinct = True
+ 
+ 
+ class Count(Aggregate):
+@@ -142,6 +143,7 @@ class StdDev(NumericOutputFieldMixin, Aggregate):
+ class Sum(FixDurationInputMixin, Aggregate):
+     function = 'SUM'
+     name = 'Sum'
++    allow_distinct = True
+ 
+ 
+ class Variance(NumericOutputFieldMixin, Aggregate):
+2025-04-05 10:34:42,739 - INFO - Eval script for django__django-11603 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11603/eval.sh; copying to container...
+2025-04-05 10:35:24,946 - INFO - Test runtime: 41.50 seconds
+2025-04-05 10:35:24,946 - INFO - Test output for django__django-11603 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11603/test_output.txt
+2025-04-05 10:35:25,245 - INFO - Git diff after:
+diff --git a/django/db/models/aggregates.py b/django/db/models/aggregates.py
+index da4ff928aa..8b10829eb8 100644
+--- a/django/db/models/aggregates.py
++++ b/django/db/models/aggregates.py
+@@ -99,6 +99,7 @@ class Aggregate(Func):
+ class Avg(FixDurationInputMixin, NumericOutputFieldMixin, Aggregate):
+     function = 'AVG'
+     name = 'Avg'
++    allow_distinct = True
+ 
+ 
+ class Count(Aggregate):
+@@ -142,6 +143,7 @@ class StdDev(NumericOutputFieldMixin, Aggregate):
+ class Sum(FixDurationInputMixin, Aggregate):
+     function = 'SUM'
+     name = 'Sum'
++    allow_distinct = True
+ 
+ 
+ class Variance(NumericOutputFieldMixin, Aggregate):
+2025-04-05 10:35:25,245 - INFO - Grading answer for django__django-11603...
+2025-04-05 10:35:25,245 - INFO - report: {'django__django-11603': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11603: resolved: False
+2025-04-05 10:35:25,245 - INFO - Attempting to stop container sweb.eval.django__django-11603.241028_solver...
+2025-04-05 10:35:41,427 - INFO - Attempting to remove container sweb.eval.django__django-11603.241028_solver...
+2025-04-05 10:35:41,547 - INFO - Container sweb.eval.django__django-11603.241028_solver removed.
+2025-04-05 10:35:41,547 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11603:latest...
+2025-04-05 10:35:46,046 - INFO - Image sweb.eval.x86_64.django__django-11603:latest removed.

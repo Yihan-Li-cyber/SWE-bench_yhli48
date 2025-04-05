@@ -1,0 +1,67 @@
+2025-04-05 10:16:01,352 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11099
+Building instance image sweb.eval.x86_64.django__django-11099:latest for django__django-11099
+2025-04-05 10:18:12,943 - INFO - Creating container for django__django-11099...
+2025-04-05 10:18:13,125 - INFO - Container for django__django-11099 created: 498b770ccb732a2b45530d76927e2ae7866fd69179960564b5795ea118cddbf7
+2025-04-05 10:18:14,534 - INFO - Container for django__django-11099 started: 498b770ccb732a2b45530d76927e2ae7866fd69179960564b5795ea118cddbf7
+2025-04-05 10:18:14,534 - INFO - Intermediate patch for django__django-11099 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11099/patch.diff, now applying to container...
+2025-04-05 10:18:15,740 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:18:16,029 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/validators.py
+
+2025-04-05 10:18:21,343 - INFO - Git diff before:
+diff --git a/django/contrib/auth/validators.py b/django/contrib/auth/validators.py
+index b4878cfd45..1304f20a60 100644
+--- a/django/contrib/auth/validators.py
++++ b/django/contrib/auth/validators.py
+@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
+ 
+ @deconstructible
+ class ASCIIUsernameValidator(validators.RegexValidator):
+-    regex = r'^[\w.@+-]+$'
++    regex = r'\A[\w.@+-]+\Z'
+     message = _(
+         'Enter a valid username. This value may contain only English letters, '
+         'numbers, and @/./+/-/_ characters.'
+@@ -17,7 +17,7 @@ class ASCIIUsernameValidator(validators.RegexValidator):
+ 
+ @deconstructible
+ class UnicodeUsernameValidator(validators.RegexValidator):
+-    regex = r'^[\w.@+-]+$'
++    regex = r'\A[\w.@+-]+\Z'
+     message = _(
+         'Enter a valid username. This value may contain only letters, '
+         'numbers, and @/./+/-/_ characters.'
+2025-04-05 10:18:21,343 - INFO - Eval script for django__django-11099 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11099/eval.sh; copying to container...
+2025-04-05 10:19:02,825 - INFO - Test runtime: 40.68 seconds
+2025-04-05 10:19:02,826 - INFO - Test output for django__django-11099 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11099/test_output.txt
+2025-04-05 10:19:03,133 - INFO - Git diff after:
+diff --git a/django/contrib/auth/validators.py b/django/contrib/auth/validators.py
+index b4878cfd45..1304f20a60 100644
+--- a/django/contrib/auth/validators.py
++++ b/django/contrib/auth/validators.py
+@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
+ 
+ @deconstructible
+ class ASCIIUsernameValidator(validators.RegexValidator):
+-    regex = r'^[\w.@+-]+$'
++    regex = r'\A[\w.@+-]+\Z'
+     message = _(
+         'Enter a valid username. This value may contain only English letters, '
+         'numbers, and @/./+/-/_ characters.'
+@@ -17,7 +17,7 @@ class ASCIIUsernameValidator(validators.RegexValidator):
+ 
+ @deconstructible
+ class UnicodeUsernameValidator(validators.RegexValidator):
+-    regex = r'^[\w.@+-]+$'
++    regex = r'\A[\w.@+-]+\Z'
+     message = _(
+         'Enter a valid username. This value may contain only letters, '
+         'numbers, and @/./+/-/_ characters.'
+2025-04-05 10:19:03,133 - INFO - Grading answer for django__django-11099...
+2025-04-05 10:19:03,133 - INFO - report: {'django__django-11099': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11099: resolved: False
+2025-04-05 10:19:03,134 - INFO - Attempting to stop container sweb.eval.django__django-11099.241028_solver...
+2025-04-05 10:19:19,640 - INFO - Attempting to remove container sweb.eval.django__django-11099.241028_solver...
+2025-04-05 10:19:19,830 - INFO - Container sweb.eval.django__django-11099.241028_solver removed.
+2025-04-05 10:19:19,830 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11099:latest...
+2025-04-05 10:19:22,038 - INFO - Image sweb.eval.x86_64.django__django-11099:latest removed.

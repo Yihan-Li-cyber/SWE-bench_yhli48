@@ -1,0 +1,58 @@
+2025-04-05 15:17:19,250 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16493
+Building instance image sweb.eval.x86_64.django__django-16493:latest for django__django-16493
+2025-04-05 15:19:34,847 - INFO - Creating container for django__django-16493...
+2025-04-05 15:19:34,878 - INFO - Container for django__django-16493 created: fd9ce8d9ac044a34d4ad1f06665481998c994575a50c53e21da83a6303c94f1e
+2025-04-05 15:19:35,452 - INFO - Container for django__django-16493 started: fd9ce8d9ac044a34d4ad1f06665481998c994575a50c53e21da83a6303c94f1e
+2025-04-05 15:19:35,452 - INFO - Intermediate patch for django__django-16493 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16493/patch.diff, now applying to container...
+2025-04-05 15:19:36,229 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:19:36,422 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/files.py
+patching file tests/model_fields/test_callable_storage.py
+
+2025-04-05 15:19:41,444 - INFO - Git diff before:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index 7a99b12691..0569ec31a3 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -295,8 +295,10 @@ class FileField(Field):
+         if kwargs.get("max_length") == 100:
+             del kwargs["max_length"]
+         kwargs["upload_to"] = self.upload_to
+-        if self.storage is not default_storage:
+-            kwargs["storage"] = getattr(self, "_storage_callable", self.storage)
++        if hasattr(self, '_storage_callable'):
++            kwargs["storage"] = self._storage_callable
++        elif self.storage is not default_storage:
++            kwargs["storage"] = self.storage
+         return name, path, args, kwargs
+ 
+     def get_internal_type(self):
+2025-04-05 15:19:41,444 - INFO - Eval script for django__django-16493 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16493/eval.sh; copying to container...
+2025-04-05 15:20:23,744 - INFO - Test runtime: 41.80 seconds
+2025-04-05 15:20:23,744 - INFO - Test output for django__django-16493 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16493/test_output.txt
+2025-04-05 15:20:24,042 - INFO - Git diff after:
+diff --git a/django/db/models/fields/files.py b/django/db/models/fields/files.py
+index 7a99b12691..0569ec31a3 100644
+--- a/django/db/models/fields/files.py
++++ b/django/db/models/fields/files.py
+@@ -295,8 +295,10 @@ class FileField(Field):
+         if kwargs.get("max_length") == 100:
+             del kwargs["max_length"]
+         kwargs["upload_to"] = self.upload_to
+-        if self.storage is not default_storage:
+-            kwargs["storage"] = getattr(self, "_storage_callable", self.storage)
++        if hasattr(self, '_storage_callable'):
++            kwargs["storage"] = self._storage_callable
++        elif self.storage is not default_storage:
++            kwargs["storage"] = self.storage
+         return name, path, args, kwargs
+ 
+     def get_internal_type(self):
+2025-04-05 15:20:24,042 - INFO - Grading answer for django__django-16493...
+2025-04-05 15:20:24,043 - INFO - report: {'django__django-16493': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16493: resolved: False
+2025-04-05 15:20:24,043 - INFO - Attempting to stop container sweb.eval.django__django-16493.241028_solver...
+2025-04-05 15:20:39,722 - INFO - Attempting to remove container sweb.eval.django__django-16493.241028_solver...
+2025-04-05 15:20:39,927 - INFO - Container sweb.eval.django__django-16493.241028_solver removed.
+2025-04-05 15:20:39,928 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16493:latest...
+2025-04-05 15:20:41,929 - INFO - Image sweb.eval.x86_64.django__django-16493:latest removed.

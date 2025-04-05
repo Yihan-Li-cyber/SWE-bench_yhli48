@@ -1,0 +1,93 @@
+2025-04-05 11:10:21,429 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13346
+Building instance image sweb.eval.x86_64.django__django-13346:latest for django__django-13346
+2025-04-05 11:13:23,244 - INFO - Creating container for django__django-13346...
+2025-04-05 11:13:23,429 - INFO - Container for django__django-13346 created: 8f8ea7469ff6b5fa1fa1d81f820511a9d41ebe3d97e217a3dddf889bc4538dae
+2025-04-05 11:14:22,636 - INFO - Container for django__django-13346 started: 8f8ea7469ff6b5fa1fa1d81f820511a9d41ebe3d97e217a3dddf889bc4538dae
+2025-04-05 11:14:22,636 - INFO - Intermediate patch for django__django-13346 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13346/patch.diff, now applying to container...
+2025-04-05 11:14:23,541 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:14:23,742 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/json.py
+
+2025-04-05 11:14:29,329 - INFO - Git diff before:
+diff --git a/django/db/models/fields/json.py b/django/db/models/fields/json.py
+index fafc1beee8..457533a871 100644
+--- a/django/db/models/fields/json.py
++++ b/django/db/models/fields/json.py
+@@ -447,6 +447,31 @@ class KeyTransformIEndsWith(CaseInsensitiveMixin, KeyTransformTextLookupMixin, l
+     pass
+ 
+ 
++class KeyTransformIn(lookups.In):
++    def process_rhs(self, compiler, connection):
++        rhs, rhs_params = super().process_rhs(compiler, connection)
++        if connection.vendor == 'mysql':
++            func = ["JSON_EXTRACT(%s, '$')" if value != 'null' else '%s' for value in rhs_params]
++            rhs = rhs % tuple(func)
++        elif connection.vendor == 'oracle':
++            func = []
++            for value in rhs_params:
++                value = json.loads(value)
++                function = 'JSON_QUERY' if isinstance(value, (list, dict)) else 'JSON_VALUE'
++                func.append("%s('%s', '$.value')" % (
++                    function,
++                    json.dumps({'value': value}),
++                ))
++            rhs = rhs % tuple(func)
++            rhs_params = []
++        elif connection.vendor == 'sqlite':
++            func = ["JSON_EXTRACT(%s, '$')" if value != 'null' else '%s' for value in rhs_params]
++            rhs = rhs % tuple(func)
++        return rhs, rhs_params
++
++
++KeyTransform.register_lookup(KeyTransformIn)
++
+ class KeyTransformRegex(KeyTransformTextLookupMixin, lookups.Regex):
+     pass
+2025-04-05 11:14:29,329 - INFO - Eval script for django__django-13346 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13346/eval.sh; copying to container...
+2025-04-05 11:15:12,235 - INFO - Test runtime: 42.09 seconds
+2025-04-05 11:15:12,235 - INFO - Test output for django__django-13346 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13346/test_output.txt
+2025-04-05 11:15:12,538 - INFO - Git diff after:
+diff --git a/django/db/models/fields/json.py b/django/db/models/fields/json.py
+index fafc1beee8..457533a871 100644
+--- a/django/db/models/fields/json.py
++++ b/django/db/models/fields/json.py
+@@ -447,6 +447,31 @@ class KeyTransformIEndsWith(CaseInsensitiveMixin, KeyTransformTextLookupMixin, l
+     pass
+ 
+ 
++class KeyTransformIn(lookups.In):
++    def process_rhs(self, compiler, connection):
++        rhs, rhs_params = super().process_rhs(compiler, connection)
++        if connection.vendor == 'mysql':
++            func = ["JSON_EXTRACT(%s, '$')" if value != 'null' else '%s' for value in rhs_params]
++            rhs = rhs % tuple(func)
++        elif connection.vendor == 'oracle':
++            func = []
++            for value in rhs_params:
++                value = json.loads(value)
++                function = 'JSON_QUERY' if isinstance(value, (list, dict)) else 'JSON_VALUE'
++                func.append("%s('%s', '$.value')" % (
++                    function,
++                    json.dumps({'value': value}),
++                ))
++            rhs = rhs % tuple(func)
++            rhs_params = []
++        elif connection.vendor == 'sqlite':
++            func = ["JSON_EXTRACT(%s, '$')" if value != 'null' else '%s' for value in rhs_params]
++            rhs = rhs % tuple(func)
++        return rhs, rhs_params
++
++
++KeyTransform.register_lookup(KeyTransformIn)
++
+ class KeyTransformRegex(KeyTransformTextLookupMixin, lookups.Regex):
+     pass
+2025-04-05 11:15:12,539 - INFO - Grading answer for django__django-13346...
+2025-04-05 11:15:12,539 - INFO - report: {'django__django-13346': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13346: resolved: False
+2025-04-05 11:15:12,539 - INFO - Attempting to stop container sweb.eval.django__django-13346.241028_solver...
+2025-04-05 11:15:28,629 - INFO - Attempting to remove container sweb.eval.django__django-13346.241028_solver...
+2025-04-05 11:15:28,743 - INFO - Container sweb.eval.django__django-13346.241028_solver removed.
+2025-04-05 11:15:28,744 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13346:latest...
+2025-04-05 11:15:30,639 - INFO - Image sweb.eval.x86_64.django__django-13346:latest removed.

@@ -1,0 +1,124 @@
+2025-04-05 12:19:24,665 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15561
+Building instance image sweb.eval.x86_64.django__django-15561:latest for django__django-15561
+2025-04-05 12:22:40,936 - INFO - Creating container for django__django-15561...
+2025-04-05 12:22:41,138 - INFO - Container for django__django-15561 created: 72e26f0a31eedf783a2b3a5639ca75c608d8790a298261ca85553fe18285fec4
+2025-04-05 12:22:42,126 - INFO - Container for django__django-15561 started: 72e26f0a31eedf783a2b3a5639ca75c608d8790a298261ca85553fe18285fec4
+2025-04-05 12:22:42,126 - INFO - Intermediate patch for django__django-15561 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15561/patch.diff, now applying to container...
+2025-04-05 12:22:43,019 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:22:43,232 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/schema.py
+patching file tests/migrations/test_operations.py
+
+2025-04-05 12:22:48,650 - INFO - Git diff before:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 9d6952df21..85d53e3b1a 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1378,6 +1378,7 @@ class BaseDatabaseSchemaEditor:
+         # - adding only a db_column and the column name is not changed
+         non_database_attrs = [
+             "blank",
++            "choices",
+             "db_column",
+             "editable",
+             "error_messages",
+diff --git a/tests/migrations/test_operations.py b/tests/migrations/test_operations.py
+index a84321ad3b..20e1598e31 100644
+--- a/tests/migrations/test_operations.py
++++ b/tests/migrations/test_operations.py
+@@ -1781,6 +1781,33 @@ class OperationTests(OperationTestBase):
+                 operation.database_forwards(app_label, editor, new_state, project_state)
+         self.assertColumnExists(rider_table, "pony_id")
+ 
++    def test_alter_field_choices_noop(self):
++        """
++        AlterField operation is a noop when changing only the choices,
++        regardless of the database backend.
++        """
++        app_label = "test_afcn"
++        project_state = self.set_up_test_model(app_label)
++        operation = migrations.AlterField(
++            "Pony",
++            "pink",
++            models.IntegerField(choices=[(1, 'Pink'), (2, 'Blue')]),
++        )
++        new_state = project_state.clone()
++        operation.state_forwards(app_label, new_state)
++        self.assertIsNone(project_state.models[app_label, "pony"].fields["pink"].choices)
++        self.assertEqual(
++            new_state.models[app_label, "pony"].fields["pink"].choices,
++            [(1, 'Pink'), (2, 'Blue')],
++        )
++        # Test the database alteration
++        with connection.schema_editor() as editor:
++            with self.assertNumQueries(0):
++                operation.database_forwards(app_label, editor, project_state, new_state)
++        # And test reversal
++        with connection.schema_editor() as editor:
++            with self.assertNumQueries(0):
++                operation.database_backwards(app_label, editor, new_state, project_state)
+     def test_alter_field_pk(self):
+         """
+         The AlterField operation on primary keys (things like PostgreSQL's
+2025-04-05 12:22:48,650 - INFO - Eval script for django__django-15561 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15561/eval.sh; copying to container...
+2025-04-05 12:23:44,035 - INFO - Test runtime: 54.80 seconds
+2025-04-05 12:23:44,036 - INFO - Test output for django__django-15561 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15561/test_output.txt
+2025-04-05 12:23:44,628 - INFO - Git diff after:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index 9d6952df21..85d53e3b1a 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -1378,6 +1378,7 @@ class BaseDatabaseSchemaEditor:
+         # - adding only a db_column and the column name is not changed
+         non_database_attrs = [
+             "blank",
++            "choices",
+             "db_column",
+             "editable",
+             "error_messages",
+diff --git a/tests/migrations/test_operations.py b/tests/migrations/test_operations.py
+index a84321ad3b..20e1598e31 100644
+--- a/tests/migrations/test_operations.py
++++ b/tests/migrations/test_operations.py
+@@ -1781,6 +1781,33 @@ class OperationTests(OperationTestBase):
+                 operation.database_forwards(app_label, editor, new_state, project_state)
+         self.assertColumnExists(rider_table, "pony_id")
+ 
++    def test_alter_field_choices_noop(self):
++        """
++        AlterField operation is a noop when changing only the choices,
++        regardless of the database backend.
++        """
++        app_label = "test_afcn"
++        project_state = self.set_up_test_model(app_label)
++        operation = migrations.AlterField(
++            "Pony",
++            "pink",
++            models.IntegerField(choices=[(1, 'Pink'), (2, 'Blue')]),
++        )
++        new_state = project_state.clone()
++        operation.state_forwards(app_label, new_state)
++        self.assertIsNone(project_state.models[app_label, "pony"].fields["pink"].choices)
++        self.assertEqual(
++            new_state.models[app_label, "pony"].fields["pink"].choices,
++            [(1, 'Pink'), (2, 'Blue')],
++        )
++        # Test the database alteration
++        with connection.schema_editor() as editor:
++            with self.assertNumQueries(0):
++                operation.database_forwards(app_label, editor, project_state, new_state)
++        # And test reversal
++        with connection.schema_editor() as editor:
++            with self.assertNumQueries(0):
++                operation.database_backwards(app_label, editor, new_state, project_state)
+     def test_alter_field_pk(self):
+         """
+         The AlterField operation on primary keys (things like PostgreSQL's
+2025-04-05 12:23:44,628 - INFO - Grading answer for django__django-15561...
+2025-04-05 12:23:44,629 - INFO - report: {'django__django-15561': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15561: resolved: False
+2025-04-05 12:23:44,629 - INFO - Attempting to stop container sweb.eval.django__django-15561.241028_solver...
+2025-04-05 12:24:01,732 - INFO - Attempting to remove container sweb.eval.django__django-15561.241028_solver...
+2025-04-05 12:24:04,233 - INFO - Container sweb.eval.django__django-15561.241028_solver removed.
+2025-04-05 12:24:04,234 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15561:latest...
+2025-04-05 12:24:07,037 - INFO - Image sweb.eval.x86_64.django__django-15561:latest removed.

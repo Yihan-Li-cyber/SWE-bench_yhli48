@@ -1,0 +1,186 @@
+2025-04-05 11:51:42,632 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14631
+Building instance image sweb.eval.x86_64.django__django-14631:latest for django__django-14631
+2025-04-05 11:54:38,218 - INFO - Creating container for django__django-14631...
+2025-04-05 11:54:38,330 - INFO - Container for django__django-14631 created: 3185c92a54d952c57a6b3c9b1aaccf5e96f261b3aca055650e569c5066bfa085
+2025-04-05 11:55:29,837 - INFO - Container for django__django-14631 started: 3185c92a54d952c57a6b3c9b1aaccf5e96f261b3aca055650e569c5066bfa085
+2025-04-05 11:55:29,837 - INFO - Intermediate patch for django__django-14631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14631/patch.diff, now applying to container...
+2025-04-05 11:55:30,722 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:55:30,920 - INFO - >>>>> Applied Patch:
+patching file django/forms/boundfield.py
+patching file django/forms/forms.py
+
+2025-04-05 11:55:36,527 - INFO - Git diff before:
+diff --git a/django/forms/boundfield.py b/django/forms/boundfield.py
+index 88adadb37d..d7111be026 100644
+--- a/django/forms/boundfield.py
++++ b/django/forms/boundfield.py
+@@ -232,6 +232,23 @@ class BoundField:
+     def widget_type(self):
+         return re.sub(r'widget$|input$', '', self.field.widget.__class__.__name__.lower())
+ 
++    def _did_change(self):
++        """
++        Return True if the field's value has changed from its initial value.
++        """
++        if not self.field.show_hidden_initial:
++            initial_value = self.initial
++        else:
++            initial_prefixed_name = self.form.add_initial_prefix(self.name)
++            hidden_widget = self.field.hidden_widget()
++            try:
++                initial_value = self.field.to_python(
++                    self.form._widget_data_value(hidden_widget, initial_prefixed_name)
++                )
++            except ValidationError:
++                # Always assume data has changed if validation fails.
++                return True
++        return self.field.has_changed(initial_value, self.data)
+ 
+ @html_safe
+ class BoundWidget:
+diff --git a/django/forms/forms.py b/django/forms/forms.py
+index d14037bfe9..2bc90bdb5e 100644
+--- a/django/forms/forms.py
++++ b/django/forms/forms.py
+@@ -387,15 +387,12 @@ class BaseForm:
+         self._post_clean()
+ 
+     def _clean_fields(self):
+-        for name, field in self.fields.items():
+-            if field.disabled:
+-                value = self.get_initial_for_field(field, name)
+-            else:
+-                value = self._field_data_value(field, self.add_prefix(name))
++        for name, bf in self._bound_items():
++            field = bf.field
++            value = bf.initial if field.disabled else bf.data
+             try:
+                 if isinstance(field, FileField):
+-                    initial = self.get_initial_for_field(field, name)
+-                    value = field.clean(value, initial)
++                    value = field.clean(value, bf.initial)
+                 else:
+                     value = field.clean(value)
+                 self.cleaned_data[name] = value
+@@ -436,27 +433,7 @@ class BaseForm:
+ 
+     @cached_property
+     def changed_data(self):
+-        data = []
+-        for name, field in self.fields.items():
+-            data_value = self._field_data_value(field, self.add_prefix(name))
+-            if not field.show_hidden_initial:
+-                # Use the BoundField's initial as this is the value passed to
+-                # the widget.
+-                initial_value = self[name].initial
+-            else:
+-                initial_prefixed_name = self.add_initial_prefix(name)
+-                hidden_widget = field.hidden_widget()
+-                try:
+-                    initial_value = field.to_python(
+-                        self._widget_data_value(hidden_widget, initial_prefixed_name)
+-                    )
+-                except ValidationError:
+-                    # Always assume data has changed if validation fails.
+-                    data.append(name)
+-                    continue
+-            if field.has_changed(initial_value, data_value):
+-                data.append(name)
+-        return data
++        return [name for name, bf in self._bound_items() if bf._did_change()]
+ 
+     @property
+     def media(self):
+2025-04-05 11:55:36,527 - INFO - Eval script for django__django-14631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14631/eval.sh; copying to container...
+2025-04-05 11:56:24,417 - INFO - Test runtime: 47.11 seconds
+2025-04-05 11:56:24,418 - INFO - Test output for django__django-14631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14631/test_output.txt
+2025-04-05 11:56:24,727 - INFO - Git diff after:
+diff --git a/django/forms/boundfield.py b/django/forms/boundfield.py
+index 88adadb37d..d7111be026 100644
+--- a/django/forms/boundfield.py
++++ b/django/forms/boundfield.py
+@@ -232,6 +232,23 @@ class BoundField:
+     def widget_type(self):
+         return re.sub(r'widget$|input$', '', self.field.widget.__class__.__name__.lower())
+ 
++    def _did_change(self):
++        """
++        Return True if the field's value has changed from its initial value.
++        """
++        if not self.field.show_hidden_initial:
++            initial_value = self.initial
++        else:
++            initial_prefixed_name = self.form.add_initial_prefix(self.name)
++            hidden_widget = self.field.hidden_widget()
++            try:
++                initial_value = self.field.to_python(
++                    self.form._widget_data_value(hidden_widget, initial_prefixed_name)
++                )
++            except ValidationError:
++                # Always assume data has changed if validation fails.
++                return True
++        return self.field.has_changed(initial_value, self.data)
+ 
+ @html_safe
+ class BoundWidget:
+diff --git a/django/forms/forms.py b/django/forms/forms.py
+index d14037bfe9..2bc90bdb5e 100644
+--- a/django/forms/forms.py
++++ b/django/forms/forms.py
+@@ -387,15 +387,12 @@ class BaseForm:
+         self._post_clean()
+ 
+     def _clean_fields(self):
+-        for name, field in self.fields.items():
+-            if field.disabled:
+-                value = self.get_initial_for_field(field, name)
+-            else:
+-                value = self._field_data_value(field, self.add_prefix(name))
++        for name, bf in self._bound_items():
++            field = bf.field
++            value = bf.initial if field.disabled else bf.data
+             try:
+                 if isinstance(field, FileField):
+-                    initial = self.get_initial_for_field(field, name)
+-                    value = field.clean(value, initial)
++                    value = field.clean(value, bf.initial)
+                 else:
+                     value = field.clean(value)
+                 self.cleaned_data[name] = value
+@@ -436,27 +433,7 @@ class BaseForm:
+ 
+     @cached_property
+     def changed_data(self):
+-        data = []
+-        for name, field in self.fields.items():
+-            data_value = self._field_data_value(field, self.add_prefix(name))
+-            if not field.show_hidden_initial:
+-                # Use the BoundField's initial as this is the value passed to
+-                # the widget.
+-                initial_value = self[name].initial
+-            else:
+-                initial_prefixed_name = self.add_initial_prefix(name)
+-                hidden_widget = field.hidden_widget()
+-                try:
+-                    initial_value = field.to_python(
+-                        self._widget_data_value(hidden_widget, initial_prefixed_name)
+-                    )
+-                except ValidationError:
+-                    # Always assume data has changed if validation fails.
+-                    data.append(name)
+-                    continue
+-            if field.has_changed(initial_value, data_value):
+-                data.append(name)
+-        return data
++        return [name for name, bf in self._bound_items() if bf._did_change()]
+ 
+     @property
+     def media(self):
+2025-04-05 11:56:24,727 - INFO - Grading answer for django__django-14631...
+2025-04-05 11:56:24,728 - INFO - report: {'django__django-14631': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14631: resolved: False
+2025-04-05 11:56:24,728 - INFO - Attempting to stop container sweb.eval.django__django-14631.241028_solver...
+2025-04-05 11:56:41,432 - INFO - Attempting to remove container sweb.eval.django__django-14631.241028_solver...
+2025-04-05 11:56:41,628 - INFO - Container sweb.eval.django__django-14631.241028_solver removed.
+2025-04-05 11:56:41,628 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14631:latest...
+2025-04-05 11:56:44,025 - INFO - Image sweb.eval.x86_64.django__django-14631:latest removed.

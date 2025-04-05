@@ -1,0 +1,54 @@
+2025-04-05 11:15:05,438 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13417
+Building instance image sweb.eval.x86_64.django__django-13417:latest for django__django-13417
+2025-04-05 11:17:21,651 - INFO - Creating container for django__django-13417...
+2025-04-05 11:17:21,926 - INFO - Container for django__django-13417 created: 6747d5d24e0ecb306ffdeac5b910d8e4443ff6315758213f5a38b154d5169e57
+2025-04-05 11:17:23,937 - INFO - Container for django__django-13417 started: 6747d5d24e0ecb306ffdeac5b910d8e4443ff6315758213f5a38b154d5169e57
+2025-04-05 11:17:23,938 - INFO - Intermediate patch for django__django-13417 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13417/patch.diff, now applying to container...
+2025-04-05 11:17:25,150 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:17:25,440 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+patching file tests/queries/test_ordered.py
+
+2025-04-05 11:17:31,534 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 85cd8311a7..d2cf50bd18 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1222,6 +1222,10 @@ class QuerySet:
+         """
+         if isinstance(self, EmptyQuerySet):
+             return True
++        # If this is a GROUP BY query and no explicit order_by() was specified,
++        # then the result is not ordered regardless of model's default ordering
++        if self.query.group_by is not None and not (self.query.extra_order_by or self.query.order_by):
++            return False
+         if self.query.extra_order_by or self.query.order_by:
+             return True
+         elif self.query.default_ordering and self.query.get_meta().ordering:
+2025-04-05 11:17:31,534 - INFO - Eval script for django__django-13417 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13417/eval.sh; copying to container...
+2025-04-05 11:18:23,658 - INFO - Test runtime: 51.11 seconds
+2025-04-05 11:18:23,658 - INFO - Test output for django__django-13417 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13417/test_output.txt
+2025-04-05 11:18:23,941 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index 85cd8311a7..d2cf50bd18 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -1222,6 +1222,10 @@ class QuerySet:
+         """
+         if isinstance(self, EmptyQuerySet):
+             return True
++        # If this is a GROUP BY query and no explicit order_by() was specified,
++        # then the result is not ordered regardless of model's default ordering
++        if self.query.group_by is not None and not (self.query.extra_order_by or self.query.order_by):
++            return False
+         if self.query.extra_order_by or self.query.order_by:
+             return True
+         elif self.query.default_ordering and self.query.get_meta().ordering:
+2025-04-05 11:18:23,941 - INFO - Grading answer for django__django-13417...
+2025-04-05 11:18:23,942 - INFO - report: {'django__django-13417': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13417: resolved: False
+2025-04-05 11:18:23,942 - INFO - Attempting to stop container sweb.eval.django__django-13417.241028_solver...
+2025-04-05 11:18:41,931 - INFO - Attempting to remove container sweb.eval.django__django-13417.241028_solver...
+2025-04-05 11:18:42,047 - INFO - Container sweb.eval.django__django-13417.241028_solver removed.
+2025-04-05 11:18:42,047 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13417:latest...
+2025-04-05 11:18:44,625 - INFO - Image sweb.eval.x86_64.django__django-13417:latest removed.

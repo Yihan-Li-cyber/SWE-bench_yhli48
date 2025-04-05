@@ -1,0 +1,49 @@
+2025-04-05 12:19:29,347 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15569
+Building instance image sweb.eval.x86_64.django__django-15569:latest for django__django-15569
+2025-04-05 12:22:33,537 - INFO - Creating container for django__django-15569...
+2025-04-05 12:22:34,027 - INFO - Container for django__django-15569 created: 687ff4127b2be9120407dac77c0d511ade42b5339e6900b85b7793a93dd73d11
+2025-04-05 12:22:35,142 - INFO - Container for django__django-15569 started: 687ff4127b2be9120407dac77c0d511ade42b5339e6900b85b7793a93dd73d11
+2025-04-05 12:22:35,143 - INFO - Intermediate patch for django__django-15569 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15569/patch.diff, now applying to container...
+2025-04-05 12:22:36,130 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:22:36,339 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query_utils.py
+
+2025-04-05 12:22:41,248 - INFO - Git diff before:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index 0caa165e15..e24045ddd8 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -217,7 +217,7 @@ class RegisterLookupMixin:
+         if lookup_name is None:
+             lookup_name = lookup.lookup_name
+         del cls.class_lookups[lookup_name]
+-
++        cls._clear_cached_lookups()
+ 
+ def select_related_descend(field, restricted, requested, load_fields, reverse=False):
+     """
+2025-04-05 12:22:41,248 - INFO - Eval script for django__django-15569 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15569/eval.sh; copying to container...
+2025-04-05 12:23:42,134 - INFO - Test runtime: 60.10 seconds
+2025-04-05 12:23:42,135 - INFO - Test output for django__django-15569 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15569/test_output.txt
+2025-04-05 12:23:42,533 - INFO - Git diff after:
+diff --git a/django/db/models/query_utils.py b/django/db/models/query_utils.py
+index 0caa165e15..e24045ddd8 100644
+--- a/django/db/models/query_utils.py
++++ b/django/db/models/query_utils.py
+@@ -217,7 +217,7 @@ class RegisterLookupMixin:
+         if lookup_name is None:
+             lookup_name = lookup.lookup_name
+         del cls.class_lookups[lookup_name]
+-
++        cls._clear_cached_lookups()
+ 
+ def select_related_descend(field, restricted, requested, load_fields, reverse=False):
+     """
+2025-04-05 12:23:42,533 - INFO - Grading answer for django__django-15569...
+2025-04-05 12:23:42,534 - INFO - report: {'django__django-15569': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15569: resolved: False
+2025-04-05 12:23:42,534 - INFO - Attempting to stop container sweb.eval.django__django-15569.241028_solver...
+2025-04-05 12:23:58,937 - INFO - Attempting to remove container sweb.eval.django__django-15569.241028_solver...
+2025-04-05 12:23:59,030 - INFO - Container sweb.eval.django__django-15569.241028_solver removed.
+2025-04-05 12:23:59,030 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15569:latest...
+2025-04-05 12:24:04,332 - INFO - Image sweb.eval.x86_64.django__django-15569:latest removed.

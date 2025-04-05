@@ -1,0 +1,88 @@
+2025-04-05 10:50:51,948 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12419
+Building instance image sweb.eval.x86_64.django__django-12419:latest for django__django-12419
+2025-04-05 10:53:29,142 - INFO - Creating container for django__django-12419...
+2025-04-05 10:53:29,250 - INFO - Container for django__django-12419 created: c8001d87040105901d3720fb90402b05ddc1b88399b16f30f9c61b88c2c53e94
+2025-04-05 10:53:30,947 - INFO - Container for django__django-12419 started: c8001d87040105901d3720fb90402b05ddc1b88399b16f30f9c61b88c2c53e94
+2025-04-05 10:53:30,948 - INFO - Intermediate patch for django__django-12419 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12419/patch.diff, now applying to container...
+2025-04-05 10:53:32,039 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:53:32,328 - INFO - >>>>> Applied Patch:
+patching file django/conf/global_settings.py
+patching file tests/middleware/test_security.py
+
+2025-04-05 10:53:38,233 - INFO - Git diff before:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index 09c9b95d26..5e30e02773 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -637,6 +637,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+ SECURE_HSTS_PRELOAD = False
+ SECURE_HSTS_SECONDS = 0
+ SECURE_REDIRECT_EXEMPT = []
+-SECURE_REFERRER_POLICY = None
++SECURE_REFERRER_POLICY = "same-origin"
+ SECURE_SSL_HOST = None
+ SECURE_SSL_REDIRECT = False
+diff --git a/tests/middleware/test_security.py b/tests/middleware/test_security.py
+index 07b72fc73a..8eebf30282 100644
+--- a/tests/middleware/test_security.py
++++ b/tests/middleware/test_security.py
+@@ -247,6 +247,15 @@ class SecurityMiddlewareTest(SimpleTestCase):
+             with self.subTest(value=value), override_settings(SECURE_REFERRER_POLICY=value):
+                 self.assertEqual(self.process_response()['Referrer-Policy'], expected)
+ 
++    @override_settings(SECURE_REFERRER_POLICY="same-origin")
++    def test_referrer_policy_default(self):
++        """
++        With SECURE_REFERRER_POLICY set to "same-origin", the middleware adds a
++        "Referrer-Policy" header with the value "same-origin" to the response.
++        """
++        self.assertEqual(self.process_response()['Referrer-Policy'], 'same-origin')
++
++
+     @override_settings(SECURE_REFERRER_POLICY='strict-origin')
+     def test_referrer_policy_already_present(self):
+         """
+2025-04-05 10:53:38,233 - INFO - Eval script for django__django-12419 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12419/eval.sh; copying to container...
+2025-04-05 10:54:19,346 - INFO - Test runtime: 40.32 seconds
+2025-04-05 10:54:19,347 - INFO - Test output for django__django-12419 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12419/test_output.txt
+2025-04-05 10:54:19,828 - INFO - Git diff after:
+diff --git a/django/conf/global_settings.py b/django/conf/global_settings.py
+index 09c9b95d26..5e30e02773 100644
+--- a/django/conf/global_settings.py
++++ b/django/conf/global_settings.py
+@@ -637,6 +637,6 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+ SECURE_HSTS_PRELOAD = False
+ SECURE_HSTS_SECONDS = 0
+ SECURE_REDIRECT_EXEMPT = []
+-SECURE_REFERRER_POLICY = None
++SECURE_REFERRER_POLICY = "same-origin"
+ SECURE_SSL_HOST = None
+ SECURE_SSL_REDIRECT = False
+diff --git a/tests/middleware/test_security.py b/tests/middleware/test_security.py
+index 07b72fc73a..8eebf30282 100644
+--- a/tests/middleware/test_security.py
++++ b/tests/middleware/test_security.py
+@@ -247,6 +247,15 @@ class SecurityMiddlewareTest(SimpleTestCase):
+             with self.subTest(value=value), override_settings(SECURE_REFERRER_POLICY=value):
+                 self.assertEqual(self.process_response()['Referrer-Policy'], expected)
+ 
++    @override_settings(SECURE_REFERRER_POLICY="same-origin")
++    def test_referrer_policy_default(self):
++        """
++        With SECURE_REFERRER_POLICY set to "same-origin", the middleware adds a
++        "Referrer-Policy" header with the value "same-origin" to the response.
++        """
++        self.assertEqual(self.process_response()['Referrer-Policy'], 'same-origin')
++
++
+     @override_settings(SECURE_REFERRER_POLICY='strict-origin')
+     def test_referrer_policy_already_present(self):
+         """
+2025-04-05 10:54:19,829 - INFO - Grading answer for django__django-12419...
+2025-04-05 10:54:19,829 - INFO - report: {'django__django-12419': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12419: resolved: False
+2025-04-05 10:54:19,830 - INFO - Attempting to stop container sweb.eval.django__django-12419.241028_solver...
+2025-04-05 10:54:36,328 - INFO - Attempting to remove container sweb.eval.django__django-12419.241028_solver...
+2025-04-05 10:54:36,442 - INFO - Container sweb.eval.django__django-12419.241028_solver removed.
+2025-04-05 10:54:36,442 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12419:latest...
+2025-04-05 10:54:39,724 - INFO - Image sweb.eval.x86_64.django__django-12419:latest removed.

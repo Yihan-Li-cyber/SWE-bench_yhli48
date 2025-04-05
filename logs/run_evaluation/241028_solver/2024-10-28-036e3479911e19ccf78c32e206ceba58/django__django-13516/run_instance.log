@@ -1,0 +1,57 @@
+2025-04-05 11:16:00,926 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13516
+Building instance image sweb.eval.x86_64.django__django-13516:latest for django__django-13516
+2025-04-05 11:18:53,645 - INFO - Creating container for django__django-13516...
+2025-04-05 11:18:53,835 - INFO - Container for django__django-13516 created: 343a805f9fdcd43ed9de43a794550a4828386d071f04bd364807d46897b42a04
+2025-04-05 11:18:54,963 - INFO - Container for django__django-13516 started: 343a805f9fdcd43ed9de43a794550a4828386d071f04bd364807d46897b42a04
+2025-04-05 11:18:54,963 - INFO - Intermediate patch for django__django-13516 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13516/patch.diff, now applying to container...
+2025-04-05 11:18:55,843 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:18:56,044 - INFO - >>>>> Applied Patch:
+patching file django/core/management/base.py
+
+2025-04-05 11:19:02,631 - INFO - Git diff before:
+diff --git a/django/core/management/base.py b/django/core/management/base.py
+index e6cbf8c64f..116f25b0ed 100644
+--- a/django/core/management/base.py
++++ b/django/core/management/base.py
+@@ -149,8 +149,11 @@ class OutputWrapper(TextIOBase):
+             msg += ending
+         style_func = style_func or self.style_func
+         self._out.write(style_func(msg))
++        self._out.flush()
+ 
+-
++    def flush(self):
++        """Flush the underlying output stream."""
++        return self._out.flush()
+ class BaseCommand:
+     """
+     The base class from which all management commands ultimately
+2025-04-05 11:19:02,632 - INFO - Eval script for django__django-13516 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13516/eval.sh; copying to container...
+2025-04-05 11:19:48,828 - INFO - Test runtime: 45.48 seconds
+2025-04-05 11:19:48,829 - INFO - Test output for django__django-13516 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13516/test_output.txt
+2025-04-05 11:19:49,147 - INFO - Git diff after:
+diff --git a/django/core/management/base.py b/django/core/management/base.py
+index e6cbf8c64f..116f25b0ed 100644
+--- a/django/core/management/base.py
++++ b/django/core/management/base.py
+@@ -149,8 +149,11 @@ class OutputWrapper(TextIOBase):
+             msg += ending
+         style_func = style_func or self.style_func
+         self._out.write(style_func(msg))
++        self._out.flush()
+ 
+-
++    def flush(self):
++        """Flush the underlying output stream."""
++        return self._out.flush()
+ class BaseCommand:
+     """
+     The base class from which all management commands ultimately
+2025-04-05 11:19:49,147 - INFO - Grading answer for django__django-13516...
+2025-04-05 11:19:49,147 - INFO - report: {'django__django-13516': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13516: resolved: False
+2025-04-05 11:19:49,148 - INFO - Attempting to stop container sweb.eval.django__django-13516.241028_solver...
+2025-04-05 11:20:05,827 - INFO - Attempting to remove container sweb.eval.django__django-13516.241028_solver...
+2025-04-05 11:20:06,028 - INFO - Container sweb.eval.django__django-13516.241028_solver removed.
+2025-04-05 11:20:06,028 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13516:latest...
+2025-04-05 11:20:09,323 - INFO - Image sweb.eval.x86_64.django__django-13516:latest removed.

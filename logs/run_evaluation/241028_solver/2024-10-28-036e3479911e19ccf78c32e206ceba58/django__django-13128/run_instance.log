@@ -1,0 +1,87 @@
+2025-04-05 11:02:57,323 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13128
+Building instance image sweb.eval.x86_64.django__django-13128:latest for django__django-13128
+2025-04-05 11:05:51,938 - INFO - Creating container for django__django-13128...
+2025-04-05 11:05:52,203 - INFO - Container for django__django-13128 created: 2ecbdc60d0c055981f5d7ebf3e2f04e727d9f48c67e2f756a4e91f0d88e5f9b0
+2025-04-05 11:05:53,336 - INFO - Container for django__django-13128 started: 2ecbdc60d0c055981f5d7ebf3e2f04e727d9f48c67e2f756a4e91f0d88e5f9b0
+2025-04-05 11:05:53,336 - INFO - Intermediate patch for django__django-13128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13128/patch.diff, now applying to container...
+2025-04-05 11:05:54,338 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:05:54,540 - INFO - >>>>> Applied Patch:
+patching file django/db/models/expressions.py
+
+2025-04-05 11:05:59,839 - INFO - Git diff before:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index d913658291..e4e4d026b4 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -65,7 +65,16 @@ class Combinable:
+ 
+         if reversed:
+             return CombinedExpression(other, connector, self)
+-        return CombinedExpression(self, connector, other)
++        expr = CombinedExpression(self, connector, other)
++        if (
++            connector == self.SUB and
++            hasattr(self, 'output_field') and
++            hasattr(other, 'output_field') and
++            self.output_field.get_internal_type() in {'DateField', 'DateTimeField', 'TimeField'} and
++            self.output_field.get_internal_type() == other.output_field.get_internal_type()
++        ):
++            return TemporalSubtraction(self, other)
++        return expr
+ 
+     #############
+     # OPERATORS #
+@@ -457,9 +466,6 @@ class CombinedExpression(SQLiteNumericMixin, Expression):
+             lhs_type != rhs_type
+         ):
+             return DurationExpression(self.lhs, self.connector, self.rhs).as_sql(compiler, connection)
+-        datetime_fields = {'DateField', 'DateTimeField', 'TimeField'}
+-        if self.connector == self.SUB and lhs_type in datetime_fields and lhs_type == rhs_type:
+-            return TemporalSubtraction(self.lhs, self.rhs).as_sql(compiler, connection)
+         expressions = []
+         expression_params = []
+         sql, params = compiler.compile(self.lhs)
+2025-04-05 11:05:59,839 - INFO - Eval script for django__django-13128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13128/eval.sh; copying to container...
+2025-04-05 11:06:41,457 - INFO - Test runtime: 40.82 seconds
+2025-04-05 11:06:41,457 - INFO - Test output for django__django-13128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13128/test_output.txt
+2025-04-05 11:06:41,840 - INFO - Git diff after:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index d913658291..e4e4d026b4 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -65,7 +65,16 @@ class Combinable:
+ 
+         if reversed:
+             return CombinedExpression(other, connector, self)
+-        return CombinedExpression(self, connector, other)
++        expr = CombinedExpression(self, connector, other)
++        if (
++            connector == self.SUB and
++            hasattr(self, 'output_field') and
++            hasattr(other, 'output_field') and
++            self.output_field.get_internal_type() in {'DateField', 'DateTimeField', 'TimeField'} and
++            self.output_field.get_internal_type() == other.output_field.get_internal_type()
++        ):
++            return TemporalSubtraction(self, other)
++        return expr
+ 
+     #############
+     # OPERATORS #
+@@ -457,9 +466,6 @@ class CombinedExpression(SQLiteNumericMixin, Expression):
+             lhs_type != rhs_type
+         ):
+             return DurationExpression(self.lhs, self.connector, self.rhs).as_sql(compiler, connection)
+-        datetime_fields = {'DateField', 'DateTimeField', 'TimeField'}
+-        if self.connector == self.SUB and lhs_type in datetime_fields and lhs_type == rhs_type:
+-            return TemporalSubtraction(self.lhs, self.rhs).as_sql(compiler, connection)
+         expressions = []
+         expression_params = []
+         sql, params = compiler.compile(self.lhs)
+2025-04-05 11:06:41,840 - INFO - Grading answer for django__django-13128...
+2025-04-05 11:06:41,840 - INFO - report: {'django__django-13128': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13128: resolved: False
+2025-04-05 11:06:41,841 - INFO - Attempting to stop container sweb.eval.django__django-13128.241028_solver...
+2025-04-05 11:06:58,227 - INFO - Attempting to remove container sweb.eval.django__django-13128.241028_solver...
+2025-04-05 11:06:58,424 - INFO - Container sweb.eval.django__django-13128.241028_solver removed.
+2025-04-05 11:06:58,424 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13128:latest...
+2025-04-05 11:07:00,732 - INFO - Image sweb.eval.x86_64.django__django-13128:latest removed.

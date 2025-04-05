@@ -1,0 +1,47 @@
+2025-04-05 11:28:28,447 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13925
+Building instance image sweb.eval.x86_64.django__django-13925:latest for django__django-13925
+2025-04-05 11:31:18,930 - INFO - Creating container for django__django-13925...
+2025-04-05 11:31:19,043 - INFO - Container for django__django-13925 created: bb383423e8069494660901eea6afbf6044229a957519871d0d78e530bddfa299
+2025-04-05 11:31:20,344 - INFO - Container for django__django-13925 started: bb383423e8069494660901eea6afbf6044229a957519871d0d78e530bddfa299
+2025-04-05 11:31:20,344 - INFO - Intermediate patch for django__django-13925 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13925/patch.diff, now applying to container...
+2025-04-05 11:31:21,332 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:31:21,534 - INFO - >>>>> Applied Patch:
+patching file django/db/models/options.py
+
+2025-04-05 11:31:27,528 - INFO - Git diff before:
+diff --git a/django/db/models/options.py b/django/db/models/options.py
+index 4028e05b99..6868e08380 100644
+--- a/django/db/models/options.py
++++ b/django/db/models/options.py
+@@ -280,6 +280,7 @@ class Options:
+                 if already_created:
+                     field = already_created[0]
+                 field.primary_key = True
++                field.auto_created = False  # Inherited PKs are not auto-created
+                 self.setup_pk(field)
+             else:
+                 pk_class = self._get_default_pk_class()
+2025-04-05 11:31:27,528 - INFO - Eval script for django__django-13925 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13925/eval.sh; copying to container...
+2025-04-05 11:31:52,148 - INFO - Test runtime: 23.98 seconds
+2025-04-05 11:31:52,148 - INFO - Test output for django__django-13925 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13925/test_output.txt
+2025-04-05 11:31:52,430 - INFO - Git diff after:
+diff --git a/django/db/models/options.py b/django/db/models/options.py
+index 4028e05b99..6868e08380 100644
+--- a/django/db/models/options.py
++++ b/django/db/models/options.py
+@@ -280,6 +280,7 @@ class Options:
+                 if already_created:
+                     field = already_created[0]
+                 field.primary_key = True
++                field.auto_created = False  # Inherited PKs are not auto-created
+                 self.setup_pk(field)
+             else:
+                 pk_class = self._get_default_pk_class()
+2025-04-05 11:31:52,430 - INFO - Grading answer for django__django-13925...
+2025-04-05 11:31:52,431 - INFO - report: {'django__django-13925': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13925: resolved: False
+2025-04-05 11:31:52,431 - INFO - Attempting to stop container sweb.eval.django__django-13925.241028_solver...
+2025-04-05 11:32:27,633 - INFO - Attempting to remove container sweb.eval.django__django-13925.241028_solver...
+2025-04-05 11:32:27,732 - INFO - Container sweb.eval.django__django-13925.241028_solver removed.
+2025-04-05 11:32:27,732 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13925:latest...
+2025-04-05 11:32:34,149 - INFO - Image sweb.eval.x86_64.django__django-13925:latest removed.

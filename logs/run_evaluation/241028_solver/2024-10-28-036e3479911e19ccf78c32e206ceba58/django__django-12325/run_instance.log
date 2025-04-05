@@ -1,0 +1,72 @@
+2025-04-05 10:50:38,749 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12325
+Building instance image sweb.eval.x86_64.django__django-12325:latest for django__django-12325
+2025-04-05 10:53:29,040 - INFO - Creating container for django__django-12325...
+2025-04-05 10:53:29,146 - INFO - Container for django__django-12325 created: 9c0adc9cfb109738c1534dd2cbf7915d8aafbf947b064ed629061b79fc4c2878
+2025-04-05 10:53:30,948 - INFO - Container for django__django-12325 started: 9c0adc9cfb109738c1534dd2cbf7915d8aafbf947b064ed629061b79fc4c2878
+2025-04-05 10:53:30,949 - INFO - Intermediate patch for django__django-12325 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12325/patch.diff, now applying to container...
+2025-04-05 10:53:32,027 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:53:32,324 - INFO - >>>>> Applied Patch:
+patching file django/db/models/base.py
+patching file tests/model_inheritance/test_parent_link.py
+
+2025-04-05 10:53:38,350 - INFO - Git diff before:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 8ea6c05ef9..93caf9a68d 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -200,11 +200,17 @@ class ModelBase(type):
+             # Skip concrete parent classes.
+             if base != new_class and not base._meta.abstract:
+                 continue
+-            # Locate OneToOneField instances.
++            # First pass: collect explicitly marked parent links
+             for field in base._meta.local_fields:
+-                if isinstance(field, OneToOneField):
++                if isinstance(field, OneToOneField) and getattr(field.remote_field, 'parent_link', False):
+                     related = resolve_relation(new_class, field.remote_field.model)
+                     parent_links[make_model_tuple(related)] = field
++            # Second pass: collect implicit parent links only if no explicit one exists
++            if not parent_links:
++                for field in base._meta.local_fields:
++                    if isinstance(field, OneToOneField):
++                        related = resolve_relation(new_class, field.remote_field.model)
++                        parent_links[make_model_tuple(related)] = field
+ 
+         # Track fields inherited from base models.
+         inherited_attributes = set()
+2025-04-05 10:53:38,423 - INFO - Eval script for django__django-12325 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12325/eval.sh; copying to container...
+2025-04-05 10:54:22,927 - INFO - Test runtime: 43.79 seconds
+2025-04-05 10:54:22,928 - INFO - Test output for django__django-12325 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12325/test_output.txt
+2025-04-05 10:54:23,247 - INFO - Git diff after:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index 8ea6c05ef9..93caf9a68d 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -200,11 +200,17 @@ class ModelBase(type):
+             # Skip concrete parent classes.
+             if base != new_class and not base._meta.abstract:
+                 continue
+-            # Locate OneToOneField instances.
++            # First pass: collect explicitly marked parent links
+             for field in base._meta.local_fields:
+-                if isinstance(field, OneToOneField):
++                if isinstance(field, OneToOneField) and getattr(field.remote_field, 'parent_link', False):
+                     related = resolve_relation(new_class, field.remote_field.model)
+                     parent_links[make_model_tuple(related)] = field
++            # Second pass: collect implicit parent links only if no explicit one exists
++            if not parent_links:
++                for field in base._meta.local_fields:
++                    if isinstance(field, OneToOneField):
++                        related = resolve_relation(new_class, field.remote_field.model)
++                        parent_links[make_model_tuple(related)] = field
+ 
+         # Track fields inherited from base models.
+         inherited_attributes = set()
+2025-04-05 10:54:23,247 - INFO - Grading answer for django__django-12325...
+2025-04-05 10:54:23,323 - INFO - report: {'django__django-12325': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12325: resolved: False
+2025-04-05 10:54:23,323 - INFO - Attempting to stop container sweb.eval.django__django-12325.241028_solver...
+2025-04-05 10:54:39,636 - INFO - Attempting to remove container sweb.eval.django__django-12325.241028_solver...
+2025-04-05 10:54:39,742 - INFO - Container sweb.eval.django__django-12325.241028_solver removed.
+2025-04-05 10:54:39,743 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12325:latest...
+2025-04-05 10:54:41,930 - INFO - Image sweb.eval.x86_64.django__django-12325:latest removed.

@@ -1,4 +1,4 @@
-2025-04-04 09:14:22,287 - INFO - Building image sweb.env.x86_64.c70974ae7654c7a2c98577:latest
+2025-04-05 07:27:56,367 - INFO - Building image sweb.env.x86_64.c70974ae7654c7a2c98577:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-04 09:14:22,288 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-05 07:27:56,367 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,28 +21,28 @@ conda create -n testbed python=3.6 setuptools==38.2.4 -y
 conda activate testbed
 python -m pip install attrs==17.3.0 exceptiongroup==0.0.0a0 execnet==1.5.0 hypothesis==3.44.2 cython==0.27.3 jinja2==2.10 MarkupSafe==1.0 numpy==1.16.0 packaging==16.8 pluggy==0.6.0 psutil==5.4.2 pyerfa==1.7.0 pytest-arraydiff==0.1 pytest-astropy-header==0.1 pytest-astropy==0.2.1 pytest-cov==2.5.1 pytest-doctestplus==0.1.2 pytest-filter-subpackage==0.1 pytest-forked==0.2 pytest-mock==1.6.3 pytest-openfiles==0.2.0 pytest-remotedata==0.2.0 pytest-xdist==1.20.1 pytest==3.3.1 PyYAML==3.12 sortedcontainers==1.5.9 tomli==0.2.0
 
-2025-04-04 09:14:22,296 - INFO - Building docker image sweb.env.x86_64.c70974ae7654c7a2c98577:latest in logs/build_images/env/sweb.env.x86_64.c70974ae7654c7a2c98577__latest with platform linux/x86_64
-2025-04-04 09:14:22,332 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-04 09:14:22,332 - INFO - 
-2025-04-04 09:14:22,332 - INFO - ---> 7652b8eed4b5
-2025-04-04 09:14:22,332 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-04 09:14:22,333 - INFO - 
-2025-04-04 09:14:22,474 - INFO - ---> 7e50528d00f6
-2025-04-04 09:14:22,475 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-04 09:14:22,475 - INFO - 
-2025-04-04 09:14:22,526 - INFO - ---> Running in b3d9df9a32b8
-2025-04-04 09:14:23,763 - INFO - ---> Removed intermediate container b3d9df9a32b8
-2025-04-04 09:14:23,763 - INFO - ---> f919f47fffbb
-2025-04-04 09:14:23,763 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-04 09:14:23,763 - INFO - 
-2025-04-04 09:14:23,851 - INFO - ---> Running in 7012cf0a9c40
-2025-04-04 09:14:26,615 - INFO - ---> Removed intermediate container 7012cf0a9c40
-2025-04-04 09:14:26,616 - INFO - ---> 13830ef295a0
-2025-04-04 09:14:26,616 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-04 09:14:26,616 - INFO - 
-2025-04-04 09:14:26,654 - INFO - ---> Running in 042bffc9f9c3
-2025-04-04 09:14:28,198 - INFO - + source /opt/miniconda3/bin/activate
-2025-04-04 09:14:28,199 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-05 07:27:56,376 - INFO - Building docker image sweb.env.x86_64.c70974ae7654c7a2c98577:latest in logs/build_images/env/sweb.env.x86_64.c70974ae7654c7a2c98577__latest with platform linux/x86_64
+2025-04-05 07:27:56,451 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-05 07:27:56,452 - INFO - 
+2025-04-05 07:27:56,452 - INFO - ---> bb912b738013
+2025-04-05 07:27:56,452 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-05 07:27:56,452 - INFO - 
+2025-04-05 07:27:56,586 - INFO - ---> d3e53c4c0f3c
+2025-04-05 07:27:56,586 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-05 07:27:56,587 - INFO - 
+2025-04-05 07:27:56,683 - INFO - ---> Running in 5a4324105e19
+2025-04-05 07:27:59,127 - INFO - ---> Removed intermediate container 5a4324105e19
+2025-04-05 07:27:59,127 - INFO - ---> a7052495f344
+2025-04-05 07:27:59,128 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-05 07:27:59,128 - INFO - 
+2025-04-05 07:27:59,310 - INFO - ---> Running in 07759ab76dc3
+2025-04-05 07:28:02,790 - INFO - ---> Removed intermediate container 07759ab76dc3
+2025-04-05 07:28:02,790 - INFO - ---> c416f76a2ae4
+2025-04-05 07:28:02,790 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-05 07:28:02,790 - INFO - 
+2025-04-05 07:28:02,878 - INFO - ---> Running in a2bfc047e851
+2025-04-05 07:28:04,853 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-05 07:28:04,854 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -52,26 +52,26 @@ python -m pip install attrs==17.3.0 exceptiongroup==0.0.0a0 execnet==1.5.0 hypot
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+++ '[' -z '' ']'
+2025-04-05 07:28:04,854 - INFO - +++ '[' -z '' ']'
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-04 09:14:28,200 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 09:14:28,201 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 09:14:28,204 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-05 07:28:04,855 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-05 07:28:04,857 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-05 07:28:04,859 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-2025-04-04 09:14:28,204 - INFO - ++ conda activate
+2025-04-05 07:28:04,859 - INFO - ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
-++ '[' -n '' ']'
+2025-04-05 07:28:04,859 - INFO - ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 09:14:28,205 - INFO - +++ PS1=
+2025-04-05 07:28:04,859 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 09:14:28,206 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 09:14:28,511 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-05 07:28:04,860 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-05 07:28:05,573 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -81,7 +81,7 @@ export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
 export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-2025-04-04 09:14:28,511 - INFO - ++ eval 'PS1='\''(base) '\''
+++ eval 'PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -90,10 +90,10 @@ export CONDA_PROMPT_MODIFIER='\''(base) '\''
 export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
-2025-04-04 09:14:28,512 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-2025-04-04 09:14:28,512 - INFO - +++ PS1='(base) '
-2025-04-04 09:14:28,512 - INFO - +++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-2025-04-04 09:14:28,512 - INFO - +++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
++++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export CONDA_PREFIX=/opt/miniconda3
 +++ CONDA_PREFIX=/opt/miniconda3
 +++ export CONDA_SHLVL=1
@@ -106,7 +106,7 @@ export _CE_CONDA='\'''\''
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
-+++ export _CE_CONDA=
+2025-04-05 07:28:05,574 - INFO - +++ export _CE_CONDA=
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
@@ -118,17 +118,16 @@ export _CE_CONDA='\'''\''
 + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.6 setuptools==38.2.4 -y
-2025-04-04 09:14:28,513 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.6 setuptools==38.2.4 -y
-2025-04-04 09:14:29,737 - INFO - Channels:
+2025-04-05 07:28:05,575 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.6 setuptools==38.2.4 -y
+2025-04-05 07:28:09,590 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
-Collecting package metadata (repodata.json):
-2025-04-04 09:14:29,737 - INFO - ...working...
-2025-04-04 09:17:10,952 - INFO - done
+Collecting package metadata (repodata.json): ...working...
+2025-04-05 07:33:32,609 - INFO - done
 Solving environment: ...working...
-2025-04-04 09:17:13,150 - INFO - done
-2025-04-04 09:17:25,200 - INFO - ## Package Plan ##
+2025-04-05 07:33:41,402 - INFO - done
+2025-04-05 07:34:25,526 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -184,12 +183,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-04 09:17:25,661 - INFO - done
-2025-04-04 09:17:25,661 - INFO - Verifying transaction: ...working...
-2025-04-04 09:17:28,060 - INFO - done
-2025-04-04 09:17:28,062 - INFO - Executing transaction: ...working...
-2025-04-04 09:17:45,035 - INFO - done
-2025-04-04 09:17:45,105 - INFO - #
+2025-04-05 07:34:26,918 - INFO - done
+Verifying transaction: ...working...
+2025-04-05 07:34:32,117 - INFO - done
+2025-04-05 07:34:32,118 - INFO - Executing transaction: ...working...
+2025-04-05 07:34:44,820 - INFO - done
+2025-04-05 07:34:45,114 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -197,16 +196,16 @@ Preparing transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-04 09:17:45,752 - INFO - + conda activate testbed
-2025-04-04 09:17:45,761 - INFO - + local cmd=activate
+2025-04-05 07:34:45,825 - INFO - + conda activate testbed
++ local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-04 09:17:45,764 - INFO - ++ PS1='(base) '
+2025-04-05 07:34:45,825 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 09:17:45,764 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 09:17:45,955 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-05 07:34:45,826 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-05 07:34:46,619 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -241,7 +240,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ CONDA_PROMPT_MODIFIER='(testbed) '
 ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
-2025-04-04 09:17:45,955 - INFO - ++ export CONDA_EXE=/opt/miniconda3/bin/conda
+++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
 ++ export _CE_M=
 ++ _CE_M=
@@ -250,167 +249,167 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 + __conda_hashr
-2025-04-04 09:17:45,956 - INFO - + '[' -n '' ']'
++ '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-2025-04-04 09:17:45,956 - INFO - + python -m pip install attrs==17.3.0 exceptiongroup==0.0.0a0 execnet==1.5.0 hypothesis==3.44.2 cython==0.27.3 jinja2==2.10 MarkupSafe==1.0 numpy==1.16.0 packaging==16.8 pluggy==0.6.0 psutil==5.4.2 pyerfa==1.7.0 pytest-arraydiff==0.1 pytest-astropy-header==0.1 pytest-astropy==0.2.1 pytest-cov==2.5.1 pytest-doctestplus==0.1.2 pytest-filter-subpackage==0.1 pytest-forked==0.2 pytest-mock==1.6.3 pytest-openfiles==0.2.0 pytest-remotedata==0.2.0 pytest-xdist==1.20.1 pytest==3.3.1 PyYAML==3.12 sortedcontainers==1.5.9 tomli==0.2.0
-2025-04-04 09:17:47,195 - INFO - Collecting attrs==17.3.0
-2025-04-04 09:17:47,218 - INFO - Downloading attrs-17.3.0-py2.py3-none-any.whl (29 kB)
-2025-04-04 09:17:47,423 - INFO - Collecting exceptiongroup==0.0.0a0
-2025-04-04 09:17:47,434 - INFO - Downloading exceptiongroup-0.0.0a0-py3-none-any.whl (16 kB)
-2025-04-04 09:17:47,574 - INFO - Collecting execnet==1.5.0
-2025-04-04 09:17:47,583 - INFO - Downloading execnet-1.5.0-py2.py3-none-any.whl (39 kB)
-2025-04-04 09:17:49,821 - INFO - Collecting hypothesis==3.44.2
-2025-04-04 09:17:49,828 - INFO - Downloading hypothesis-3.44.2-py3-none-any.whl (186 kB)
-2025-04-04 09:17:51,967 - INFO - Collecting cython==0.27.3
-2025-04-04 09:17:51,973 - INFO - Downloading Cython-0.27.3-cp36-cp36m-manylinux1_x86_64.whl (3.1 MB)
-2025-04-04 09:17:52,230 - INFO - Collecting jinja2==2.10
-2025-04-04 09:17:52,242 - INFO - Downloading Jinja2-2.10-py2.py3-none-any.whl (126 kB)
-2025-04-04 09:17:52,765 - INFO - Collecting MarkupSafe==1.0
-2025-04-04 09:17:52,771 - INFO - Downloading MarkupSafe-1.0.tar.gz (14 kB)
-2025-04-04 09:17:55,254 - INFO - Collecting numpy==1.16.0
-2025-04-04 09:17:55,262 - INFO - Downloading numpy-1.16.0-cp36-cp36m-manylinux1_x86_64.whl (17.3 MB)
-2025-04-04 09:17:55,861 - INFO - Collecting packaging==16.8
-2025-04-04 09:17:55,931 - INFO - Downloading packaging-16.8-py2.py3-none-any.whl (23 kB)
-2025-04-04 09:17:56,120 - INFO - Collecting pluggy==0.6.0
-2025-04-04 09:17:56,148 - INFO - Downloading pluggy-0.6.0-py3-none-any.whl (13 kB)
-2025-04-04 09:17:56,816 - INFO - Collecting psutil==5.4.2
-2025-04-04 09:17:56,821 - INFO - Downloading psutil-5.4.2.tar.gz (411 kB)
-2025-04-04 09:17:58,115 - INFO - Collecting pyerfa==1.7.0
-2025-04-04 09:17:58,122 - INFO - Downloading pyerfa-1.7.0-cp36-cp36m-manylinux2010_x86_64.whl (693 kB)
-2025-04-04 09:17:58,302 - INFO - Collecting pytest-arraydiff==0.1
-2025-04-04 09:17:58,309 - INFO - Downloading pytest-arraydiff-0.1.tar.gz (8.8 kB)
-2025-04-04 09:17:58,804 - INFO - Collecting pytest-astropy-header==0.1
-2025-04-04 09:17:58,814 - INFO - Downloading pytest_astropy_header-0.1-py2.py3-none-any.whl (7.3 kB)
-2025-04-04 09:17:58,941 - INFO - Collecting pytest-astropy==0.2.1
-2025-04-04 09:17:58,996 - INFO - Downloading pytest-astropy-0.2.1.tar.gz (3.6 kB)
-2025-04-04 09:17:59,460 - INFO - Collecting pytest-cov==2.5.1
-2025-04-04 09:17:59,466 - INFO - Downloading pytest_cov-2.5.1-py2.py3-none-any.whl (21 kB)
-2025-04-04 09:17:59,701 - INFO - Collecting pytest-doctestplus==0.1.2
-2025-04-04 09:17:59,708 - INFO - Downloading pytest-doctestplus-0.1.2.tar.gz (14 kB)
-2025-04-04 09:18:00,204 - INFO - Collecting pytest-filter-subpackage==0.1
-2025-04-04 09:18:00,211 - INFO - Downloading pytest_filter_subpackage-0.1-py2.py3-none-any.whl (4.9 kB)
-2025-04-04 09:18:00,260 - INFO - Collecting pytest-forked==0.2
-2025-04-04 09:18:00,266 - INFO - Downloading pytest_forked-0.2-py2.py3-none-any.whl (6.1 kB)
-2025-04-04 09:18:00,393 - INFO - Collecting pytest-mock==1.6.3
-2025-04-04 09:18:00,398 - INFO - Downloading pytest_mock-1.6.3-py2.py3-none-any.whl (12 kB)
-2025-04-04 09:18:00,540 - INFO - Collecting pytest-openfiles==0.2.0
-2025-04-04 09:18:00,551 - INFO - Downloading pytest-openfiles-0.2.0.tar.gz (5.2 kB)
-2025-04-04 09:18:01,135 - INFO - Collecting pytest-remotedata==0.2.0
-2025-04-04 09:18:01,243 - INFO - Downloading pytest-remotedata-0.2.0.tar.gz (9.5 kB)
-2025-04-04 09:18:01,790 - INFO - Collecting pytest-xdist==1.20.1
-2025-04-04 09:18:01,797 - INFO - Downloading pytest_xdist-1.20.1-py2.py3-none-any.whl (37 kB)
-2025-04-04 09:18:02,215 - INFO - Collecting pytest==3.3.1
-2025-04-04 09:18:02,225 - INFO - Downloading pytest-3.3.1-py2.py3-none-any.whl (184 kB)
-2025-04-04 09:18:02,675 - INFO - Collecting PyYAML==3.12
-2025-04-04 09:18:02,685 - INFO - Downloading PyYAML-3.12.zip (375 kB)
-2025-04-04 09:18:03,432 - INFO - Collecting sortedcontainers==1.5.9
-2025-04-04 09:18:03,442 - INFO - Downloading sortedcontainers-1.5.9-py2.py3-none-any.whl (31 kB)
-2025-04-04 09:18:03,535 - INFO - Collecting tomli==0.2.0
-2025-04-04 09:18:03,605 - INFO - Downloading tomli-0.2.0-py3-none-any.whl (8.6 kB)
-2025-04-04 09:18:03,703 - INFO - Collecting trio
-2025-04-04 09:18:03,713 - INFO - Downloading trio-0.19.0-py3-none-any.whl (356 kB)
-2025-04-04 09:18:03,782 - INFO - Collecting apipkg>=1.4
-2025-04-04 09:18:03,789 - INFO - Downloading apipkg-2.1.1-py2.py3-none-any.whl (7.1 kB)
-2025-04-04 09:18:07,364 - INFO - Collecting coverage
-2025-04-04 09:18:07,372 - INFO - Downloading coverage-6.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (212 kB)
-2025-04-04 09:18:07,590 - INFO - Collecting pyparsing
-2025-04-04 09:18:07,597 - INFO - Downloading pyparsing-3.1.4-py3-none-any.whl (104 kB)
-2025-04-04 09:18:07,664 - INFO - Collecting six
-2025-04-04 09:18:07,670 - INFO - Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
-2025-04-04 09:18:08,070 - INFO - Collecting py>=1.5.0
-2025-04-04 09:18:08,076 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
-2025-04-04 09:18:08,094 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from pytest==3.3.1) (38.2.4)
-2025-04-04 09:18:08,298 - INFO - Collecting async-generator>=1.9
-2025-04-04 09:18:08,306 - INFO - Downloading async_generator-1.10-py3-none-any.whl (18 kB)
-2025-04-04 09:18:08,359 - INFO - Collecting outcome
-2025-04-04 09:18:08,364 - INFO - Downloading outcome-1.1.0-py2.py3-none-any.whl (9.7 kB)
-2025-04-04 09:18:08,403 - INFO - Collecting sniffio
-2025-04-04 09:18:08,409 - INFO - Downloading sniffio-1.2.0-py3-none-any.whl (10 kB)
-2025-04-04 09:18:08,476 - INFO - Collecting idna
-2025-04-04 09:18:08,482 - INFO - Downloading idna-3.10-py3-none-any.whl (70 kB)
-2025-04-04 09:18:08,533 - INFO - Collecting trio
-2025-04-04 09:18:08,542 - INFO - Downloading trio-0.18.0-py3-none-any.whl (354 kB)
-2025-04-04 09:18:08,590 - INFO - Downloading trio-0.17.0-py3-none-any.whl (354 kB)
-2025-04-04 09:18:08,643 - INFO - Downloading trio-0.16.0-py3-none-any.whl (337 kB)
-2025-04-04 09:18:08,697 - INFO - Downloading trio-0.15.1-py3-none-any.whl (330 kB)
-2025-04-04 09:18:08,756 - INFO - Downloading trio-0.15.0-py3-none-any.whl (329 kB)
-2025-04-04 09:18:08,812 - INFO - Downloading trio-0.14.0-py3-none-any.whl (327 kB)
-2025-04-04 09:18:08,862 - INFO - Downloading trio-0.13.0-py3-none-any.whl (320 kB)
-2025-04-04 09:18:08,914 - INFO - Downloading trio-0.12.1-py3-none-any.whl (314 kB)
-2025-04-04 09:18:08,972 - INFO - Downloading trio-0.12.0-py3-none-any.whl (313 kB)
-2025-04-04 09:18:09,026 - INFO - Downloading trio-0.11.0-py3-none-any.whl (289 kB)
-2025-04-04 09:18:09,077 - INFO - Downloading trio-0.10.0.tar.gz (402 kB)
-2025-04-04 09:18:09,208 - INFO - Installing build dependencies: started
-2025-04-04 09:18:12,072 - INFO - Installing build dependencies: finished with status 'done'
-2025-04-04 09:18:12,074 - INFO - Getting requirements to build wheel: started
-2025-04-04 09:18:12,625 - INFO - Getting requirements to build wheel: finished with status 'done'
-2025-04-04 09:18:12,632 - INFO - Preparing wheel metadata: started
-2025-04-04 09:18:13,160 - INFO - Preparing wheel metadata: finished with status 'done'
-2025-04-04 09:18:13,218 - INFO - Downloading trio-0.9.0-py3-none-any.whl (261 kB)
-2025-04-04 09:18:13,301 - INFO - Downloading trio-0.8.0-py3-none-any.whl (255 kB)
-2025-04-04 09:18:13,377 - INFO - Collecting contextvars>=2.1
-2025-04-04 09:18:13,385 - INFO - Downloading contextvars-2.4.tar.gz (9.6 kB)
-2025-04-04 09:18:14,148 - INFO - Collecting immutables>=0.9
-2025-04-04 09:18:14,156 - INFO - Downloading immutables-0.19-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (116 kB)
-2025-04-04 09:18:14,277 - INFO - Collecting typing-extensions>=3.7.4.3
-2025-04-04 09:18:14,286 - INFO - Downloading typing_extensions-4.1.1-py3-none-any.whl (26 kB)
-2025-04-04 09:18:14,361 - INFO - Collecting outcome
-2025-04-04 09:18:14,368 - INFO - Downloading outcome-1.0.1-py2.py3-none-any.whl (10 kB)
-2025-04-04 09:18:14,396 - INFO - Downloading outcome-1.0.0-py2.py3-none-any.whl (5.1 kB)
-2025-04-04 09:18:14,471 - INFO - Building wheels for collected packages: MarkupSafe, psutil, pytest-arraydiff, pytest-astropy, pytest-doctestplus, pytest-openfiles, pytest-remotedata, PyYAML, contextvars
-  Building wheel for MarkupSafe (setup.py): started
-2025-04-04 09:18:15,340 - INFO - Building wheel for MarkupSafe (setup.py): finished with status 'done'
-2025-04-04 09:18:15,342 - INFO - Created wheel for MarkupSafe: filename=MarkupSafe-1.0-cp36-cp36m-linux_x86_64.whl size=26125 sha256=79c04e14e1fbaad2d8a284ff64952c13f04b932121565b433db266adb616a8c7
-  Stored in directory: /root/.cache/pip/wheels/00/5a/67/e7ff93a250c45c5b91636cc8a0660c888bbb7d2829eaa6ca9d
-2025-04-04 09:18:15,348 - INFO - Building wheel for psutil (setup.py): started
-2025-04-04 09:18:17,319 - INFO - Building wheel for psutil (setup.py): finished with status 'done'
-2025-04-04 09:18:17,320 - INFO - Created wheel for psutil: filename=psutil-5.4.2-cp36-cp36m-linux_x86_64.whl size=252904 sha256=fa4e5761e3dd88fb2a872831d307f045093faca42a23c437ef1a14e99b97e88a
-2025-04-04 09:18:17,320 - INFO - Stored in directory: /root/.cache/pip/wheels/c5/18/95/569dcfb7e6ef608e2a5f7b874eb54b586e309127eda990022d
-2025-04-04 09:18:17,327 - INFO - Building wheel for pytest-arraydiff (setup.py): started
-2025-04-04 09:18:17,767 - INFO - Building wheel for pytest-arraydiff (setup.py): finished with status 'done'
-2025-04-04 09:18:17,768 - INFO - Created wheel for pytest-arraydiff: filename=pytest_arraydiff-0.1-py3-none-any.whl size=8150 sha256=3d22c60f654503fea935f91eb7a0cb5f5df65b01760196161c07d487effa0d67
-2025-04-04 09:18:17,769 - INFO - Stored in directory: /root/.cache/pip/wheels/c4/33/39/28583fdf07c5692bc1e90f0734aa62023afc885bbee2ef6d43
-2025-04-04 09:18:17,776 - INFO - Building wheel for pytest-astropy (setup.py): started
-2025-04-04 09:18:18,210 - INFO - Building wheel for pytest-astropy (setup.py): finished with status 'done'
-2025-04-04 09:18:18,211 - INFO - Created wheel for pytest-astropy: filename=pytest_astropy-0.2.1-py3-none-any.whl size=3182 sha256=00a713b6948f91bbbf3fe80ce8290660d4a5921938dee87575811cd80fc10743
-2025-04-04 09:18:18,212 - INFO - Stored in directory: /root/.cache/pip/wheels/a2/50/0f/5eda04333fc65d224038d57b26fc715369673b5ef43b198742
-2025-04-04 09:18:18,216 - INFO - Building wheel for pytest-doctestplus (setup.py): started
-2025-04-04 09:18:18,761 - INFO - Building wheel for pytest-doctestplus (setup.py): finished with status 'done'
-2025-04-04 09:18:18,763 - INFO - Created wheel for pytest-doctestplus: filename=pytest_doctestplus-0.1.2-py3-none-any.whl size=13564 sha256=1c1ddf279bc97f7aecfeb7bfe12cab441729f17db02a3e28affb892172f8b0b6
-2025-04-04 09:18:18,766 - INFO - Stored in directory: /root/.cache/pip/wheels/45/68/8e/7b95453863efb8d0db3e724fe2de7e150127cd91111248c9b7
-2025-04-04 09:18:18,770 - INFO - Building wheel for pytest-openfiles (setup.py): started
-2025-04-04 09:18:19,338 - INFO - Building wheel for pytest-openfiles (setup.py): finished with status 'done'
-2025-04-04 09:18:19,339 - INFO - Created wheel for pytest-openfiles: filename=pytest_openfiles-0.2.0-py3-none-any.whl size=6143 sha256=59770aa5cc6f07420ed3f96fb46b3b051d3778bb2d1bec5f50e7f9834a5cb1d2
-2025-04-04 09:18:19,341 - INFO - Stored in directory: /root/.cache/pip/wheels/7a/a4/77/ce43650175f0007e250b0e632132e16e292923420a11c2c890
-2025-04-04 09:18:19,355 - INFO - Building wheel for pytest-remotedata (setup.py): started
-2025-04-04 09:18:19,879 - INFO - Building wheel for pytest-remotedata (setup.py): finished with status 'done'
-2025-04-04 09:18:19,879 - INFO - Created wheel for pytest-remotedata: filename=pytest_remotedata-0.2.0-py3-none-any.whl size=11313 sha256=7841b52f9e4a0295ce1c4623f4ce896af050701952bcf31b835cd42465ccbbcc
-  Stored in directory: /root/.cache/pip/wheels/82/82/15/e00a2b86dd24ce0e1a315653b10e609567d61465340e3f930a
-2025-04-04 09:18:19,885 - INFO - Building wheel for PyYAML (setup.py): started
-2025-04-04 09:18:20,646 - INFO - Building wheel for PyYAML (setup.py): finished with status 'done'
-2025-04-04 09:18:20,646 - INFO - Created wheel for PyYAML: filename=PyYAML-3.12-cp36-cp36m-linux_x86_64.whl size=43078 sha256=049d09bb0d10c294894b135a9ae0a69b3d43be159549ddeddc9cb78d683dcbb8
-2025-04-04 09:18:20,646 - INFO - Stored in directory: /root/.cache/pip/wheels/58/13/a4/e672e27a1ba3320d443b791c3a1203c64f5cb17f2a69dc7438
-2025-04-04 09:18:20,828 - INFO - Building wheel for contextvars (setup.py): started
-2025-04-04 09:18:21,258 - INFO - Building wheel for contextvars (setup.py): finished with status 'done'
-2025-04-04 09:18:21,259 - INFO - Created wheel for contextvars: filename=contextvars-2.4-py3-none-any.whl size=7683 sha256=7c02574fa3cb996995a8fe070c76dd0645037ed7624aa87dd166eac6f7478fca
-2025-04-04 09:18:21,260 - INFO - Stored in directory: /root/.cache/pip/wheels/41/11/53/911724983aa48deb94792432e14e518447212dd6c5477d49d3
-2025-04-04 09:18:21,265 - INFO - Successfully built MarkupSafe psutil pytest-arraydiff pytest-astropy pytest-doctestplus pytest-openfiles pytest-remotedata PyYAML contextvars
-2025-04-04 09:18:21,439 - INFO - Installing collected packages: typing-extensions, immutables, six, py, pluggy, contextvars, attrs, sortedcontainers, sniffio, pytest, psutil, outcome, numpy, idna, async-generator, apipkg, trio, pytest-remotedata, pytest-openfiles, pytest-forked, pytest-doctestplus, pytest-arraydiff, pyparsing, MarkupSafe, execnet, coverage, tomli, PyYAML, pytest-xdist, pytest-mock, pytest-filter-subpackage, pytest-cov, pytest-astropy-header, pytest-astropy, pyerfa, packaging, jinja2, hypothesis, exceptiongroup, cython
-2025-04-04 09:18:30,302 - INFO - Successfully installed MarkupSafe-1.0 PyYAML-3.12 apipkg-2.1.1 async-generator-1.10 attrs-17.3.0 contextvars-2.4 coverage-6.2 cython-0.27.3 exceptiongroup-0.0.0a0 execnet-1.5.0 hypothesis-3.44.2 idna-3.10 immutables-0.19 jinja2-2.10 numpy-1.16.0 outcome-1.0.0 packaging-16.8 pluggy-0.6.0 psutil-5.4.2 py-1.11.0 pyerfa-1.7.0 pyparsing-3.1.4 pytest-3.3.1 pytest-arraydiff-0.1 pytest-astropy-0.2.1 pytest-astropy-header-0.1 pytest-cov-2.5.1 pytest-doctestplus-0.1.2 pytest-filter-subpackage-0.1 pytest-forked-0.2 pytest-mock-1.6.3 pytest-openfiles-0.2.0 pytest-remotedata-0.2.0 pytest-xdist-1.20.1 six-1.17.0 sniffio-1.2.0 sortedcontainers-1.5.9 tomli-0.2.0 trio-0.8.0 typing-extensions-4.1.1
-2025-04-04 09:18:30,302 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-2025-04-04 09:18:52,820 - INFO - ---> Removed intermediate container 042bffc9f9c3
-2025-04-04 09:18:52,821 - INFO - ---> 4bb89c38e111
-2025-04-04 09:18:52,821 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-04 09:18:52,821 - INFO - 
-2025-04-04 09:18:53,586 - INFO - ---> Running in ac021c621c7b
-2025-04-04 09:18:53,657 - INFO - ---> Removed intermediate container ac021c621c7b
-2025-04-04 09:18:53,658 - INFO - ---> 7a7bdf1d8b0b
-2025-04-04 09:18:53,658 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-04 09:18:53,658 - INFO - 
-2025-04-04 09:18:53,745 - INFO - ---> Running in 5edcd4fdbf32
-2025-04-04 09:18:54,886 - INFO - ---> Removed intermediate container 5edcd4fdbf32
-2025-04-04 09:18:54,887 - INFO - ---> 89951e3f7816
-2025-04-04 09:18:54,887 - INFO - Successfully built 89951e3f7816
-2025-04-04 09:18:54,891 - INFO - Successfully tagged sweb.env.x86_64.c70974ae7654c7a2c98577:latest
-2025-04-04 09:18:54,891 - INFO - Image built successfully!
++ python -m pip install attrs==17.3.0 exceptiongroup==0.0.0a0 execnet==1.5.0 hypothesis==3.44.2 cython==0.27.3 jinja2==2.10 MarkupSafe==1.0 numpy==1.16.0 packaging==16.8 pluggy==0.6.0 psutil==5.4.2 pyerfa==1.7.0 pytest-arraydiff==0.1 pytest-astropy-header==0.1 pytest-astropy==0.2.1 pytest-cov==2.5.1 pytest-doctestplus==0.1.2 pytest-filter-subpackage==0.1 pytest-forked==0.2 pytest-mock==1.6.3 pytest-openfiles==0.2.0 pytest-remotedata==0.2.0 pytest-xdist==1.20.1 pytest==3.3.1 PyYAML==3.12 sortedcontainers==1.5.9 tomli==0.2.0
+2025-04-05 07:34:49,509 - INFO - Collecting attrs==17.3.0
+2025-04-05 07:34:49,604 - INFO - Downloading attrs-17.3.0-py2.py3-none-any.whl (29 kB)
+2025-04-05 07:34:49,808 - INFO - Collecting exceptiongroup==0.0.0a0
+2025-04-05 07:34:49,815 - INFO - Downloading exceptiongroup-0.0.0a0-py3-none-any.whl (16 kB)
+2025-04-05 07:34:50,118 - INFO - Collecting execnet==1.5.0
+2025-04-05 07:34:50,125 - INFO - Downloading execnet-1.5.0-py2.py3-none-any.whl (39 kB)
+2025-04-05 07:34:57,813 - INFO - Collecting hypothesis==3.44.2
+2025-04-05 07:34:57,924 - INFO - Downloading hypothesis-3.44.2-py3-none-any.whl (186 kB)
+2025-04-05 07:35:07,917 - INFO - Collecting cython==0.27.3
+2025-04-05 07:35:07,923 - INFO - Downloading Cython-0.27.3-cp36-cp36m-manylinux1_x86_64.whl (3.1 MB)
+2025-04-05 07:35:08,524 - INFO - Collecting jinja2==2.10
+2025-04-05 07:35:08,605 - INFO - Downloading Jinja2-2.10-py2.py3-none-any.whl (126 kB)
+2025-04-05 07:35:10,618 - INFO - Collecting MarkupSafe==1.0
+2025-04-05 07:35:10,625 - INFO - Downloading MarkupSafe-1.0.tar.gz (14 kB)
+2025-04-05 07:35:19,820 - INFO - Collecting numpy==1.16.0
+2025-04-05 07:35:19,829 - INFO - Downloading numpy-1.16.0-cp36-cp36m-manylinux1_x86_64.whl (17.3 MB)
+2025-04-05 07:35:21,722 - INFO - Collecting packaging==16.8
+2025-04-05 07:35:21,726 - INFO - Downloading packaging-16.8-py2.py3-none-any.whl (23 kB)
+2025-04-05 07:35:22,007 - INFO - Collecting pluggy==0.6.0
+2025-04-05 07:35:22,013 - INFO - Downloading pluggy-0.6.0-py3-none-any.whl (13 kB)
+2025-04-05 07:35:24,828 - INFO - Collecting psutil==5.4.2
+2025-04-05 07:35:24,912 - INFO - Downloading psutil-5.4.2.tar.gz (411 kB)
+2025-04-05 07:35:27,625 - INFO - Collecting pyerfa==1.7.0
+2025-04-05 07:35:27,707 - INFO - Downloading pyerfa-1.7.0-cp36-cp36m-manylinux2010_x86_64.whl (693 kB)
+2025-04-05 07:35:28,107 - INFO - Collecting pytest-arraydiff==0.1
+2025-04-05 07:35:28,114 - INFO - Downloading pytest-arraydiff-0.1.tar.gz (8.8 kB)
+2025-04-05 07:35:29,506 - INFO - Collecting pytest-astropy-header==0.1
+2025-04-05 07:35:29,514 - INFO - Downloading pytest_astropy_header-0.1-py2.py3-none-any.whl (7.3 kB)
+2025-04-05 07:35:29,724 - INFO - Collecting pytest-astropy==0.2.1
+2025-04-05 07:35:29,732 - INFO - Downloading pytest-astropy-0.2.1.tar.gz (3.6 kB)
+2025-04-05 07:35:31,128 - INFO - Collecting pytest-cov==2.5.1
+2025-04-05 07:35:31,212 - INFO - Downloading pytest_cov-2.5.1-py2.py3-none-any.whl (21 kB)
+2025-04-05 07:35:31,426 - INFO - Collecting pytest-doctestplus==0.1.2
+2025-04-05 07:35:31,508 - INFO - Downloading pytest-doctestplus-0.1.2.tar.gz (14 kB)
+2025-04-05 07:35:33,114 - INFO - Collecting pytest-filter-subpackage==0.1
+2025-04-05 07:35:33,123 - INFO - Downloading pytest_filter_subpackage-0.1-py2.py3-none-any.whl (4.9 kB)
+2025-04-05 07:35:33,321 - INFO - Collecting pytest-forked==0.2
+2025-04-05 07:35:33,328 - INFO - Downloading pytest_forked-0.2-py2.py3-none-any.whl (6.1 kB)
+2025-04-05 07:35:33,812 - INFO - Collecting pytest-mock==1.6.3
+2025-04-05 07:35:33,821 - INFO - Downloading pytest_mock-1.6.3-py2.py3-none-any.whl (12 kB)
+2025-04-05 07:35:34,064 - INFO - Collecting pytest-openfiles==0.2.0
+2025-04-05 07:35:34,107 - INFO - Downloading pytest-openfiles-0.2.0.tar.gz (5.2 kB)
+2025-04-05 07:35:35,827 - INFO - Collecting pytest-remotedata==0.2.0
+2025-04-05 07:35:35,909 - INFO - Downloading pytest-remotedata-0.2.0.tar.gz (9.5 kB)
+2025-04-05 07:35:37,622 - INFO - Collecting pytest-xdist==1.20.1
+2025-04-05 07:35:37,628 - INFO - Downloading pytest_xdist-1.20.1-py2.py3-none-any.whl (37 kB)
+2025-04-05 07:35:38,629 - INFO - Collecting pytest==3.3.1
+2025-04-05 07:35:38,713 - INFO - Downloading pytest-3.3.1-py2.py3-none-any.whl (184 kB)
+2025-04-05 07:35:40,227 - INFO - Collecting PyYAML==3.12
+2025-04-05 07:35:40,308 - INFO - Downloading PyYAML-3.12.zip (375 kB)
+2025-04-05 07:35:42,921 - INFO - Collecting sortedcontainers==1.5.9
+2025-04-05 07:35:42,927 - INFO - Downloading sortedcontainers-1.5.9-py2.py3-none-any.whl (31 kB)
+2025-04-05 07:35:43,314 - INFO - Collecting tomli==0.2.0
+2025-04-05 07:35:43,321 - INFO - Downloading tomli-0.2.0-py3-none-any.whl (8.6 kB)
+2025-04-05 07:35:43,620 - INFO - Collecting trio
+2025-04-05 07:35:43,628 - INFO - Downloading trio-0.19.0-py3-none-any.whl (356 kB)
+2025-04-05 07:35:43,913 - INFO - Collecting apipkg>=1.4
+2025-04-05 07:35:43,921 - INFO - Downloading apipkg-2.1.1-py2.py3-none-any.whl (7.1 kB)
+2025-04-05 07:35:59,210 - INFO - Collecting coverage
+2025-04-05 07:35:59,216 - INFO - Downloading coverage-6.2-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (212 kB)
+2025-04-05 07:36:00,112 - INFO - Collecting pyparsing
+2025-04-05 07:36:00,118 - INFO - Downloading pyparsing-3.1.4-py3-none-any.whl (104 kB)
+2025-04-05 07:36:00,832 - INFO - Collecting six
+2025-04-05 07:36:00,914 - INFO - Downloading six-1.17.0-py2.py3-none-any.whl (11 kB)
+2025-04-05 07:36:02,615 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (from pytest==3.3.1) (38.2.4)
+2025-04-05 07:36:02,923 - INFO - Collecting py>=1.5.0
+2025-04-05 07:36:02,931 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+2025-04-05 07:36:03,617 - INFO - Collecting sniffio
+2025-04-05 07:36:03,623 - INFO - Downloading sniffio-1.2.0-py3-none-any.whl (10 kB)
+2025-04-05 07:36:03,816 - INFO - Collecting async-generator>=1.9
+2025-04-05 07:36:03,823 - INFO - Downloading async_generator-1.10-py3-none-any.whl (18 kB)
+2025-04-05 07:36:03,934 - INFO - Collecting contextvars>=2.1
+2025-04-05 07:36:04,013 - INFO - Downloading contextvars-2.4.tar.gz (9.6 kB)
+2025-04-05 07:36:05,411 - INFO - Collecting outcome
+2025-04-05 07:36:05,422 - INFO - Downloading outcome-1.1.0-py2.py3-none-any.whl (9.7 kB)
+2025-04-05 07:36:05,719 - INFO - Collecting idna
+2025-04-05 07:36:05,742 - INFO - Downloading idna-3.10-py3-none-any.whl (70 kB)
+2025-04-05 07:36:05,817 - INFO - Collecting trio
+2025-04-05 07:36:05,823 - INFO - Downloading trio-0.18.0-py3-none-any.whl (354 kB)
+2025-04-05 07:36:06,024 - INFO - Downloading trio-0.17.0-py3-none-any.whl (354 kB)
+2025-04-05 07:36:06,222 - INFO - Downloading trio-0.16.0-py3-none-any.whl (337 kB)
+2025-04-05 07:36:06,426 - INFO - Downloading trio-0.15.1-py3-none-any.whl (330 kB)
+2025-04-05 07:36:06,624 - INFO - Downloading trio-0.15.0-py3-none-any.whl (329 kB)
+2025-04-05 07:36:06,817 - INFO - Downloading trio-0.14.0-py3-none-any.whl (327 kB)
+2025-04-05 07:36:06,964 - INFO - Downloading trio-0.13.0-py3-none-any.whl (320 kB)
+2025-04-05 07:36:07,132 - INFO - Downloading trio-0.12.1-py3-none-any.whl (314 kB)
+2025-04-05 07:36:07,324 - INFO - Downloading trio-0.12.0-py3-none-any.whl (313 kB)
+2025-04-05 07:36:07,515 - INFO - Downloading trio-0.11.0-py3-none-any.whl (289 kB)
+2025-04-05 07:36:07,721 - INFO - Downloading trio-0.10.0.tar.gz (402 kB)
+2025-04-05 07:36:08,354 - INFO - Installing build dependencies: started
+2025-04-05 07:36:19,716 - INFO - Installing build dependencies: finished with status 'done'
+2025-04-05 07:36:19,717 - INFO - Getting requirements to build wheel: started
+2025-04-05 07:36:21,510 - INFO - Getting requirements to build wheel: finished with status 'done'
+2025-04-05 07:36:21,516 - INFO - Preparing wheel metadata: started
+2025-04-05 07:36:23,534 - INFO - Preparing wheel metadata: finished with status 'done'
+2025-04-05 07:36:23,650 - INFO - Downloading trio-0.9.0-py3-none-any.whl (261 kB)
+2025-04-05 07:36:23,832 - INFO - Downloading trio-0.8.0-py3-none-any.whl (255 kB)
+2025-04-05 07:36:25,332 - INFO - Collecting immutables>=0.9
+2025-04-05 07:36:25,418 - INFO - Downloading immutables-0.19-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64.whl (116 kB)
+2025-04-05 07:36:26,015 - INFO - Collecting typing-extensions>=3.7.4.3
+2025-04-05 07:36:26,023 - INFO - Downloading typing_extensions-4.1.1-py3-none-any.whl (26 kB)
+2025-04-05 07:36:26,316 - INFO - Collecting outcome
+2025-04-05 07:36:26,324 - INFO - Downloading outcome-1.0.1-py2.py3-none-any.whl (10 kB)
+2025-04-05 07:36:26,410 - INFO - Downloading outcome-1.0.0-py2.py3-none-any.whl (5.1 kB)
+2025-04-05 07:36:26,620 - INFO - Building wheels for collected packages: MarkupSafe, psutil, pytest-arraydiff, pytest-astropy, pytest-doctestplus, pytest-openfiles, pytest-remotedata, PyYAML, contextvars
+2025-04-05 07:36:26,623 - INFO - Building wheel for MarkupSafe (setup.py): started
+2025-04-05 07:36:29,424 - INFO - Building wheel for MarkupSafe (setup.py): finished with status 'done'
+2025-04-05 07:36:29,425 - INFO - Created wheel for MarkupSafe: filename=MarkupSafe-1.0-cp36-cp36m-linux_x86_64.whl size=26125 sha256=16b22c62eff8f2c8d0fb65fd50d8828a3e6a11a6739f827275fb90864076fe2e
+2025-04-05 07:36:29,425 - INFO - Stored in directory: /root/.cache/pip/wheels/00/5a/67/e7ff93a250c45c5b91636cc8a0660c888bbb7d2829eaa6ca9d
+2025-04-05 07:36:29,431 - INFO - Building wheel for psutil (setup.py): started
+2025-04-05 07:36:36,620 - INFO - Building wheel for psutil (setup.py): finished with status 'done'
+2025-04-05 07:36:36,623 - INFO - Created wheel for psutil: filename=psutil-5.4.2-cp36-cp36m-linux_x86_64.whl size=252905 sha256=be0fdbc0850c8a18f0ebda17b059ab3e0be99429c03aeb7cf8fe32ac16fa66e7
+2025-04-05 07:36:36,623 - INFO - Stored in directory: /root/.cache/pip/wheels/c5/18/95/569dcfb7e6ef608e2a5f7b874eb54b586e309127eda990022d
+2025-04-05 07:36:36,630 - INFO - Building wheel for pytest-arraydiff (setup.py): started
+2025-04-05 07:36:37,934 - INFO - Building wheel for pytest-arraydiff (setup.py): finished with status 'done'
+2025-04-05 07:36:37,941 - INFO - Created wheel for pytest-arraydiff: filename=pytest_arraydiff-0.1-py3-none-any.whl size=8150 sha256=176b3549abbd97ee8533b4e100c1a680ef55a175c77ce01fe2560c5ad1cb28d7
+2025-04-05 07:36:37,941 - INFO - Stored in directory: /root/.cache/pip/wheels/c4/33/39/28583fdf07c5692bc1e90f0734aa62023afc885bbee2ef6d43
+2025-04-05 07:36:37,948 - INFO - Building wheel for pytest-astropy (setup.py): started
+2025-04-05 07:36:39,524 - INFO - Building wheel for pytest-astropy (setup.py): finished with status 'done'
+2025-04-05 07:36:39,524 - INFO - Created wheel for pytest-astropy: filename=pytest_astropy-0.2.1-py3-none-any.whl size=3182 sha256=2f617dce709532d1e633295bbad1815eb69f2491d402053a6c7af338acab4e11
+  Stored in directory: /root/.cache/pip/wheels/a2/50/0f/5eda04333fc65d224038d57b26fc715369673b5ef43b198742
+2025-04-05 07:36:39,529 - INFO - Building wheel for pytest-doctestplus (setup.py): started
+2025-04-05 07:36:41,319 - INFO - Building wheel for pytest-doctestplus (setup.py): finished with status 'done'
+2025-04-05 07:36:41,320 - INFO - Created wheel for pytest-doctestplus: filename=pytest_doctestplus-0.1.2-py3-none-any.whl size=13564 sha256=6b91afa4099c612e9dbac47eb583904294e1df08df1c54d8a92041d1d855c8dd
+2025-04-05 07:36:41,320 - INFO - Stored in directory: /root/.cache/pip/wheels/45/68/8e/7b95453863efb8d0db3e724fe2de7e150127cd91111248c9b7
+2025-04-05 07:36:41,333 - INFO - Building wheel for pytest-openfiles (setup.py): started
+2025-04-05 07:36:43,029 - INFO - Building wheel for pytest-openfiles (setup.py): finished with status 'done'
+2025-04-05 07:36:43,035 - INFO - Created wheel for pytest-openfiles: filename=pytest_openfiles-0.2.0-py3-none-any.whl size=6143 sha256=44e3f69de0cf6de795fa475d19bac6ccd44134ca53b86cc09609dab8541ffc35
+2025-04-05 07:36:43,035 - INFO - Stored in directory: /root/.cache/pip/wheels/7a/a4/77/ce43650175f0007e250b0e632132e16e292923420a11c2c890
+2025-04-05 07:36:43,040 - INFO - Building wheel for pytest-remotedata (setup.py): started
+2025-04-05 07:36:44,723 - INFO - Building wheel for pytest-remotedata (setup.py): finished with status 'done'
+2025-04-05 07:36:44,724 - INFO - Created wheel for pytest-remotedata: filename=pytest_remotedata-0.2.0-py3-none-any.whl size=11313 sha256=2d48d7b0a0af6abb8ab2449c76498d2df29527df5f948d3c789bd45db3cbbbb0
+2025-04-05 07:36:44,724 - INFO - Stored in directory: /root/.cache/pip/wheels/82/82/15/e00a2b86dd24ce0e1a315653b10e609567d61465340e3f930a
+2025-04-05 07:36:44,730 - INFO - Building wheel for PyYAML (setup.py): started
+2025-04-05 07:36:46,929 - INFO - Building wheel for PyYAML (setup.py): finished with status 'done'
+2025-04-05 07:36:46,930 - INFO - Created wheel for PyYAML: filename=PyYAML-3.12-cp36-cp36m-linux_x86_64.whl size=43078 sha256=bfd227f11bc093c069398a343aca86db0b0b865a34553a8b55d97a0879a0f477
+2025-04-05 07:36:46,931 - INFO - Stored in directory: /root/.cache/pip/wheels/58/13/a4/e672e27a1ba3320d443b791c3a1203c64f5cb17f2a69dc7438
+2025-04-05 07:36:47,016 - INFO - Building wheel for contextvars (setup.py): started
+2025-04-05 07:36:48,636 - INFO - Building wheel for contextvars (setup.py): finished with status 'done'
+2025-04-05 07:36:48,637 - INFO - Created wheel for contextvars: filename=contextvars-2.4-py3-none-any.whl size=7683 sha256=638a8f5d651b9d4f34329e425172bf0938bb38c8b54c943f8a713283ea709a0c
+2025-04-05 07:36:48,637 - INFO - Stored in directory: /root/.cache/pip/wheels/41/11/53/911724983aa48deb94792432e14e518447212dd6c5477d49d3
+2025-04-05 07:36:48,642 - INFO - Successfully built MarkupSafe psutil pytest-arraydiff pytest-astropy pytest-doctestplus pytest-openfiles pytest-remotedata PyYAML contextvars
+2025-04-05 07:36:49,327 - INFO - Installing collected packages: typing-extensions, immutables, six, py, pluggy, contextvars, attrs, sortedcontainers, sniffio, pytest, psutil, outcome, numpy, idna, async-generator, apipkg, trio, pytest-remotedata, pytest-openfiles, pytest-forked, pytest-doctestplus, pytest-arraydiff, pyparsing, MarkupSafe, execnet, coverage, tomli, PyYAML, pytest-xdist, pytest-mock, pytest-filter-subpackage, pytest-cov, pytest-astropy-header, pytest-astropy, pyerfa, packaging, jinja2, hypothesis, exceptiongroup, cython
+2025-04-05 07:37:09,875 - INFO - Successfully installed MarkupSafe-1.0 PyYAML-3.12 apipkg-2.1.1 async-generator-1.10 attrs-17.3.0 contextvars-2.4 coverage-6.2 cython-0.27.3 exceptiongroup-0.0.0a0 execnet-1.5.0 hypothesis-3.44.2 idna-3.10 immutables-0.19 jinja2-2.10 numpy-1.16.0 outcome-1.0.0 packaging-16.8 pluggy-0.6.0 psutil-5.4.2 py-1.11.0 pyerfa-1.7.0 pyparsing-3.1.4 pytest-3.3.1 pytest-arraydiff-0.1 pytest-astropy-0.2.1 pytest-astropy-header-0.1 pytest-cov-2.5.1 pytest-doctestplus-0.1.2 pytest-filter-subpackage-0.1 pytest-forked-0.2 pytest-mock-1.6.3 pytest-openfiles-0.2.0 pytest-remotedata-0.2.0 pytest-xdist-1.20.1 six-1.17.0 sniffio-1.2.0 sortedcontainers-1.5.9 tomli-0.2.0 trio-0.8.0 typing-extensions-4.1.1
+2025-04-05 07:37:09,913 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+2025-04-05 07:38:01,238 - INFO - ---> Removed intermediate container a2bfc047e851
+2025-04-05 07:38:01,238 - INFO - ---> 9ac77157d916
+2025-04-05 07:38:01,238 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-05 07:38:01,238 - INFO - 
+2025-04-05 07:38:01,625 - INFO - ---> Running in af85f700772f
+2025-04-05 07:38:01,930 - INFO - ---> Removed intermediate container af85f700772f
+2025-04-05 07:38:01,930 - INFO - ---> c629a44e274d
+2025-04-05 07:38:01,930 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-05 07:38:01,931 - INFO - 
+2025-04-05 07:38:02,228 - INFO - ---> Running in 27f0e00c2e28
+2025-04-05 07:38:04,326 - INFO - ---> Removed intermediate container 27f0e00c2e28
+2025-04-05 07:38:04,327 - INFO - ---> 0a724c22b370
+2025-04-05 07:38:04,327 - INFO - Successfully built 0a724c22b370
+2025-04-05 07:38:04,332 - INFO - Successfully tagged sweb.env.x86_64.c70974ae7654c7a2c98577:latest
+2025-04-05 07:38:04,332 - INFO - Image built successfully!

@@ -1,0 +1,55 @@
+2025-04-05 10:53:10,248 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12663
+Building instance image sweb.eval.x86_64.django__django-12663:latest for django__django-12663
+2025-04-05 10:55:27,226 - INFO - Creating container for django__django-12663...
+2025-04-05 10:55:27,431 - INFO - Container for django__django-12663 created: 0eb26a3a24b943ac92186ce53c7f4f3cb2a234e56dcbc69e8443865f0db43411
+2025-04-05 10:55:28,831 - INFO - Container for django__django-12663 started: 0eb26a3a24b943ac92186ce53c7f4f3cb2a234e56dcbc69e8443865f0db43411
+2025-04-05 10:55:28,832 - INFO - Intermediate patch for django__django-12663 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12663/patch.diff, now applying to container...
+2025-04-05 10:55:30,044 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:55:30,329 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/__init__.py
+
+2025-04-05 10:55:35,947 - INFO - Git diff before:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index caa03665ea..64fcbc04c3 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -804,6 +804,11 @@ class Field(RegisterLookupMixin):
+         """Perform preliminary non-db specific value checks and conversions."""
+         if isinstance(value, Promise):
+             value = value._proxy____cast()
++        from django.utils.functional import LazyObject, empty
++        if isinstance(value, LazyObject):
++            if value._wrapped is empty:
++                value._setup()
++            value = value._wrapped
+         return value
+ 
+     def get_db_prep_value(self, value, connection, prepared=False):
+2025-04-05 10:55:35,947 - INFO - Eval script for django__django-12663 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12663/eval.sh; copying to container...
+2025-04-05 10:56:23,827 - INFO - Test runtime: 46.90 seconds
+2025-04-05 10:56:23,827 - INFO - Test output for django__django-12663 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12663/test_output.txt
+2025-04-05 10:56:24,142 - INFO - Git diff after:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index caa03665ea..64fcbc04c3 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -804,6 +804,11 @@ class Field(RegisterLookupMixin):
+         """Perform preliminary non-db specific value checks and conversions."""
+         if isinstance(value, Promise):
+             value = value._proxy____cast()
++        from django.utils.functional import LazyObject, empty
++        if isinstance(value, LazyObject):
++            if value._wrapped is empty:
++                value._setup()
++            value = value._wrapped
+         return value
+ 
+     def get_db_prep_value(self, value, connection, prepared=False):
+2025-04-05 10:56:24,142 - INFO - Grading answer for django__django-12663...
+2025-04-05 10:56:24,143 - INFO - report: {'django__django-12663': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12663: resolved: False
+2025-04-05 10:56:24,143 - INFO - Attempting to stop container sweb.eval.django__django-12663.241028_solver...
+2025-04-05 10:57:10,246 - INFO - Attempting to remove container sweb.eval.django__django-12663.241028_solver...
+2025-04-05 10:57:10,338 - INFO - Container sweb.eval.django__django-12663.241028_solver removed.
+2025-04-05 10:57:10,338 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12663:latest...
+2025-04-05 10:57:17,527 - INFO - Image sweb.eval.x86_64.django__django-12663:latest removed.

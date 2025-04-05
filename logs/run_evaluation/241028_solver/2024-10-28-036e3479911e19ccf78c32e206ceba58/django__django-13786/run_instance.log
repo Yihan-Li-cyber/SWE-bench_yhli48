@@ -1,0 +1,71 @@
+2025-04-05 11:23:50,723 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13786
+Building instance image sweb.eval.x86_64.django__django-13786:latest for django__django-13786
+2025-04-05 11:26:07,331 - INFO - Creating container for django__django-13786...
+2025-04-05 11:26:07,449 - INFO - Container for django__django-13786 created: bbf61a8c844fe26ba8a7e305323841437315712377ed65863f2493b149c506fd
+2025-04-05 11:26:56,841 - INFO - Container for django__django-13786 started: bbf61a8c844fe26ba8a7e305323841437315712377ed65863f2493b149c506fd
+2025-04-05 11:26:56,841 - INFO - Intermediate patch for django__django-13786 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13786/patch.diff, now applying to container...
+2025-04-05 11:26:57,926 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:26:58,138 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/models.py
+
+2025-04-05 11:27:04,237 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index dddf7c679c..de1700d632 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -137,11 +137,18 @@ class CreateModel(ModelOperation):
+                 ),
+             ]
+         elif isinstance(operation, AlterModelOptions) and self.name_lower == operation.name_lower:
++            # Copy existing options and update with new ones
++            options = self.options.copy()
++            options.update(operation.options)
++            # Remove keys not present in new options that are in ALTER_OPTION_KEYS
++            for key in operation.ALTER_OPTION_KEYS:
++                if key not in operation.options:
++                    options.pop(key, None)
+             return [
+                 CreateModel(
+                     self.name,
+                     fields=self.fields,
+-                    options={**self.options, **operation.options},
++                    options=options,
+                     bases=self.bases,
+                     managers=self.managers,
+                 ),
+2025-04-05 11:27:04,237 - INFO - Eval script for django__django-13786 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13786/eval.sh; copying to container...
+2025-04-05 11:27:45,118 - INFO - Test runtime: 40.08 seconds
+2025-04-05 11:27:45,118 - INFO - Test output for django__django-13786 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13786/test_output.txt
+2025-04-05 11:27:45,445 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/models.py b/django/db/migrations/operations/models.py
+index dddf7c679c..de1700d632 100644
+--- a/django/db/migrations/operations/models.py
++++ b/django/db/migrations/operations/models.py
+@@ -137,11 +137,18 @@ class CreateModel(ModelOperation):
+                 ),
+             ]
+         elif isinstance(operation, AlterModelOptions) and self.name_lower == operation.name_lower:
++            # Copy existing options and update with new ones
++            options = self.options.copy()
++            options.update(operation.options)
++            # Remove keys not present in new options that are in ALTER_OPTION_KEYS
++            for key in operation.ALTER_OPTION_KEYS:
++                if key not in operation.options:
++                    options.pop(key, None)
+             return [
+                 CreateModel(
+                     self.name,
+                     fields=self.fields,
+-                    options={**self.options, **operation.options},
++                    options=options,
+                     bases=self.bases,
+                     managers=self.managers,
+                 ),
+2025-04-05 11:27:45,446 - INFO - Grading answer for django__django-13786...
+2025-04-05 11:27:45,446 - INFO - report: {'django__django-13786': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13786: resolved: False
+2025-04-05 11:27:45,446 - INFO - Attempting to stop container sweb.eval.django__django-13786.241028_solver...
+2025-04-05 11:28:01,627 - INFO - Attempting to remove container sweb.eval.django__django-13786.241028_solver...
+2025-04-05 11:28:01,740 - INFO - Container sweb.eval.django__django-13786.241028_solver removed.
+2025-04-05 11:28:01,741 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13786:latest...
+2025-04-05 11:28:03,738 - INFO - Image sweb.eval.x86_64.django__django-13786:latest removed.

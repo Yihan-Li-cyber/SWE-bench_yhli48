@@ -1,0 +1,92 @@
+2025-04-05 11:46:51,538 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14500
+Building instance image sweb.eval.x86_64.django__django-14500:latest for django__django-14500
+2025-04-05 11:50:18,818 - INFO - Creating container for django__django-14500...
+2025-04-05 11:50:18,929 - INFO - Container for django__django-14500 created: 37458062c36b9b4f668f2eaff8ef33ca3a2e8c127144cb89983d35f5f45d992a
+2025-04-05 11:50:20,727 - INFO - Container for django__django-14500 started: 37458062c36b9b4f668f2eaff8ef33ca3a2e8c127144cb89983d35f5f45d992a
+2025-04-05 11:50:20,727 - INFO - Intermediate patch for django__django-14500 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14500/patch.diff, now applying to container...
+2025-04-05 11:50:21,824 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:50:22,128 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/executor.py
+patching file tests/migrations/test_squashed_unapply.py
+
+2025-04-05 11:50:28,525 - INFO - Git diff before:
+diff --git a/django/db/migrations/executor.py b/django/db/migrations/executor.py
+index 57042a8690..8b2c15ee4a 100644
+--- a/django/db/migrations/executor.py
++++ b/django/db/migrations/executor.py
+@@ -250,12 +250,23 @@ class MigrationExecutor:
+         if not fake:
+             with self.connection.schema_editor(atomic=migration.atomic) as schema_editor:
+                 state = migration.unapply(state, schema_editor)
+-        # For replacement migrations, record individual statuses
+-        if migration.replaces:
+-            for app_label, name in migration.replaces:
+-                self.recorder.record_unapplied(app_label, name)
+-        else:
+-            self.recorder.record_unapplied(migration.app_label, migration.name)
++        # Record this specific migration as unapplied
++        self.recorder.record_unapplied(migration.app_label, migration.name)
++        # If this is a replaced migration, ensure the replacement migration
++        # stays applied if any of its replaced migrations are still applied
++        if not migration.replaces:
++            self.loader.build_graph()
++            # Find any squashed migrations that replace this migration
++            for key, squashed in self.loader.replacements.items():
++                if (migration.app_label, migration.name) in squashed.replaces:
++                    # Check if any other replaced migrations are still applied
++                    other_replaced = [(app, name) for app, name in squashed.replaces 
++                                    if (app, name) != (migration.app_label, migration.name)]
++                    applied = [target in self.recorder.applied_migrations() 
++                             for target in other_replaced]
++                    if any(applied):
++                        # Keep the squashed migration applied since some replaced migrations remain
++                        self.recorder.record_applied(key[0], key[1])
+         # Report progress
+         if self.progress_callback:
+             self.progress_callback("unapply_success", migration, fake)
+2025-04-05 11:50:28,526 - INFO - Eval script for django__django-14500 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14500/eval.sh; copying to container...
+2025-04-05 11:51:21,726 - INFO - Test runtime: 52.31 seconds
+2025-04-05 11:51:21,727 - INFO - Test output for django__django-14500 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14500/test_output.txt
+2025-04-05 11:51:22,119 - INFO - Git diff after:
+diff --git a/django/db/migrations/executor.py b/django/db/migrations/executor.py
+index 57042a8690..8b2c15ee4a 100644
+--- a/django/db/migrations/executor.py
++++ b/django/db/migrations/executor.py
+@@ -250,12 +250,23 @@ class MigrationExecutor:
+         if not fake:
+             with self.connection.schema_editor(atomic=migration.atomic) as schema_editor:
+                 state = migration.unapply(state, schema_editor)
+-        # For replacement migrations, record individual statuses
+-        if migration.replaces:
+-            for app_label, name in migration.replaces:
+-                self.recorder.record_unapplied(app_label, name)
+-        else:
+-            self.recorder.record_unapplied(migration.app_label, migration.name)
++        # Record this specific migration as unapplied
++        self.recorder.record_unapplied(migration.app_label, migration.name)
++        # If this is a replaced migration, ensure the replacement migration
++        # stays applied if any of its replaced migrations are still applied
++        if not migration.replaces:
++            self.loader.build_graph()
++            # Find any squashed migrations that replace this migration
++            for key, squashed in self.loader.replacements.items():
++                if (migration.app_label, migration.name) in squashed.replaces:
++                    # Check if any other replaced migrations are still applied
++                    other_replaced = [(app, name) for app, name in squashed.replaces 
++                                    if (app, name) != (migration.app_label, migration.name)]
++                    applied = [target in self.recorder.applied_migrations() 
++                             for target in other_replaced]
++                    if any(applied):
++                        # Keep the squashed migration applied since some replaced migrations remain
++                        self.recorder.record_applied(key[0], key[1])
+         # Report progress
+         if self.progress_callback:
+             self.progress_callback("unapply_success", migration, fake)
+2025-04-05 11:51:22,119 - INFO - Grading answer for django__django-14500...
+2025-04-05 11:51:22,120 - INFO - report: {'django__django-14500': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14500: resolved: False
+2025-04-05 11:51:22,120 - INFO - Attempting to stop container sweb.eval.django__django-14500.241028_solver...
+2025-04-05 11:51:39,915 - INFO - Attempting to remove container sweb.eval.django__django-14500.241028_solver...
+2025-04-05 11:51:40,113 - INFO - Container sweb.eval.django__django-14500.241028_solver removed.
+2025-04-05 11:51:40,113 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14500:latest...
+2025-04-05 11:51:42,626 - INFO - Image sweb.eval.x86_64.django__django-14500:latest removed.

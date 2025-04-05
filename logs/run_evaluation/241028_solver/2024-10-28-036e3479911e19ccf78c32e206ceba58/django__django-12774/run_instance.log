@@ -1,0 +1,71 @@
+2025-04-05 10:54:46,345 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12774
+Building instance image sweb.eval.x86_64.django__django-12774:latest for django__django-12774
+2025-04-05 10:57:36,949 - INFO - Creating container for django__django-12774...
+2025-04-05 10:57:37,135 - INFO - Container for django__django-12774 created: be960cdce20289fbf32a4eab26aa63815686ada6ba1b0bb5c138bdf8d35343a0
+2025-04-05 10:57:38,248 - INFO - Container for django__django-12774 started: be960cdce20289fbf32a4eab26aa63815686ada6ba1b0bb5c138bdf8d35343a0
+2025-04-05 10:57:38,249 - INFO - Intermediate patch for django__django-12774 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12774/patch.diff, now applying to container...
+2025-04-05 10:57:39,146 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:57:39,341 - INFO - >>>>> Applied Patch:
+patching file django/db/models/query.py
+
+2025-04-05 10:57:44,349 - INFO - Git diff before:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index d9c9b0db04..55faf8cb3f 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -689,8 +689,17 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot use 'limit' or 'offset' with in_bulk"
+-        if field_name != 'pk' and not self.model._meta.get_field(field_name).unique:
+-            raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
++        if field_name != 'pk':
++            from django.db.models import UniqueConstraint
++            field = self.model._meta.get_field(field_name)
++            is_unique = field.unique or any(
++                isinstance(constraint, UniqueConstraint) 
++                and len(constraint.fields) == 1 
++                and constraint.fields[0] == field_name
++                for constraint in self.model._meta.constraints
++            )
++            if not is_unique:
++                raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
+         if id_list is not None:
+             if not id_list:
+                 return {}
+2025-04-05 10:57:44,349 - INFO - Eval script for django__django-12774 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12774/eval.sh; copying to container...
+2025-04-05 10:58:25,634 - INFO - Test runtime: 40.58 seconds
+2025-04-05 10:58:25,635 - INFO - Test output for django__django-12774 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12774/test_output.txt
+2025-04-05 10:58:25,952 - INFO - Git diff after:
+diff --git a/django/db/models/query.py b/django/db/models/query.py
+index d9c9b0db04..55faf8cb3f 100644
+--- a/django/db/models/query.py
++++ b/django/db/models/query.py
+@@ -689,8 +689,17 @@ class QuerySet:
+         """
+         assert not self.query.is_sliced, \
+             "Cannot use 'limit' or 'offset' with in_bulk"
+-        if field_name != 'pk' and not self.model._meta.get_field(field_name).unique:
+-            raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
++        if field_name != 'pk':
++            from django.db.models import UniqueConstraint
++            field = self.model._meta.get_field(field_name)
++            is_unique = field.unique or any(
++                isinstance(constraint, UniqueConstraint) 
++                and len(constraint.fields) == 1 
++                and constraint.fields[0] == field_name
++                for constraint in self.model._meta.constraints
++            )
++            if not is_unique:
++                raise ValueError("in_bulk()'s field_name must be a unique field but %r isn't." % field_name)
+         if id_list is not None:
+             if not id_list:
+                 return {}
+2025-04-05 10:58:25,952 - INFO - Grading answer for django__django-12774...
+2025-04-05 10:58:25,953 - INFO - report: {'django__django-12774': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12774: resolved: False
+2025-04-05 10:58:25,953 - INFO - Attempting to stop container sweb.eval.django__django-12774.241028_solver...
+2025-04-05 10:58:42,125 - INFO - Attempting to remove container sweb.eval.django__django-12774.241028_solver...
+2025-04-05 10:58:42,244 - INFO - Container sweb.eval.django__django-12774.241028_solver removed.
+2025-04-05 10:58:42,244 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12774:latest...
+2025-04-05 10:58:43,947 - INFO - Image sweb.eval.x86_64.django__django-12774:latest removed.

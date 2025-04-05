@@ -1,0 +1,63 @@
+2025-04-05 11:19:41,443 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13590
+Building instance image sweb.eval.x86_64.django__django-13590:latest for django__django-13590
+2025-04-05 11:22:33,452 - INFO - Creating container for django__django-13590...
+2025-04-05 11:22:33,541 - INFO - Container for django__django-13590 created: 772af5deb915e501ea50cba03c5afa49c305288871d73952bde20f7495d39701
+2025-04-05 11:22:42,238 - INFO - Container for django__django-13590 started: 772af5deb915e501ea50cba03c5afa49c305288871d73952bde20f7495d39701
+2025-04-05 11:22:42,239 - INFO - Intermediate patch for django__django-13590 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13590/patch.diff, now applying to container...
+2025-04-05 11:22:43,321 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:22:43,544 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-05 11:22:50,030 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 4648daf395..c20f0fa0e2 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1077,10 +1077,14 @@ class Query(BaseExpression):
+         elif isinstance(value, (list, tuple)):
+             # The items of the iterable may be expressions and therefore need
+             # to be resolved independently.
+-            return type(value)(
++            resolved_values = (
+                 self.resolve_lookup_value(sub_value, can_reuse, allow_joins)
+                 for sub_value in value
+             )
++            if hasattr(value, '_fields'):  # Named tuple
++                resolved_values = list(resolved_values)  # Consume generator
++                return type(value)(*resolved_values)  # Unpack values
++            return type(value)(resolved_values)  # Keep as generator for regular tuples
+         return value
+ 
+     def solve_lookup_type(self, lookup):
+2025-04-05 11:22:50,030 - INFO - Eval script for django__django-13590 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13590/eval.sh; copying to container...
+2025-04-05 11:23:34,153 - INFO - Test runtime: 43.31 seconds
+2025-04-05 11:23:34,153 - INFO - Test output for django__django-13590 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13590/test_output.txt
+2025-04-05 11:23:34,541 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 4648daf395..c20f0fa0e2 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -1077,10 +1077,14 @@ class Query(BaseExpression):
+         elif isinstance(value, (list, tuple)):
+             # The items of the iterable may be expressions and therefore need
+             # to be resolved independently.
+-            return type(value)(
++            resolved_values = (
+                 self.resolve_lookup_value(sub_value, can_reuse, allow_joins)
+                 for sub_value in value
+             )
++            if hasattr(value, '_fields'):  # Named tuple
++                resolved_values = list(resolved_values)  # Consume generator
++                return type(value)(*resolved_values)  # Unpack values
++            return type(value)(resolved_values)  # Keep as generator for regular tuples
+         return value
+ 
+     def solve_lookup_type(self, lookup):
+2025-04-05 11:23:34,541 - INFO - Grading answer for django__django-13590...
+2025-04-05 11:23:34,541 - INFO - report: {'django__django-13590': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13590: resolved: False
+2025-04-05 11:23:34,542 - INFO - Attempting to stop container sweb.eval.django__django-13590.241028_solver...
+2025-04-05 11:23:50,535 - INFO - Attempting to remove container sweb.eval.django__django-13590.241028_solver...
+2025-04-05 11:23:50,724 - INFO - Container sweb.eval.django__django-13590.241028_solver removed.
+2025-04-05 11:23:50,725 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13590:latest...
+2025-04-05 11:23:52,652 - INFO - Image sweb.eval.x86_64.django__django-13590:latest removed.

@@ -1,0 +1,58 @@
+2025-04-05 11:32:36,234 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14011
+Building instance image sweb.eval.x86_64.django__django-14011:latest for django__django-14011
+2025-04-05 11:35:24,242 - INFO - Creating container for django__django-14011...
+2025-04-05 11:35:24,345 - INFO - Container for django__django-14011 created: f4aa3ba50fd3d5ef7fb2683b174e3089543afdbbef3ab3d2e0501cbf1d058551
+2025-04-05 11:35:26,040 - INFO - Container for django__django-14011 started: f4aa3ba50fd3d5ef7fb2683b174e3089543afdbbef3ab3d2e0501cbf1d058551
+2025-04-05 11:35:26,041 - INFO - Intermediate patch for django__django-14011 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14011/patch.diff, now applying to container...
+2025-04-05 11:35:27,113 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:35:27,334 - INFO - >>>>> Applied Patch:
+patching file django/core/servers/basehttp.py
+patching file tests/reproduction_test.py
+
+2025-04-05 11:35:34,027 - INFO - Git diff before:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index 14dab517c9..1d45e3bfdd 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -81,6 +81,12 @@ class ThreadedWSGIServer(socketserver.ThreadingMixIn, WSGIServer):
+     """A threaded version of the WSGIServer"""
+     daemon_threads = True
+ 
++    def process_request_thread(self, request, client_address):
++        try:
++            super().process_request_thread(request, client_address)
++        finally:
++            from django.db import connections
++            connections.close_all()
+ 
+ class ServerHandler(simple_server.ServerHandler):
+     http_version = '1.1'
+2025-04-05 11:35:34,028 - INFO - Eval script for django__django-14011 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14011/eval.sh; copying to container...
+2025-04-05 11:36:26,024 - INFO - Test runtime: 51.19 seconds
+2025-04-05 11:36:26,025 - INFO - Test output for django__django-14011 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14011/test_output.txt
+2025-04-05 11:36:26,327 - INFO - Git diff after:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index 14dab517c9..1d45e3bfdd 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -81,6 +81,12 @@ class ThreadedWSGIServer(socketserver.ThreadingMixIn, WSGIServer):
+     """A threaded version of the WSGIServer"""
+     daemon_threads = True
+ 
++    def process_request_thread(self, request, client_address):
++        try:
++            super().process_request_thread(request, client_address)
++        finally:
++            from django.db import connections
++            connections.close_all()
+ 
+ class ServerHandler(simple_server.ServerHandler):
+     http_version = '1.1'
+2025-04-05 11:36:26,327 - INFO - Grading answer for django__django-14011...
+2025-04-05 11:36:26,328 - INFO - report: {'django__django-14011': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14011: resolved: False
+2025-04-05 11:36:26,328 - INFO - Attempting to stop container sweb.eval.django__django-14011.241028_solver...
+2025-04-05 11:36:42,639 - INFO - Attempting to remove container sweb.eval.django__django-14011.241028_solver...
+2025-04-05 11:36:42,823 - INFO - Container sweb.eval.django__django-14011.241028_solver removed.
+2025-04-05 11:36:42,824 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14011:latest...
+2025-04-05 11:36:45,742 - INFO - Image sweb.eval.x86_64.django__django-14011:latest removed.

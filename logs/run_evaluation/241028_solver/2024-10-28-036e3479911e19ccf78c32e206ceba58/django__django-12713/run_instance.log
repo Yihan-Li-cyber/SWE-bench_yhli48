@@ -1,0 +1,87 @@
+2025-04-05 10:54:13,140 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12713
+Building instance image sweb.eval.x86_64.django__django-12713:latest for django__django-12713
+2025-04-05 10:57:12,253 - INFO - Creating container for django__django-12713...
+2025-04-05 10:57:12,353 - INFO - Container for django__django-12713 created: 9c253efb23f59a265134f845c29d80ecc851590967b54e7ddf01cbc11b722177
+2025-04-05 10:57:14,032 - INFO - Container for django__django-12713 started: 9c253efb23f59a265134f845c29d80ecc851590967b54e7ddf01cbc11b722177
+2025-04-05 10:57:14,033 - INFO - Intermediate patch for django__django-12713 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12713/patch.diff, now applying to container...
+2025-04-05 10:57:14,944 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:57:15,150 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-05 10:57:20,547 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 69a5fbf389..db7df891e3 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -249,16 +249,17 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+             return None
+         db = kwargs.get('using')
+ 
+-        autocomplete_fields = self.get_autocomplete_fields(request)
+-        if db_field.name in autocomplete_fields:
+-            kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in self.raw_id_fields:
+-            kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
+-            kwargs['widget'] = widgets.FilteredSelectMultiple(
+-                db_field.verbose_name,
+-                db_field.name in self.filter_vertical
+-            )
++        if 'widget' not in kwargs:
++            autocomplete_fields = self.get_autocomplete_fields(request)
++            if db_field.name in autocomplete_fields:
++                kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
++            elif db_field.name in self.raw_id_fields:
++                kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
++            elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
++                kwargs['widget'] = widgets.FilteredSelectMultiple(
++                    db_field.verbose_name,
++                    db_field.name in self.filter_vertical
++                )
+ 
+         if 'queryset' not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+2025-04-05 10:57:20,548 - INFO - Eval script for django__django-12713 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12713/eval.sh; copying to container...
+2025-04-05 10:58:03,136 - INFO - Test runtime: 41.90 seconds
+2025-04-05 10:58:03,137 - INFO - Test output for django__django-12713 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12713/test_output.txt
+2025-04-05 10:58:03,534 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 69a5fbf389..db7df891e3 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -249,16 +249,17 @@ class BaseModelAdmin(metaclass=forms.MediaDefiningClass):
+             return None
+         db = kwargs.get('using')
+ 
+-        autocomplete_fields = self.get_autocomplete_fields(request)
+-        if db_field.name in autocomplete_fields:
+-            kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in self.raw_id_fields:
+-            kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
+-        elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
+-            kwargs['widget'] = widgets.FilteredSelectMultiple(
+-                db_field.verbose_name,
+-                db_field.name in self.filter_vertical
+-            )
++        if 'widget' not in kwargs:
++            autocomplete_fields = self.get_autocomplete_fields(request)
++            if db_field.name in autocomplete_fields:
++                kwargs['widget'] = AutocompleteSelectMultiple(db_field.remote_field, self.admin_site, using=db)
++            elif db_field.name in self.raw_id_fields:
++                kwargs['widget'] = widgets.ManyToManyRawIdWidget(db_field.remote_field, self.admin_site, using=db)
++            elif db_field.name in [*self.filter_vertical, *self.filter_horizontal]:
++                kwargs['widget'] = widgets.FilteredSelectMultiple(
++                    db_field.verbose_name,
++                    db_field.name in self.filter_vertical
++                )
+ 
+         if 'queryset' not in kwargs:
+             queryset = self.get_field_queryset(db, db_field, request)
+2025-04-05 10:58:03,534 - INFO - Grading answer for django__django-12713...
+2025-04-05 10:58:03,535 - INFO - report: {'django__django-12713': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12713: resolved: False
+2025-04-05 10:58:03,535 - INFO - Attempting to stop container sweb.eval.django__django-12713.241028_solver...
+2025-04-05 10:58:19,746 - INFO - Attempting to remove container sweb.eval.django__django-12713.241028_solver...
+2025-04-05 10:58:19,930 - INFO - Container sweb.eval.django__django-12713.241028_solver removed.
+2025-04-05 10:58:19,931 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12713:latest...
+2025-04-05 10:58:22,128 - INFO - Image sweb.eval.x86_64.django__django-12713:latest removed.

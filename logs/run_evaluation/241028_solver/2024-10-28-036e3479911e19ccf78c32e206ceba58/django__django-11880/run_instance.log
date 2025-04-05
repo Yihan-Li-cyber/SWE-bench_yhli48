@@ -1,0 +1,43 @@
+2025-04-05 10:39:50,351 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11880
+Building instance image sweb.eval.x86_64.django__django-11880:latest for django__django-11880
+2025-04-05 10:42:38,845 - INFO - Creating container for django__django-11880...
+2025-04-05 10:42:39,046 - INFO - Container for django__django-11880 created: a4d55caddc59150e047974ccedfe1f58fea71f9e9369159bb20cd72a9720a371
+2025-04-05 10:42:40,436 - INFO - Container for django__django-11880 started: a4d55caddc59150e047974ccedfe1f58fea71f9e9369159bb20cd72a9720a371
+2025-04-05 10:42:40,436 - INFO - Intermediate patch for django__django-11880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11880/patch.diff, now applying to container...
+2025-04-05 10:42:41,345 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:42:41,633 - INFO - >>>>> Applied Patch:
+patching file django/forms/fields.py
+
+2025-04-05 10:42:46,944 - INFO - Git diff before:
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index 03cd8af8d7..4cc3133ca0 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -200,6 +200,7 @@ class Field:
+         memo[id(self)] = result
+         result.widget = copy.deepcopy(self.widget, memo)
+         result.validators = self.validators[:]
++        result.error_messages = copy.deepcopy(self.error_messages, memo)
+         return result
+2025-04-05 10:42:46,945 - INFO - Eval script for django__django-11880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11880/eval.sh; copying to container...
+2025-04-05 10:43:27,844 - INFO - Test runtime: 40.20 seconds
+2025-04-05 10:43:27,844 - INFO - Test output for django__django-11880 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11880/test_output.txt
+2025-04-05 10:43:28,328 - INFO - Git diff after:
+diff --git a/django/forms/fields.py b/django/forms/fields.py
+index 03cd8af8d7..4cc3133ca0 100644
+--- a/django/forms/fields.py
++++ b/django/forms/fields.py
+@@ -200,6 +200,7 @@ class Field:
+         memo[id(self)] = result
+         result.widget = copy.deepcopy(self.widget, memo)
+         result.validators = self.validators[:]
++        result.error_messages = copy.deepcopy(self.error_messages, memo)
+         return result
+2025-04-05 10:43:28,329 - INFO - Grading answer for django__django-11880...
+2025-04-05 10:43:28,329 - INFO - report: {'django__django-11880': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11880: resolved: False
+2025-04-05 10:43:28,330 - INFO - Attempting to stop container sweb.eval.django__django-11880.241028_solver...
+2025-04-05 10:43:44,438 - INFO - Attempting to remove container sweb.eval.django__django-11880.241028_solver...
+2025-04-05 10:43:44,626 - INFO - Container sweb.eval.django__django-11880.241028_solver removed.
+2025-04-05 10:43:44,626 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11880:latest...
+2025-04-05 10:43:46,642 - INFO - Image sweb.eval.x86_64.django__django-11880:latest removed.

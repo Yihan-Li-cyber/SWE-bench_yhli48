@@ -1,0 +1,53 @@
+2025-04-05 11:57:17,330 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14792
+Building instance image sweb.eval.x86_64.django__django-14792:latest for django__django-14792
+2025-04-05 12:00:28,527 - INFO - Creating container for django__django-14792...
+2025-04-05 12:00:28,643 - INFO - Container for django__django-14792 created: 25d57fc64ab0b072f0c6b45f5c82d86cf22b08d98abbc79b185a9a1a267a68b3
+2025-04-05 12:00:30,117 - INFO - Container for django__django-14792 started: 25d57fc64ab0b072f0c6b45f5c82d86cf22b08d98abbc79b185a9a1a267a68b3
+2025-04-05 12:00:30,118 - INFO - Intermediate patch for django__django-14792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14792/patch.diff, now applying to container...
+2025-04-05 12:00:31,333 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:00:31,632 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/postgresql/operations.py
+
+2025-04-05 12:00:37,521 - INFO - Git diff before:
+diff --git a/django/db/backends/postgresql/operations.py b/django/db/backends/postgresql/operations.py
+index 8d19872bea..535b7d468b 100644
+--- a/django/db/backends/postgresql/operations.py
++++ b/django/db/backends/postgresql/operations.py
+@@ -44,7 +44,9 @@ class DatabaseOperations(BaseDatabaseOperations):
+         return "DATE_TRUNC('%s', %s)" % (lookup_type, field_name)
+ 
+     def _prepare_tzname_delta(self, tzname):
+-        if '+' in tzname:
++        if tzname.startswith('Etc/GMT'):
++            return tzname
++        elif '+' in tzname:
+             return tzname.replace('+', '-')
+         elif '-' in tzname:
+             return tzname.replace('-', '+')
+2025-04-05 12:00:37,521 - INFO - Eval script for django__django-14792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14792/eval.sh; copying to container...
+2025-04-05 12:01:27,421 - INFO - Test runtime: 49.09 seconds
+2025-04-05 12:01:27,421 - INFO - Test output for django__django-14792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14792/test_output.txt
+2025-04-05 12:01:27,741 - INFO - Git diff after:
+diff --git a/django/db/backends/postgresql/operations.py b/django/db/backends/postgresql/operations.py
+index 8d19872bea..535b7d468b 100644
+--- a/django/db/backends/postgresql/operations.py
++++ b/django/db/backends/postgresql/operations.py
+@@ -44,7 +44,9 @@ class DatabaseOperations(BaseDatabaseOperations):
+         return "DATE_TRUNC('%s', %s)" % (lookup_type, field_name)
+ 
+     def _prepare_tzname_delta(self, tzname):
+-        if '+' in tzname:
++        if tzname.startswith('Etc/GMT'):
++            return tzname
++        elif '+' in tzname:
+             return tzname.replace('+', '-')
+         elif '-' in tzname:
+             return tzname.replace('-', '+')
+2025-04-05 12:01:27,741 - INFO - Grading answer for django__django-14792...
+2025-04-05 12:01:27,741 - INFO - report: {'django__django-14792': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14792: resolved: False
+2025-04-05 12:01:27,741 - INFO - Attempting to stop container sweb.eval.django__django-14792.241028_solver...
+2025-04-05 12:01:45,120 - INFO - Attempting to remove container sweb.eval.django__django-14792.241028_solver...
+2025-04-05 12:01:45,234 - INFO - Container sweb.eval.django__django-14792.241028_solver removed.
+2025-04-05 12:01:45,234 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14792:latest...
+2025-04-05 12:01:48,034 - INFO - Image sweb.eval.x86_64.django__django-14792:latest removed.

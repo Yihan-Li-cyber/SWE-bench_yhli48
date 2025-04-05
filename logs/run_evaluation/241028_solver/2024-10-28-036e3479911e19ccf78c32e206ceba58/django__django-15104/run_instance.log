@@ -1,0 +1,48 @@
+2025-04-05 12:05:08,624 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15104
+Building instance image sweb.eval.x86_64.django__django-15104:latest for django__django-15104
+2025-04-05 12:08:23,916 - INFO - Creating container for django__django-15104...
+2025-04-05 12:08:24,125 - INFO - Container for django__django-15104 created: 446f82bf2dca88f93f6f9294dbf970bf931fea9897944e8c5cb7fd93903c2e51
+2025-04-05 12:08:26,825 - INFO - Container for django__django-15104 started: 446f82bf2dca88f93f6f9294dbf970bf931fea9897944e8c5cb7fd93903c2e51
+2025-04-05 12:08:26,825 - INFO - Intermediate patch for django__django-15104 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15104/patch.diff, now applying to container...
+2025-04-05 12:08:28,222 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:08:28,524 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/autodetector.py
+patching file tests/migrations/test_custom_fk.py
+
+2025-04-05 12:08:35,033 - INFO - Git diff before:
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 97977d72ef..bf9c2acd26 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -96,7 +96,7 @@ class MigrationAutodetector:
+         for name, field in sorted(fields.items()):
+             deconstruction = self.deep_deconstruct(field)
+             if field.remote_field and field.remote_field.model:
+-                del deconstruction[2]['to']
++                deconstruction[2].pop('to', None)
+             fields_def.append(deconstruction)
+         return fields_def
+2025-04-05 12:08:35,034 - INFO - Eval script for django__django-15104 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15104/eval.sh; copying to container...
+2025-04-05 12:09:24,943 - INFO - Test runtime: 49.32 seconds
+2025-04-05 12:09:24,944 - INFO - Test output for django__django-15104 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15104/test_output.txt
+2025-04-05 12:09:25,237 - INFO - Git diff after:
+diff --git a/django/db/migrations/autodetector.py b/django/db/migrations/autodetector.py
+index 97977d72ef..bf9c2acd26 100644
+--- a/django/db/migrations/autodetector.py
++++ b/django/db/migrations/autodetector.py
+@@ -96,7 +96,7 @@ class MigrationAutodetector:
+         for name, field in sorted(fields.items()):
+             deconstruction = self.deep_deconstruct(field)
+             if field.remote_field and field.remote_field.model:
+-                del deconstruction[2]['to']
++                deconstruction[2].pop('to', None)
+             fields_def.append(deconstruction)
+         return fields_def
+2025-04-05 12:09:25,237 - INFO - Grading answer for django__django-15104...
+2025-04-05 12:09:25,238 - INFO - report: {'django__django-15104': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15104: resolved: False
+2025-04-05 12:09:25,238 - INFO - Attempting to stop container sweb.eval.django__django-15104.241028_solver...
+2025-04-05 12:09:41,221 - INFO - Attempting to remove container sweb.eval.django__django-15104.241028_solver...
+2025-04-05 12:09:41,336 - INFO - Container sweb.eval.django__django-15104.241028_solver removed.
+2025-04-05 12:09:41,337 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15104:latest...
+2025-04-05 12:09:43,870 - INFO - Image sweb.eval.x86_64.django__django-15104:latest removed.

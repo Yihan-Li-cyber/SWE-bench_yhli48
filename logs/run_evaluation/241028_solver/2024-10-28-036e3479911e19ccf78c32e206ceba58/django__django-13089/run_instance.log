@@ -1,0 +1,61 @@
+2025-04-05 11:01:24,745 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13089
+Building instance image sweb.eval.x86_64.django__django-13089:latest for django__django-13089
+2025-04-05 11:03:34,932 - INFO - Creating container for django__django-13089...
+2025-04-05 11:03:35,130 - INFO - Container for django__django-13089 created: a9c31ff682f16408c3d598c8f0385247aa8bc3c78b3f76722b82760ca5d459ba
+2025-04-05 11:03:36,429 - INFO - Container for django__django-13089 started: a9c31ff682f16408c3d598c8f0385247aa8bc3c78b3f76722b82760ca5d459ba
+2025-04-05 11:03:36,429 - INFO - Intermediate patch for django__django-13089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13089/patch.diff, now applying to container...
+2025-04-05 11:03:37,637 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:03:37,942 - INFO - >>>>> Applied Patch:
+patching file django/core/cache/backends/db.py
+
+2025-04-05 11:03:43,735 - INFO - Git diff before:
+diff --git a/django/core/cache/backends/db.py b/django/core/cache/backends/db.py
+index 33c79c5a14..6394ba878f 100644
+--- a/django/core/cache/backends/db.py
++++ b/django/core/cache/backends/db.py
+@@ -267,9 +267,11 @@ class DatabaseCache(BaseDatabaseCache):
+                 cursor.execute(
+                     connection.ops.cache_key_culling_sql() % table,
+                     [cull_num])
+-                cursor.execute("DELETE FROM %s "
+-                               "WHERE cache_key < %%s" % table,
+-                               [cursor.fetchone()[0]])
++                result = cursor.fetchone()
++                if result:
++                    cursor.execute("DELETE FROM %s "
++                                   "WHERE cache_key < %%s" % table,
++                                   [result[0]])
+ 
+     def clear(self):
+         db = router.db_for_write(self.cache_model_class)
+2025-04-05 11:03:43,736 - INFO - Eval script for django__django-13089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13089/eval.sh; copying to container...
+2025-04-05 11:05:46,527 - INFO - Test runtime: 121.98 seconds
+2025-04-05 11:05:46,528 - INFO - Test output for django__django-13089 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13089/test_output.txt
+2025-04-05 11:05:46,842 - INFO - Git diff after:
+diff --git a/django/core/cache/backends/db.py b/django/core/cache/backends/db.py
+index 33c79c5a14..6394ba878f 100644
+--- a/django/core/cache/backends/db.py
++++ b/django/core/cache/backends/db.py
+@@ -267,9 +267,11 @@ class DatabaseCache(BaseDatabaseCache):
+                 cursor.execute(
+                     connection.ops.cache_key_culling_sql() % table,
+                     [cull_num])
+-                cursor.execute("DELETE FROM %s "
+-                               "WHERE cache_key < %%s" % table,
+-                               [cursor.fetchone()[0]])
++                result = cursor.fetchone()
++                if result:
++                    cursor.execute("DELETE FROM %s "
++                                   "WHERE cache_key < %%s" % table,
++                                   [result[0]])
+ 
+     def clear(self):
+         db = router.db_for_write(self.cache_model_class)
+2025-04-05 11:05:46,842 - INFO - Grading answer for django__django-13089...
+2025-04-05 11:05:46,843 - INFO - report: {'django__django-13089': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13089: resolved: False
+2025-04-05 11:05:46,843 - INFO - Attempting to stop container sweb.eval.django__django-13089.241028_solver...
+2025-04-05 11:06:04,629 - INFO - Attempting to remove container sweb.eval.django__django-13089.241028_solver...
+2025-04-05 11:06:04,831 - INFO - Container sweb.eval.django__django-13089.241028_solver removed.
+2025-04-05 11:06:04,832 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13089:latest...
+2025-04-05 11:06:07,156 - INFO - Image sweb.eval.x86_64.django__django-13089:latest removed.

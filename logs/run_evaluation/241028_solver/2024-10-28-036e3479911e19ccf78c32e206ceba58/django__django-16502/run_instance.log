@@ -1,0 +1,65 @@
+2025-04-05 15:17:33,644 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16502
+Building instance image sweb.eval.x86_64.django__django-16502:latest for django__django-16502
+2025-04-05 15:19:51,494 - INFO - Creating container for django__django-16502...
+2025-04-05 15:19:51,624 - INFO - Container for django__django-16502 created: 0218b1331fcc55d86a6ebd9a17fe4d4e702ebfa753fbf13260259e02a95f7ed5
+2025-04-05 15:19:52,262 - INFO - Container for django__django-16502 started: 0218b1331fcc55d86a6ebd9a17fe4d4e702ebfa753fbf13260259e02a95f7ed5
+2025-04-05 15:19:52,262 - INFO - Intermediate patch for django__django-16502 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16502/patch.diff, now applying to container...
+2025-04-05 15:19:52,950 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:19:53,122 - INFO - >>>>> Applied Patch:
+patching file django/core/servers/basehttp.py
+
+2025-04-05 15:19:58,229 - INFO - Git diff before:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index fef5532e58..273ed5f78c 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -113,6 +113,16 @@ class ThreadedWSGIServer(socketserver.ThreadingMixIn, WSGIServer):
+ class ServerHandler(simple_server.ServerHandler):
+     http_version = "1.1"
+ 
++    def write(self, data):
++        """'write()' callable as specified by PEP 3333.
++        
++        Suppresses sending of response body for HEAD requests.
++        """
++        if self.environ.get('REQUEST_METHOD', '') == 'HEAD':
++            return
++
++        super().write(data)
++
+     def __init__(self, stdin, stdout, stderr, environ, **kwargs):
+         """
+         Use a LimitedStream so that unread request data will be ignored at
+2025-04-05 15:19:58,230 - INFO - Eval script for django__django-16502 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16502/eval.sh; copying to container...
+2025-04-05 15:20:39,426 - INFO - Test runtime: 40.78 seconds
+2025-04-05 15:20:39,426 - INFO - Test output for django__django-16502 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16502/test_output.txt
+2025-04-05 15:20:39,630 - INFO - Git diff after:
+diff --git a/django/core/servers/basehttp.py b/django/core/servers/basehttp.py
+index fef5532e58..273ed5f78c 100644
+--- a/django/core/servers/basehttp.py
++++ b/django/core/servers/basehttp.py
+@@ -113,6 +113,16 @@ class ThreadedWSGIServer(socketserver.ThreadingMixIn, WSGIServer):
+ class ServerHandler(simple_server.ServerHandler):
+     http_version = "1.1"
+ 
++    def write(self, data):
++        """'write()' callable as specified by PEP 3333.
++        
++        Suppresses sending of response body for HEAD requests.
++        """
++        if self.environ.get('REQUEST_METHOD', '') == 'HEAD':
++            return
++
++        super().write(data)
++
+     def __init__(self, stdin, stdout, stderr, environ, **kwargs):
+         """
+         Use a LimitedStream so that unread request data will be ignored at
+2025-04-05 15:20:39,630 - INFO - Grading answer for django__django-16502...
+2025-04-05 15:20:39,630 - INFO - report: {'django__django-16502': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16502: resolved: False
+2025-04-05 15:20:39,631 - INFO - Attempting to stop container sweb.eval.django__django-16502.241028_solver...
+2025-04-05 15:20:55,519 - INFO - Attempting to remove container sweb.eval.django__django-16502.241028_solver...
+2025-04-05 15:20:55,625 - INFO - Container sweb.eval.django__django-16502.241028_solver removed.
+2025-04-05 15:20:55,626 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16502:latest...
+2025-04-05 15:20:57,446 - INFO - Image sweb.eval.x86_64.django__django-16502:latest removed.

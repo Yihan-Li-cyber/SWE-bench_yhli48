@@ -1,0 +1,69 @@
+2025-04-05 14:40:35,739 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-15930
+Building instance image sweb.eval.x86_64.django__django-15930:latest for django__django-15930
+2025-04-05 14:42:51,662 - INFO - Creating container for django__django-15930...
+2025-04-05 14:42:51,739 - INFO - Container for django__django-15930 created: 227a212fc196616aa2c3a1745d719f3c3e877e8943159c0661bf076ec79f20c5
+2025-04-05 14:42:52,567 - INFO - Container for django__django-15930 started: 227a212fc196616aa2c3a1745d719f3c3e877e8943159c0661bf076ec79f20c5
+2025-04-05 14:42:52,568 - INFO - Intermediate patch for django__django-15930 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15930/patch.diff, now applying to container...
+2025-04-05 14:42:53,333 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 14:42:53,527 - INFO - >>>>> Applied Patch:
+patching file django/db/models/expressions.py
+
+2025-04-05 14:42:58,625 - INFO - Git diff before:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 822968ef56..a729bad39c 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1298,9 +1298,15 @@ class When(Expression):
+         connection.ops.check_expression_support(self)
+         template_params = extra_context
+         sql_params = []
+-        condition_sql, condition_params = compiler.compile(self.condition)
+-        template_params["condition"] = condition_sql
+-        sql_params.extend(condition_params)
++        
++        # Handle negated empty Q objects specially
++        if isinstance(self.condition, Q) and not self.condition.children and self.condition.negated:
++            template_params["condition"] = "TRUE"
++        else:
++            condition_sql, condition_params = compiler.compile(self.condition)
++            template_params["condition"] = condition_sql
++            sql_params.extend(condition_params)
++            
+         result_sql, result_params = compiler.compile(self.result)
+         template_params["result"] = result_sql
+         sql_params.extend(result_params)
+2025-04-05 14:42:58,626 - INFO - Eval script for django__django-15930 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15930/eval.sh; copying to container...
+2025-04-05 14:43:41,847 - INFO - Test runtime: 42.72 seconds
+2025-04-05 14:43:41,848 - INFO - Test output for django__django-15930 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15930/test_output.txt
+2025-04-05 14:43:42,132 - INFO - Git diff after:
+diff --git a/django/db/models/expressions.py b/django/db/models/expressions.py
+index 822968ef56..a729bad39c 100644
+--- a/django/db/models/expressions.py
++++ b/django/db/models/expressions.py
+@@ -1298,9 +1298,15 @@ class When(Expression):
+         connection.ops.check_expression_support(self)
+         template_params = extra_context
+         sql_params = []
+-        condition_sql, condition_params = compiler.compile(self.condition)
+-        template_params["condition"] = condition_sql
+-        sql_params.extend(condition_params)
++        
++        # Handle negated empty Q objects specially
++        if isinstance(self.condition, Q) and not self.condition.children and self.condition.negated:
++            template_params["condition"] = "TRUE"
++        else:
++            condition_sql, condition_params = compiler.compile(self.condition)
++            template_params["condition"] = condition_sql
++            sql_params.extend(condition_params)
++            
+         result_sql, result_params = compiler.compile(self.result)
+         template_params["result"] = result_sql
+         sql_params.extend(result_params)
+2025-04-05 14:43:42,132 - INFO - Grading answer for django__django-15930...
+2025-04-05 14:43:42,133 - INFO - report: {'django__django-15930': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15930: resolved: False
+2025-04-05 14:43:42,133 - INFO - Attempting to stop container sweb.eval.django__django-15930.241028_solver...
+2025-04-05 14:43:58,017 - INFO - Attempting to remove container sweb.eval.django__django-15930.241028_solver...
+2025-04-05 14:43:58,130 - INFO - Container sweb.eval.django__django-15930.241028_solver removed.
+2025-04-05 14:43:58,130 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15930:latest...
+2025-04-05 14:44:00,442 - INFO - Image sweb.eval.x86_64.django__django-15930:latest removed.

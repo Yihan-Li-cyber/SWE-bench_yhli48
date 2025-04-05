@@ -1,0 +1,56 @@
+2025-04-05 10:34:27,242 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11728
+Building instance image sweb.eval.x86_64.django__django-11728:latest for django__django-11728
+2025-04-05 10:36:27,138 - INFO - Creating container for django__django-11728...
+2025-04-05 10:36:27,244 - INFO - Container for django__django-11728 created: 49d28c8bf1454de57ca616759e7f612b4a2a8d02b4b3747033b5a762f3a0450e
+2025-04-05 10:36:28,527 - INFO - Container for django__django-11728 started: 49d28c8bf1454de57ca616759e7f612b4a2a8d02b4b3747033b5a762f3a0450e
+2025-04-05 10:36:28,528 - INFO - Intermediate patch for django__django-11728 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11728/patch.diff, now applying to container...
+2025-04-05 10:36:29,337 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:36:29,541 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admindocs/utils.py
+patching file tests/contrib/admindocs/test_utils.py
+
+2025-04-05 10:36:34,557 - INFO - Git diff before:
+diff --git a/django/contrib/admindocs/utils.py b/django/contrib/admindocs/utils.py
+index 1ce4594501..cf0b807790 100644
+--- a/django/contrib/admindocs/utils.py
++++ b/django/contrib/admindocs/utils.py
+@@ -181,6 +181,11 @@ def replace_named_groups(pattern):
+                 unmatched_open_brackets -= 1
+             prev_char = val
+ 
++        # If we've reached the end of the pattern without finding a balanced closing
++        # parenthesis, include everything up to the end
++        if unmatched_open_brackets > 0:
++            group_pattern_and_name.append((pattern[start:], group_name))
++
+     # Replace the string for named capture groups with their group names.
+     for group_pattern, group_name in group_pattern_and_name:
+         pattern = pattern.replace(group_pattern, group_name)
+2025-04-05 10:36:34,557 - INFO - Eval script for django__django-11728 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11728/eval.sh; copying to container...
+2025-04-05 10:37:32,036 - INFO - Test runtime: 56.90 seconds
+2025-04-05 10:37:32,036 - INFO - Test output for django__django-11728 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11728/test_output.txt
+2025-04-05 10:37:32,729 - INFO - Git diff after:
+diff --git a/django/contrib/admindocs/utils.py b/django/contrib/admindocs/utils.py
+index 1ce4594501..cf0b807790 100644
+--- a/django/contrib/admindocs/utils.py
++++ b/django/contrib/admindocs/utils.py
+@@ -181,6 +181,11 @@ def replace_named_groups(pattern):
+                 unmatched_open_brackets -= 1
+             prev_char = val
+ 
++        # If we've reached the end of the pattern without finding a balanced closing
++        # parenthesis, include everything up to the end
++        if unmatched_open_brackets > 0:
++            group_pattern_and_name.append((pattern[start:], group_name))
++
+     # Replace the string for named capture groups with their group names.
+     for group_pattern, group_name in group_pattern_and_name:
+         pattern = pattern.replace(group_pattern, group_name)
+2025-04-05 10:37:32,729 - INFO - Grading answer for django__django-11728...
+2025-04-05 10:37:32,729 - INFO - report: {'django__django-11728': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11728: resolved: False
+2025-04-05 10:37:32,730 - INFO - Attempting to stop container sweb.eval.django__django-11728.241028_solver...
+2025-04-05 10:38:19,333 - INFO - Attempting to remove container sweb.eval.django__django-11728.241028_solver...
+2025-04-05 10:38:19,536 - INFO - Container sweb.eval.django__django-11728.241028_solver removed.
+2025-04-05 10:38:19,536 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11728:latest...
+2025-04-05 10:38:23,532 - INFO - Image sweb.eval.x86_64.django__django-11728:latest removed.

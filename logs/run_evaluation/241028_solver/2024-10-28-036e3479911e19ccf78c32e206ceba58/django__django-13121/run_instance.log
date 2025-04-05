@@ -1,0 +1,85 @@
+2025-04-05 11:02:51,437 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13121
+Building instance image sweb.eval.x86_64.django__django-13121:latest for django__django-13121
+2025-04-05 11:06:01,109 - INFO - Creating container for django__django-13121...
+2025-04-05 11:06:01,236 - INFO - Container for django__django-13121 created: 26d143a4e47f3411e2b05e383ae9324d8bc4cffb8755275424dd2ba5dd976cc6
+2025-04-05 11:06:03,556 - INFO - Container for django__django-13121 started: 26d143a4e47f3411e2b05e383ae9324d8bc4cffb8755275424dd2ba5dd976cc6
+2025-04-05 11:06:03,557 - INFO - Intermediate patch for django__django-13121 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13121/patch.diff, now applying to container...
+2025-04-05 11:06:04,650 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:06:05,038 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/mysql/operations.py
+patching file django/db/backends/sqlite3/operations.py
+patching file test_duration.py
+
+2025-04-05 11:06:10,930 - INFO - Git diff before:
+diff --git a/django/db/backends/mysql/operations.py b/django/db/backends/mysql/operations.py
+index af8cfd86b5..28d45ca109 100644
+--- a/django/db/backends/mysql/operations.py
++++ b/django/db/backends/mysql/operations.py
+@@ -150,6 +150,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+         """
+         return cursor.fetchall()
+ 
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            return datetime.timedelta(microseconds=value)
++
+     def format_for_duration_arithmetic(self, sql):
+         return 'INTERVAL %s MICROSECOND' % sql
+ 
+diff --git a/django/db/backends/sqlite3/operations.py b/django/db/backends/sqlite3/operations.py
+index 9510b5edd9..811af1178a 100644
+--- a/django/db/backends/sqlite3/operations.py
++++ b/django/db/backends/sqlite3/operations.py
+@@ -102,6 +102,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+             field_name, *self._convert_tznames_to_sql(tzname),
+         )
+ 
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            return datetime.timedelta(microseconds=int(value))
++
+     def datetime_extract_sql(self, lookup_type, field_name, tzname):
+         return "django_datetime_extract('%s', %s, %s, %s)" % (
+             lookup_type.lower(), field_name, *self._convert_tznames_to_sql(tzname),
+2025-04-05 11:06:10,931 - INFO - Eval script for django__django-13121 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13121/eval.sh; copying to container...
+2025-04-05 11:06:53,854 - INFO - Test runtime: 42.43 seconds
+2025-04-05 11:06:53,855 - INFO - Test output for django__django-13121 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13121/test_output.txt
+2025-04-05 11:06:54,150 - INFO - Git diff after:
+diff --git a/django/db/backends/mysql/operations.py b/django/db/backends/mysql/operations.py
+index af8cfd86b5..28d45ca109 100644
+--- a/django/db/backends/mysql/operations.py
++++ b/django/db/backends/mysql/operations.py
+@@ -150,6 +150,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+         """
+         return cursor.fetchall()
+ 
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            return datetime.timedelta(microseconds=value)
++
+     def format_for_duration_arithmetic(self, sql):
+         return 'INTERVAL %s MICROSECOND' % sql
+ 
+diff --git a/django/db/backends/sqlite3/operations.py b/django/db/backends/sqlite3/operations.py
+index 9510b5edd9..811af1178a 100644
+--- a/django/db/backends/sqlite3/operations.py
++++ b/django/db/backends/sqlite3/operations.py
+@@ -102,6 +102,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+             field_name, *self._convert_tznames_to_sql(tzname),
+         )
+ 
++    def convert_durationfield_value(self, value, expression, connection):
++        if value is not None:
++            return datetime.timedelta(microseconds=int(value))
++
+     def datetime_extract_sql(self, lookup_type, field_name, tzname):
+         return "django_datetime_extract('%s', %s, %s, %s)" % (
+             lookup_type.lower(), field_name, *self._convert_tznames_to_sql(tzname),
+2025-04-05 11:06:54,223 - INFO - Grading answer for django__django-13121...
+2025-04-05 11:06:54,224 - INFO - report: {'django__django-13121': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13121: resolved: False
+2025-04-05 11:06:54,224 - INFO - Attempting to stop container sweb.eval.django__django-13121.241028_solver...
+2025-04-05 11:07:10,735 - INFO - Attempting to remove container sweb.eval.django__django-13121.241028_solver...
+2025-04-05 11:07:10,933 - INFO - Container sweb.eval.django__django-13121.241028_solver removed.
+2025-04-05 11:07:10,933 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13121:latest...
+2025-04-05 11:07:16,245 - INFO - Image sweb.eval.x86_64.django__django-13121:latest removed.

@@ -1,0 +1,60 @@
+2025-04-05 11:42:17,448 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14351
+Building instance image sweb.eval.x86_64.django__django-14351:latest for django__django-14351
+2025-04-05 11:46:13,131 - INFO - Creating container for django__django-14351...
+2025-04-05 11:46:13,317 - INFO - Container for django__django-14351 created: 3de5c8503265825738125e50958c762f0ba5db2f703a34bf2e043bb153ac5897
+2025-04-05 11:46:14,627 - INFO - Container for django__django-14351 started: 3de5c8503265825738125e50958c762f0ba5db2f703a34bf2e043bb153ac5897
+2025-04-05 11:46:14,627 - INFO - Intermediate patch for django__django-14351 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14351/patch.diff, now applying to container...
+2025-04-05 11:46:15,714 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:46:15,920 - INFO - >>>>> Applied Patch:
+patching file django/db/models/lookups.py
+patching file tests/queries/test_in_lookup.py
+
+2025-04-05 11:46:22,227 - INFO - Git diff before:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 5089737034..023b5f9805 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -401,9 +401,10 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
+             placeholder = '(' + ', '.join(sqls) + ')'
+             return (placeholder, sqls_params)
+         else:
+-            if not getattr(self.rhs, 'has_select_fields', True):
+-                self.rhs.clear_select_clause()
+-                self.rhs.add_fields(['pk'])
++            # Always ensure we're only selecting the primary key for IN subqueries
++            # to avoid the "subquery must return only one column" error
++            self.rhs.clear_select_clause()
++            self.rhs.add_fields(['pk'])
+             return super().process_rhs(compiler, connection)
+ 
+     def get_rhs_op(self, connection, rhs):
+2025-04-05 11:46:22,228 - INFO - Eval script for django__django-14351 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14351/eval.sh; copying to container...
+2025-04-05 11:47:11,421 - INFO - Test runtime: 48.31 seconds
+2025-04-05 11:47:11,421 - INFO - Test output for django__django-14351 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14351/test_output.txt
+2025-04-05 11:47:11,732 - INFO - Git diff after:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 5089737034..023b5f9805 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -401,9 +401,10 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
+             placeholder = '(' + ', '.join(sqls) + ')'
+             return (placeholder, sqls_params)
+         else:
+-            if not getattr(self.rhs, 'has_select_fields', True):
+-                self.rhs.clear_select_clause()
+-                self.rhs.add_fields(['pk'])
++            # Always ensure we're only selecting the primary key for IN subqueries
++            # to avoid the "subquery must return only one column" error
++            self.rhs.clear_select_clause()
++            self.rhs.add_fields(['pk'])
+             return super().process_rhs(compiler, connection)
+ 
+     def get_rhs_op(self, connection, rhs):
+2025-04-05 11:47:11,732 - INFO - Grading answer for django__django-14351...
+2025-04-05 11:47:11,733 - INFO - report: {'django__django-14351': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14351: resolved: False
+2025-04-05 11:47:11,733 - INFO - Attempting to stop container sweb.eval.django__django-14351.241028_solver...
+2025-04-05 11:47:28,532 - INFO - Attempting to remove container sweb.eval.django__django-14351.241028_solver...
+2025-04-05 11:47:28,716 - INFO - Container sweb.eval.django__django-14351.241028_solver removed.
+2025-04-05 11:47:28,717 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14351:latest...
+2025-04-05 11:47:31,119 - INFO - Image sweb.eval.x86_64.django__django-14351:latest removed.

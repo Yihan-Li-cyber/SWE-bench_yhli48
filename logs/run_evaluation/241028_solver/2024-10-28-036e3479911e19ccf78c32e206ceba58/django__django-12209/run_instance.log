@@ -1,0 +1,69 @@
+2025-04-05 10:47:09,743 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12209
+Building instance image sweb.eval.x86_64.django__django-12209:latest for django__django-12209
+2025-04-05 10:49:23,046 - INFO - Creating container for django__django-12209...
+2025-04-05 10:49:23,149 - INFO - Container for django__django-12209 created: 7b3123db09f5fd1238303fb2b47666bb3be859d29a017a4143393327dd754038
+2025-04-05 10:49:24,342 - INFO - Container for django__django-12209 started: 7b3123db09f5fd1238303fb2b47666bb3be859d29a017a4143393327dd754038
+2025-04-05 10:49:24,342 - INFO - Intermediate patch for django__django-12209 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12209/patch.diff, now applying to container...
+2025-04-05 10:49:25,346 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:49:25,632 - INFO - >>>>> Applied Patch:
+patching file django/db/models/base.py
+patching file tests/model_save/__init__.py
+patching file tests/model_save/migrations/0001_initial.py
+patching file tests/model_save/migrations/__init__.py
+patching file tests/model_save/test_explicit_pk.py
+
+2025-04-05 10:49:31,334 - INFO - Git diff before:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index e3b14a41a0..db1f40e62e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -847,12 +847,14 @@ class Model(metaclass=ModelBase):
+         if not pk_set and (force_update or update_fields):
+             raise ValueError("Cannot force an update in save() with no primary key.")
+         updated = False
+-        # Skip an UPDATE when adding an instance and primary key has a default.
++        # Skip an UPDATE when adding an instance and primary key has a default,
++        # but only if the primary key was not explicitly set.
+         if (
+             not force_insert and
+             self._state.adding and
+             self._meta.pk.default and
+-            self._meta.pk.default is not NOT_PROVIDED
++            self._meta.pk.default is not NOT_PROVIDED and
++            pk_val == self._meta.pk.get_default()
+         ):
+             force_insert = True
+         # If possible, try an UPDATE. If that doesn't update anything, do an INSERT.
+2025-04-05 10:49:31,335 - INFO - Eval script for django__django-12209 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12209/eval.sh; copying to container...
+2025-04-05 10:50:21,927 - INFO - Test runtime: 49.90 seconds
+2025-04-05 10:50:21,927 - INFO - Test output for django__django-12209 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12209/test_output.txt
+2025-04-05 10:50:22,327 - INFO - Git diff after:
+diff --git a/django/db/models/base.py b/django/db/models/base.py
+index e3b14a41a0..db1f40e62e 100644
+--- a/django/db/models/base.py
++++ b/django/db/models/base.py
+@@ -847,12 +847,14 @@ class Model(metaclass=ModelBase):
+         if not pk_set and (force_update or update_fields):
+             raise ValueError("Cannot force an update in save() with no primary key.")
+         updated = False
+-        # Skip an UPDATE when adding an instance and primary key has a default.
++        # Skip an UPDATE when adding an instance and primary key has a default,
++        # but only if the primary key was not explicitly set.
+         if (
+             not force_insert and
+             self._state.adding and
+             self._meta.pk.default and
+-            self._meta.pk.default is not NOT_PROVIDED
++            self._meta.pk.default is not NOT_PROVIDED and
++            pk_val == self._meta.pk.get_default()
+         ):
+             force_insert = True
+         # If possible, try an UPDATE. If that doesn't update anything, do an INSERT.
+2025-04-05 10:50:22,327 - INFO - Grading answer for django__django-12209...
+2025-04-05 10:50:22,327 - INFO - report: {'django__django-12209': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12209: resolved: False
+2025-04-05 10:50:22,328 - INFO - Attempting to stop container sweb.eval.django__django-12209.241028_solver...
+2025-04-05 10:50:38,735 - INFO - Attempting to remove container sweb.eval.django__django-12209.241028_solver...
+2025-04-05 10:50:38,926 - INFO - Container sweb.eval.django__django-12209.241028_solver removed.
+2025-04-05 10:50:38,926 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12209:latest...
+2025-04-05 10:50:41,554 - INFO - Image sweb.eval.x86_64.django__django-12209:latest removed.

@@ -1,0 +1,65 @@
+2025-04-05 11:55:37,119 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14752
+Building instance image sweb.eval.x86_64.django__django-14752:latest for django__django-14752
+2025-04-05 11:58:21,235 - INFO - Creating container for django__django-14752...
+2025-04-05 11:58:21,416 - INFO - Container for django__django-14752 created: b0dfb78a2479da82c57ab93c24071acbc9d6e3a0ff71d74faebf66824640e378
+2025-04-05 11:58:22,840 - INFO - Container for django__django-14752 started: b0dfb78a2479da82c57ab93c24071acbc9d6e3a0ff71d74faebf66824640e378
+2025-04-05 11:58:22,840 - INFO - Intermediate patch for django__django-14752 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14752/patch.diff, now applying to container...
+2025-04-05 11:58:23,933 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:58:24,229 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/views/autocomplete.py
+
+2025-04-05 11:58:30,555 - INFO - Git diff before:
+diff --git a/django/contrib/admin/views/autocomplete.py b/django/contrib/admin/views/autocomplete.py
+index 3903e4c98c..593bb371dd 100644
+--- a/django/contrib/admin/views/autocomplete.py
++++ b/django/contrib/admin/views/autocomplete.py
+@@ -26,12 +26,14 @@ class AutocompleteJsonView(BaseListView):
+         context = self.get_context_data()
+         return JsonResponse({
+             'results': [
+-                {'id': str(getattr(obj, to_field_name)), 'text': str(obj)}
+-                for obj in context['object_list']
++                self.serialize_result(obj, to_field_name) for obj in context['object_list']
+             ],
+             'pagination': {'more': context['page_obj'].has_next()},
+         })
+ 
++    def serialize_result(self, obj, to_field_name):
++        return {'id': str(getattr(obj, to_field_name)), 'text': str(obj)}
++
+     def get_paginator(self, *args, **kwargs):
+         """Use the ModelAdmin's paginator."""
+         return self.model_admin.get_paginator(self.request, *args, **kwargs)
+2025-04-05 11:58:30,555 - INFO - Eval script for django__django-14752 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14752/eval.sh; copying to container...
+2025-04-05 11:59:25,521 - INFO - Test runtime: 54.08 seconds
+2025-04-05 11:59:25,522 - INFO - Test output for django__django-14752 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14752/test_output.txt
+2025-04-05 11:59:25,830 - INFO - Git diff after:
+diff --git a/django/contrib/admin/views/autocomplete.py b/django/contrib/admin/views/autocomplete.py
+index 3903e4c98c..593bb371dd 100644
+--- a/django/contrib/admin/views/autocomplete.py
++++ b/django/contrib/admin/views/autocomplete.py
+@@ -26,12 +26,14 @@ class AutocompleteJsonView(BaseListView):
+         context = self.get_context_data()
+         return JsonResponse({
+             'results': [
+-                {'id': str(getattr(obj, to_field_name)), 'text': str(obj)}
+-                for obj in context['object_list']
++                self.serialize_result(obj, to_field_name) for obj in context['object_list']
+             ],
+             'pagination': {'more': context['page_obj'].has_next()},
+         })
+ 
++    def serialize_result(self, obj, to_field_name):
++        return {'id': str(getattr(obj, to_field_name)), 'text': str(obj)}
++
+     def get_paginator(self, *args, **kwargs):
+         """Use the ModelAdmin's paginator."""
+         return self.model_admin.get_paginator(self.request, *args, **kwargs)
+2025-04-05 11:59:25,830 - INFO - Grading answer for django__django-14752...
+2025-04-05 11:59:25,831 - INFO - report: {'django__django-14752': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14752: resolved: False
+2025-04-05 11:59:25,831 - INFO - Attempting to stop container sweb.eval.django__django-14752.241028_solver...
+2025-04-05 11:59:42,114 - INFO - Attempting to remove container sweb.eval.django__django-14752.241028_solver...
+2025-04-05 11:59:42,218 - INFO - Container sweb.eval.django__django-14752.241028_solver removed.
+2025-04-05 11:59:42,218 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14752:latest...
+2025-04-05 11:59:44,637 - INFO - Image sweb.eval.x86_64.django__django-14752:latest removed.

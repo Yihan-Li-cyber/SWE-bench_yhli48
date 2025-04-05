@@ -1,0 +1,51 @@
+2025-04-05 11:59:38,430 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-14915
+Building instance image sweb.eval.x86_64.django__django-14915:latest for django__django-14915
+2025-04-05 12:02:37,026 - INFO - Creating container for django__django-14915...
+2025-04-05 12:02:37,526 - INFO - Container for django__django-14915 created: 32cdb37a0faeaa51ded97af468e6b2272ca9d5dfe413901467b2763762ac23c5
+2025-04-05 12:02:39,139 - INFO - Container for django__django-14915 started: 32cdb37a0faeaa51ded97af468e6b2272ca9d5dfe413901467b2763762ac23c5
+2025-04-05 12:02:39,140 - INFO - Intermediate patch for django__django-14915 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14915/patch.diff, now applying to container...
+2025-04-05 12:02:40,142 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:02:40,429 - INFO - >>>>> Applied Patch:
+patching file django/forms/models.py
+
+2025-04-05 12:02:46,730 - INFO - Git diff before:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 5dcf923c12..bc7e6959e7 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -1171,6 +1171,9 @@ class ModelChoiceIteratorValue:
+             other = other.value
+         return self.value == other
+ 
++    def __hash__(self):
++        return hash(self.value)
++
+ 
+ class ModelChoiceIterator:
+     def __init__(self, field):
+2025-04-05 12:02:46,731 - INFO - Eval script for django__django-14915 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14915/eval.sh; copying to container...
+2025-04-05 12:03:36,118 - INFO - Test runtime: 48.00 seconds
+2025-04-05 12:03:36,119 - INFO - Test output for django__django-14915 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14915/test_output.txt
+2025-04-05 12:03:36,527 - INFO - Git diff after:
+diff --git a/django/forms/models.py b/django/forms/models.py
+index 5dcf923c12..bc7e6959e7 100644
+--- a/django/forms/models.py
++++ b/django/forms/models.py
+@@ -1171,6 +1171,9 @@ class ModelChoiceIteratorValue:
+             other = other.value
+         return self.value == other
+ 
++    def __hash__(self):
++        return hash(self.value)
++
+ 
+ class ModelChoiceIterator:
+     def __init__(self, field):
+2025-04-05 12:03:36,527 - INFO - Grading answer for django__django-14915...
+2025-04-05 12:03:36,527 - INFO - report: {'django__django-14915': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14915: resolved: False
+2025-04-05 12:03:36,528 - INFO - Attempting to stop container sweb.eval.django__django-14915.241028_solver...
+2025-04-05 12:03:54,018 - INFO - Attempting to remove container sweb.eval.django__django-14915.241028_solver...
+2025-04-05 12:03:54,217 - INFO - Container sweb.eval.django__django-14915.241028_solver removed.
+2025-04-05 12:03:54,217 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14915:latest...
+2025-04-05 12:03:56,840 - INFO - Image sweb.eval.x86_64.django__django-14915:latest removed.

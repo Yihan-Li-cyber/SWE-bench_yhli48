@@ -1,0 +1,49 @@
+2025-04-05 14:59:35,941 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16255
+Building instance image sweb.eval.x86_64.django__django-16255:latest for django__django-16255
+2025-04-05 15:01:57,441 - INFO - Creating container for django__django-16255...
+2025-04-05 15:01:57,625 - INFO - Container for django__django-16255 created: 56c87e0676aedcb4e3e6f3954952b0ccc0b775d8bffcb56b1031f5a1bf373a7e
+2025-04-05 15:01:58,446 - INFO - Container for django__django-16255 started: 56c87e0676aedcb4e3e6f3954952b0ccc0b775d8bffcb56b1031f5a1bf373a7e
+2025-04-05 15:01:58,446 - INFO - Intermediate patch for django__django-16255 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16255/patch.diff, now applying to container...
+2025-04-05 15:01:59,137 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:01:59,330 - INFO - >>>>> Applied Patch:
+patching file django/contrib/sitemaps/__init__.py
+
+2025-04-05 15:02:04,640 - INFO - Git diff before:
+diff --git a/django/contrib/sitemaps/__init__.py b/django/contrib/sitemaps/__init__.py
+index 27756d9d96..b40ad806ed 100644
+--- a/django/contrib/sitemaps/__init__.py
++++ b/django/contrib/sitemaps/__init__.py
+@@ -168,7 +168,7 @@ class Sitemap:
+         if callable(self.lastmod):
+             try:
+                 return max([self.lastmod(item) for item in self.items()])
+-            except TypeError:
++            except (TypeError, ValueError):
+                 return None
+         else:
+             return self.lastmod
+2025-04-05 15:02:04,640 - INFO - Eval script for django__django-16255 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16255/eval.sh; copying to container...
+2025-04-05 15:02:49,452 - INFO - Test runtime: 44.29 seconds
+2025-04-05 15:02:49,453 - INFO - Test output for django__django-16255 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16255/test_output.txt
+2025-04-05 15:02:49,726 - INFO - Git diff after:
+diff --git a/django/contrib/sitemaps/__init__.py b/django/contrib/sitemaps/__init__.py
+index 27756d9d96..b40ad806ed 100644
+--- a/django/contrib/sitemaps/__init__.py
++++ b/django/contrib/sitemaps/__init__.py
+@@ -168,7 +168,7 @@ class Sitemap:
+         if callable(self.lastmod):
+             try:
+                 return max([self.lastmod(item) for item in self.items()])
+-            except TypeError:
++            except (TypeError, ValueError):
+                 return None
+         else:
+             return self.lastmod
+2025-04-05 15:02:49,726 - INFO - Grading answer for django__django-16255...
+2025-04-05 15:02:49,727 - INFO - report: {'django__django-16255': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16255: resolved: False
+2025-04-05 15:02:49,727 - INFO - Attempting to stop container sweb.eval.django__django-16255.241028_solver...
+2025-04-05 15:03:05,624 - INFO - Attempting to remove container sweb.eval.django__django-16255.241028_solver...
+2025-04-05 15:03:05,748 - INFO - Container sweb.eval.django__django-16255.241028_solver removed.
+2025-04-05 15:03:05,748 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16255:latest...
+2025-04-05 15:03:07,942 - INFO - Image sweb.eval.x86_64.django__django-16255:latest removed.

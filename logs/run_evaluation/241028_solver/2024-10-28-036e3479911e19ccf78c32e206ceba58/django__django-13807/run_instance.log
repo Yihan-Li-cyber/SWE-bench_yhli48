@@ -1,0 +1,77 @@
+2025-04-05 11:23:52,658 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13807
+Building instance image sweb.eval.x86_64.django__django-13807:latest for django__django-13807
+2025-04-05 11:27:17,831 - INFO - Creating container for django__django-13807...
+2025-04-05 11:27:18,040 - INFO - Container for django__django-13807 created: 010a79cd77936c33109558e23f1ce763db00f1bdaa6e52f40dcd12018831c157
+2025-04-05 11:27:19,633 - INFO - Container for django__django-13807 started: 010a79cd77936c33109558e23f1ce763db00f1bdaa6e52f40dcd12018831c157
+2025-04-05 11:27:19,634 - INFO - Intermediate patch for django__django-13807 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13807/patch.diff, now applying to container...
+2025-04-05 11:27:20,436 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:27:20,640 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/sqlite3/base.py
+
+2025-04-05 11:27:26,340 - INFO - Git diff before:
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index 2eeaf98c0d..a412b3ffe5 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -327,19 +327,19 @@ class DatabaseWrapper(BaseDatabaseWrapper):
+                     violations = cursor.execute('PRAGMA foreign_key_check').fetchall()
+                 else:
+                     violations = chain.from_iterable(
+-                        cursor.execute('PRAGMA foreign_key_check(%s)' % table_name).fetchall()
++                        cursor.execute('PRAGMA foreign_key_check(%s)' % self.connection.ops.quote_name(table_name)).fetchall()
+                         for table_name in table_names
+                     )
+                 # See https://www.sqlite.org/pragma.html#pragma_foreign_key_check
+                 for table_name, rowid, referenced_table_name, foreign_key_index in violations:
+                     foreign_key = cursor.execute(
+-                        'PRAGMA foreign_key_list(%s)' % table_name
++                        'PRAGMA foreign_key_list(%s)' % self.connection.ops.quote_name(table_name)
+                     ).fetchall()[foreign_key_index]
+                     column_name, referenced_column_name = foreign_key[3:5]
+                     primary_key_column_name = self.introspection.get_primary_key_column(cursor, table_name)
+                     primary_key_value, bad_value = cursor.execute(
+                         'SELECT %s, %s FROM %s WHERE rowid = %%s' % (
+-                            primary_key_column_name, column_name, table_name
++                            primary_key_column_name, column_name, self.connection.ops.quote_name(table_name)
+                         ),
+                         (rowid,),
+                     ).fetchone()
+2025-04-05 11:27:26,341 - INFO - Eval script for django__django-13807 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13807/eval.sh; copying to container...
+2025-04-05 11:28:07,028 - INFO - Test runtime: 40.08 seconds
+2025-04-05 11:28:07,028 - INFO - Test output for django__django-13807 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13807/test_output.txt
+2025-04-05 11:28:07,339 - INFO - Git diff after:
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index 2eeaf98c0d..a412b3ffe5 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -327,19 +327,19 @@ class DatabaseWrapper(BaseDatabaseWrapper):
+                     violations = cursor.execute('PRAGMA foreign_key_check').fetchall()
+                 else:
+                     violations = chain.from_iterable(
+-                        cursor.execute('PRAGMA foreign_key_check(%s)' % table_name).fetchall()
++                        cursor.execute('PRAGMA foreign_key_check(%s)' % self.connection.ops.quote_name(table_name)).fetchall()
+                         for table_name in table_names
+                     )
+                 # See https://www.sqlite.org/pragma.html#pragma_foreign_key_check
+                 for table_name, rowid, referenced_table_name, foreign_key_index in violations:
+                     foreign_key = cursor.execute(
+-                        'PRAGMA foreign_key_list(%s)' % table_name
++                        'PRAGMA foreign_key_list(%s)' % self.connection.ops.quote_name(table_name)
+                     ).fetchall()[foreign_key_index]
+                     column_name, referenced_column_name = foreign_key[3:5]
+                     primary_key_column_name = self.introspection.get_primary_key_column(cursor, table_name)
+                     primary_key_value, bad_value = cursor.execute(
+                         'SELECT %s, %s FROM %s WHERE rowid = %%s' % (
+-                            primary_key_column_name, column_name, table_name
++                            primary_key_column_name, column_name, self.connection.ops.quote_name(table_name)
+                         ),
+                         (rowid,),
+                     ).fetchone()
+2025-04-05 11:28:07,339 - INFO - Grading answer for django__django-13807...
+2025-04-05 11:28:07,339 - INFO - report: {'django__django-13807': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13807: resolved: False
+2025-04-05 11:28:07,340 - INFO - Attempting to stop container sweb.eval.django__django-13807.241028_solver...
+2025-04-05 11:28:23,742 - INFO - Attempting to remove container sweb.eval.django__django-13807.241028_solver...
+2025-04-05 11:28:25,934 - INFO - Container sweb.eval.django__django-13807.241028_solver removed.
+2025-04-05 11:28:25,934 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13807:latest...
+2025-04-05 11:28:28,441 - INFO - Image sweb.eval.x86_64.django__django-13807:latest removed.

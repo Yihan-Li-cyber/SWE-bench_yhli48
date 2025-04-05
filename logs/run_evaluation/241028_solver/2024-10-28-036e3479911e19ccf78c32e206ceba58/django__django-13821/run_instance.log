@@ -1,0 +1,53 @@
+2025-04-05 11:28:16,852 - INFO - Environment image sweb.env.x86_64.e83e37f52c09532c62acfb:latest found for django__django-13821
+Building instance image sweb.eval.x86_64.django__django-13821:latest for django__django-13821
+2025-04-05 11:30:54,034 - INFO - Creating container for django__django-13821...
+2025-04-05 11:30:54,225 - INFO - Container for django__django-13821 created: 6a852421c3ecfcb46ac2138fe1db19aaf7a425abb804bd6796146b32bf4f393f
+2025-04-05 11:30:55,631 - INFO - Container for django__django-13821 started: 6a852421c3ecfcb46ac2138fe1db19aaf7a425abb804bd6796146b32bf4f393f
+2025-04-05 11:30:55,632 - INFO - Intermediate patch for django__django-13821 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13821/patch.diff, now applying to container...
+2025-04-05 11:30:56,441 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:30:56,734 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/sqlite3/base.py
+
+2025-04-05 11:31:02,344 - INFO - Git diff before:
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index ab4ea70492..dcff5534e0 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -64,8 +64,8 @@ def list_aggregate(function):
+ 
+ 
+ def check_sqlite_version():
+-    if Database.sqlite_version_info < (3, 8, 3):
+-        raise ImproperlyConfigured('SQLite 3.8.3 or later is required (found %s).' % Database.sqlite_version)
++    if Database.sqlite_version_info < (3, 9, 0):
++        raise ImproperlyConfigured('SQLite 3.9.0 or later is required (found %s).' % Database.sqlite_version)
+ 
+ 
+ check_sqlite_version()
+2025-04-05 11:31:02,344 - INFO - Eval script for django__django-13821 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13821/eval.sh; copying to container...
+2025-04-05 11:31:45,244 - INFO - Test runtime: 42.12 seconds
+2025-04-05 11:31:45,245 - INFO - Test output for django__django-13821 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13821/test_output.txt
+2025-04-05 11:31:45,436 - INFO - Git diff after:
+diff --git a/django/db/backends/sqlite3/base.py b/django/db/backends/sqlite3/base.py
+index ab4ea70492..dcff5534e0 100644
+--- a/django/db/backends/sqlite3/base.py
++++ b/django/db/backends/sqlite3/base.py
+@@ -64,8 +64,8 @@ def list_aggregate(function):
+ 
+ 
+ def check_sqlite_version():
+-    if Database.sqlite_version_info < (3, 8, 3):
+-        raise ImproperlyConfigured('SQLite 3.8.3 or later is required (found %s).' % Database.sqlite_version)
++    if Database.sqlite_version_info < (3, 9, 0):
++        raise ImproperlyConfigured('SQLite 3.9.0 or later is required (found %s).' % Database.sqlite_version)
+ 
+ 
+ check_sqlite_version()
+2025-04-05 11:31:45,437 - INFO - Grading answer for django__django-13821...
+2025-04-05 11:31:45,437 - INFO - report: {'django__django-13821': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13821: resolved: False
+2025-04-05 11:31:45,438 - INFO - Attempting to stop container sweb.eval.django__django-13821.241028_solver...
+2025-04-05 11:32:27,844 - INFO - Attempting to remove container sweb.eval.django__django-13821.241028_solver...
+2025-04-05 11:32:30,026 - INFO - Container sweb.eval.django__django-13821.241028_solver removed.
+2025-04-05 11:32:30,027 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13821:latest...
+2025-04-05 11:32:36,232 - INFO - Image sweb.eval.x86_64.django__django-13821:latest removed.

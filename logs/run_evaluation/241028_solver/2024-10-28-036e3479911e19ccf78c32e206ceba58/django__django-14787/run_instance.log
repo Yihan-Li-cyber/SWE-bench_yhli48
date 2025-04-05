@@ -1,0 +1,51 @@
+2025-04-05 11:56:44,032 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-14787
+Building instance image sweb.eval.x86_64.django__django-14787:latest for django__django-14787
+2025-04-05 11:59:45,047 - INFO - Creating container for django__django-14787...
+2025-04-05 11:59:45,144 - INFO - Container for django__django-14787 created: cd43c429ba4dc1f8fc129714e0de93fae5d681df5dc90f4eb8e9bcf33b95449c
+2025-04-05 11:59:46,554 - INFO - Container for django__django-14787 started: cd43c429ba4dc1f8fc129714e0de93fae5d681df5dc90f4eb8e9bcf33b95449c
+2025-04-05 11:59:46,555 - INFO - Intermediate patch for django__django-14787 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14787/patch.diff, now applying to container...
+2025-04-05 11:59:47,335 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:59:47,620 - INFO - >>>>> Applied Patch:
+patching file django/utils/decorators.py
+
+2025-04-05 11:59:53,130 - INFO - Git diff before:
+diff --git a/django/utils/decorators.py b/django/utils/decorators.py
+index 5c9a5d01c7..86f10f4722 100644
+--- a/django/utils/decorators.py
++++ b/django/utils/decorators.py
+@@ -37,7 +37,9 @@ def _multi_decorate(decorators, method):
+         # 'self' argument, but it's a closure over self so it can call
+         # 'func'. Also, wrap method.__get__() in a function because new
+         # attributes can't be set on bound method objects, only on functions.
++        # Create the bound method and preserve the original method's attributes
+         bound_method = partial(method.__get__(self, type(self)))
++        update_wrapper(bound_method, method)
+         for dec in decorators:
+             bound_method = dec(bound_method)
+         return bound_method(*args, **kwargs)
+2025-04-05 11:59:53,130 - INFO - Eval script for django__django-14787 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14787/eval.sh; copying to container...
+2025-04-05 12:00:42,818 - INFO - Test runtime: 48.99 seconds
+2025-04-05 12:00:42,818 - INFO - Test output for django__django-14787 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14787/test_output.txt
+2025-04-05 12:00:43,421 - INFO - Git diff after:
+diff --git a/django/utils/decorators.py b/django/utils/decorators.py
+index 5c9a5d01c7..86f10f4722 100644
+--- a/django/utils/decorators.py
++++ b/django/utils/decorators.py
+@@ -37,7 +37,9 @@ def _multi_decorate(decorators, method):
+         # 'self' argument, but it's a closure over self so it can call
+         # 'func'. Also, wrap method.__get__() in a function because new
+         # attributes can't be set on bound method objects, only on functions.
++        # Create the bound method and preserve the original method's attributes
+         bound_method = partial(method.__get__(self, type(self)))
++        update_wrapper(bound_method, method)
+         for dec in decorators:
+             bound_method = dec(bound_method)
+         return bound_method(*args, **kwargs)
+2025-04-05 12:00:43,421 - INFO - Grading answer for django__django-14787...
+2025-04-05 12:00:43,422 - INFO - report: {'django__django-14787': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14787: resolved: False
+2025-04-05 12:00:43,422 - INFO - Attempting to stop container sweb.eval.django__django-14787.241028_solver...
+2025-04-05 12:00:59,826 - INFO - Attempting to remove container sweb.eval.django__django-14787.241028_solver...
+2025-04-05 12:00:59,923 - INFO - Container sweb.eval.django__django-14787.241028_solver removed.
+2025-04-05 12:00:59,923 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14787:latest...
+2025-04-05 12:01:03,036 - INFO - Image sweb.eval.x86_64.django__django-14787:latest removed.

@@ -1,4 +1,4 @@
-2025-04-04 09:33:45,232 - INFO - Building image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
+2025-04-05 08:18:48,650 - INFO - Building image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-04 09:33:45,232 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-05 08:18:48,650 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,28 +21,28 @@ conda create -n testbed python=3.9  -y
 conda activate testbed
 python -m pip install py==1.11.0 packaging==23.1 attrs==23.1.0 more-itertools==10.1.0 pluggy==0.13.1
 
-2025-04-04 09:33:45,233 - INFO - Building docker image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest in logs/build_images/env/sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb__latest with platform linux/x86_64
-2025-04-04 09:33:45,240 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-04 09:33:45,241 - INFO - 
-2025-04-04 09:33:45,241 - INFO - ---> 7652b8eed4b5
-2025-04-04 09:33:45,241 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-04 09:33:45,241 - INFO - 
-2025-04-04 09:33:45,294 - INFO - ---> 48146f5e9126
-2025-04-04 09:33:45,295 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-04 09:33:45,295 - INFO - 
-2025-04-04 09:33:45,333 - INFO - ---> Running in e79f177a2d39
-2025-04-04 09:33:46,252 - INFO - ---> Removed intermediate container e79f177a2d39
-2025-04-04 09:33:46,254 - INFO - ---> 11e86b97fefd
-2025-04-04 09:33:46,254 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-04 09:33:46,254 - INFO - 
-2025-04-04 09:33:46,334 - INFO - ---> Running in 31edae42eb73
-2025-04-04 09:33:47,270 - INFO - ---> Removed intermediate container 31edae42eb73
-2025-04-04 09:33:47,270 - INFO - ---> 54e102f75e68
-2025-04-04 09:33:47,270 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-04 09:33:47,270 - INFO - 
-2025-04-04 09:33:47,325 - INFO - ---> Running in 6a684739b305
-2025-04-04 09:33:47,836 - INFO - + source /opt/miniconda3/bin/activate
-2025-04-04 09:33:47,837 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-05 08:18:48,651 - INFO - Building docker image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest in logs/build_images/env/sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb__latest with platform linux/x86_64
+2025-04-05 08:18:48,729 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-05 08:18:48,729 - INFO - 
+2025-04-05 08:18:48,729 - INFO - ---> bb912b738013
+2025-04-05 08:18:48,729 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-05 08:18:48,729 - INFO - 
+2025-04-05 08:18:48,840 - INFO - ---> 86c937fd6692
+2025-04-05 08:18:48,841 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-05 08:18:48,841 - INFO - 
+2025-04-05 08:18:48,945 - INFO - ---> Running in 79da0595b554
+2025-04-05 08:18:50,852 - INFO - ---> Removed intermediate container 79da0595b554
+2025-04-05 08:18:50,852 - INFO - ---> 29575f0bbab6
+2025-04-05 08:18:50,852 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-05 08:18:50,852 - INFO - 
+2025-04-05 08:18:50,944 - INFO - ---> Running in 606d0124daa5
+2025-04-05 08:18:52,943 - INFO - ---> Removed intermediate container 606d0124daa5
+2025-04-05 08:18:52,944 - INFO - ---> 16ed970a8c28
+2025-04-05 08:18:52,944 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-05 08:18:52,944 - INFO - 
+2025-04-05 08:18:53,044 - INFO - ---> Running in 6e9ea94ff208
+2025-04-05 08:18:54,053 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-05 08:18:54,054 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -52,26 +52,26 @@ python -m pip install py==1.11.0 packaging==23.1 attrs==23.1.0 more-itertools==1
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+++ '[' -z '' ']'
+2025-04-05 08:18:54,054 - INFO - +++ '[' -z '' ']'
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-04 09:33:47,838 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 09:33:47,841 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 09:33:47,843 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-05 08:18:54,125 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-05 08:18:54,126 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-05 08:18:54,127 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-++ conda activate
+2025-04-05 08:18:54,127 - INFO - ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
-++ '[' -n '' ']'
+2025-04-05 08:18:54,127 - INFO - ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 09:33:47,844 - INFO - +++ PS1=
+2025-04-05 08:18:54,128 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 09:33:47,845 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 09:33:48,073 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-05 08:18:54,129 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-05 08:18:54,851 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -100,34 +100,34 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ CONDA_SHLVL=1
 +++ export CONDA_DEFAULT_ENV=base
 +++ CONDA_DEFAULT_ENV=base
-+++ export 'CONDA_PROMPT_MODIFIER=(base) '
+2025-04-05 08:18:54,851 - INFO - +++ export 'CONDA_PROMPT_MODIFIER=(base) '
 +++ CONDA_PROMPT_MODIFIER='(base) '
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
-2025-04-04 09:33:48,073 - INFO - +++ export _CE_M=
++++ export _CE_M=
 +++ _CE_M=
 +++ export _CE_CONDA=
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
-2025-04-04 09:33:48,074 - INFO - ++ '[' -n '' ']'
+2025-04-05 08:18:54,851 - INFO - ++ '[' -n '' ']'
 ++ '[' -n '' ']'
 ++ hash -r
-+ conda create -n testbed python=3.9 -y
+2025-04-05 08:18:54,851 - INFO - + conda create -n testbed python=3.9 -y
 + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.9 -y
-2025-04-04 09:33:48,074 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
-2025-04-04 09:33:49,276 - INFO - Channels:
+2025-04-05 08:18:54,852 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
+2025-04-05 08:18:58,652 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
 Collecting package metadata (repodata.json): ...working...
-2025-04-04 09:35:19,193 - INFO - done
-2025-04-04 09:35:19,194 - INFO - Solving environment: ...working...
-2025-04-04 09:35:21,376 - INFO - done
-2025-04-04 09:35:27,649 - INFO - ## Package Plan ##
+2025-04-05 08:23:48,949 - INFO - done
+Solving environment: ...working...
+2025-04-05 08:23:56,737 - INFO - done
+2025-04-05 08:24:14,452 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -182,12 +182,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-04 09:35:28,194 - INFO - done
+2025-04-05 08:24:15,953 - INFO - done
 Verifying transaction: ...working...
-2025-04-04 09:35:31,347 - INFO - done
-2025-04-04 09:35:31,358 - INFO - Executing transaction: ...working...
-2025-04-04 09:35:39,259 - INFO - done
-2025-04-04 09:35:39,379 - INFO - #
+2025-04-05 08:24:24,055 - INFO - done
+2025-04-05 08:24:24,133 - INFO - Executing transaction: ...working...
+2025-04-05 08:24:32,533 - INFO - done
+2025-04-05 08:24:32,758 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -195,16 +195,16 @@ Verifying transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-04 09:35:40,159 - INFO - + conda activate testbed
-2025-04-04 09:35:40,160 - INFO - + local cmd=activate
+2025-04-05 08:24:33,542 - INFO - + conda activate testbed
++ local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-04 09:35:40,162 - INFO - ++ PS1='(base) '
+2025-04-05 08:24:33,543 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 09:35:40,163 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 09:35:40,369 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-05 08:24:33,543 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-05 08:24:34,146 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -226,7 +226,7 @@ export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
 export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-2025-04-04 09:35:40,369 - INFO - ++ PS1='(testbed) '
+++ PS1='(testbed) '
 ++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
@@ -240,48 +240,48 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
 ++ export CONDA_EXE=/opt/miniconda3/bin/conda
-++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-05 08:24:34,146 - INFO - ++ CONDA_EXE=/opt/miniconda3/bin/conda
 ++ export _CE_M=
 ++ _CE_M=
 ++ export _CE_CONDA=
 ++ _CE_CONDA=
 ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-2025-04-04 09:35:40,369 - INFO - + __conda_hashr
-+ '[' -n '' ']'
+2025-04-05 08:24:34,146 - INFO - + __conda_hashr
+2025-04-05 08:24:34,146 - INFO - + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-+ python -m pip install py==1.11.0 packaging==23.1 attrs==23.1.0 more-itertools==10.1.0 pluggy==0.13.1
-2025-04-04 09:35:41,235 - INFO - Collecting py==1.11.0
-2025-04-04 09:35:41,252 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
-2025-04-04 09:35:41,302 - INFO - Collecting packaging==23.1
-2025-04-04 09:35:41,311 - INFO - Downloading packaging-23.1-py3-none-any.whl.metadata (3.1 kB)
-2025-04-04 09:35:41,350 - INFO - Collecting attrs==23.1.0
-2025-04-04 09:35:41,358 - INFO - Downloading attrs-23.1.0-py3-none-any.whl.metadata (11 kB)
-2025-04-04 09:35:41,412 - INFO - Collecting more-itertools==10.1.0
-2025-04-04 09:35:41,440 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl.metadata (33 kB)
-2025-04-04 09:35:41,475 - INFO - Collecting pluggy==0.13.1
-2025-04-04 09:35:41,481 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl.metadata (15 kB)
-2025-04-04 09:35:41,502 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
-2025-04-04 09:35:41,517 - INFO - Downloading packaging-23.1-py3-none-any.whl (48 kB)
-2025-04-04 09:35:41,527 - INFO - Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
-2025-04-04 09:35:41,541 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl (55 kB)
-2025-04-04 09:35:41,556 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
-2025-04-04 09:35:41,623 - INFO - Installing collected packages: py, pluggy, packaging, more-itertools, attrs
-2025-04-04 09:35:41,920 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 09:35:41,920 - INFO - Successfully installed attrs-23.1.0 more-itertools-10.1.0 packaging-23.1 pluggy-0.13.1 py-1.11.0
-2025-04-04 09:36:07,673 - INFO - ---> Removed intermediate container 6a684739b305
-2025-04-04 09:36:07,674 - INFO - ---> 9514434a1962
-2025-04-04 09:36:07,674 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-04 09:36:07,674 - INFO - 
-2025-04-04 09:36:07,860 - INFO - ---> Running in 42739b8f3e0d
-2025-04-04 09:36:07,923 - INFO - ---> Removed intermediate container 42739b8f3e0d
-2025-04-04 09:36:07,923 - INFO - ---> 0695dd7c7952
-2025-04-04 09:36:07,924 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-04 09:36:07,924 - INFO - 
-2025-04-04 09:36:08,043 - INFO - ---> Running in 6055e081b50f
-2025-04-04 09:36:08,949 - INFO - ---> Removed intermediate container 6055e081b50f
-2025-04-04 09:36:08,950 - INFO - ---> ec2c4483d188
-2025-04-04 09:36:08,950 - INFO - Successfully built ec2c4483d188
-2025-04-04 09:36:08,955 - INFO - Successfully tagged sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
-2025-04-04 09:36:08,956 - INFO - Image built successfully!
+2025-04-05 08:24:34,147 - INFO - + python -m pip install py==1.11.0 packaging==23.1 attrs==23.1.0 more-itertools==10.1.0 pluggy==0.13.1
+2025-04-05 08:24:36,436 - INFO - Collecting py==1.11.0
+2025-04-05 08:24:36,542 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl.metadata (2.8 kB)
+2025-04-05 08:24:36,641 - INFO - Collecting packaging==23.1
+2025-04-05 08:24:36,647 - INFO - Downloading packaging-23.1-py3-none-any.whl.metadata (3.1 kB)
+2025-04-05 08:24:36,736 - INFO - Collecting attrs==23.1.0
+2025-04-05 08:24:36,744 - INFO - Downloading attrs-23.1.0-py3-none-any.whl.metadata (11 kB)
+2025-04-05 08:24:36,935 - INFO - Collecting more-itertools==10.1.0
+2025-04-05 08:24:36,940 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl.metadata (33 kB)
+2025-04-05 08:24:37,034 - INFO - Collecting pluggy==0.13.1
+2025-04-05 08:24:37,041 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl.metadata (15 kB)
+2025-04-05 08:24:37,133 - INFO - Downloading py-1.11.0-py2.py3-none-any.whl (98 kB)
+2025-04-05 08:24:37,143 - INFO - Downloading packaging-23.1-py3-none-any.whl (48 kB)
+2025-04-05 08:24:37,152 - INFO - Downloading attrs-23.1.0-py3-none-any.whl (61 kB)
+2025-04-05 08:24:37,161 - INFO - Downloading more_itertools-10.1.0-py3-none-any.whl (55 kB)
+2025-04-05 08:24:37,231 - INFO - Downloading pluggy-0.13.1-py2.py3-none-any.whl (18 kB)
+2025-04-05 08:24:37,441 - INFO - Installing collected packages: py, pluggy, packaging, more-itertools, attrs
+2025-04-05 08:24:38,355 - INFO - Successfully installed attrs-23.1.0 more-itertools-10.1.0 packaging-23.1 pluggy-0.13.1 py-1.11.0
+2025-04-05 08:24:38,355 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-05 08:25:23,437 - INFO - ---> Removed intermediate container 6e9ea94ff208
+2025-04-05 08:25:23,437 - INFO - ---> a0c9148106bd
+2025-04-05 08:25:23,437 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-05 08:25:23,437 - INFO - 
+2025-04-05 08:25:23,746 - INFO - ---> Running in 287a2e834d55
+2025-04-05 08:25:23,864 - INFO - ---> Removed intermediate container 287a2e834d55
+2025-04-05 08:25:23,864 - INFO - ---> 04ee98516336
+2025-04-05 08:25:23,864 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-05 08:25:23,865 - INFO - 
+2025-04-05 08:25:23,947 - INFO - ---> Running in f35fe5872ae8
+2025-04-05 08:25:26,447 - INFO - ---> Removed intermediate container f35fe5872ae8
+2025-04-05 08:25:26,447 - INFO - ---> 22349ff59adb
+2025-04-05 08:25:26,447 - INFO - Successfully built 22349ff59adb
+2025-04-05 08:25:26,450 - INFO - Successfully tagged sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest
+2025-04-05 08:25:26,450 - INFO - Image built successfully!

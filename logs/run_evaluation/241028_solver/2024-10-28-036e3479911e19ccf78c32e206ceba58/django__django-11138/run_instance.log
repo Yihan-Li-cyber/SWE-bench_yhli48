@@ -1,0 +1,55 @@
+2025-04-05 10:16:28,737 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11138
+Building instance image sweb.eval.x86_64.django__django-11138:latest for django__django-11138
+2025-04-05 10:18:48,298 - INFO - Creating container for django__django-11138...
+2025-04-05 10:18:48,343 - INFO - Container for django__django-11138 created: f6f86ee086f6f97bbcad4c4bf78a2bb33cb73752b1fb67db2377287814fa38b1
+2025-04-05 10:18:49,433 - INFO - Container for django__django-11138 started: f6f86ee086f6f97bbcad4c4bf78a2bb33cb73752b1fb67db2377287814fa38b1
+2025-04-05 10:18:49,433 - INFO - Intermediate patch for django__django-11138 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11138/patch.diff, now applying to container...
+2025-04-05 10:18:50,239 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:18:50,431 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/mysql/operations.py
+
+2025-04-05 10:18:55,536 - INFO - Git diff before:
+diff --git a/django/db/backends/mysql/operations.py b/django/db/backends/mysql/operations.py
+index 50f85e0621..ab1509e30a 100644
+--- a/django/db/backends/mysql/operations.py
++++ b/django/db/backends/mysql/operations.py
+@@ -70,7 +70,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+ 
+     def _convert_field_to_tz(self, field_name, tzname):
+         if settings.USE_TZ:
+-            field_name = "CONVERT_TZ(%s, 'UTC', '%s')" % (field_name, tzname)
++            source_tz = self.connection.settings_dict.get('TIME_ZONE') or 'UTC'
++            if source_tz == tzname:
++                return field_name
++            field_name = "CONVERT_TZ(%s, '%s', '%s')" % (field_name, source_tz, tzname)
+         return field_name
+ 
+     def datetime_cast_date_sql(self, field_name, tzname):
+2025-04-05 10:18:55,536 - INFO - Eval script for django__django-11138 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11138/eval.sh; copying to container...
+2025-04-05 10:19:34,624 - INFO - Test runtime: 38.36 seconds
+2025-04-05 10:19:34,624 - INFO - Test output for django__django-11138 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11138/test_output.txt
+2025-04-05 10:19:34,934 - INFO - Git diff after:
+diff --git a/django/db/backends/mysql/operations.py b/django/db/backends/mysql/operations.py
+index 50f85e0621..ab1509e30a 100644
+--- a/django/db/backends/mysql/operations.py
++++ b/django/db/backends/mysql/operations.py
+@@ -70,7 +70,10 @@ class DatabaseOperations(BaseDatabaseOperations):
+ 
+     def _convert_field_to_tz(self, field_name, tzname):
+         if settings.USE_TZ:
+-            field_name = "CONVERT_TZ(%s, 'UTC', '%s')" % (field_name, tzname)
++            source_tz = self.connection.settings_dict.get('TIME_ZONE') or 'UTC'
++            if source_tz == tzname:
++                return field_name
++            field_name = "CONVERT_TZ(%s, '%s', '%s')" % (field_name, source_tz, tzname)
+         return field_name
+ 
+     def datetime_cast_date_sql(self, field_name, tzname):
+2025-04-05 10:19:34,935 - INFO - Grading answer for django__django-11138...
+2025-04-05 10:19:34,935 - INFO - report: {'django__django-11138': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11138: resolved: False
+2025-04-05 10:19:34,936 - INFO - Attempting to stop container sweb.eval.django__django-11138.241028_solver...
+2025-04-05 10:19:51,040 - INFO - Attempting to remove container sweb.eval.django__django-11138.241028_solver...
+2025-04-05 10:19:51,137 - INFO - Container sweb.eval.django__django-11138.241028_solver removed.
+2025-04-05 10:19:51,137 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11138:latest...
+2025-04-05 10:19:53,140 - INFO - Image sweb.eval.x86_64.django__django-11138:latest removed.

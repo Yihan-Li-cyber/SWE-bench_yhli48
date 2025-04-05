@@ -1,0 +1,71 @@
+2025-04-05 10:23:27,727 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11239
+Building instance image sweb.eval.x86_64.django__django-11239:latest for django__django-11239
+2025-04-05 10:26:20,339 - INFO - Creating container for django__django-11239...
+2025-04-05 10:26:20,450 - INFO - Container for django__django-11239 created: 7dd8390b25d9e6ccaf823b6a207d92ef70ee156d20740ded90c6c7a2bcdcf32d
+2025-04-05 10:26:23,139 - INFO - Container for django__django-11239 started: 7dd8390b25d9e6ccaf823b6a207d92ef70ee156d20740ded90c6c7a2bcdcf32d
+2025-04-05 10:26:23,139 - INFO - Intermediate patch for django__django-11239 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11239/patch.diff, now applying to container...
+2025-04-05 10:26:24,137 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:26:24,334 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/postgresql/client.py
+
+2025-04-05 10:26:29,731 - INFO - Git diff before:
+diff --git a/django/db/backends/postgresql/client.py b/django/db/backends/postgresql/client.py
+index cf4df76882..170a327f1c 100644
+--- a/django/db/backends/postgresql/client.py
++++ b/django/db/backends/postgresql/client.py
+@@ -26,6 +26,19 @@ class DatabaseClient(BaseDatabaseClient):
+             args += ['-p', str(port)]
+         args += [dbname]
+ 
++        # Add SSL parameters
++        sslmode = conn_params.get('sslmode')
++        if sslmode:
++            args += ['sslmode=%s' % sslmode]
++        sslcert = conn_params.get('sslcert')
++        if sslcert:
++            args += ['sslcert=%s' % sslcert]
++        sslkey = conn_params.get('sslkey')
++        if sslkey:
++            args += ['sslkey=%s' % sslkey]
++        sslrootcert = conn_params.get('sslrootcert')
++        if sslrootcert:
++            args += ['sslrootcert=%s' % sslrootcert]
+         sigint_handler = signal.getsignal(signal.SIGINT)
+         subprocess_env = os.environ.copy()
+         if passwd:
+2025-04-05 10:26:29,731 - INFO - Eval script for django__django-11239 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11239/eval.sh; copying to container...
+2025-04-05 10:27:07,528 - INFO - Test runtime: 37.09 seconds
+2025-04-05 10:27:07,528 - INFO - Test output for django__django-11239 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11239/test_output.txt
+2025-04-05 10:27:07,837 - INFO - Git diff after:
+diff --git a/django/db/backends/postgresql/client.py b/django/db/backends/postgresql/client.py
+index cf4df76882..170a327f1c 100644
+--- a/django/db/backends/postgresql/client.py
++++ b/django/db/backends/postgresql/client.py
+@@ -26,6 +26,19 @@ class DatabaseClient(BaseDatabaseClient):
+             args += ['-p', str(port)]
+         args += [dbname]
+ 
++        # Add SSL parameters
++        sslmode = conn_params.get('sslmode')
++        if sslmode:
++            args += ['sslmode=%s' % sslmode]
++        sslcert = conn_params.get('sslcert')
++        if sslcert:
++            args += ['sslcert=%s' % sslcert]
++        sslkey = conn_params.get('sslkey')
++        if sslkey:
++            args += ['sslkey=%s' % sslkey]
++        sslrootcert = conn_params.get('sslrootcert')
++        if sslrootcert:
++            args += ['sslrootcert=%s' % sslrootcert]
+         sigint_handler = signal.getsignal(signal.SIGINT)
+         subprocess_env = os.environ.copy()
+         if passwd:
+2025-04-05 10:27:07,837 - INFO - Grading answer for django__django-11239...
+2025-04-05 10:27:07,838 - INFO - report: {'django__django-11239': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11239: resolved: False
+2025-04-05 10:27:07,838 - INFO - Attempting to stop container sweb.eval.django__django-11239.241028_solver...
+2025-04-05 10:27:23,624 - INFO - Attempting to remove container sweb.eval.django__django-11239.241028_solver...
+2025-04-05 10:27:23,735 - INFO - Container sweb.eval.django__django-11239.241028_solver removed.
+2025-04-05 10:27:23,736 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11239:latest...
+2025-04-05 10:27:26,330 - INFO - Image sweb.eval.x86_64.django__django-11239:latest removed.

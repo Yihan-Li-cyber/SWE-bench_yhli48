@@ -1,0 +1,55 @@
+2025-04-05 11:55:37,129 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-14771
+Building instance image sweb.eval.x86_64.django__django-14771:latest for django__django-14771
+2025-04-05 11:58:35,529 - INFO - Creating container for django__django-14771...
+2025-04-05 11:58:35,635 - INFO - Container for django__django-14771 created: 08ab31449fe430e4125270912fe460bded1697b8f54c9b20b7b1e1a75d59c8e5
+2025-04-05 11:59:35,422 - INFO - Container for django__django-14771 started: 08ab31449fe430e4125270912fe460bded1697b8f54c9b20b7b1e1a75d59c8e5
+2025-04-05 11:59:35,422 - INFO - Intermediate patch for django__django-14771 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14771/patch.diff, now applying to container...
+2025-04-05 11:59:36,326 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:59:36,522 - INFO - >>>>> Applied Patch:
+patching file django/utils/autoreload.py
+
+2025-04-05 11:59:42,240 - INFO - Git diff before:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index cc65c043ab..f62c35b7df 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -219,7 +219,10 @@ def get_child_arguments():
+     import __main__
+     py_script = Path(sys.argv[0])
+ 
+-    args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions]
++    args = [sys.executable]
++    args.extend('-W%s' % o for o in sys.warnoptions)
++    args.extend('-X%s=%s' % (k, v) if v is not True else '-X%s' % k
++               for k, v in getattr(sys, '_xoptions', {}).items())
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+2025-04-05 11:59:42,240 - INFO - Eval script for django__django-14771 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14771/eval.sh; copying to container...
+2025-04-05 12:00:33,032 - INFO - Test runtime: 50.11 seconds
+2025-04-05 12:00:33,033 - INFO - Test output for django__django-14771 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14771/test_output.txt
+2025-04-05 12:00:33,517 - INFO - Git diff after:
+diff --git a/django/utils/autoreload.py b/django/utils/autoreload.py
+index cc65c043ab..f62c35b7df 100644
+--- a/django/utils/autoreload.py
++++ b/django/utils/autoreload.py
+@@ -219,7 +219,10 @@ def get_child_arguments():
+     import __main__
+     py_script = Path(sys.argv[0])
+ 
+-    args = [sys.executable] + ['-W%s' % o for o in sys.warnoptions]
++    args = [sys.executable]
++    args.extend('-W%s' % o for o in sys.warnoptions)
++    args.extend('-X%s=%s' % (k, v) if v is not True else '-X%s' % k
++               for k, v in getattr(sys, '_xoptions', {}).items())
+     # __spec__ is set when the server was started with the `-m` option,
+     # see https://docs.python.org/3/reference/import.html#main-spec
+     # __spec__ may not exist, e.g. when running in a Conda env.
+2025-04-05 12:00:33,517 - INFO - Grading answer for django__django-14771...
+2025-04-05 12:00:33,517 - INFO - report: {'django__django-14771': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14771: resolved: False
+2025-04-05 12:00:33,517 - INFO - Attempting to stop container sweb.eval.django__django-14771.241028_solver...
+2025-04-05 12:00:49,938 - INFO - Attempting to remove container sweb.eval.django__django-14771.241028_solver...
+2025-04-05 12:00:50,134 - INFO - Container sweb.eval.django__django-14771.241028_solver removed.
+2025-04-05 12:00:50,134 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14771:latest...
+2025-04-05 12:00:52,639 - INFO - Image sweb.eval.x86_64.django__django-14771:latest removed.

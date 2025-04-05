@@ -1,0 +1,67 @@
+2025-04-05 15:13:46,864 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16454
+Building instance image sweb.eval.x86_64.django__django-16454:latest for django__django-16454
+2025-04-05 15:16:08,748 - INFO - Creating container for django__django-16454...
+2025-04-05 15:16:08,918 - INFO - Container for django__django-16454 created: ce50c20b0de4e52983fb7532ae1a9f46ed77f37a41a29652d34af276fa0245cb
+2025-04-05 15:16:09,656 - INFO - Container for django__django-16454 started: ce50c20b0de4e52983fb7532ae1a9f46ed77f37a41a29652d34af276fa0245cb
+2025-04-05 15:16:09,656 - INFO - Intermediate patch for django__django-16454 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16454/patch.diff, now applying to container...
+2025-04-05 15:16:10,351 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 15:16:10,535 - INFO - >>>>> Applied Patch:
+patching file django/core/management/base.py
+
+2025-04-05 15:16:15,425 - INFO - Git diff before:
+diff --git a/django/core/management/base.py b/django/core/management/base.py
+index abc6f79a15..0c3bb840a8 100644
+--- a/django/core/management/base.py
++++ b/django/core/management/base.py
+@@ -44,6 +44,17 @@ class SystemCheckError(CommandError):
+ 
+ 
+ class CommandParser(ArgumentParser):
++    def add_subparsers(self, **kwargs):
++        subparsers = super().add_subparsers(**kwargs)
++        original_add_parser = subparsers.add_parser
++
++        def add_parser(name, **kwargs):
++            if 'parser_class' not in kwargs:
++                kwargs['parser_class'] = CommandParser
++            return original_add_parser(name, **kwargs)
++
++        subparsers.add_parser = add_parser
++        return subparsers
+     """
+     Customized ArgumentParser class to improve some error messages and prevent
+     SystemExit in several occasions, as SystemExit is unacceptable when a
+2025-04-05 15:16:15,426 - INFO - Eval script for django__django-16454 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16454/eval.sh; copying to container...
+2025-04-05 15:17:01,628 - INFO - Test runtime: 45.70 seconds
+2025-04-05 15:17:01,629 - INFO - Test output for django__django-16454 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16454/test_output.txt
+2025-04-05 15:17:01,938 - INFO - Git diff after:
+diff --git a/django/core/management/base.py b/django/core/management/base.py
+index abc6f79a15..0c3bb840a8 100644
+--- a/django/core/management/base.py
++++ b/django/core/management/base.py
+@@ -44,6 +44,17 @@ class SystemCheckError(CommandError):
+ 
+ 
+ class CommandParser(ArgumentParser):
++    def add_subparsers(self, **kwargs):
++        subparsers = super().add_subparsers(**kwargs)
++        original_add_parser = subparsers.add_parser
++
++        def add_parser(name, **kwargs):
++            if 'parser_class' not in kwargs:
++                kwargs['parser_class'] = CommandParser
++            return original_add_parser(name, **kwargs)
++
++        subparsers.add_parser = add_parser
++        return subparsers
+     """
+     Customized ArgumentParser class to improve some error messages and prevent
+     SystemExit in several occasions, as SystemExit is unacceptable when a
+2025-04-05 15:17:01,938 - INFO - Grading answer for django__django-16454...
+2025-04-05 15:17:01,939 - INFO - report: {'django__django-16454': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16454: resolved: False
+2025-04-05 15:17:01,939 - INFO - Attempting to stop container sweb.eval.django__django-16454.241028_solver...
+2025-04-05 15:17:17,376 - INFO - Attempting to remove container sweb.eval.django__django-16454.241028_solver...
+2025-04-05 15:17:17,437 - INFO - Container sweb.eval.django__django-16454.241028_solver removed.
+2025-04-05 15:17:17,437 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16454:latest...
+2025-04-05 15:17:19,246 - INFO - Image sweb.eval.x86_64.django__django-16454:latest removed.

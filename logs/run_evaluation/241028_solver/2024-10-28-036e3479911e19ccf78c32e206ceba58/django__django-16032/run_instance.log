@@ -1,0 +1,85 @@
+2025-04-05 14:47:42,845 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-16032
+Building instance image sweb.eval.x86_64.django__django-16032:latest for django__django-16032
+2025-04-05 14:50:00,209 - INFO - Creating container for django__django-16032...
+2025-04-05 14:50:00,273 - INFO - Container for django__django-16032 created: 55d7cd33e6d205343108d702497fd54a0b64470b433d38330e7d1be7728dc6d7
+2025-04-05 14:50:01,046 - INFO - Container for django__django-16032 started: 55d7cd33e6d205343108d702497fd54a0b64470b433d38330e7d1be7728dc6d7
+2025-04-05 14:50:01,047 - INFO - Intermediate patch for django__django-16032 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16032/patch.diff, now applying to container...
+2025-04-05 14:50:01,832 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 14:50:02,041 - INFO - >>>>> Applied Patch:
+patching file django/db/models/lookups.py
+patching file django/db/models/sql/query.py
+patching file tests/annotations/test_alias_subquery.py
+
+2025-04-05 14:50:07,531 - INFO - Git diff before:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 866e38df83..16d0adedb0 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -420,9 +420,9 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
+ 
+         if isinstance(self.rhs, Query):
+             self.rhs.clear_ordering(clear_default=True)
+-            if not self.rhs.has_select_fields:
+-                self.rhs.clear_select_clause()
+-                self.rhs.add_fields(["pk"])
++            # Always clear select clause for subqueries in __in lookups
++            self.rhs.clear_select_clause()
++            self.rhs.add_fields(["pk"])
+         return super().get_prep_lookup()
+ 
+     def process_rhs(self, compiler, connection):
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 8419dc0d54..169b7e7473 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -2096,6 +2096,8 @@ class Query(BaseExpression):
+         self.select_related = False
+         self.set_extra_mask(())
+         self.set_annotation_mask(())
++        # Clear all annotations when clearing select clause
++        self.annotations = {k: v for k, v in self.annotations.items() if k in (self.annotation_select_mask or ())}
+ 
+     def clear_select_fields(self):
+         """
+2025-04-05 14:50:07,532 - INFO - Eval script for django__django-16032 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16032/eval.sh; copying to container...
+2025-04-05 14:50:50,722 - INFO - Test runtime: 42.59 seconds
+2025-04-05 14:50:50,722 - INFO - Test output for django__django-16032 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16032/test_output.txt
+2025-04-05 14:50:50,938 - INFO - Git diff after:
+diff --git a/django/db/models/lookups.py b/django/db/models/lookups.py
+index 866e38df83..16d0adedb0 100644
+--- a/django/db/models/lookups.py
++++ b/django/db/models/lookups.py
+@@ -420,9 +420,9 @@ class In(FieldGetDbPrepValueIterableMixin, BuiltinLookup):
+ 
+         if isinstance(self.rhs, Query):
+             self.rhs.clear_ordering(clear_default=True)
+-            if not self.rhs.has_select_fields:
+-                self.rhs.clear_select_clause()
+-                self.rhs.add_fields(["pk"])
++            # Always clear select clause for subqueries in __in lookups
++            self.rhs.clear_select_clause()
++            self.rhs.add_fields(["pk"])
+         return super().get_prep_lookup()
+ 
+     def process_rhs(self, compiler, connection):
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index 8419dc0d54..169b7e7473 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -2096,6 +2096,8 @@ class Query(BaseExpression):
+         self.select_related = False
+         self.set_extra_mask(())
+         self.set_annotation_mask(())
++        # Clear all annotations when clearing select clause
++        self.annotations = {k: v for k, v in self.annotations.items() if k in (self.annotation_select_mask or ())}
+ 
+     def clear_select_fields(self):
+         """
+2025-04-05 14:50:50,939 - INFO - Grading answer for django__django-16032...
+2025-04-05 14:50:50,939 - INFO - report: {'django__django-16032': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16032: resolved: False
+2025-04-05 14:50:50,939 - INFO - Attempting to stop container sweb.eval.django__django-16032.241028_solver...
+2025-04-05 14:51:06,925 - INFO - Attempting to remove container sweb.eval.django__django-16032.241028_solver...
+2025-04-05 14:51:07,029 - INFO - Container sweb.eval.django__django-16032.241028_solver removed.
+2025-04-05 14:51:07,029 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16032:latest...
+2025-04-05 14:51:09,147 - INFO - Image sweb.eval.x86_64.django__django-16032:latest removed.

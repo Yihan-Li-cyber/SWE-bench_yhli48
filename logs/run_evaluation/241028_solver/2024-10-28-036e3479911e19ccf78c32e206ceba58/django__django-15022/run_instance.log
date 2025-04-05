@@ -1,0 +1,77 @@
+2025-04-05 12:00:52,715 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15022
+Building instance image sweb.eval.x86_64.django__django-15022:latest for django__django-15022
+2025-04-05 12:04:07,941 - INFO - Creating container for django__django-15022...
+2025-04-05 12:04:08,122 - INFO - Container for django__django-15022 created: d843d26508fba2e66a9684972ab381c1306c36d448229d25dde429bd96cbd331
+2025-04-05 12:04:09,340 - INFO - Container for django__django-15022 started: d843d26508fba2e66a9684972ab381c1306c36d448229d25dde429bd96cbd331
+2025-04-05 12:04:09,341 - INFO - Intermediate patch for django__django-15022 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15022/patch.diff, now applying to container...
+2025-04-05 12:04:10,535 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:04:10,837 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/options.py
+
+2025-04-05 12:04:17,034 - INFO - Git diff before:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 66f3396a6b..0e50bc056e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1031,14 +1031,21 @@ class ModelAdmin(BaseModelAdmin):
+         if search_fields and search_term:
+             orm_lookups = [construct_search(str(search_field))
+                            for search_field in search_fields]
++            search_terms = []
+             for bit in smart_split(search_term):
+                 if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
+                     bit = unescape_string_literal(bit)
++                search_terms.append(bit)
++            
++            # Combine all terms into a single Q object
++            queries = models.Q()
++            for bit in search_terms:
+                 or_queries = models.Q(
+                     *((orm_lookup, bit) for orm_lookup in orm_lookups),
+                     _connector=models.Q.OR,
+                 )
+-                queryset = queryset.filter(or_queries)
++                queries &= or_queries
++            queryset = queryset.filter(queries)
+             may_have_duplicates |= any(
+                 lookup_spawns_duplicates(self.opts, search_spec)
+                 for search_spec in orm_lookups
+2025-04-05 12:04:17,034 - INFO - Eval script for django__django-15022 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15022/eval.sh; copying to container...
+2025-04-05 12:05:12,329 - INFO - Test runtime: 54.50 seconds
+2025-04-05 12:05:12,330 - INFO - Test output for django__django-15022 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15022/test_output.txt
+2025-04-05 12:05:12,831 - INFO - Git diff after:
+diff --git a/django/contrib/admin/options.py b/django/contrib/admin/options.py
+index 66f3396a6b..0e50bc056e 100644
+--- a/django/contrib/admin/options.py
++++ b/django/contrib/admin/options.py
+@@ -1031,14 +1031,21 @@ class ModelAdmin(BaseModelAdmin):
+         if search_fields and search_term:
+             orm_lookups = [construct_search(str(search_field))
+                            for search_field in search_fields]
++            search_terms = []
+             for bit in smart_split(search_term):
+                 if bit.startswith(('"', "'")) and bit[0] == bit[-1]:
+                     bit = unescape_string_literal(bit)
++                search_terms.append(bit)
++            
++            # Combine all terms into a single Q object
++            queries = models.Q()
++            for bit in search_terms:
+                 or_queries = models.Q(
+                     *((orm_lookup, bit) for orm_lookup in orm_lookups),
+                     _connector=models.Q.OR,
+                 )
+-                queryset = queryset.filter(or_queries)
++                queries &= or_queries
++            queryset = queryset.filter(queries)
+             may_have_duplicates |= any(
+                 lookup_spawns_duplicates(self.opts, search_spec)
+                 for search_spec in orm_lookups
+2025-04-05 12:05:12,831 - INFO - Grading answer for django__django-15022...
+2025-04-05 12:05:12,831 - INFO - report: {'django__django-15022': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15022: resolved: False
+2025-04-05 12:05:12,832 - INFO - Attempting to stop container sweb.eval.django__django-15022.241028_solver...
+2025-04-05 12:05:29,036 - INFO - Attempting to remove container sweb.eval.django__django-15022.241028_solver...
+2025-04-05 12:05:29,219 - INFO - Container sweb.eval.django__django-15022.241028_solver removed.
+2025-04-05 12:05:29,219 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15022:latest...
+2025-04-05 12:05:32,131 - INFO - Image sweb.eval.x86_64.django__django-15022:latest removed.

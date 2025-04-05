@@ -1,0 +1,103 @@
+2025-04-05 14:18:58,433 - INFO - Environment image sweb.env.x86_64.a33dddf55cdff5d8e23374:latest found for django__django-15732
+Building instance image sweb.eval.x86_64.django__django-15732:latest for django__django-15732
+2025-04-05 14:21:54,133 - INFO - Creating container for django__django-15732...
+2025-04-05 14:21:54,243 - INFO - Container for django__django-15732 created: ed3e4cd5b58574098b3a6117d67ba878c42d30e63d505a99c2316cbbd9a61041
+2025-04-05 14:21:55,065 - INFO - Container for django__django-15732 started: ed3e4cd5b58574098b3a6117d67ba878c42d30e63d505a99c2316cbbd9a61041
+2025-04-05 14:21:55,065 - INFO - Intermediate patch for django__django-15732 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15732/patch.diff, now applying to container...
+2025-04-05 14:21:55,832 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 14:21:56,034 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/base/schema.py
+
+2025-04-05 14:22:01,533 - INFO - Git diff before:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index f2ca8c8df9..424e3f43ce 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -562,17 +562,26 @@ class BaseDatabaseSchemaEditor:
+         }
+         meta_index_names = {constraint.name for constraint in model._meta.indexes}
+         columns = [model._meta.get_field(field).column for field in fields]
+-        constraint_names = self._constraint_names(
+-            model,
+-            columns,
+-            exclude=meta_constraint_names | meta_index_names,
+-            **constraint_kwargs,
+-        )
+-        if len(constraint_names) != 1:
++        # When removing unique constraints, exclude primary key constraints
++        if constraint_kwargs.get('unique'):
++            constraint_names = self._constraint_names(
++                model,
++                columns,
++                exclude=meta_constraint_names | meta_index_names,
++                unique=True,
++                primary_key=False,
++            )
++        else:
++            constraint_names = self._constraint_names(
++                model,
++                columns,
++                exclude=meta_constraint_names | meta_index_names,
++                **constraint_kwargs,
++            )
++        if not constraint_names:
+             raise ValueError(
+-                "Found wrong number (%s) of constraints for %s(%s)"
++                "Found no constraints for %s(%s)"
+                 % (
+-                    len(constraint_names),
+                     model._meta.db_table,
+                     ", ".join(columns),
+                 )
+2025-04-05 14:22:01,535 - INFO - Eval script for django__django-15732 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15732/eval.sh; copying to container...
+2025-04-05 14:22:56,641 - INFO - Test runtime: 54.42 seconds
+2025-04-05 14:22:56,641 - INFO - Test output for django__django-15732 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15732/test_output.txt
+2025-04-05 14:22:56,835 - INFO - Git diff after:
+diff --git a/django/db/backends/base/schema.py b/django/db/backends/base/schema.py
+index f2ca8c8df9..424e3f43ce 100644
+--- a/django/db/backends/base/schema.py
++++ b/django/db/backends/base/schema.py
+@@ -562,17 +562,26 @@ class BaseDatabaseSchemaEditor:
+         }
+         meta_index_names = {constraint.name for constraint in model._meta.indexes}
+         columns = [model._meta.get_field(field).column for field in fields]
+-        constraint_names = self._constraint_names(
+-            model,
+-            columns,
+-            exclude=meta_constraint_names | meta_index_names,
+-            **constraint_kwargs,
+-        )
+-        if len(constraint_names) != 1:
++        # When removing unique constraints, exclude primary key constraints
++        if constraint_kwargs.get('unique'):
++            constraint_names = self._constraint_names(
++                model,
++                columns,
++                exclude=meta_constraint_names | meta_index_names,
++                unique=True,
++                primary_key=False,
++            )
++        else:
++            constraint_names = self._constraint_names(
++                model,
++                columns,
++                exclude=meta_constraint_names | meta_index_names,
++                **constraint_kwargs,
++            )
++        if not constraint_names:
+             raise ValueError(
+-                "Found wrong number (%s) of constraints for %s(%s)"
++                "Found no constraints for %s(%s)"
+                 % (
+-                    len(constraint_names),
+                     model._meta.db_table,
+                     ", ".join(columns),
+                 )
+2025-04-05 14:22:56,836 - INFO - Grading answer for django__django-15732...
+2025-04-05 14:22:56,836 - INFO - report: {'django__django-15732': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15732: resolved: False
+2025-04-05 14:22:56,836 - INFO - Attempting to stop container sweb.eval.django__django-15732.241028_solver...
+2025-04-05 14:23:12,820 - INFO - Attempting to remove container sweb.eval.django__django-15732.241028_solver...
+2025-04-05 14:23:12,927 - INFO - Container sweb.eval.django__django-15732.241028_solver removed.
+2025-04-05 14:23:12,927 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15732:latest...
+2025-04-05 14:23:14,928 - INFO - Image sweb.eval.x86_64.django__django-15732:latest removed.

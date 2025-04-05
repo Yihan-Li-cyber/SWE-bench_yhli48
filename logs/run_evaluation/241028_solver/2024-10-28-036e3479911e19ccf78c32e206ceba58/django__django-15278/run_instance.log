@@ -1,0 +1,61 @@
+2025-04-05 12:09:43,875 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15278
+Building instance image sweb.eval.x86_64.django__django-15278:latest for django__django-15278
+2025-04-05 12:13:20,723 - INFO - Creating container for django__django-15278...
+2025-04-05 12:13:20,839 - INFO - Container for django__django-15278 created: d2190566bccef95a1d7d6febbaa03919286144b4e3e4bda73e8557e3bff5d346
+2025-04-05 12:13:22,043 - INFO - Container for django__django-15278 started: d2190566bccef95a1d7d6febbaa03919286144b4e3e4bda73e8557e3bff5d346
+2025-04-05 12:13:22,043 - INFO - Intermediate patch for django__django-15278 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15278/patch.diff, now applying to container...
+2025-04-05 12:13:23,324 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:13:23,633 - INFO - >>>>> Applied Patch:
+patching file django/db/backends/sqlite3/schema.py
+
+2025-04-05 12:13:29,828 - INFO - Git diff before:
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index 6752a8e3c0..231782977f 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -326,8 +326,12 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+         """Create a field on a model."""
+         # Fields with default values cannot by handled by ALTER TABLE ADD
+         # COLUMN statement because DROP DEFAULT is not supported in
+-        # ALTER TABLE.
+-        if not field.null or self.effective_default(field) is not None:
++        # ALTER TABLE. Also, fields with UNIQUE constraints cannot be
++        # added via ALTER TABLE in SQLite.
++        if (not field.null or
++            self.effective_default(field) is not None or
++            field.unique or
++            field.one_to_one):
+             self._remake_table(model, create_field=field)
+         else:
+             super().add_field(model, field)
+2025-04-05 12:13:29,828 - INFO - Eval script for django__django-15278 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15278/eval.sh; copying to container...
+2025-04-05 12:14:27,739 - INFO - Test runtime: 57.01 seconds
+2025-04-05 12:14:27,740 - INFO - Test output for django__django-15278 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15278/test_output.txt
+2025-04-05 12:14:28,221 - INFO - Git diff after:
+diff --git a/django/db/backends/sqlite3/schema.py b/django/db/backends/sqlite3/schema.py
+index 6752a8e3c0..231782977f 100644
+--- a/django/db/backends/sqlite3/schema.py
++++ b/django/db/backends/sqlite3/schema.py
+@@ -326,8 +326,12 @@ class DatabaseSchemaEditor(BaseDatabaseSchemaEditor):
+         """Create a field on a model."""
+         # Fields with default values cannot by handled by ALTER TABLE ADD
+         # COLUMN statement because DROP DEFAULT is not supported in
+-        # ALTER TABLE.
+-        if not field.null or self.effective_default(field) is not None:
++        # ALTER TABLE. Also, fields with UNIQUE constraints cannot be
++        # added via ALTER TABLE in SQLite.
++        if (not field.null or
++            self.effective_default(field) is not None or
++            field.unique or
++            field.one_to_one):
+             self._remake_table(model, create_field=field)
+         else:
+             super().add_field(model, field)
+2025-04-05 12:14:28,221 - INFO - Grading answer for django__django-15278...
+2025-04-05 12:14:28,222 - INFO - report: {'django__django-15278': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15278: resolved: False
+2025-04-05 12:14:28,222 - INFO - Attempting to stop container sweb.eval.django__django-15278.241028_solver...
+2025-04-05 12:14:45,237 - INFO - Attempting to remove container sweb.eval.django__django-15278.241028_solver...
+2025-04-05 12:14:45,429 - INFO - Container sweb.eval.django__django-15278.241028_solver removed.
+2025-04-05 12:14:45,429 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15278:latest...
+2025-04-05 12:14:48,634 - INFO - Image sweb.eval.x86_64.django__django-15278:latest removed.

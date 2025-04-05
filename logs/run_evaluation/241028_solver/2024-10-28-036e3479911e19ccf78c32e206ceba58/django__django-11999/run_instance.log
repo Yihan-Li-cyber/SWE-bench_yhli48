@@ -1,0 +1,90 @@
+2025-04-05 10:42:37,838 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-11999
+Building instance image sweb.eval.x86_64.django__django-11999:latest for django__django-11999
+2025-04-05 10:44:45,737 - INFO - Creating container for django__django-11999...
+2025-04-05 10:44:45,946 - INFO - Container for django__django-11999 created: f654db55626c64277c28c5f1ab70e99e97d587365badfa4e5c6adc77fb7ba42a
+2025-04-05 10:44:47,431 - INFO - Container for django__django-11999 started: f654db55626c64277c28c5f1ab70e99e97d587365badfa4e5c6adc77fb7ba42a
+2025-04-05 10:44:47,432 - INFO - Intermediate patch for django__django-11999 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11999/patch.diff, now applying to container...
+2025-04-05 10:44:48,933 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:44:49,244 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/__init__.py
+patching file tests/model_fields/models.py
+
+2025-04-05 10:44:54,738 - INFO - Git diff before:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index ee45bb941e..f17f98c511 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -763,8 +763,9 @@ class Field(RegisterLookupMixin):
+             if not getattr(cls, self.attname, None):
+                 setattr(cls, self.attname, self.descriptor_class(self))
+         if self.choices is not None:
+-            setattr(cls, 'get_%s_display' % self.name,
+-                    partialmethod(cls._get_FIELD_display, field=self))
++            method_name = 'get_%s_display' % self.name
++            if not hasattr(cls, method_name):
++                setattr(cls, method_name, partialmethod(cls._get_FIELD_display, field=self))
+ 
+     def get_filter_kwargs_for_object(self, obj):
+         """
+diff --git a/tests/model_fields/models.py b/tests/model_fields/models.py
+index 98b32d0c1e..2c31b40c80 100644
+--- a/tests/model_fields/models.py
++++ b/tests/model_fields/models.py
+@@ -67,6 +67,12 @@ class WhizIter(models.Model):
+ class WhizIterEmpty(models.Model):
+     c = models.CharField(choices=iter(()), blank=True, max_length=1)
+ 
++class WhizOverride(models.Model):
++    c = models.IntegerField(choices=Whiz.CHOICES, null=True)
++
++    def get_c_display(self):
++        return "overridden"
++
+ 
+ class Choiceful(models.Model):
+     no_choices = models.IntegerField(null=True)
+2025-04-05 10:44:54,739 - INFO - Eval script for django__django-11999 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11999/eval.sh; copying to container...
+2025-04-05 10:45:38,841 - INFO - Test runtime: 43.30 seconds
+2025-04-05 10:45:38,841 - INFO - Test output for django__django-11999 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11999/test_output.txt
+2025-04-05 10:45:39,444 - INFO - Git diff after:
+diff --git a/django/db/models/fields/__init__.py b/django/db/models/fields/__init__.py
+index ee45bb941e..f17f98c511 100644
+--- a/django/db/models/fields/__init__.py
++++ b/django/db/models/fields/__init__.py
+@@ -763,8 +763,9 @@ class Field(RegisterLookupMixin):
+             if not getattr(cls, self.attname, None):
+                 setattr(cls, self.attname, self.descriptor_class(self))
+         if self.choices is not None:
+-            setattr(cls, 'get_%s_display' % self.name,
+-                    partialmethod(cls._get_FIELD_display, field=self))
++            method_name = 'get_%s_display' % self.name
++            if not hasattr(cls, method_name):
++                setattr(cls, method_name, partialmethod(cls._get_FIELD_display, field=self))
+ 
+     def get_filter_kwargs_for_object(self, obj):
+         """
+diff --git a/tests/model_fields/models.py b/tests/model_fields/models.py
+index 98b32d0c1e..2c31b40c80 100644
+--- a/tests/model_fields/models.py
++++ b/tests/model_fields/models.py
+@@ -67,6 +67,12 @@ class WhizIter(models.Model):
+ class WhizIterEmpty(models.Model):
+     c = models.CharField(choices=iter(()), blank=True, max_length=1)
+ 
++class WhizOverride(models.Model):
++    c = models.IntegerField(choices=Whiz.CHOICES, null=True)
++
++    def get_c_display(self):
++        return "overridden"
++
+ 
+ class Choiceful(models.Model):
+     no_choices = models.IntegerField(null=True)
+2025-04-05 10:45:39,444 - INFO - Grading answer for django__django-11999...
+2025-04-05 10:45:39,444 - INFO - report: {'django__django-11999': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11999: resolved: False
+2025-04-05 10:45:39,445 - INFO - Attempting to stop container sweb.eval.django__django-11999.241028_solver...
+2025-04-05 10:45:57,645 - INFO - Attempting to remove container sweb.eval.django__django-11999.241028_solver...
+2025-04-05 10:45:57,825 - INFO - Container sweb.eval.django__django-11999.241028_solver removed.
+2025-04-05 10:45:57,825 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11999:latest...
+2025-04-05 10:46:00,238 - INFO - Image sweb.eval.x86_64.django__django-11999:latest removed.

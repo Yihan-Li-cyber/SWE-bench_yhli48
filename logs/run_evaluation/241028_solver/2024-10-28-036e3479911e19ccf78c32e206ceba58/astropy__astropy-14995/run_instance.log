@@ -1,2 +1,126 @@
-2025-04-04 16:40:21,768 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14995
+2025-04-05 09:46:34,943 - INFO - Environment image sweb.env.x86_64.428468730904ff6b4232aa:latest found for astropy__astropy-14995
 Building instance image sweb.eval.x86_64.astropy__astropy-14995:latest for astropy__astropy-14995
+2025-04-05 09:53:11,444 - INFO - Creating container for astropy__astropy-14995...
+2025-04-05 09:53:11,735 - INFO - Container for astropy__astropy-14995 created: bc346eb4928fbb835a75810bb616115ccddaa59176c8d1566ec4800f5c9c404a
+2025-04-05 09:53:12,921 - INFO - Container for astropy__astropy-14995 started: bc346eb4928fbb835a75810bb616115ccddaa59176c8d1566ec4800f5c9c404a
+2025-04-05 09:53:12,922 - INFO - Intermediate patch for astropy__astropy-14995 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14995/patch.diff, now applying to container...
+2025-04-05 09:53:13,736 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 09:53:13,939 - INFO - >>>>> Applied Patch:
+patching file astropy/nddata/mixins/ndarithmetic.py
+patching file test_mask.py
+
+2025-04-05 09:53:16,547 - INFO - Git diff before:
+diff --git a/astropy/nddata/mixins/ndarithmetic.py b/astropy/nddata/mixins/ndarithmetic.py
+index 4153dfccb2..d443334f28 100644
+--- a/astropy/nddata/mixins/ndarithmetic.py
++++ b/astropy/nddata/mixins/ndarithmetic.py
+@@ -513,18 +513,26 @@ class NDArithmeticMixin:
+             ``handle_mask`` must create (and copy) the returned mask.
+         """
+         # If only one mask is present we need not bother about any type checks
+-        if (
+-            self.mask is None and operand is not None and operand.mask is None
+-        ) or handle_mask is None:
++        # If no mask handling requested, return None
++        if handle_mask is None:
+             return None
+-        elif self.mask is None and operand is not None:
+-            # Make a copy so there is no reference in the result.
++            
++        # If one operand is None (for reduction operations), just copy the mask
++        if operand is None:
++            return deepcopy(self.mask)
++            
++        # If both operands exist but neither has a mask, return None
++        if self.mask is None and operand.mask is None:
++            return None
++            
++        # If only one operand has a mask, return a copy of that mask
++        if self.mask is None:
+             return deepcopy(operand.mask)
+-        elif operand is None:
++        if operand.mask is None:
+             return deepcopy(self.mask)
+-        else:
+-            # Now lets calculate the resulting mask (operation enforces copy)
+-            return handle_mask(self.mask, operand.mask, **kwds)
++            
++        # Both operands have masks, apply the mask operation
++        return handle_mask(self.mask, operand.mask, **kwds)
+ 
+     def _arithmetic_wcs(self, operation, operand, compare_wcs, **kwds):
+         """
+diff --git a/pyproject.toml b/pyproject.toml
+index 15bb49f22b..dc9c3c5f37 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "cython==0.29.34",
+             "oldest-supported-numpy",
+2025-04-05 09:53:16,547 - INFO - Eval script for astropy__astropy-14995 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14995/eval.sh; copying to container...
+2025-04-05 09:58:28,369 - INFO - Test runtime: 311.14 seconds
+2025-04-05 09:58:28,370 - INFO - Test output for astropy__astropy-14995 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-14995/test_output.txt
+2025-04-05 09:58:28,534 - INFO - Git diff after:
+diff --git a/astropy/nddata/mixins/ndarithmetic.py b/astropy/nddata/mixins/ndarithmetic.py
+index 4153dfccb2..d443334f28 100644
+--- a/astropy/nddata/mixins/ndarithmetic.py
++++ b/astropy/nddata/mixins/ndarithmetic.py
+@@ -513,18 +513,26 @@ class NDArithmeticMixin:
+             ``handle_mask`` must create (and copy) the returned mask.
+         """
+         # If only one mask is present we need not bother about any type checks
+-        if (
+-            self.mask is None and operand is not None and operand.mask is None
+-        ) or handle_mask is None:
++        # If no mask handling requested, return None
++        if handle_mask is None:
+             return None
+-        elif self.mask is None and operand is not None:
+-            # Make a copy so there is no reference in the result.
++            
++        # If one operand is None (for reduction operations), just copy the mask
++        if operand is None:
++            return deepcopy(self.mask)
++            
++        # If both operands exist but neither has a mask, return None
++        if self.mask is None and operand.mask is None:
++            return None
++            
++        # If only one operand has a mask, return a copy of that mask
++        if self.mask is None:
+             return deepcopy(operand.mask)
+-        elif operand is None:
++        if operand.mask is None:
+             return deepcopy(self.mask)
+-        else:
+-            # Now lets calculate the resulting mask (operation enforces copy)
+-            return handle_mask(self.mask, operand.mask, **kwds)
++            
++        # Both operands have masks, apply the mask operation
++        return handle_mask(self.mask, operand.mask, **kwds)
+ 
+     def _arithmetic_wcs(self, operation, operand, compare_wcs, **kwds):
+         """
+diff --git a/pyproject.toml b/pyproject.toml
+index 15bb49f22b..dc9c3c5f37 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -1,5 +1,5 @@
+ [build-system]
+-requires = ["setuptools",
++requires = ["setuptools==68.0.0",
+             "setuptools_scm>=6.2",
+             "cython==0.29.34",
+             "oldest-supported-numpy",
+2025-04-05 09:58:28,534 - INFO - Grading answer for astropy__astropy-14995...
+2025-04-05 09:58:28,536 - INFO - report: {'astropy__astropy-14995': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-14995: resolved: False
+2025-04-05 09:58:28,537 - INFO - Attempting to stop container sweb.eval.astropy__astropy-14995.241028_solver...
+2025-04-05 09:58:44,829 - INFO - Attempting to remove container sweb.eval.astropy__astropy-14995.241028_solver...
+2025-04-05 09:58:44,940 - INFO - Container sweb.eval.astropy__astropy-14995.241028_solver removed.
+2025-04-05 09:58:44,941 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-14995:latest...
+2025-04-05 09:58:45,750 - INFO - Image sweb.eval.x86_64.astropy__astropy-14995:latest removed.

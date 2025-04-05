@@ -1,0 +1,57 @@
+2025-04-05 10:31:35,248 - INFO - Environment image sweb.env.x86_64.2baaea72acc974f6c02079:latest found for django__django-11555
+Building instance image sweb.eval.x86_64.django__django-11555:latest for django__django-11555
+2025-04-05 10:34:32,244 - INFO - Creating container for django__django-11555...
+2025-04-05 10:34:32,432 - INFO - Container for django__django-11555 created: 35e2e770c519f8a65a823eb2b8702491ea7a917bda21657d5df6b681c5bec9d1
+2025-04-05 10:34:33,654 - INFO - Container for django__django-11555 started: 35e2e770c519f8a65a823eb2b8702491ea7a917bda21657d5df6b681c5bec9d1
+2025-04-05 10:34:33,654 - INFO - Intermediate patch for django__django-11555 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11555/patch.diff, now applying to container...
+2025-04-05 10:34:34,636 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:34:34,843 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/compiler.py
+
+2025-04-05 10:34:40,430 - INFO - Git diff before:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index eaccc96d7d..dc182bacf2 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -271,6 +271,12 @@ class SQLCompiler:
+             self._meta_ordering = ordering
+         else:
+             ordering = []
++        # Ensure Meta.ordering is normalized to handle expressions
++        if self._meta_ordering:
++            ordering = [
++                field.asc() if hasattr(field, 'resolve_expression') and not isinstance(field, OrderBy) else field
++                for field in ordering
++            ]
+         if self.query.standard_ordering:
+             asc, desc = ORDER_DIR['ASC']
+         else:
+2025-04-05 10:34:40,430 - INFO - Eval script for django__django-11555 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11555/eval.sh; copying to container...
+2025-04-05 10:35:21,023 - INFO - Test runtime: 39.98 seconds
+2025-04-05 10:35:21,024 - INFO - Test output for django__django-11555 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-11555/test_output.txt
+2025-04-05 10:35:21,527 - INFO - Git diff after:
+diff --git a/django/db/models/sql/compiler.py b/django/db/models/sql/compiler.py
+index eaccc96d7d..dc182bacf2 100644
+--- a/django/db/models/sql/compiler.py
++++ b/django/db/models/sql/compiler.py
+@@ -271,6 +271,12 @@ class SQLCompiler:
+             self._meta_ordering = ordering
+         else:
+             ordering = []
++        # Ensure Meta.ordering is normalized to handle expressions
++        if self._meta_ordering:
++            ordering = [
++                field.asc() if hasattr(field, 'resolve_expression') and not isinstance(field, OrderBy) else field
++                for field in ordering
++            ]
+         if self.query.standard_ordering:
+             asc, desc = ORDER_DIR['ASC']
+         else:
+2025-04-05 10:35:21,527 - INFO - Grading answer for django__django-11555...
+2025-04-05 10:35:21,527 - INFO - report: {'django__django-11555': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-11555: resolved: False
+2025-04-05 10:35:21,528 - INFO - Attempting to stop container sweb.eval.django__django-11555.241028_solver...
+2025-04-05 10:35:37,535 - INFO - Attempting to remove container sweb.eval.django__django-11555.241028_solver...
+2025-04-05 10:35:37,638 - INFO - Container sweb.eval.django__django-11555.241028_solver removed.
+2025-04-05 10:35:37,638 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-11555:latest...
+2025-04-05 10:35:39,844 - INFO - Image sweb.eval.x86_64.django__django-11555:latest removed.

@@ -1,0 +1,160 @@
+2025-04-05 11:32:36,223 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-13964
+Building instance image sweb.eval.x86_64.django__django-13964:latest for django__django-13964
+2025-04-05 11:35:24,234 - INFO - Creating container for django__django-13964...
+2025-04-05 11:35:24,415 - INFO - Container for django__django-13964 created: f1353e361c16c6d5ff8be2d552dfcc93f79ca0709372746a3f9bfa722fd8fb02
+2025-04-05 11:35:25,739 - INFO - Container for django__django-13964 started: f1353e361c16c6d5ff8be2d552dfcc93f79ca0709372746a3f9bfa722fd8fb02
+2025-04-05 11:35:25,739 - INFO - Intermediate patch for django__django-13964 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13964/patch.diff, now applying to container...
+2025-04-05 11:35:26,820 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:35:27,027 - INFO - >>>>> Applied Patch:
+patching file django/db/models/fields/related.py
+patching file django/db/models/fields/related_descriptors.py
+
+2025-04-05 11:35:33,926 - INFO - Git diff before:
+diff --git a/django/db/models/fields/related.py b/django/db/models/fields/related.py
+index 899ae8efe8..750f79010f 100644
+--- a/django/db/models/fields/related.py
++++ b/django/db/models/fields/related.py
+@@ -317,6 +317,17 @@ class RelatedField(FieldCacheMixin, Field):
+                 field.do_related_class(related, model)
+             lazy_related_operation(resolve_related_class, cls, self.remote_field.model, field=self)
+ 
++    def pre_save(self, model_instance, add):
++        # Check if we have a cached related instance from assignment
++        cached = getattr(model_instance._state, 'fields_cache', {}).get(self.name)
++        if cached is not None and cached._state.adding:
++            # The related object was unsaved at assignment time, check if it has a PK now
++            for lh_field, rh_field in self.related_fields:
++                val = getattr(cached, rh_field.attname)
++                if val:
++                    setattr(model_instance, lh_field.attname, val)
++        return super().pre_save(model_instance, add)
++
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+         if self.remote_field.limit_choices_to:
+@@ -869,7 +880,19 @@ class ForeignKey(ForeignObject):
+                 obj=self,
+                 id='fields.W342',
+             )
+-        ] if self.unique else []
++        ]
++
++    def pre_save(self, model_instance, add):
++        # Check if we have a cached related instance from assignment
++        cached = getattr(model_instance._state, 'fields_cache', {}).get(self.name)
++        if cached is not None and cached._state.adding:
++            # The related object was unsaved at assignment time, check if it has a PK now
++            for lh_field, rh_field in self.related_fields:
++                val = getattr(cached, rh_field.attname)
++                if val:
++                    setattr(model_instance, lh_field.attname, val)
++        return super().pre_save(model_instance, add)
++
+ 
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+diff --git a/django/db/models/fields/related_descriptors.py b/django/db/models/fields/related_descriptors.py
+index 872a4c98dc..9567be2bc7 100644
+--- a/django/db/models/fields/related_descriptors.py
++++ b/django/db/models/fields/related_descriptors.py
+@@ -253,8 +253,18 @@ class ForwardManyToOneDescriptor:
+ 
+         # Set the values of the related field.
+         else:
+-            for lh_field, rh_field in self.field.related_fields:
+-                setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
++            # For non-saved instances with non-auto PKs, we need to track PK changes
++            if value._state.adding and not any(
++                getattr(value, field.attname) for field in self.field.foreign_related_fields
++            ):
++                # Delay FK id resolution until save
++                instance._state.fields_cache[self.field.name] = value
++                # Clear any existing value to ensure it gets updated
++                for lh_field, rh_field in self.field.related_fields:
++                    setattr(instance, lh_field.attname, None)
++            else:
++                for lh_field, rh_field in self.field.related_fields:
++                    setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
+ 
+         # Set the related instance cache used by __get__ to avoid an SQL query
+         # when accessing the attribute we just set.
+2025-04-05 11:35:33,927 - INFO - Eval script for django__django-13964 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13964/eval.sh; copying to container...
+2025-04-05 11:36:01,129 - INFO - Test runtime: 26.39 seconds
+2025-04-05 11:36:01,129 - INFO - Test output for django__django-13964 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-13964/test_output.txt
+2025-04-05 11:36:01,439 - INFO - Git diff after:
+diff --git a/django/db/models/fields/related.py b/django/db/models/fields/related.py
+index 899ae8efe8..750f79010f 100644
+--- a/django/db/models/fields/related.py
++++ b/django/db/models/fields/related.py
+@@ -317,6 +317,17 @@ class RelatedField(FieldCacheMixin, Field):
+                 field.do_related_class(related, model)
+             lazy_related_operation(resolve_related_class, cls, self.remote_field.model, field=self)
+ 
++    def pre_save(self, model_instance, add):
++        # Check if we have a cached related instance from assignment
++        cached = getattr(model_instance._state, 'fields_cache', {}).get(self.name)
++        if cached is not None and cached._state.adding:
++            # The related object was unsaved at assignment time, check if it has a PK now
++            for lh_field, rh_field in self.related_fields:
++                val = getattr(cached, rh_field.attname)
++                if val:
++                    setattr(model_instance, lh_field.attname, val)
++        return super().pre_save(model_instance, add)
++
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+         if self.remote_field.limit_choices_to:
+@@ -869,7 +880,19 @@ class ForeignKey(ForeignObject):
+                 obj=self,
+                 id='fields.W342',
+             )
+-        ] if self.unique else []
++        ]
++
++    def pre_save(self, model_instance, add):
++        # Check if we have a cached related instance from assignment
++        cached = getattr(model_instance._state, 'fields_cache', {}).get(self.name)
++        if cached is not None and cached._state.adding:
++            # The related object was unsaved at assignment time, check if it has a PK now
++            for lh_field, rh_field in self.related_fields:
++                val = getattr(cached, rh_field.attname)
++                if val:
++                    setattr(model_instance, lh_field.attname, val)
++        return super().pre_save(model_instance, add)
++
+ 
+     def deconstruct(self):
+         name, path, args, kwargs = super().deconstruct()
+diff --git a/django/db/models/fields/related_descriptors.py b/django/db/models/fields/related_descriptors.py
+index 872a4c98dc..9567be2bc7 100644
+--- a/django/db/models/fields/related_descriptors.py
++++ b/django/db/models/fields/related_descriptors.py
+@@ -253,8 +253,18 @@ class ForwardManyToOneDescriptor:
+ 
+         # Set the values of the related field.
+         else:
+-            for lh_field, rh_field in self.field.related_fields:
+-                setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
++            # For non-saved instances with non-auto PKs, we need to track PK changes
++            if value._state.adding and not any(
++                getattr(value, field.attname) for field in self.field.foreign_related_fields
++            ):
++                # Delay FK id resolution until save
++                instance._state.fields_cache[self.field.name] = value
++                # Clear any existing value to ensure it gets updated
++                for lh_field, rh_field in self.field.related_fields:
++                    setattr(instance, lh_field.attname, None)
++            else:
++                for lh_field, rh_field in self.field.related_fields:
++                    setattr(instance, lh_field.attname, getattr(value, rh_field.attname))
+ 
+         # Set the related instance cache used by __get__ to avoid an SQL query
+         # when accessing the attribute we just set.
+2025-04-05 11:36:01,439 - INFO - Grading answer for django__django-13964...
+2025-04-05 11:36:01,439 - INFO - report: {'django__django-13964': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-13964: resolved: False
+2025-04-05 11:36:01,439 - INFO - Attempting to stop container sweb.eval.django__django-13964.241028_solver...
+2025-04-05 11:36:33,521 - INFO - Attempting to remove container sweb.eval.django__django-13964.241028_solver...
+2025-04-05 11:36:33,628 - INFO - Container sweb.eval.django__django-13964.241028_solver removed.
+2025-04-05 11:36:33,628 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-13964:latest...
+2025-04-05 11:36:36,229 - INFO - Image sweb.eval.x86_64.django__django-13964:latest removed.

@@ -1,0 +1,48 @@
+2025-04-05 10:49:00,954 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-12304
+Building instance image sweb.eval.x86_64.django__django-12304:latest for django__django-12304
+2025-04-05 10:51:43,926 - INFO - Creating container for django__django-12304...
+2025-04-05 10:51:44,240 - INFO - Container for django__django-12304 created: 988407caf89b09b7ed476951697fb5fb7ca12548c3f0d741d79a3e1e523e221a
+2025-04-05 10:51:45,844 - INFO - Container for django__django-12304 started: 988407caf89b09b7ed476951697fb5fb7ca12548c3f0d741d79a3e1e523e221a
+2025-04-05 10:51:45,845 - INFO - Intermediate patch for django__django-12304 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12304/patch.diff, now applying to container...
+2025-04-05 10:51:47,334 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:51:47,732 - INFO - >>>>> Applied Patch:
+patching file django/db/models/enums.py
+patching file test_enum_template.py
+
+2025-04-05 10:51:53,433 - INFO - Git diff before:
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index f48143ddaf..4e13147b89 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -61,6 +61,7 @@ class ChoicesMeta(enum.EnumMeta):
+ class Choices(enum.Enum, metaclass=ChoicesMeta):
+     """Class for creating enumerated choices."""
+ 
++    do_not_call_in_templates = True
+     def __str__(self):
+         """
+         Use value when cast to str, so that Choices set as model instance
+2025-04-05 10:51:53,434 - INFO - Eval script for django__django-12304 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12304/eval.sh; copying to container...
+2025-04-05 10:52:31,132 - INFO - Test runtime: 36.70 seconds
+2025-04-05 10:52:31,132 - INFO - Test output for django__django-12304 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-12304/test_output.txt
+2025-04-05 10:52:31,447 - INFO - Git diff after:
+diff --git a/django/db/models/enums.py b/django/db/models/enums.py
+index f48143ddaf..4e13147b89 100644
+--- a/django/db/models/enums.py
++++ b/django/db/models/enums.py
+@@ -61,6 +61,7 @@ class ChoicesMeta(enum.EnumMeta):
+ class Choices(enum.Enum, metaclass=ChoicesMeta):
+     """Class for creating enumerated choices."""
+ 
++    do_not_call_in_templates = True
+     def __str__(self):
+         """
+         Use value when cast to str, so that Choices set as model instance
+2025-04-05 10:52:31,448 - INFO - Grading answer for django__django-12304...
+2025-04-05 10:52:31,448 - INFO - report: {'django__django-12304': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-12304: resolved: False
+2025-04-05 10:52:31,448 - INFO - Attempting to stop container sweb.eval.django__django-12304.241028_solver...
+2025-04-05 10:53:04,754 - INFO - Attempting to remove container sweb.eval.django__django-12304.241028_solver...
+2025-04-05 10:53:04,834 - INFO - Container sweb.eval.django__django-12304.241028_solver removed.
+2025-04-05 10:53:04,835 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-12304:latest...
+2025-04-05 10:53:10,241 - INFO - Image sweb.eval.x86_64.django__django-12304:latest removed.

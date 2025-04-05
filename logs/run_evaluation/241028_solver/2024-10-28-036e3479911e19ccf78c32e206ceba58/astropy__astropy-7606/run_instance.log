@@ -1,0 +1,47 @@
+2025-04-05 09:58:33,224 - INFO - Environment image sweb.env.x86_64.c70974ae7654c7a2c98577:latest found for astropy__astropy-7606
+Building instance image sweb.eval.x86_64.astropy__astropy-7606:latest for astropy__astropy-7606
+2025-04-05 10:11:28,131 - INFO - Creating container for astropy__astropy-7606...
+2025-04-05 10:11:28,235 - INFO - Container for astropy__astropy-7606 created: 96058a71a5fe9844db836ce9854239896d421660a6a7c5c376742123d7f4378f
+2025-04-05 10:11:29,244 - INFO - Container for astropy__astropy-7606 started: 96058a71a5fe9844db836ce9854239896d421660a6a7c5c376742123d7f4378f
+2025-04-05 10:11:29,244 - INFO - Intermediate patch for astropy__astropy-7606 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7606/patch.diff, now applying to container...
+2025-04-05 10:11:30,027 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 10:11:30,229 - INFO - >>>>> Applied Patch:
+patching file astropy/units/core.py
+
+2025-04-05 10:11:32,730 - INFO - Git diff before:
+diff --git a/astropy/units/core.py b/astropy/units/core.py
+index e9bd986d33..1b202395e9 100644
+--- a/astropy/units/core.py
++++ b/astropy/units/core.py
+@@ -1710,6 +1710,8 @@ class UnrecognizedUnit(IrreducibleUnit):
+         _unrecognized_operator
+ 
+     def __eq__(self, other):
++        if other is None:
++            return False
+         other = Unit(other, parse_strict='silent')
+         return isinstance(other, UnrecognizedUnit) and self.name == other.name
+2025-04-05 10:11:32,731 - INFO - Eval script for astropy__astropy-7606 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7606/eval.sh; copying to container...
+2025-04-05 10:12:28,348 - INFO - Test runtime: 55.11 seconds
+2025-04-05 10:12:28,349 - INFO - Test output for astropy__astropy-7606 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/astropy__astropy-7606/test_output.txt
+2025-04-05 10:12:28,552 - INFO - Git diff after:
+diff --git a/astropy/units/core.py b/astropy/units/core.py
+index e9bd986d33..1b202395e9 100644
+--- a/astropy/units/core.py
++++ b/astropy/units/core.py
+@@ -1710,6 +1710,8 @@ class UnrecognizedUnit(IrreducibleUnit):
+         _unrecognized_operator
+ 
+     def __eq__(self, other):
++        if other is None:
++            return False
+         other = Unit(other, parse_strict='silent')
+         return isinstance(other, UnrecognizedUnit) and self.name == other.name
+2025-04-05 10:12:28,552 - INFO - Grading answer for astropy__astropy-7606...
+2025-04-05 10:12:28,552 - INFO - report: {'astropy__astropy-7606': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for astropy__astropy-7606: resolved: False
+2025-04-05 10:12:28,553 - INFO - Attempting to stop container sweb.eval.astropy__astropy-7606.241028_solver...
+2025-04-05 10:12:45,129 - INFO - Attempting to remove container sweb.eval.astropy__astropy-7606.241028_solver...
+2025-04-05 10:12:45,152 - INFO - Container sweb.eval.astropy__astropy-7606.241028_solver removed.
+2025-04-05 10:12:45,152 - INFO - Attempting to remove image sweb.eval.x86_64.astropy__astropy-7606:latest...
+2025-04-05 10:12:46,138 - INFO - Image sweb.eval.x86_64.astropy__astropy-7606:latest removed.

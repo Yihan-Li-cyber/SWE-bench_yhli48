@@ -1,0 +1,129 @@
+2025-04-05 12:05:32,138 - INFO - Environment image sweb.env.x86_64.934a137824256b612e9dc5:latest found for django__django-15128
+Building instance image sweb.eval.x86_64.django__django-15128:latest for django__django-15128
+2025-04-05 12:08:23,948 - INFO - Creating container for django__django-15128...
+2025-04-05 12:08:24,041 - INFO - Container for django__django-15128 created: 1843f5708c6e8fab3a503ad53128a5dbecff6487146b9fbc5d67cbefd52beaf4
+2025-04-05 12:08:26,742 - INFO - Container for django__django-15128 started: 1843f5708c6e8fab3a503ad53128a5dbecff6487146b9fbc5d67cbefd52beaf4
+2025-04-05 12:08:26,742 - INFO - Intermediate patch for django__django-15128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15128/patch.diff, now applying to container...
+2025-04-05 12:08:28,145 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 12:08:28,342 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/query.py
+
+2025-04-05 12:08:34,526 - INFO - Git diff before:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index aaf35ee37c..2a0529db59 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -761,7 +761,29 @@ class Query(BaseExpression):
+ 
+         # Create a new alias for this table.
+         if alias_list:
+-            alias = '%s%d' % (self.alias_prefix, len(self.alias_map) + 1)
++            # Find the next available alias number that won't create conflicts
++            counter = len(self.alias_map) + 1
++            while True:
++                alias = '%s%d' % (self.alias_prefix, counter)
++                # Check if this alias would conflict with existing aliases
++                # or with potential future alias changes
++                if alias not in self.alias_map:
++                    # Also check if any existing alias could be remapped to this one
++                    potential_conflict = False
++                    for existing_alias in self.alias_map:
++                        if existing_alias.startswith(self.alias_prefix):
++                            try:
++                                num = int(existing_alias[len(self.alias_prefix):])
++                                # If there's an alias Tx, avoid creating T(x+1)
++                                # as it could conflict during remapping
++                                if num + 1 == counter:
++                                    potential_conflict = True
++                                    break
++                            except ValueError:
++                                continue
++                    if not potential_conflict:
++                        break
++                counter += 1
+             alias_list.append(alias)
+         else:
+             # The first occurrence of a table uses the table name directly.
+@@ -845,8 +867,16 @@ class Query(BaseExpression):
+         Change the aliases in change_map (which maps old-alias -> new-alias),
+         relabelling any references to them in select columns and the where
+         clause.
++
++        The change_map keys and values must be disjoint to prevent an alias
++        from being changed twice. For example, if we had T4->T5 and T5->T6,
++        then T4 would incorrectly become T6 instead of T5 as the changes
++        are processed sequentially.
+         """
+-        assert set(change_map).isdisjoint(change_map.values())
++        assert set(change_map).isdisjoint(change_map.values()), (
++            "Alias change map contains overlapping keys and values - an alias "
++            "would be changed twice"
++        )
+ 
+         # 1. Update references in "select" (normal columns plus aliases),
+         # "group by" and "where".
+2025-04-05 12:08:34,527 - INFO - Eval script for django__django-15128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15128/eval.sh; copying to container...
+2025-04-05 12:09:33,419 - INFO - Test runtime: 58.19 seconds
+2025-04-05 12:09:33,420 - INFO - Test output for django__django-15128 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-15128/test_output.txt
+2025-04-05 12:09:33,739 - INFO - Git diff after:
+diff --git a/django/db/models/sql/query.py b/django/db/models/sql/query.py
+index aaf35ee37c..2a0529db59 100644
+--- a/django/db/models/sql/query.py
++++ b/django/db/models/sql/query.py
+@@ -761,7 +761,29 @@ class Query(BaseExpression):
+ 
+         # Create a new alias for this table.
+         if alias_list:
+-            alias = '%s%d' % (self.alias_prefix, len(self.alias_map) + 1)
++            # Find the next available alias number that won't create conflicts
++            counter = len(self.alias_map) + 1
++            while True:
++                alias = '%s%d' % (self.alias_prefix, counter)
++                # Check if this alias would conflict with existing aliases
++                # or with potential future alias changes
++                if alias not in self.alias_map:
++                    # Also check if any existing alias could be remapped to this one
++                    potential_conflict = False
++                    for existing_alias in self.alias_map:
++                        if existing_alias.startswith(self.alias_prefix):
++                            try:
++                                num = int(existing_alias[len(self.alias_prefix):])
++                                # If there's an alias Tx, avoid creating T(x+1)
++                                # as it could conflict during remapping
++                                if num + 1 == counter:
++                                    potential_conflict = True
++                                    break
++                            except ValueError:
++                                continue
++                    if not potential_conflict:
++                        break
++                counter += 1
+             alias_list.append(alias)
+         else:
+             # The first occurrence of a table uses the table name directly.
+@@ -845,8 +867,16 @@ class Query(BaseExpression):
+         Change the aliases in change_map (which maps old-alias -> new-alias),
+         relabelling any references to them in select columns and the where
+         clause.
++
++        The change_map keys and values must be disjoint to prevent an alias
++        from being changed twice. For example, if we had T4->T5 and T5->T6,
++        then T4 would incorrectly become T6 instead of T5 as the changes
++        are processed sequentially.
+         """
+-        assert set(change_map).isdisjoint(change_map.values())
++        assert set(change_map).isdisjoint(change_map.values()), (
++            "Alias change map contains overlapping keys and values - an alias "
++            "would be changed twice"
++        )
+ 
+         # 1. Update references in "select" (normal columns plus aliases),
+         # "group by" and "where".
+2025-04-05 12:09:33,739 - INFO - Grading answer for django__django-15128...
+2025-04-05 12:09:33,739 - INFO - report: {'django__django-15128': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-15128: resolved: False
+2025-04-05 12:09:33,740 - INFO - Attempting to stop container sweb.eval.django__django-15128.241028_solver...
+2025-04-05 12:09:50,033 - INFO - Attempting to remove container sweb.eval.django__django-15128.241028_solver...
+2025-04-05 12:09:50,220 - INFO - Container sweb.eval.django__django-15128.241028_solver removed.
+2025-04-05 12:09:50,220 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-15128:latest...
+2025-04-05 12:09:54,228 - INFO - Image sweb.eval.x86_64.django__django-15128:latest removed.

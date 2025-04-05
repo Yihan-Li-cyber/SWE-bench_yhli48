@@ -1,0 +1,112 @@
+2025-04-05 11:34:42,437 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14053
+Building instance image sweb.eval.x86_64.django__django-14053:latest for django__django-14053
+2025-04-05 11:37:42,721 - INFO - Creating container for django__django-14053...
+2025-04-05 11:37:42,824 - INFO - Container for django__django-14053 created: 5c17fce9c54f9e02c446d82f246323a2a29cd692744cc4787f4e7badb7dadd78
+2025-04-05 11:37:43,927 - INFO - Container for django__django-14053 started: 5c17fce9c54f9e02c446d82f246323a2a29cd692744cc4787f4e7badb7dadd78
+2025-04-05 11:37:43,927 - INFO - Intermediate patch for django__django-14053 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14053/patch.diff, now applying to container...
+2025-04-05 11:37:45,114 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:37:45,332 - INFO - >>>>> Applied Patch:
+patching file django/contrib/staticfiles/storage.py
+patching file test_post_process.py
+
+2025-04-05 11:37:51,416 - INFO - Git diff before:
+diff --git a/django/contrib/staticfiles/storage.py b/django/contrib/staticfiles/storage.py
+index 494890cc23..fd2ae247e5 100644
+--- a/django/contrib/staticfiles/storage.py
++++ b/django/contrib/staticfiles/storage.py
+@@ -220,24 +220,30 @@ class HashedFilesMixin:
+ 
+         # where to store the new paths
+         hashed_files = {}
++        yielded_files = set()
+ 
+         # build a list of adjustable files
+-        adjustable_paths = [
++        adjustable_paths = {
+             path for path in paths
+             if matches_patterns(path, self._patterns)
+-        ]
+-        # Do a single pass first. Post-process all files once, then repeat for
+-        # adjustable files.
+-        for name, hashed_name, processed, _ in self._post_process(paths, adjustable_paths, hashed_files):
+-            yield name, hashed_name, processed
++        }
+ 
+-        paths = {path: paths[path] for path in adjustable_paths}
++        # First pass - handle non-adjustable files only
++        non_adjustable_paths = {path: paths[path] for path in paths if path not in adjustable_paths}
++        for name, hashed_name, processed, _ in self._post_process(non_adjustable_paths, adjustable_paths, hashed_files):
++            yielded_files.add(name)
++            yield name, hashed_name, processed
+ 
++        # Handle adjustable files with multiple passes if needed
++        remaining_paths = {path: paths[path] for path in adjustable_paths}
+         for i in range(self.max_post_process_passes):
+             substitutions = False
+-            for name, hashed_name, processed, subst in self._post_process(paths, adjustable_paths, hashed_files):
+-                yield name, hashed_name, processed
++            for name, hashed_name, processed, subst in self._post_process(remaining_paths, adjustable_paths, hashed_files):
+                 substitutions = substitutions or subst
++                # Only yield if this is a new file or if we've made changes in this pass
++                if name not in yielded_files or subst:
++                    yielded_files.add(name)
++                    yield name, hashed_name, processed
+ 
+             if not substitutions:
+                 break
+2025-04-05 11:37:51,417 - INFO - Eval script for django__django-14053 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14053/eval.sh; copying to container...
+2025-04-05 11:38:48,321 - INFO - Test runtime: 56.18 seconds
+2025-04-05 11:38:48,322 - INFO - Test output for django__django-14053 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14053/test_output.txt
+2025-04-05 11:38:48,833 - INFO - Git diff after:
+diff --git a/django/contrib/staticfiles/storage.py b/django/contrib/staticfiles/storage.py
+index 494890cc23..fd2ae247e5 100644
+--- a/django/contrib/staticfiles/storage.py
++++ b/django/contrib/staticfiles/storage.py
+@@ -220,24 +220,30 @@ class HashedFilesMixin:
+ 
+         # where to store the new paths
+         hashed_files = {}
++        yielded_files = set()
+ 
+         # build a list of adjustable files
+-        adjustable_paths = [
++        adjustable_paths = {
+             path for path in paths
+             if matches_patterns(path, self._patterns)
+-        ]
+-        # Do a single pass first. Post-process all files once, then repeat for
+-        # adjustable files.
+-        for name, hashed_name, processed, _ in self._post_process(paths, adjustable_paths, hashed_files):
+-            yield name, hashed_name, processed
++        }
+ 
+-        paths = {path: paths[path] for path in adjustable_paths}
++        # First pass - handle non-adjustable files only
++        non_adjustable_paths = {path: paths[path] for path in paths if path not in adjustable_paths}
++        for name, hashed_name, processed, _ in self._post_process(non_adjustable_paths, adjustable_paths, hashed_files):
++            yielded_files.add(name)
++            yield name, hashed_name, processed
+ 
++        # Handle adjustable files with multiple passes if needed
++        remaining_paths = {path: paths[path] for path in adjustable_paths}
+         for i in range(self.max_post_process_passes):
+             substitutions = False
+-            for name, hashed_name, processed, subst in self._post_process(paths, adjustable_paths, hashed_files):
+-                yield name, hashed_name, processed
++            for name, hashed_name, processed, subst in self._post_process(remaining_paths, adjustable_paths, hashed_files):
+                 substitutions = substitutions or subst
++                # Only yield if this is a new file or if we've made changes in this pass
++                if name not in yielded_files or subst:
++                    yielded_files.add(name)
++                    yield name, hashed_name, processed
+ 
+             if not substitutions:
+                 break
+2025-04-05 11:38:48,833 - INFO - Grading answer for django__django-14053...
+2025-04-05 11:38:48,833 - INFO - report: {'django__django-14053': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14053: resolved: False
+2025-04-05 11:38:48,833 - INFO - Attempting to stop container sweb.eval.django__django-14053.241028_solver...
+2025-04-05 11:39:05,912 - INFO - Attempting to remove container sweb.eval.django__django-14053.241028_solver...
+2025-04-05 11:39:06,031 - INFO - Container sweb.eval.django__django-14053.241028_solver removed.
+2025-04-05 11:39:06,031 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14053:latest...
+2025-04-05 11:39:08,722 - INFO - Image sweb.eval.x86_64.django__django-14053:latest removed.

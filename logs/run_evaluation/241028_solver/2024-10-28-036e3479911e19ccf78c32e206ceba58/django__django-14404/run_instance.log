@@ -1,0 +1,49 @@
+2025-04-05 11:44:53,628 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14404
+Building instance image sweb.eval.x86_64.django__django-14404:latest for django__django-14404
+2025-04-05 11:48:10,336 - INFO - Creating container for django__django-14404...
+2025-04-05 11:48:10,520 - INFO - Container for django__django-14404 created: bfd01721fe0a3f4154009679a475887524018591d65d834bd43e5e084d3317c1
+2025-04-05 11:49:05,644 - INFO - Container for django__django-14404 started: bfd01721fe0a3f4154009679a475887524018591d65d834bd43e5e084d3317c1
+2025-04-05 11:49:05,644 - INFO - Intermediate patch for django__django-14404 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14404/patch.diff, now applying to container...
+2025-04-05 11:49:06,423 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:49:06,636 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/sites.py
+
+2025-04-05 11:49:12,525 - INFO - Git diff before:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 59a4a0364d..74ef4c491e 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -420,7 +420,7 @@ class AdminSite:
+     def catch_all_view(self, request, url):
+         if settings.APPEND_SLASH and not url.endswith('/'):
+             urlconf = getattr(request, 'urlconf', None)
+-            path = '%s/' % request.path_info
++            path = '%s/' % request.path
+             try:
+                 match = resolve(path, urlconf)
+             except Resolver404:
+2025-04-05 11:49:12,525 - INFO - Eval script for django__django-14404 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14404/eval.sh; copying to container...
+2025-04-05 11:54:48,138 - INFO - Test runtime: 334.93 seconds
+2025-04-05 11:54:48,139 - INFO - Test output for django__django-14404 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14404/test_output.txt
+2025-04-05 11:54:48,508 - INFO - Git diff after:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 59a4a0364d..74ef4c491e 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -420,7 +420,7 @@ class AdminSite:
+     def catch_all_view(self, request, url):
+         if settings.APPEND_SLASH and not url.endswith('/'):
+             urlconf = getattr(request, 'urlconf', None)
+-            path = '%s/' % request.path_info
++            path = '%s/' % request.path
+             try:
+                 match = resolve(path, urlconf)
+             except Resolver404:
+2025-04-05 11:54:48,508 - INFO - Grading answer for django__django-14404...
+2025-04-05 11:54:48,508 - INFO - report: {'django__django-14404': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14404: resolved: False
+2025-04-05 11:54:48,509 - INFO - Attempting to stop container sweb.eval.django__django-14404.241028_solver...
+2025-04-05 11:55:29,314 - INFO - Attempting to remove container sweb.eval.django__django-14404.241028_solver...
+2025-04-05 11:55:29,419 - INFO - Container sweb.eval.django__django-14404.241028_solver removed.
+2025-04-05 11:55:29,419 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14404:latest...
+2025-04-05 11:55:37,114 - INFO - Image sweb.eval.x86_64.django__django-14404:latest removed.

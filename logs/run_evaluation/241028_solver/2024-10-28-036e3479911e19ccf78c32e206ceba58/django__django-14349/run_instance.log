@@ -1,0 +1,51 @@
+2025-04-05 11:42:02,935 - INFO - Environment image sweb.env.x86_64.297af196949a2a635bce66:latest found for django__django-14349
+Building instance image sweb.eval.x86_64.django__django-14349:latest for django__django-14349
+2025-04-05 11:45:34,916 - INFO - Creating container for django__django-14349...
+2025-04-05 11:45:35,026 - INFO - Container for django__django-14349 created: 284e687d81741360bed10be5336070cb227632b7cbc79c86e82034c7ce006129
+2025-04-05 11:45:36,212 - INFO - Container for django__django-14349 started: 284e687d81741360bed10be5336070cb227632b7cbc79c86e82034c7ce006129
+2025-04-05 11:45:36,213 - INFO - Intermediate patch for django__django-14349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14349/patch.diff, now applying to container...
+2025-04-05 11:45:37,415 - INFO - Failed to apply patch to container, trying again...
+2025-04-05 11:45:37,730 - INFO - >>>>> Applied Patch:
+patching file django/core/validators.py
+
+2025-04-05 11:45:43,734 - INFO - Git diff before:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index a385819510..b247fd0745 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -101,6 +101,9 @@ class URLValidator(RegexValidator):
+     def __call__(self, value):
+         if not isinstance(value, str):
+             raise ValidationError(self.message, code=self.code, params={'value': value})
++        # Reject URLs containing control characters
++        if '\n' in value or '\r' in value or '\t' in value:
++            raise ValidationError(self.message, code=self.code, params={'value': value})
+         # Check if the scheme is valid.
+         scheme = value.split('://')[0].lower()
+         if scheme not in self.schemes:
+2025-04-05 11:45:43,734 - INFO - Eval script for django__django-14349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14349/eval.sh; copying to container...
+2025-04-05 11:46:31,922 - INFO - Test runtime: 47.49 seconds
+2025-04-05 11:46:31,923 - INFO - Test output for django__django-14349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-14349/test_output.txt
+2025-04-05 11:46:32,418 - INFO - Git diff after:
+diff --git a/django/core/validators.py b/django/core/validators.py
+index a385819510..b247fd0745 100644
+--- a/django/core/validators.py
++++ b/django/core/validators.py
+@@ -101,6 +101,9 @@ class URLValidator(RegexValidator):
+     def __call__(self, value):
+         if not isinstance(value, str):
+             raise ValidationError(self.message, code=self.code, params={'value': value})
++        # Reject URLs containing control characters
++        if '\n' in value or '\r' in value or '\t' in value:
++            raise ValidationError(self.message, code=self.code, params={'value': value})
+         # Check if the scheme is valid.
+         scheme = value.split('://')[0].lower()
+         if scheme not in self.schemes:
+2025-04-05 11:46:32,419 - INFO - Grading answer for django__django-14349...
+2025-04-05 11:46:32,419 - INFO - report: {'django__django-14349': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-14349: resolved: False
+2025-04-05 11:46:32,419 - INFO - Attempting to stop container sweb.eval.django__django-14349.241028_solver...
+2025-04-05 11:46:48,813 - INFO - Attempting to remove container sweb.eval.django__django-14349.241028_solver...
+2025-04-05 11:46:48,926 - INFO - Container sweb.eval.django__django-14349.241028_solver removed.
+2025-04-05 11:46:48,927 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-14349:latest...
+2025-04-05 11:46:51,533 - INFO - Image sweb.eval.x86_64.django__django-14349:latest removed.

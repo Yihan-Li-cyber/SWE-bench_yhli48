@@ -1,4 +1,4 @@
-2025-04-04 09:21:20,984 - INFO - Building image sweb.env.x86_64.34a2704c943706976d0871:latest
+2025-04-05 07:45:24,416 - INFO - Building image sweb.env.x86_64.34a2704c943706976d0871:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-04 09:21:20,985 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-05 07:45:24,416 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -91,30 +91,30 @@ rm $HOME/requirements.txt
 conda activate testbed
 python -m pip install setuptools==70.0.0 click==8.1.3 itsdangerous==2.1.2 Jinja2==3.1.2 MarkupSafe==2.1.1 Werkzeug==2.3.7
 
-2025-04-04 09:21:20,985 - INFO - Building docker image sweb.env.x86_64.34a2704c943706976d0871:latest in logs/build_images/env/sweb.env.x86_64.34a2704c943706976d0871__latest with platform linux/x86_64
-2025-04-04 09:21:21,022 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-04 09:21:21,022 - INFO - 
-2025-04-04 09:21:21,022 - INFO - ---> 7652b8eed4b5
-2025-04-04 09:21:21,022 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-04 09:21:21,022 - INFO - 
-2025-04-04 09:21:21,223 - INFO - ---> 0f9fbe6273c1
-2025-04-04 09:21:21,223 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-04 09:21:21,223 - INFO - 
-2025-04-04 09:21:21,290 - INFO - ---> Running in 36f267c40967
-2025-04-04 09:21:23,128 - INFO - ---> Removed intermediate container 36f267c40967
-2025-04-04 09:21:23,128 - INFO - ---> 2063128cd80f
-2025-04-04 09:21:23,129 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-04 09:21:23,129 - INFO - 
-2025-04-04 09:21:23,299 - INFO - ---> Running in 0b101d39e181
-2025-04-04 09:21:24,521 - INFO - ---> Removed intermediate container 0b101d39e181
-2025-04-04 09:21:24,521 - INFO - ---> 5e46211dda87
-2025-04-04 09:21:24,521 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-04 09:21:24,522 - INFO - 
-2025-04-04 09:21:24,647 - INFO - ---> Running in 0d5f9cd7f52b
-2025-04-04 09:21:25,187 - INFO - + source /opt/miniconda3/bin/activate
-++ _CONDA_ROOT=/opt/miniconda3
+2025-04-05 07:45:24,417 - INFO - Building docker image sweb.env.x86_64.34a2704c943706976d0871:latest in logs/build_images/env/sweb.env.x86_64.34a2704c943706976d0871__latest with platform linux/x86_64
+2025-04-05 07:45:24,424 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-05 07:45:24,424 - INFO - 
+2025-04-05 07:45:24,425 - INFO - ---> bb912b738013
+2025-04-05 07:45:24,425 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-05 07:45:24,425 - INFO - 
+2025-04-05 07:45:24,533 - INFO - ---> 104e7bfe5041
+2025-04-05 07:45:24,533 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-05 07:45:24,533 - INFO - 
+2025-04-05 07:45:24,628 - INFO - ---> Running in 5208d737183f
+2025-04-05 07:45:26,419 - INFO - ---> Removed intermediate container 5208d737183f
+2025-04-05 07:45:26,419 - INFO - ---> 3c55eefa8ed7
+2025-04-05 07:45:26,419 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-05 07:45:26,419 - INFO - 
+2025-04-05 07:45:26,518 - INFO - ---> Running in 2da4bd3cc317
+2025-04-05 07:45:28,021 - INFO - ---> Removed intermediate container 2da4bd3cc317
+2025-04-05 07:45:28,022 - INFO - ---> ecbe7d1039e8
+2025-04-05 07:45:28,022 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-05 07:45:28,022 - INFO - 
+2025-04-05 07:45:28,117 - INFO - ---> Running in 838dd2898c5d
+2025-04-05 07:45:29,031 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-05 07:45:29,032 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
-2025-04-04 09:21:25,187 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-05 07:45:29,032 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
@@ -122,26 +122,26 @@ python -m pip install setuptools==70.0.0 click==8.1.3 itsdangerous==2.1.2 Jinja2
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-2025-04-04 09:21:25,188 - INFO - +++ '[' -z '' ']'
+2025-04-05 07:45:29,032 - INFO - +++ '[' -z '' ']'
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
-2025-04-04 09:21:25,188 - INFO - +++ '[' -n '' ']'
-2025-04-04 09:21:25,190 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 09:21:25,192 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 09:21:25,194 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ '[' -n '' ']'
+2025-04-05 07:45:29,032 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-05 07:45:29,034 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-05 07:45:29,035 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-++ conda activate
+2025-04-05 07:45:29,035 - INFO - ++ conda activate
 ++ local cmd=activate
-2025-04-04 09:21:25,195 - INFO - ++ case "$cmd" in
-++ __conda_activate activate
-++ '[' -n '' ']'
+++ case "$cmd" in
+2025-04-05 07:45:29,035 - INFO - ++ __conda_activate activate
+2025-04-05 07:45:29,035 - INFO - ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 09:21:25,195 - INFO - +++ PS1=
+2025-04-05 07:45:29,035 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 09:21:25,196 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 09:21:25,472 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-05 07:45:29,036 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-05 07:45:29,836 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -162,7 +162,7 @@ export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
 export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ PS1='(base) '
-2025-04-04 09:21:25,473 - INFO - +++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export CONDA_PREFIX=/opt/miniconda3
 +++ CONDA_PREFIX=/opt/miniconda3
@@ -170,7 +170,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ CONDA_SHLVL=1
 +++ export CONDA_DEFAULT_ENV=base
 +++ CONDA_DEFAULT_ENV=base
-+++ export 'CONDA_PROMPT_MODIFIER=(base) '
+2025-04-05 07:45:29,836 - INFO - +++ export 'CONDA_PROMPT_MODIFIER=(base) '
 +++ CONDA_PROMPT_MODIFIER='(base) '
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -181,23 +181,23 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
-++ '[' -n '' ']'
+2025-04-05 07:45:29,836 - INFO - ++ '[' -n '' ']'
 ++ '[' -n '' ']'
 ++ hash -r
-+ conda create -n testbed python=3.11 -y
+2025-04-05 07:45:29,911 - INFO - + conda create -n testbed python=3.11 -y
 + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.11 -y
-2025-04-04 09:21:25,474 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.11 -y
-2025-04-04 09:21:26,558 - INFO - Channels:
++ /opt/miniconda3/bin/conda create -n testbed python=3.11 -y
+2025-04-05 07:45:33,742 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
 Collecting package metadata (repodata.json): ...working...
-2025-04-04 09:22:46,163 - INFO - done
+2025-04-05 07:50:24,715 - INFO - done
 Solving environment: ...working...
-2025-04-04 09:22:48,276 - INFO - done
-2025-04-04 09:22:53,499 - INFO - ## Package Plan ##
+2025-04-05 07:50:32,820 - INFO - done
+2025-04-05 07:50:51,235 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -255,12 +255,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-04 09:22:54,147 - INFO - done
+2025-04-05 07:50:52,836 - INFO - done
 Verifying transaction: ...working...
-2025-04-04 09:22:56,492 - INFO - done
-2025-04-04 09:22:56,494 - INFO - Executing transaction: ...working...
-2025-04-04 09:23:04,386 - INFO - done
-2025-04-04 09:23:04,472 - INFO - #
+2025-04-05 07:51:02,026 - INFO - done
+2025-04-05 07:51:02,029 - INFO - Executing transaction: ...working...
+2025-04-05 07:51:11,521 - INFO - done
+2025-04-05 07:51:11,840 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -268,17 +268,17 @@ Verifying transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-04 09:23:04,684 - INFO - + cat
-2025-04-04 09:23:04,686 - INFO - + conda activate testbed
+2025-04-05 07:51:12,833 - INFO - + cat
+2025-04-05 07:51:12,838 - INFO - + conda activate testbed
 + local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-04 09:23:04,686 - INFO - ++ PS1='(base) '
+2025-04-05 07:51:12,839 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 09:23:04,687 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 09:23:04,895 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-05 07:51:12,840 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-05 07:51:13,719 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -315,233 +315,232 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ CONDA_PREFIX_1=/opt/miniconda3
 ++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
-++ export _CE_M=
+2025-04-05 07:51:13,719 - INFO - ++ export _CE_M=
 ++ _CE_M=
 ++ export _CE_CONDA=
 ++ _CE_CONDA=
-2025-04-04 09:23:04,895 - INFO - ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 + __conda_hashr
 + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-+ python -m pip install -r /root/requirements.txt
-2025-04-04 09:23:05,784 - INFO - Collecting alabaster==0.7.13 (from -r /root/requirements.txt (line 1))
-2025-04-04 09:23:05,878 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl.metadata (3.0 kB)
-2025-04-04 09:23:05,941 - INFO - Collecting babel==2.12.1 (from -r /root/requirements.txt (line 2))
-2025-04-04 09:23:05,946 - INFO - Downloading Babel-2.12.1-py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:06,057 - INFO - Collecting certifi==2022.12.7 (from -r /root/requirements.txt (line 3))
-2025-04-04 09:23:06,073 - INFO - Downloading certifi-2022.12.7-py3-none-any.whl.metadata (2.9 kB)
-2025-04-04 09:23:06,284 - INFO - Collecting charset-normalizer==3.1.0 (from -r /root/requirements.txt (line 4))
-2025-04-04 09:23:06,354 - INFO - Downloading charset_normalizer-3.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (30 kB)
-2025-04-04 09:23:06,419 - INFO - Collecting docutils==0.17.1 (from -r /root/requirements.txt (line 5))
-2025-04-04 09:23:06,479 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl.metadata (2.9 kB)
-2025-04-04 09:23:06,515 - INFO - Collecting idna==3.4 (from -r /root/requirements.txt (line 6))
-2025-04-04 09:23:06,522 - INFO - Downloading idna-3.4-py3-none-any.whl.metadata (9.8 kB)
-2025-04-04 09:23:06,566 - INFO - Collecting imagesize==1.4.1 (from -r /root/requirements.txt (line 7))
-2025-04-04 09:23:06,571 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl.metadata (1.5 kB)
-2025-04-04 09:23:06,606 - INFO - Collecting jinja2==3.1.2 (from -r /root/requirements.txt (line 8))
-2025-04-04 09:23:06,654 - INFO - Downloading Jinja2-3.1.2-py3-none-any.whl.metadata (3.5 kB)
-2025-04-04 09:23:06,804 - INFO - Collecting markupsafe==2.1.2 (from -r /root/requirements.txt (line 9))
-2025-04-04 09:23:06,810 - INFO - Downloading MarkupSafe-2.1.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.2 kB)
-2025-04-04 09:23:06,845 - INFO - Collecting packaging==23.0 (from -r /root/requirements.txt (line 10))
-2025-04-04 09:23:06,850 - INFO - Downloading packaging-23.0-py3-none-any.whl.metadata (3.1 kB)
-2025-04-04 09:23:07,026 - INFO - Collecting pallets-sphinx-themes==2.0.3 (from -r /root/requirements.txt (line 11))
-2025-04-04 09:23:07,032 - INFO - Downloading Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl.metadata (1.7 kB)
-2025-04-04 09:23:07,171 - INFO - Collecting pygments==2.15.0 (from -r /root/requirements.txt (line 12))
-2025-04-04 09:23:07,177 - INFO - Downloading Pygments-2.15.0-py3-none-any.whl.metadata (2.5 kB)
-2025-04-04 09:23:07,231 - INFO - Collecting requests==2.28.2 (from -r /root/requirements.txt (line 13))
-2025-04-04 09:23:07,274 - INFO - Downloading requests-2.28.2-py3-none-any.whl.metadata (4.6 kB)
-2025-04-04 09:23:07,324 - INFO - Collecting snowballstemmer==2.2.0 (from -r /root/requirements.txt (line 14))
-2025-04-04 09:23:07,333 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
-2025-04-04 09:23:07,406 - INFO - Collecting sphinx==4.5.0 (from -r /root/requirements.txt (line 15))
-2025-04-04 09:23:07,410 - INFO - Downloading Sphinx-4.5.0-py3-none-any.whl.metadata (7.9 kB)
-2025-04-04 09:23:07,552 - INFO - Collecting sphinx-issues==3.0.1 (from -r /root/requirements.txt (line 16))
-2025-04-04 09:23:07,559 - INFO - Downloading sphinx_issues-3.0.1-py3-none-any.whl.metadata (7.9 kB)
-2025-04-04 09:23:07,614 - INFO - Collecting sphinx-tabs==3.3.1 (from -r /root/requirements.txt (line 17))
-2025-04-04 09:23:07,620 - INFO - Downloading sphinx_tabs-3.3.1-py3-none-any.whl.metadata (6.3 kB)
-2025-04-04 09:23:07,653 - INFO - Collecting sphinxcontrib-applehelp==1.0.4 (from -r /root/requirements.txt (line 18))
-2025-04-04 09:23:07,660 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl.metadata (2.7 kB)
-2025-04-04 09:23:07,826 - INFO - Collecting sphinxcontrib-devhelp==1.0.2 (from -r /root/requirements.txt (line 19))
-2025-04-04 09:23:07,831 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl.metadata (1.4 kB)
-2025-04-04 09:23:07,880 - INFO - Collecting sphinxcontrib-htmlhelp==2.0.1 (from -r /root/requirements.txt (line 20))
-2025-04-04 09:23:07,909 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl.metadata (2.8 kB)
-2025-04-04 09:23:07,930 - INFO - Collecting sphinxcontrib-jsmath==1.0.1 (from -r /root/requirements.txt (line 21))
-2025-04-04 09:23:07,935 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl.metadata (1.4 kB)
-2025-04-04 09:23:08,126 - INFO - Collecting sphinxcontrib-log-cabinet==1.0.1 (from -r /root/requirements.txt (line 22))
-2025-04-04 09:23:08,130 - INFO - Downloading sphinxcontrib_log_cabinet-1.0.1-py2.py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:08,181 - INFO - Collecting sphinxcontrib-qthelp==1.0.3 (from -r /root/requirements.txt (line 23))
-2025-04-04 09:23:08,185 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl.metadata (1.4 kB)
-2025-04-04 09:23:08,230 - INFO - Collecting sphinxcontrib-serializinghtml==1.1.5 (from -r /root/requirements.txt (line 24))
-2025-04-04 09:23:08,236 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl.metadata (1.5 kB)
-2025-04-04 09:23:08,312 - INFO - Collecting urllib3==1.26.15 (from -r /root/requirements.txt (line 25))
-2025-04-04 09:23:08,329 - INFO - Downloading urllib3-1.26.15-py2.py3-none-any.whl.metadata (48 kB)
-2025-04-04 09:23:08,413 - INFO - Collecting asgiref==3.6.0 (from -r /root/requirements.txt (line 27))
-2025-04-04 09:23:08,418 - INFO - Downloading asgiref-3.6.0-py3-none-any.whl.metadata (9.2 kB)
-2025-04-04 09:23:08,464 - INFO - Collecting iniconfig==2.0.0 (from -r /root/requirements.txt (line 28))
-2025-04-04 09:23:08,468 - INFO - Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
-2025-04-04 09:23:08,497 - INFO - Collecting pluggy==1.0.0 (from -r /root/requirements.txt (line 30))
-2025-04-04 09:23:08,503 - INFO - Downloading pluggy-1.0.0-py2.py3-none-any.whl.metadata (4.3 kB)
-2025-04-04 09:23:08,686 - INFO - Collecting pytest==7.3.0 (from -r /root/requirements.txt (line 31))
-2025-04-04 09:23:08,692 - INFO - Downloading pytest-7.3.0-py3-none-any.whl.metadata (7.9 kB)
-2025-04-04 09:23:08,737 - INFO - Collecting python-dotenv==1.0.0 (from -r /root/requirements.txt (line 32))
-2025-04-04 09:23:08,744 - INFO - Downloading python_dotenv-1.0.0-py3-none-any.whl.metadata (21 kB)
-2025-04-04 09:23:08,975 - INFO - Collecting cffi==1.15.1 (from -r /root/requirements.txt (line 34))
-2025-04-04 09:23:08,980 - INFO - Downloading cffi-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.1 kB)
-2025-04-04 09:23:09,211 - INFO - Collecting cryptography==40.0.1 (from -r /root/requirements.txt (line 35))
-2025-04-04 09:23:09,287 - INFO - Downloading cryptography-40.0.1-cp36-abi3-manylinux_2_28_x86_64.whl.metadata (5.4 kB)
-2025-04-04 09:23:09,535 - INFO - Collecting mypy==1.2.0 (from -r /root/requirements.txt (line 36))
-2025-04-04 09:23:09,585 - INFO - Downloading mypy-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.9 kB)
-2025-04-04 09:23:09,673 - INFO - Collecting mypy-extensions==1.0.0 (from -r /root/requirements.txt (line 37))
-2025-04-04 09:23:09,680 - INFO - Downloading mypy_extensions-1.0.0-py3-none-any.whl.metadata (1.1 kB)
-2025-04-04 09:23:09,713 - INFO - Collecting pycparser==2.21 (from -r /root/requirements.txt (line 38))
-2025-04-04 09:23:09,721 - INFO - Downloading pycparser-2.21-py2.py3-none-any.whl.metadata (1.1 kB)
-2025-04-04 09:23:10,062 - INFO - Collecting types-contextvars==2.4.7.2 (from -r /root/requirements.txt (line 39))
-2025-04-04 09:23:10,069 - INFO - Downloading types_contextvars-2.4.7.2-py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:10,244 - INFO - Collecting types-dataclasses==0.6.6 (from -r /root/requirements.txt (line 40))
-2025-04-04 09:23:10,249 - INFO - Downloading types_dataclasses-0.6.6-py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:10,306 - INFO - Collecting types-setuptools==67.6.0.7 (from -r /root/requirements.txt (line 41))
-2025-04-04 09:23:10,365 - INFO - Downloading types_setuptools-67.6.0.7-py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:10,526 - INFO - Collecting typing-extensions==4.5.0 (from -r /root/requirements.txt (line 42))
-2025-04-04 09:23:10,531 - INFO - Downloading typing_extensions-4.5.0-py3-none-any.whl.metadata (8.5 kB)
-2025-04-04 09:23:10,561 - INFO - Collecting build==0.10.0 (from -r /root/requirements.txt (line 44))
-2025-04-04 09:23:10,566 - INFO - Downloading build-0.10.0-py3-none-any.whl.metadata (4.1 kB)
-2025-04-04 09:23:10,627 - INFO - Collecting cachetools==5.3.0 (from -r /root/requirements.txt (line 45))
-2025-04-04 09:23:10,633 - INFO - Downloading cachetools-5.3.0-py3-none-any.whl.metadata (5.2 kB)
-2025-04-04 09:23:10,686 - INFO - Collecting cfgv==3.3.1 (from -r /root/requirements.txt (line 46))
-2025-04-04 09:23:10,748 - INFO - Downloading cfgv-3.3.1-py2.py3-none-any.whl.metadata (9.0 kB)
-2025-04-04 09:23:10,950 - INFO - Collecting chardet==5.1.0 (from -r /root/requirements.txt (line 47))
-2025-04-04 09:23:10,955 - INFO - Downloading chardet-5.1.0-py3-none-any.whl.metadata (3.4 kB)
-2025-04-04 09:23:11,048 - INFO - Collecting click==8.1.3 (from -r /root/requirements.txt (line 48))
-2025-04-04 09:23:11,053 - INFO - Downloading click-8.1.3-py3-none-any.whl.metadata (3.2 kB)
-2025-04-04 09:23:11,209 - INFO - Collecting colorama==0.4.6 (from -r /root/requirements.txt (line 49))
-2025-04-04 09:23:11,216 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
-2025-04-04 09:23:11,245 - INFO - Collecting distlib==0.3.6 (from -r /root/requirements.txt (line 50))
-2025-04-04 09:23:11,285 - INFO - Downloading distlib-0.3.6-py2.py3-none-any.whl.metadata (5.1 kB)
-2025-04-04 09:23:11,351 - INFO - Collecting filelock==3.11.0 (from -r /root/requirements.txt (line 51))
-2025-04-04 09:23:11,365 - INFO - Downloading filelock-3.11.0-py3-none-any.whl.metadata (2.5 kB)
-2025-04-04 09:23:11,440 - INFO - Collecting identify==2.5.22 (from -r /root/requirements.txt (line 52))
-2025-04-04 09:23:11,445 - INFO - Downloading identify-2.5.22-py2.py3-none-any.whl.metadata (4.4 kB)
-2025-04-04 09:23:11,474 - INFO - Collecting nodeenv==1.7.0 (from -r /root/requirements.txt (line 53))
-2025-04-04 09:23:11,499 - INFO - Downloading nodeenv-1.7.0-py2.py3-none-any.whl.metadata (21 kB)
-2025-04-04 09:23:11,534 - INFO - Collecting pip-compile-multi==2.6.2 (from -r /root/requirements.txt (line 54))
-2025-04-04 09:23:11,539 - INFO - Downloading pip_compile_multi-2.6.2-py2.py3-none-any.whl.metadata (9.7 kB)
-2025-04-04 09:23:11,605 - INFO - Collecting pip-tools==6.13.0 (from -r /root/requirements.txt (line 55))
-2025-04-04 09:23:11,620 - INFO - Downloading pip_tools-6.13.0-py3-none-any.whl.metadata (23 kB)
-2025-04-04 09:23:11,670 - INFO - Collecting platformdirs==3.2.0 (from -r /root/requirements.txt (line 56))
-2025-04-04 09:23:11,670 - INFO - Downloading platformdirs-3.2.0-py3-none-any.whl.metadata (9.5 kB)
-2025-04-04 09:23:11,773 - INFO - Collecting pre-commit==3.2.2 (from -r /root/requirements.txt (line 57))
-2025-04-04 09:23:11,782 - INFO - Downloading pre_commit-3.2.2-py2.py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:11,927 - INFO - Collecting pyproject-api==1.5.1 (from -r /root/requirements.txt (line 58))
-2025-04-04 09:23:11,981 - INFO - Downloading pyproject_api-1.5.1-py3-none-any.whl.metadata (2.6 kB)
-2025-04-04 09:23:12,024 - INFO - Collecting pyproject-hooks==1.0.0 (from -r /root/requirements.txt (line 59))
-2025-04-04 09:23:12,029 - INFO - Downloading pyproject_hooks-1.0.0-py3-none-any.whl.metadata (1.3 kB)
-2025-04-04 09:23:12,111 - INFO - Collecting pyyaml==6.0 (from -r /root/requirements.txt (line 60))
-2025-04-04 09:23:12,117 - INFO - Downloading PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
-2025-04-04 09:23:12,141 - INFO - Collecting toposort==1.10 (from -r /root/requirements.txt (line 61))
-2025-04-04 09:23:12,145 - INFO - Downloading toposort-1.10-py3-none-any.whl.metadata (4.1 kB)
-2025-04-04 09:23:12,233 - INFO - Collecting tox==4.4.11 (from -r /root/requirements.txt (line 62))
-2025-04-04 09:23:12,250 - INFO - Downloading tox-4.4.11-py3-none-any.whl.metadata (5.0 kB)
-2025-04-04 09:23:12,341 - INFO - Collecting virtualenv==20.21.0 (from -r /root/requirements.txt (line 63))
-2025-04-04 09:23:12,357 - INFO - Downloading virtualenv-20.21.0-py3-none-any.whl.metadata (4.1 kB)
-2025-04-04 09:23:12,395 - INFO - Collecting wheel==0.40.0 (from -r /root/requirements.txt (line 64))
-2025-04-04 09:23:12,446 - INFO - Downloading wheel-0.40.0-py3-none-any.whl.metadata (2.1 kB)
-2025-04-04 09:23:12,683 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (from nodeenv==1.7.0->-r /root/requirements.txt (line 53)) (75.8.0)
-2025-04-04 09:23:12,707 - INFO - Requirement already satisfied: pip>=22.2 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (from pip-tools==6.13.0->-r /root/requirements.txt (line 55)) (25.0)
-2025-04-04 09:23:12,924 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl (13 kB)
-2025-04-04 09:23:12,942 - INFO - Downloading Babel-2.12.1-py3-none-any.whl (10.1 MB)
-2025-04-04 09:23:13,315 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 30.2 MB/s eta 0:00:00
-2025-04-04 09:23:13,315 - INFO - 
-2025-04-04 09:23:13,321 - INFO - Downloading certifi-2022.12.7-py3-none-any.whl (155 kB)
-2025-04-04 09:23:13,393 - INFO - Downloading charset_normalizer-3.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (197 kB)
-2025-04-04 09:23:13,433 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl (575 kB)
-2025-04-04 09:23:13,480 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 575.5/575.5 kB 8.3 MB/s eta 0:00:00
-2025-04-04 09:23:13,481 - INFO - 
-2025-04-04 09:23:13,485 - INFO - Downloading idna-3.4-py3-none-any.whl (61 kB)
-2025-04-04 09:23:13,495 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl (8.8 kB)
-2025-04-04 09:23:13,546 - INFO - Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
-2025-04-04 09:23:13,644 - INFO - Downloading MarkupSafe-2.1.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (27 kB)
-2025-04-04 09:23:13,656 - INFO - Downloading packaging-23.0-py3-none-any.whl (42 kB)
-2025-04-04 09:23:13,668 - INFO - Downloading Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl (26 kB)
-2025-04-04 09:23:13,678 - INFO - Downloading Pygments-2.15.0-py3-none-any.whl (1.1 MB)
-2025-04-04 09:23:13,705 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 47.5 MB/s eta 0:00:00
-2025-04-04 09:23:13,705 - INFO - 
-2025-04-04 09:23:13,712 - INFO - Downloading requests-2.28.2-py3-none-any.whl (62 kB)
-2025-04-04 09:23:13,732 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl (93 kB)
-2025-04-04 09:23:13,774 - INFO - Downloading Sphinx-4.5.0-py3-none-any.whl (3.1 MB)
-2025-04-04 09:23:13,869 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 45.4 MB/s eta 0:00:00
-2025-04-04 09:23:13,870 - INFO - 
-2025-04-04 09:23:13,877 - INFO - Downloading sphinx_issues-3.0.1-py3-none-any.whl (8.2 kB)
-2025-04-04 09:23:13,895 - INFO - Downloading sphinx_tabs-3.3.1-py3-none-any.whl (10.0 kB)
-2025-04-04 09:23:13,915 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl (120 kB)
-2025-04-04 09:23:13,930 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl (84 kB)
-2025-04-04 09:23:13,990 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl (99 kB)
-2025-04-04 09:23:14,013 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl (5.1 kB)
-2025-04-04 09:23:14,106 - INFO - Downloading sphinxcontrib_log_cabinet-1.0.1-py2.py3-none-any.whl (4.9 kB)
-2025-04-04 09:23:14,117 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl (90 kB)
-2025-04-04 09:23:14,175 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl (94 kB)
-2025-04-04 09:23:14,228 - INFO - Downloading urllib3-1.26.15-py2.py3-none-any.whl (140 kB)
-2025-04-04 09:23:14,247 - INFO - Downloading asgiref-3.6.0-py3-none-any.whl (23 kB)
-2025-04-04 09:23:14,321 - INFO - Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
-2025-04-04 09:23:14,361 - INFO - Downloading pluggy-1.0.0-py2.py3-none-any.whl (13 kB)
-2025-04-04 09:23:14,414 - INFO - Downloading pytest-7.3.0-py3-none-any.whl (320 kB)
-2025-04-04 09:23:14,435 - INFO - Downloading python_dotenv-1.0.0-py3-none-any.whl (19 kB)
-2025-04-04 09:23:14,524 - INFO - Downloading cffi-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (462 kB)
-2025-04-04 09:23:14,619 - INFO - Downloading cryptography-40.0.1-cp36-abi3-manylinux_2_28_x86_64.whl (3.7 MB)
-2025-04-04 09:23:14,694 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 51.7 MB/s eta 0:00:00
-2025-04-04 09:23:14,694 - INFO - 
-2025-04-04 09:23:14,700 - INFO - Downloading mypy-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
-2025-04-04 09:23:14,953 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 48.0 MB/s eta 0:00:00
-2025-04-04 09:23:14,953 - INFO - 
-2025-04-04 09:23:14,957 - INFO - Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
-2025-04-04 09:23:15,016 - INFO - Downloading pycparser-2.21-py2.py3-none-any.whl (118 kB)
-2025-04-04 09:23:15,036 - INFO - Downloading types_contextvars-2.4.7.2-py3-none-any.whl (2.7 kB)
-2025-04-04 09:23:15,070 - INFO - Downloading types_dataclasses-0.6.6-py3-none-any.whl (2.9 kB)
-2025-04-04 09:23:15,082 - INFO - Downloading types_setuptools-67.6.0.7-py3-none-any.whl (35 kB)
-2025-04-04 09:23:15,155 - INFO - Downloading typing_extensions-4.5.0-py3-none-any.whl (27 kB)
-2025-04-04 09:23:15,168 - INFO - Downloading build-0.10.0-py3-none-any.whl (17 kB)
-2025-04-04 09:23:15,179 - INFO - Downloading cachetools-5.3.0-py3-none-any.whl (9.3 kB)
-2025-04-04 09:23:15,190 - INFO - Downloading cfgv-3.3.1-py2.py3-none-any.whl (7.3 kB)
-2025-04-04 09:23:15,205 - INFO - Downloading chardet-5.1.0-py3-none-any.whl (199 kB)
-2025-04-04 09:23:15,217 - INFO - Downloading click-8.1.3-py3-none-any.whl (96 kB)
-2025-04-04 09:23:15,272 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
-2025-04-04 09:23:15,284 - INFO - Downloading distlib-0.3.6-py2.py3-none-any.whl (468 kB)
-2025-04-04 09:23:15,320 - INFO - Downloading filelock-3.11.0-py3-none-any.whl (10.0 kB)
-2025-04-04 09:23:15,352 - INFO - Downloading identify-2.5.22-py2.py3-none-any.whl (98 kB)
-2025-04-04 09:23:15,365 - INFO - Downloading nodeenv-1.7.0-py2.py3-none-any.whl (21 kB)
-2025-04-04 09:23:15,379 - INFO - Downloading pip_compile_multi-2.6.2-py2.py3-none-any.whl (41 kB)
-2025-04-04 09:23:15,397 - INFO - Downloading pip_tools-6.13.0-py3-none-any.whl (53 kB)
-2025-04-04 09:23:15,477 - INFO - Downloading platformdirs-3.2.0-py3-none-any.whl (14 kB)
-2025-04-04 09:23:15,493 - INFO - Downloading pre_commit-3.2.2-py2.py3-none-any.whl (202 kB)
-2025-04-04 09:23:15,503 - INFO - Downloading pyproject_api-1.5.1-py3-none-any.whl (12 kB)
-2025-04-04 09:23:15,580 - INFO - Downloading pyproject_hooks-1.0.0-py3-none-any.whl (9.3 kB)
-2025-04-04 09:23:15,607 - INFO - Downloading PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (757 kB)
-2025-04-04 09:23:15,630 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 757.9/757.9 kB 29.3 MB/s eta 0:00:00
-2025-04-04 09:23:15,630 - INFO - 
-2025-04-04 09:23:15,635 - INFO - Downloading toposort-1.10-py3-none-any.whl (8.5 kB)
-2025-04-04 09:23:15,649 - INFO - Downloading tox-4.4.11-py3-none-any.whl (148 kB)
-2025-04-04 09:23:15,698 - INFO - Downloading virtualenv-20.21.0-py3-none-any.whl (8.7 MB)
-2025-04-04 09:23:15,916 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 40.0 MB/s eta 0:00:00
-2025-04-04 09:23:15,916 - INFO - 
-2025-04-04 09:23:15,922 - INFO - Downloading wheel-0.40.0-py3-none-any.whl (64 kB)
-2025-04-04 09:23:16,228 - INFO - Installing collected packages: types-setuptools, types-dataclasses, types-contextvars, toposort, snowballstemmer, distlib, wheel, urllib3, typing-extensions, sphinxcontrib-serializinghtml, sphinxcontrib-qthelp, sphinxcontrib-jsmath, sphinxcontrib-htmlhelp, sphinxcontrib-devhelp, sphinxcontrib-applehelp, pyyaml, python-dotenv, pyproject-hooks, pygments, pycparser, pluggy, platformdirs, packaging, nodeenv, mypy-extensions, markupsafe, iniconfig, imagesize, idna, identify, filelock, docutils, colorama, click, charset-normalizer, chardet, cfgv, certifi, cachetools, babel, asgiref, alabaster, virtualenv, requests, pytest, pyproject-api, mypy, jinja2, cffi, build, tox, sphinx, pre-commit, pip-tools, cryptography, sphinxcontrib-log-cabinet, sphinx-tabs, sphinx-issues, pip-compile-multi, pallets-sphinx-themes
-2025-04-04 09:23:16,686 - INFO - Attempting uninstall: wheel
-2025-04-04 09:23:16,690 - INFO - Found existing installation: wheel 0.45.1
-2025-04-04 09:23:16,697 - INFO - Uninstalling wheel-0.45.1:
-2025-04-04 09:23:16,700 - INFO - Successfully uninstalled wheel-0.45.1
-2025-04-04 09:23:26,017 - INFO - Successfully installed alabaster-0.7.13 asgiref-3.6.0 babel-2.12.1 build-0.10.0 cachetools-5.3.0 certifi-2022.12.7 cffi-1.15.1 cfgv-3.3.1 chardet-5.1.0 charset-normalizer-3.1.0 click-8.1.3 colorama-0.4.6 cryptography-40.0.1 distlib-0.3.6 docutils-0.17.1 filelock-3.11.0 identify-2.5.22 idna-3.4 imagesize-1.4.1 iniconfig-2.0.0 jinja2-3.1.2 markupsafe-2.1.2 mypy-1.2.0 mypy-extensions-1.0.0 nodeenv-1.7.0 packaging-23.0 pallets-sphinx-themes-2.0.3 pip-compile-multi-2.6.2 pip-tools-6.13.0 platformdirs-3.2.0 pluggy-1.0.0 pre-commit-3.2.2 pycparser-2.21 pygments-2.15.0 pyproject-api-1.5.1 pyproject-hooks-1.0.0 pytest-7.3.0 python-dotenv-1.0.0 pyyaml-6.0 requests-2.28.2 snowballstemmer-2.2.0 sphinx-4.5.0 sphinx-issues-3.0.1 sphinx-tabs-3.3.1 sphinxcontrib-applehelp-1.0.4 sphinxcontrib-devhelp-1.0.2 sphinxcontrib-htmlhelp-2.0.1 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-log-cabinet-1.0.1 sphinxcontrib-qthelp-1.0.3 sphinxcontrib-serializinghtml-1.1.5 toposort-1.10 tox-4.4.11 types-contextvars-2.4.7.2 types-dataclasses-0.6.6 types-setuptools-67.6.0.7 typing-extensions-4.5.0 urllib3-1.26.15 virtualenv-20.21.0 wheel-0.40.0
-2025-04-04 09:23:26,019 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 09:23:26,616 - INFO - + rm /root/requirements.txt
-2025-04-04 09:23:26,619 - INFO - + conda activate testbed
+2025-04-05 07:51:13,719 - INFO - + python -m pip install -r /root/requirements.txt
+2025-04-05 07:51:16,461 - INFO - Collecting alabaster==0.7.13 (from -r /root/requirements.txt (line 1))
+2025-04-05 07:51:16,641 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl.metadata (3.0 kB)
+2025-04-05 07:51:16,739 - INFO - Collecting babel==2.12.1 (from -r /root/requirements.txt (line 2))
+2025-04-05 07:51:16,744 - INFO - Downloading Babel-2.12.1-py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:16,918 - INFO - Collecting certifi==2022.12.7 (from -r /root/requirements.txt (line 3))
+2025-04-05 07:51:16,923 - INFO - Downloading certifi-2022.12.7-py3-none-any.whl.metadata (2.9 kB)
+2025-04-05 07:51:17,631 - INFO - Collecting charset-normalizer==3.1.0 (from -r /root/requirements.txt (line 4))
+2025-04-05 07:51:17,638 - INFO - Downloading charset_normalizer-3.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (30 kB)
+2025-04-05 07:51:17,743 - INFO - Collecting docutils==0.17.1 (from -r /root/requirements.txt (line 5))
+2025-04-05 07:51:17,816 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl.metadata (2.9 kB)
+2025-04-05 07:51:17,843 - INFO - Collecting idna==3.4 (from -r /root/requirements.txt (line 6))
+2025-04-05 07:51:17,847 - INFO - Downloading idna-3.4-py3-none-any.whl.metadata (9.8 kB)
+2025-04-05 07:51:17,932 - INFO - Collecting imagesize==1.4.1 (from -r /root/requirements.txt (line 7))
+2025-04-05 07:51:17,937 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl.metadata (1.5 kB)
+2025-04-05 07:51:18,036 - INFO - Collecting jinja2==3.1.2 (from -r /root/requirements.txt (line 8))
+2025-04-05 07:51:18,042 - INFO - Downloading Jinja2-3.1.2-py3-none-any.whl.metadata (3.5 kB)
+2025-04-05 07:51:18,423 - INFO - Collecting markupsafe==2.1.2 (from -r /root/requirements.txt (line 9))
+2025-04-05 07:51:18,429 - INFO - Downloading MarkupSafe-2.1.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (3.2 kB)
+2025-04-05 07:51:18,534 - INFO - Collecting packaging==23.0 (from -r /root/requirements.txt (line 10))
+2025-04-05 07:51:18,540 - INFO - Downloading packaging-23.0-py3-none-any.whl.metadata (3.1 kB)
+2025-04-05 07:51:18,631 - INFO - Collecting pallets-sphinx-themes==2.0.3 (from -r /root/requirements.txt (line 11))
+2025-04-05 07:51:18,637 - INFO - Downloading Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl.metadata (1.7 kB)
+2025-04-05 07:51:18,733 - INFO - Collecting pygments==2.15.0 (from -r /root/requirements.txt (line 12))
+2025-04-05 07:51:18,738 - INFO - Downloading Pygments-2.15.0-py3-none-any.whl.metadata (2.5 kB)
+2025-04-05 07:51:18,924 - INFO - Collecting requests==2.28.2 (from -r /root/requirements.txt (line 13))
+2025-04-05 07:51:18,929 - INFO - Downloading requests-2.28.2-py3-none-any.whl.metadata (4.6 kB)
+2025-04-05 07:51:19,024 - INFO - Collecting snowballstemmer==2.2.0 (from -r /root/requirements.txt (line 14))
+2025-04-05 07:51:19,029 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl.metadata (6.5 kB)
+2025-04-05 07:51:19,324 - INFO - Collecting sphinx==4.5.0 (from -r /root/requirements.txt (line 15))
+2025-04-05 07:51:19,329 - INFO - Downloading Sphinx-4.5.0-py3-none-any.whl.metadata (7.9 kB)
+2025-04-05 07:51:19,497 - INFO - Collecting sphinx-issues==3.0.1 (from -r /root/requirements.txt (line 16))
+2025-04-05 07:51:19,517 - INFO - Downloading sphinx_issues-3.0.1-py3-none-any.whl.metadata (7.9 kB)
+2025-04-05 07:51:19,629 - INFO - Collecting sphinx-tabs==3.3.1 (from -r /root/requirements.txt (line 17))
+2025-04-05 07:51:19,634 - INFO - Downloading sphinx_tabs-3.3.1-py3-none-any.whl.metadata (6.3 kB)
+2025-04-05 07:51:19,733 - INFO - Collecting sphinxcontrib-applehelp==1.0.4 (from -r /root/requirements.txt (line 18))
+2025-04-05 07:51:19,739 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl.metadata (2.7 kB)
+2025-04-05 07:51:19,828 - INFO - Collecting sphinxcontrib-devhelp==1.0.2 (from -r /root/requirements.txt (line 19))
+2025-04-05 07:51:19,832 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-05 07:51:19,916 - INFO - Collecting sphinxcontrib-htmlhelp==2.0.1 (from -r /root/requirements.txt (line 20))
+2025-04-05 07:51:19,921 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl.metadata (2.8 kB)
+2025-04-05 07:51:19,943 - INFO - Collecting sphinxcontrib-jsmath==1.0.1 (from -r /root/requirements.txt (line 21))
+2025-04-05 07:51:20,019 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-05 07:51:20,095 - INFO - Collecting sphinxcontrib-log-cabinet==1.0.1 (from -r /root/requirements.txt (line 22))
+2025-04-05 07:51:20,118 - INFO - Downloading sphinxcontrib_log_cabinet-1.0.1-py2.py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:20,140 - INFO - Collecting sphinxcontrib-qthelp==1.0.3 (from -r /root/requirements.txt (line 23))
+2025-04-05 07:51:20,217 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl.metadata (1.4 kB)
+2025-04-05 07:51:20,238 - INFO - Collecting sphinxcontrib-serializinghtml==1.1.5 (from -r /root/requirements.txt (line 24))
+2025-04-05 07:51:20,316 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl.metadata (1.5 kB)
+2025-04-05 07:51:20,426 - INFO - Collecting urllib3==1.26.15 (from -r /root/requirements.txt (line 25))
+2025-04-05 07:51:20,431 - INFO - Downloading urllib3-1.26.15-py2.py3-none-any.whl.metadata (48 kB)
+2025-04-05 07:51:20,620 - INFO - Collecting asgiref==3.6.0 (from -r /root/requirements.txt (line 27))
+2025-04-05 07:51:20,626 - INFO - Downloading asgiref-3.6.0-py3-none-any.whl.metadata (9.2 kB)
+2025-04-05 07:51:20,726 - INFO - Collecting iniconfig==2.0.0 (from -r /root/requirements.txt (line 28))
+2025-04-05 07:51:20,733 - INFO - Downloading iniconfig-2.0.0-py3-none-any.whl.metadata (2.6 kB)
+2025-04-05 07:51:20,825 - INFO - Collecting pluggy==1.0.0 (from -r /root/requirements.txt (line 30))
+2025-04-05 07:51:20,831 - INFO - Downloading pluggy-1.0.0-py2.py3-none-any.whl.metadata (4.3 kB)
+2025-04-05 07:51:21,128 - INFO - Collecting pytest==7.3.0 (from -r /root/requirements.txt (line 31))
+2025-04-05 07:51:21,133 - INFO - Downloading pytest-7.3.0-py3-none-any.whl.metadata (7.9 kB)
+2025-04-05 07:51:21,239 - INFO - Collecting python-dotenv==1.0.0 (from -r /root/requirements.txt (line 32))
+2025-04-05 07:51:21,316 - INFO - Downloading python_dotenv-1.0.0-py3-none-any.whl.metadata (21 kB)
+2025-04-05 07:51:21,816 - INFO - Collecting cffi==1.15.1 (from -r /root/requirements.txt (line 34))
+2025-04-05 07:51:21,822 - INFO - Downloading cffi-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.1 kB)
+2025-04-05 07:51:22,816 - INFO - Collecting cryptography==40.0.1 (from -r /root/requirements.txt (line 35))
+2025-04-05 07:51:23,029 - INFO - Downloading cryptography-40.0.1-cp36-abi3-manylinux_2_28_x86_64.whl.metadata (5.4 kB)
+2025-04-05 07:51:23,518 - INFO - Collecting mypy==1.2.0 (from -r /root/requirements.txt (line 36))
+2025-04-05 07:51:23,524 - INFO - Downloading mypy-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (1.9 kB)
+2025-04-05 07:51:23,545 - INFO - Collecting mypy-extensions==1.0.0 (from -r /root/requirements.txt (line 37))
+2025-04-05 07:51:23,620 - INFO - Downloading mypy_extensions-1.0.0-py3-none-any.whl.metadata (1.1 kB)
+2025-04-05 07:51:23,645 - INFO - Collecting pycparser==2.21 (from -r /root/requirements.txt (line 38))
+2025-04-05 07:51:23,716 - INFO - Downloading pycparser-2.21-py2.py3-none-any.whl.metadata (1.1 kB)
+2025-04-05 07:51:23,826 - INFO - Collecting types-contextvars==2.4.7.2 (from -r /root/requirements.txt (line 39))
+2025-04-05 07:51:23,831 - INFO - Downloading types_contextvars-2.4.7.2-py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:23,925 - INFO - Collecting types-dataclasses==0.6.6 (from -r /root/requirements.txt (line 40))
+2025-04-05 07:51:23,942 - INFO - Downloading types_dataclasses-0.6.6-py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:24,130 - INFO - Collecting types-setuptools==67.6.0.7 (from -r /root/requirements.txt (line 41))
+2025-04-05 07:51:24,135 - INFO - Downloading types_setuptools-67.6.0.7-py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:24,237 - INFO - Collecting typing-extensions==4.5.0 (from -r /root/requirements.txt (line 42))
+2025-04-05 07:51:24,316 - INFO - Downloading typing_extensions-4.5.0-py3-none-any.whl.metadata (8.5 kB)
+2025-04-05 07:51:24,339 - INFO - Collecting build==0.10.0 (from -r /root/requirements.txt (line 44))
+2025-04-05 07:51:24,416 - INFO - Downloading build-0.10.0-py3-none-any.whl.metadata (4.1 kB)
+2025-04-05 07:51:24,516 - INFO - Collecting cachetools==5.3.0 (from -r /root/requirements.txt (line 45))
+2025-04-05 07:51:24,522 - INFO - Downloading cachetools-5.3.0-py3-none-any.whl.metadata (5.2 kB)
+2025-04-05 07:51:24,540 - INFO - Collecting cfgv==3.3.1 (from -r /root/requirements.txt (line 46))
+2025-04-05 07:51:24,544 - INFO - Downloading cfgv-3.3.1-py2.py3-none-any.whl.metadata (9.0 kB)
+2025-04-05 07:51:24,633 - INFO - Collecting chardet==5.1.0 (from -r /root/requirements.txt (line 47))
+2025-04-05 07:51:24,636 - INFO - Downloading chardet-5.1.0-py3-none-any.whl.metadata (3.4 kB)
+2025-04-05 07:51:24,725 - INFO - Collecting click==8.1.3 (from -r /root/requirements.txt (line 48))
+2025-04-05 07:51:24,730 - INFO - Downloading click-8.1.3-py3-none-any.whl.metadata (3.2 kB)
+2025-04-05 07:51:24,824 - INFO - Collecting colorama==0.4.6 (from -r /root/requirements.txt (line 49))
+2025-04-05 07:51:24,828 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+2025-04-05 07:51:24,918 - INFO - Collecting distlib==0.3.6 (from -r /root/requirements.txt (line 50))
+2025-04-05 07:51:24,923 - INFO - Downloading distlib-0.3.6-py2.py3-none-any.whl.metadata (5.1 kB)
+2025-04-05 07:51:25,021 - INFO - Collecting filelock==3.11.0 (from -r /root/requirements.txt (line 51))
+2025-04-05 07:51:25,027 - INFO - Downloading filelock-3.11.0-py3-none-any.whl.metadata (2.5 kB)
+2025-04-05 07:51:25,226 - INFO - Collecting identify==2.5.22 (from -r /root/requirements.txt (line 52))
+2025-04-05 07:51:25,231 - INFO - Downloading identify-2.5.22-py2.py3-none-any.whl.metadata (4.4 kB)
+2025-04-05 07:51:25,332 - INFO - Collecting nodeenv==1.7.0 (from -r /root/requirements.txt (line 53))
+2025-04-05 07:51:25,337 - INFO - Downloading nodeenv-1.7.0-py2.py3-none-any.whl.metadata (21 kB)
+2025-04-05 07:51:25,535 - INFO - Collecting pip-compile-multi==2.6.2 (from -r /root/requirements.txt (line 54))
+2025-04-05 07:51:25,616 - INFO - Downloading pip_compile_multi-2.6.2-py2.py3-none-any.whl.metadata (9.7 kB)
+2025-04-05 07:51:25,820 - INFO - Collecting pip-tools==6.13.0 (from -r /root/requirements.txt (line 55))
+2025-04-05 07:51:25,824 - INFO - Downloading pip_tools-6.13.0-py3-none-any.whl.metadata (23 kB)
+2025-04-05 07:51:25,927 - INFO - Collecting platformdirs==3.2.0 (from -r /root/requirements.txt (line 56))
+2025-04-05 07:51:25,932 - INFO - Downloading platformdirs-3.2.0-py3-none-any.whl.metadata (9.5 kB)
+2025-04-05 07:51:26,128 - INFO - Collecting pre-commit==3.2.2 (from -r /root/requirements.txt (line 57))
+2025-04-05 07:51:26,133 - INFO - Downloading pre_commit-3.2.2-py2.py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:26,158 - INFO - Collecting pyproject-api==1.5.1 (from -r /root/requirements.txt (line 58))
+2025-04-05 07:51:26,164 - INFO - Downloading pyproject_api-1.5.1-py3-none-any.whl.metadata (2.6 kB)
+2025-04-05 07:51:26,222 - INFO - Collecting pyproject-hooks==1.0.0 (from -r /root/requirements.txt (line 59))
+2025-04-05 07:51:26,227 - INFO - Downloading pyproject_hooks-1.0.0-py3-none-any.whl.metadata (1.3 kB)
+2025-04-05 07:51:26,337 - INFO - Collecting pyyaml==6.0 (from -r /root/requirements.txt (line 60))
+2025-04-05 07:51:26,419 - INFO - Downloading PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (2.1 kB)
+2025-04-05 07:51:26,439 - INFO - Collecting toposort==1.10 (from -r /root/requirements.txt (line 61))
+2025-04-05 07:51:26,444 - INFO - Downloading toposort-1.10-py3-none-any.whl.metadata (4.1 kB)
+2025-04-05 07:51:26,716 - INFO - Collecting tox==4.4.11 (from -r /root/requirements.txt (line 62))
+2025-04-05 07:51:26,722 - INFO - Downloading tox-4.4.11-py3-none-any.whl.metadata (5.0 kB)
+2025-04-05 07:51:26,930 - INFO - Collecting virtualenv==20.21.0 (from -r /root/requirements.txt (line 63))
+2025-04-05 07:51:26,935 - INFO - Downloading virtualenv-20.21.0-py3-none-any.whl.metadata (4.1 kB)
+2025-04-05 07:51:27,116 - INFO - Collecting wheel==0.40.0 (from -r /root/requirements.txt (line 64))
+2025-04-05 07:51:27,121 - INFO - Downloading wheel-0.40.0-py3-none-any.whl.metadata (2.1 kB)
+2025-04-05 07:51:28,532 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (from nodeenv==1.7.0->-r /root/requirements.txt (line 53)) (75.8.0)
+2025-04-05 07:51:28,718 - INFO - Requirement already satisfied: pip>=22.2 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (from pip-tools==6.13.0->-r /root/requirements.txt (line 55)) (25.0)
+2025-04-05 07:51:29,530 - INFO - Downloading alabaster-0.7.13-py3-none-any.whl (13 kB)
+2025-04-05 07:51:29,541 - INFO - Downloading Babel-2.12.1-py3-none-any.whl (10.1 MB)
+2025-04-05 07:51:30,137 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 10.1/10.1 MB 18.9 MB/s eta 0:00:00
+2025-04-05 07:51:30,138 - INFO - 
+2025-04-05 07:51:30,216 - INFO - Downloading certifi-2022.12.7-py3-none-any.whl (155 kB)
+2025-04-05 07:51:30,228 - INFO - Downloading charset_normalizer-3.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (197 kB)
+2025-04-05 07:51:30,325 - INFO - Downloading docutils-0.17.1-py2.py3-none-any.whl (575 kB)
+2025-04-05 07:51:30,425 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 575.5/575.5 kB 3.9 MB/s eta 0:00:00
+2025-04-05 07:51:30,425 - INFO - 
+2025-04-05 07:51:30,429 - INFO - Downloading idna-3.4-py3-none-any.whl (61 kB)
+2025-04-05 07:51:30,442 - INFO - Downloading imagesize-1.4.1-py2.py3-none-any.whl (8.8 kB)
+2025-04-05 07:51:30,454 - INFO - Downloading Jinja2-3.1.2-py3-none-any.whl (133 kB)
+2025-04-05 07:51:30,528 - INFO - Downloading MarkupSafe-2.1.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (27 kB)
+2025-04-05 07:51:30,537 - INFO - Downloading packaging-23.0-py3-none-any.whl (42 kB)
+2025-04-05 07:51:30,548 - INFO - Downloading Pallets_Sphinx_Themes-2.0.3-py3-none-any.whl (26 kB)
+2025-04-05 07:51:30,620 - INFO - Downloading Pygments-2.15.0-py3-none-any.whl (1.1 MB)
+2025-04-05 07:51:30,649 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.1/1.1 MB 49.0 MB/s eta 0:00:00
+2025-04-05 07:51:30,649 - INFO - 
+2025-04-05 07:51:30,653 - INFO - Downloading requests-2.28.2-py3-none-any.whl (62 kB)
+2025-04-05 07:51:30,720 - INFO - Downloading snowballstemmer-2.2.0-py2.py3-none-any.whl (93 kB)
+2025-04-05 07:51:30,807 - INFO - Downloading Sphinx-4.5.0-py3-none-any.whl (3.1 MB)
+2025-04-05 07:51:30,935 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.1/3.1 MB 24.5 MB/s eta 0:00:00
+2025-04-05 07:51:30,935 - INFO - 
+2025-04-05 07:51:30,940 - INFO - Downloading sphinx_issues-3.0.1-py3-none-any.whl (8.2 kB)
+2025-04-05 07:51:31,020 - INFO - Downloading sphinx_tabs-3.3.1-py3-none-any.whl (10.0 kB)
+2025-04-05 07:51:31,031 - INFO - Downloading sphinxcontrib_applehelp-1.0.4-py3-none-any.whl (120 kB)
+2025-04-05 07:51:31,046 - INFO - Downloading sphinxcontrib_devhelp-1.0.2-py2.py3-none-any.whl (84 kB)
+2025-04-05 07:51:31,058 - INFO - Downloading sphinxcontrib_htmlhelp-2.0.1-py3-none-any.whl (99 kB)
+2025-04-05 07:51:31,117 - INFO - Downloading sphinxcontrib_jsmath-1.0.1-py2.py3-none-any.whl (5.1 kB)
+2025-04-05 07:51:31,217 - INFO - Downloading sphinxcontrib_log_cabinet-1.0.1-py2.py3-none-any.whl (4.9 kB)
+2025-04-05 07:51:31,228 - INFO - Downloading sphinxcontrib_qthelp-1.0.3-py2.py3-none-any.whl (90 kB)
+2025-04-05 07:51:31,239 - INFO - Downloading sphinxcontrib_serializinghtml-1.1.5-py2.py3-none-any.whl (94 kB)
+2025-04-05 07:51:31,316 - INFO - Downloading urllib3-1.26.15-py2.py3-none-any.whl (140 kB)
+2025-04-05 07:51:31,328 - INFO - Downloading asgiref-3.6.0-py3-none-any.whl (23 kB)
+2025-04-05 07:51:31,338 - INFO - Downloading iniconfig-2.0.0-py3-none-any.whl (5.9 kB)
+2025-04-05 07:51:31,419 - INFO - Downloading pluggy-1.0.0-py2.py3-none-any.whl (13 kB)
+2025-04-05 07:51:31,430 - INFO - Downloading pytest-7.3.0-py3-none-any.whl (320 kB)
+2025-04-05 07:51:31,517 - INFO - Downloading python_dotenv-1.0.0-py3-none-any.whl (19 kB)
+2025-04-05 07:51:31,531 - INFO - Downloading cffi-1.15.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (462 kB)
+2025-04-05 07:51:31,618 - INFO - Downloading cryptography-40.0.1-cp36-abi3-manylinux_2_28_x86_64.whl (3.7 MB)
+2025-04-05 07:51:31,839 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.7/3.7 MB 16.1 MB/s eta 0:00:00
+2025-04-05 07:51:31,839 - INFO - 
+2025-04-05 07:51:31,844 - INFO - Downloading mypy-1.2.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
+2025-04-05 07:51:32,634 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 16.5 MB/s eta 0:00:00
+2025-04-05 07:51:32,635 - INFO - 
+2025-04-05 07:51:32,640 - INFO - Downloading mypy_extensions-1.0.0-py3-none-any.whl (4.7 kB)
+2025-04-05 07:51:32,651 - INFO - Downloading pycparser-2.21-py2.py3-none-any.whl (118 kB)
+2025-04-05 07:51:32,667 - INFO - Downloading types_contextvars-2.4.7.2-py3-none-any.whl (2.7 kB)
+2025-04-05 07:51:32,676 - INFO - Downloading types_dataclasses-0.6.6-py3-none-any.whl (2.9 kB)
+2025-04-05 07:51:32,684 - INFO - Downloading types_setuptools-67.6.0.7-py3-none-any.whl (35 kB)
+2025-04-05 07:51:32,724 - INFO - Downloading typing_extensions-4.5.0-py3-none-any.whl (27 kB)
+2025-04-05 07:51:32,733 - INFO - Downloading build-0.10.0-py3-none-any.whl (17 kB)
+2025-04-05 07:51:32,743 - INFO - Downloading cachetools-5.3.0-py3-none-any.whl (9.3 kB)
+2025-04-05 07:51:32,751 - INFO - Downloading cfgv-3.3.1-py2.py3-none-any.whl (7.3 kB)
+2025-04-05 07:51:32,758 - INFO - Downloading chardet-5.1.0-py3-none-any.whl (199 kB)
+2025-04-05 07:51:32,827 - INFO - Downloading click-8.1.3-py3-none-any.whl (96 kB)
+2025-04-05 07:51:32,836 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+2025-04-05 07:51:32,845 - INFO - Downloading distlib-0.3.6-py2.py3-none-any.whl (468 kB)
+2025-04-05 07:51:32,927 - INFO - Downloading filelock-3.11.0-py3-none-any.whl (10.0 kB)
+2025-04-05 07:51:32,936 - INFO - Downloading identify-2.5.22-py2.py3-none-any.whl (98 kB)
+2025-04-05 07:51:32,947 - INFO - Downloading nodeenv-1.7.0-py2.py3-none-any.whl (21 kB)
+2025-04-05 07:51:32,955 - INFO - Downloading pip_compile_multi-2.6.2-py2.py3-none-any.whl (41 kB)
+2025-04-05 07:51:32,964 - INFO - Downloading pip_tools-6.13.0-py3-none-any.whl (53 kB)
+2025-04-05 07:51:32,973 - INFO - Downloading platformdirs-3.2.0-py3-none-any.whl (14 kB)
+2025-04-05 07:51:32,983 - INFO - Downloading pre_commit-3.2.2-py2.py3-none-any.whl (202 kB)
+2025-04-05 07:51:33,025 - INFO - Downloading pyproject_api-1.5.1-py3-none-any.whl (12 kB)
+2025-04-05 07:51:33,033 - INFO - Downloading pyproject_hooks-1.0.0-py3-none-any.whl (9.3 kB)
+2025-04-05 07:51:33,040 - INFO - Downloading PyYAML-6.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (757 kB)
+2025-04-05 07:51:33,123 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 757.9/757.9 kB 6.6 MB/s eta 0:00:00
+2025-04-05 07:51:33,125 - INFO - Downloading toposort-1.10-py3-none-any.whl (8.5 kB)
+2025-04-05 07:51:33,134 - INFO - Downloading tox-4.4.11-py3-none-any.whl (148 kB)
+2025-04-05 07:51:33,144 - INFO - Downloading virtualenv-20.21.0-py3-none-any.whl (8.7 MB)
+2025-04-05 07:51:33,622 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 8.7/8.7 MB 17.8 MB/s eta 0:00:00
+2025-04-05 07:51:33,623 - INFO - 
+2025-04-05 07:51:33,632 - INFO - Downloading wheel-0.40.0-py3-none-any.whl (64 kB)
+2025-04-05 07:51:34,930 - INFO - Installing collected packages: types-setuptools, types-dataclasses, types-contextvars, toposort, snowballstemmer, distlib, wheel, urllib3, typing-extensions, sphinxcontrib-serializinghtml, sphinxcontrib-qthelp, sphinxcontrib-jsmath, sphinxcontrib-htmlhelp, sphinxcontrib-devhelp, sphinxcontrib-applehelp, pyyaml, python-dotenv, pyproject-hooks, pygments, pycparser, pluggy, platformdirs, packaging, nodeenv, mypy-extensions, markupsafe, iniconfig, imagesize, idna, identify, filelock, docutils, colorama, click, charset-normalizer, chardet, cfgv, certifi, cachetools, babel, asgiref, alabaster, virtualenv, requests, pytest, pyproject-api, mypy, jinja2, cffi, build, tox, sphinx, pre-commit, pip-tools, cryptography, sphinxcontrib-log-cabinet, sphinx-tabs, sphinx-issues, pip-compile-multi, pallets-sphinx-themes
+2025-04-05 07:51:36,317 - INFO - Attempting uninstall: wheel
+2025-04-05 07:51:36,320 - INFO - Found existing installation: wheel 0.45.1
+2025-04-05 07:51:36,327 - INFO - Uninstalling wheel-0.45.1:
+2025-04-05 07:51:36,329 - INFO - Successfully uninstalled wheel-0.45.1
+2025-04-05 07:52:04,333 - INFO - Successfully installed alabaster-0.7.13 asgiref-3.6.0 babel-2.12.1 build-0.10.0 cachetools-5.3.0 certifi-2022.12.7 cffi-1.15.1 cfgv-3.3.1 chardet-5.1.0 charset-normalizer-3.1.0 click-8.1.3 colorama-0.4.6 cryptography-40.0.1 distlib-0.3.6 docutils-0.17.1 filelock-3.11.0 identify-2.5.22 idna-3.4 imagesize-1.4.1 iniconfig-2.0.0 jinja2-3.1.2 markupsafe-2.1.2 mypy-1.2.0 mypy-extensions-1.0.0 nodeenv-1.7.0 packaging-23.0 pallets-sphinx-themes-2.0.3 pip-compile-multi-2.6.2 pip-tools-6.13.0 platformdirs-3.2.0 pluggy-1.0.0 pre-commit-3.2.2 pycparser-2.21 pygments-2.15.0 pyproject-api-1.5.1 pyproject-hooks-1.0.0 pytest-7.3.0 python-dotenv-1.0.0 pyyaml-6.0 requests-2.28.2 snowballstemmer-2.2.0 sphinx-4.5.0 sphinx-issues-3.0.1 sphinx-tabs-3.3.1 sphinxcontrib-applehelp-1.0.4 sphinxcontrib-devhelp-1.0.2 sphinxcontrib-htmlhelp-2.0.1 sphinxcontrib-jsmath-1.0.1 sphinxcontrib-log-cabinet-1.0.1 sphinxcontrib-qthelp-1.0.3 sphinxcontrib-serializinghtml-1.1.5 toposort-1.10 tox-4.4.11 types-contextvars-2.4.7.2 types-dataclasses-0.6.6 types-setuptools-67.6.0.7 typing-extensions-4.5.0 urllib3-1.26.15 virtualenv-20.21.0 wheel-0.40.0
+2025-04-05 07:52:04,334 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-05 07:52:06,360 - INFO - + rm /root/requirements.txt
+2025-04-05 07:52:06,361 - INFO - + conda activate testbed
 + local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-04 09:23:26,619 - INFO - ++ PS1='(testbed) '
+2025-04-05 07:52:06,362 - INFO - ++ PS1='(testbed) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 09:23:26,620 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 09:23:26,849 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-05 07:52:06,416 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-05 07:52:07,321 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_SHLVL='\''2'\''
 export CONDA_PROMPT_MODIFIER='\''(testbed) '\'''
@@ -560,53 +559,53 @@ export CONDA_PROMPT_MODIFIER='\''(testbed) '\'''
 + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-2025-04-04 09:23:26,849 - INFO - + python -m pip install setuptools==70.0.0 click==8.1.3 itsdangerous==2.1.2 Jinja2==3.1.2 MarkupSafe==2.1.1 Werkzeug==2.3.7
-2025-04-04 09:23:27,966 - INFO - Collecting setuptools==70.0.0
-2025-04-04 09:23:28,035 - INFO - Downloading setuptools-70.0.0-py3-none-any.whl.metadata (5.9 kB)
-2025-04-04 09:23:28,055 - INFO - Requirement already satisfied: click==8.1.3 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (8.1.3)
-2025-04-04 09:23:28,081 - INFO - Collecting itsdangerous==2.1.2
-2025-04-04 09:23:28,088 - INFO - Downloading itsdangerous-2.1.2-py3-none-any.whl.metadata (2.9 kB)
-2025-04-04 09:23:28,100 - INFO - Requirement already satisfied: Jinja2==3.1.2 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (3.1.2)
-2025-04-04 09:23:28,165 - INFO - Collecting MarkupSafe==2.1.1
-2025-04-04 09:23:28,171 - INFO - Downloading MarkupSafe-2.1.1.tar.gz (18 kB)
-2025-04-04 09:23:28,199 - INFO - Preparing metadata (setup.py): started
-2025-04-04 09:23:28,639 - INFO - Preparing metadata (setup.py): finished with status 'done'
-2025-04-04 09:23:28,685 - INFO - Collecting Werkzeug==2.3.7
-2025-04-04 09:23:28,689 - INFO - Downloading werkzeug-2.3.7-py3-none-any.whl.metadata (4.1 kB)
-2025-04-04 09:23:28,718 - INFO - Downloading setuptools-70.0.0-py3-none-any.whl (863 kB)
-2025-04-04 09:23:28,762 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 863.4/863.4 kB 33.3 MB/s eta 0:00:00
-2025-04-04 09:23:28,762 - INFO - 
-2025-04-04 09:23:28,767 - INFO - Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
-2025-04-04 09:23:28,777 - INFO - Downloading werkzeug-2.3.7-py3-none-any.whl (242 kB)
-2025-04-04 09:23:28,801 - INFO - Building wheels for collected packages: MarkupSafe
-2025-04-04 09:23:28,802 - INFO - Building wheel for MarkupSafe (setup.py): started
-2025-04-04 09:23:29,634 - INFO - Building wheel for MarkupSafe (setup.py): finished with status 'done'
-2025-04-04 09:23:29,634 - INFO - Created wheel for MarkupSafe: filename=MarkupSafe-2.1.1-cp311-cp311-linux_x86_64.whl size=14831 sha256=dea418ff0c067f191d044e16be0fbf2a3792ff51ca5af7a1aaaaba4e8f68c7e1
-2025-04-04 09:23:29,635 - INFO - Stored in directory: /root/.cache/pip/wheels/f2/8e/9e/4ee907ff6fb9e145722f0506c46ad9516302d1f424b43220e5
-2025-04-04 09:23:29,639 - INFO - Successfully built MarkupSafe
-2025-04-04 09:23:29,740 - INFO - Installing collected packages: setuptools, MarkupSafe, itsdangerous, Werkzeug
-2025-04-04 09:23:29,741 - INFO - Attempting uninstall: setuptools
-2025-04-04 09:23:29,745 - INFO - Found existing installation: setuptools 75.8.0
-2025-04-04 09:23:29,749 - INFO - Uninstalling setuptools-75.8.0:
-2025-04-04 09:23:29,862 - INFO - Successfully uninstalled setuptools-75.8.0
-2025-04-04 09:23:30,671 - INFO - Attempting uninstall: MarkupSafe
-2025-04-04 09:23:30,675 - INFO - Found existing installation: MarkupSafe 2.1.2
-2025-04-04 09:23:30,678 - INFO - Uninstalling MarkupSafe-2.1.2:
-2025-04-04 09:23:30,685 - INFO - Successfully uninstalled MarkupSafe-2.1.2
-2025-04-04 09:23:31,500 - INFO - Successfully installed MarkupSafe-2.1.1 Werkzeug-2.3.7 itsdangerous-2.1.2 setuptools-70.0.0
-2025-04-04 09:23:31,501 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 09:23:55,312 - INFO - ---> Removed intermediate container 0d5f9cd7f52b
-2025-04-04 09:23:55,312 - INFO - ---> 6503eb188e05
-2025-04-04 09:23:55,313 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-04 09:23:55,313 - INFO - 
-2025-04-04 09:23:55,407 - INFO - ---> Running in 0575db342aeb
-2025-04-04 09:23:55,475 - INFO - ---> Removed intermediate container 0575db342aeb
-2025-04-04 09:23:55,475 - INFO - ---> 37d86fc3ac26
-2025-04-04 09:23:55,475 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-04 09:23:55,476 - INFO - 
-2025-04-04 09:23:55,608 - INFO - ---> Running in bc9bbf7a61e9
-2025-04-04 09:23:56,305 - INFO - ---> Removed intermediate container bc9bbf7a61e9
-2025-04-04 09:23:56,305 - INFO - ---> cd3b41444559
-2025-04-04 09:23:56,306 - INFO - Successfully built cd3b41444559
-2025-04-04 09:23:56,313 - INFO - Successfully tagged sweb.env.x86_64.34a2704c943706976d0871:latest
-2025-04-04 09:23:56,313 - INFO - Image built successfully!
+2025-04-05 07:52:07,322 - INFO - + python -m pip install setuptools==70.0.0 click==8.1.3 itsdangerous==2.1.2 Jinja2==3.1.2 MarkupSafe==2.1.1 Werkzeug==2.3.7
+2025-04-05 07:52:11,221 - INFO - Collecting setuptools==70.0.0
+2025-04-05 07:52:11,418 - INFO - Downloading setuptools-70.0.0-py3-none-any.whl.metadata (5.9 kB)
+2025-04-05 07:52:11,437 - INFO - Requirement already satisfied: click==8.1.3 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (8.1.3)
+2025-04-05 07:52:11,518 - INFO - Collecting itsdangerous==2.1.2
+2025-04-05 07:52:11,522 - INFO - Downloading itsdangerous-2.1.2-py3-none-any.whl.metadata (2.9 kB)
+2025-04-05 07:52:11,532 - INFO - Requirement already satisfied: Jinja2==3.1.2 in /opt/miniconda3/envs/testbed/lib/python3.11/site-packages (3.1.2)
+2025-04-05 07:52:11,821 - INFO - Collecting MarkupSafe==2.1.1
+2025-04-05 07:52:11,827 - INFO - Downloading MarkupSafe-2.1.1.tar.gz (18 kB)
+2025-04-05 07:52:11,925 - INFO - Preparing metadata (setup.py): started
+2025-04-05 07:52:13,539 - INFO - Preparing metadata (setup.py): finished with status 'done'
+2025-04-05 07:52:13,643 - INFO - Collecting Werkzeug==2.3.7
+2025-04-05 07:52:13,717 - INFO - Downloading werkzeug-2.3.7-py3-none-any.whl.metadata (4.1 kB)
+2025-04-05 07:52:13,817 - INFO - Downloading setuptools-70.0.0-py3-none-any.whl (863 kB)
+2025-04-05 07:52:13,949 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 863.4/863.4 kB 20.7 MB/s eta 0:00:00
+2025-04-05 07:52:13,949 - INFO - 
+2025-04-05 07:52:14,017 - INFO - Downloading itsdangerous-2.1.2-py3-none-any.whl (15 kB)
+2025-04-05 07:52:14,027 - INFO - Downloading werkzeug-2.3.7-py3-none-any.whl (242 kB)
+2025-04-05 07:52:14,116 - INFO - Building wheels for collected packages: MarkupSafe
+2025-04-05 07:52:14,117 - INFO - Building wheel for MarkupSafe (setup.py): started
+2025-04-05 07:52:17,616 - INFO - Building wheel for MarkupSafe (setup.py): finished with status 'done'
+2025-04-05 07:52:17,616 - INFO - Created wheel for MarkupSafe: filename=MarkupSafe-2.1.1-cp311-cp311-linux_x86_64.whl size=14831 sha256=85c6d8339ee33a00609bae8f546a4871b2af3998cdb0c02146a1b11088a1c643
+2025-04-05 07:52:17,616 - INFO - Stored in directory: /root/.cache/pip/wheels/f2/8e/9e/4ee907ff6fb9e145722f0506c46ad9516302d1f424b43220e5
+2025-04-05 07:52:17,620 - INFO - Successfully built MarkupSafe
+2025-04-05 07:52:17,915 - INFO - Installing collected packages: setuptools, MarkupSafe, itsdangerous, Werkzeug
+  Attempting uninstall: setuptools
+    Found existing installation: setuptools 75.8.0
+    Uninstalling setuptools-75.8.0:
+2025-04-05 07:52:18,330 - INFO - Successfully uninstalled setuptools-75.8.0
+2025-04-05 07:52:21,239 - INFO - Attempting uninstall: MarkupSafe
+2025-04-05 07:52:21,243 - INFO - Found existing installation: MarkupSafe 2.1.2
+2025-04-05 07:52:21,246 - INFO - Uninstalling MarkupSafe-2.1.2:
+2025-04-05 07:52:21,317 - INFO - Successfully uninstalled MarkupSafe-2.1.2
+2025-04-05 07:52:22,135 - INFO - Successfully installed MarkupSafe-2.1.1 Werkzeug-2.3.7 itsdangerous-2.1.2 setuptools-70.0.0
+2025-04-05 07:52:22,135 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-05 07:53:25,330 - INFO - ---> Removed intermediate container 838dd2898c5d
+2025-04-05 07:53:25,331 - INFO - ---> bd935705c6cb
+2025-04-05 07:53:25,331 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-05 07:53:25,331 - INFO - 
+2025-04-05 07:53:25,535 - INFO - ---> Running in f4cf1a98e1e6
+2025-04-05 07:53:25,635 - INFO - ---> Removed intermediate container f4cf1a98e1e6
+2025-04-05 07:53:25,636 - INFO - ---> eb5532eedc37
+2025-04-05 07:53:25,636 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-05 07:53:25,636 - INFO - 
+2025-04-05 07:53:25,920 - INFO - ---> Running in 8fa8c789cccb
+2025-04-05 07:53:28,131 - INFO - ---> Removed intermediate container 8fa8c789cccb
+2025-04-05 07:53:28,132 - INFO - ---> 6e5a007fd697
+2025-04-05 07:53:28,132 - INFO - Successfully built 6e5a007fd697
+2025-04-05 07:53:28,135 - INFO - Successfully tagged sweb.env.x86_64.34a2704c943706976d0871:latest
+2025-04-05 07:53:28,135 - INFO - Image built successfully!
