@@ -1,0 +1,57 @@
+2025-04-08 13:32:52,771 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16612
+Building instance image sweb.eval.x86_64.django__django-16612:latest for django__django-16612
+2025-04-08 13:36:44,630 - INFO - Creating container for django__django-16612...
+2025-04-08 13:36:44,834 - INFO - Container for django__django-16612 created: 9feeca0cd285ae8e53fa6b85c32ad0f26d8173000ecaf396dfdeb9e8d350859b
+2025-04-08 13:36:46,213 - INFO - Container for django__django-16612 started: 9feeca0cd285ae8e53fa6b85c32ad0f26d8173000ecaf396dfdeb9e8d350859b
+2025-04-08 13:36:46,215 - INFO - Intermediate patch for django__django-16612 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16612/patch.diff, now applying to container...
+2025-04-08 13:36:47,237 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:36:47,620 - INFO - >>>>> Applied Patch:
+patching file django/contrib/admin/sites.py
+
+2025-04-08 13:36:53,432 - INFO - Git diff before:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 61be31d890..19064eb181 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -453,7 +453,11 @@ class AdminSite:
+                 pass
+             else:
+                 if getattr(match.func, "should_append_slash", True):
+-                    return HttpResponsePermanentRedirect("%s/" % request.path)
++                    query_string = request.META.get('QUERY_STRING', '')
++                    redirect_url = "%s/" % request.path
++                    if query_string:
++                        redirect_url = "%s?%s" % (redirect_url, query_string)
++                    return HttpResponsePermanentRedirect(redirect_url)
+         raise Http404
+ 
+     def _build_app_dict(self, request, label=None):
+2025-04-08 13:36:53,511 - INFO - Eval script for django__django-16612 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16612/eval.sh; copying to container...
+2025-04-08 13:41:35,638 - INFO - Test runtime: 281.40 seconds
+2025-04-08 13:41:35,639 - INFO - Test output for django__django-16612 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16612/test_output.txt
+2025-04-08 13:41:36,035 - INFO - Git diff after:
+diff --git a/django/contrib/admin/sites.py b/django/contrib/admin/sites.py
+index 61be31d890..19064eb181 100644
+--- a/django/contrib/admin/sites.py
++++ b/django/contrib/admin/sites.py
+@@ -453,7 +453,11 @@ class AdminSite:
+                 pass
+             else:
+                 if getattr(match.func, "should_append_slash", True):
+-                    return HttpResponsePermanentRedirect("%s/" % request.path)
++                    query_string = request.META.get('QUERY_STRING', '')
++                    redirect_url = "%s/" % request.path
++                    if query_string:
++                        redirect_url = "%s?%s" % (redirect_url, query_string)
++                    return HttpResponsePermanentRedirect(redirect_url)
+         raise Http404
+ 
+     def _build_app_dict(self, request, label=None):
+2025-04-08 13:41:36,036 - INFO - Grading answer for django__django-16612...
+2025-04-08 13:41:36,037 - INFO - report: {'django__django-16612': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16612: resolved: False
+2025-04-08 13:41:36,037 - INFO - Attempting to stop container sweb.eval.django__django-16612.241028_solver...
+2025-04-08 13:41:55,219 - INFO - Attempting to remove container sweb.eval.django__django-16612.241028_solver...
+2025-04-08 13:41:55,416 - INFO - Container sweb.eval.django__django-16612.241028_solver removed.
+2025-04-08 13:41:55,416 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16612:latest...
+2025-04-08 13:41:58,030 - INFO - Image sweb.eval.x86_64.django__django-16612:latest removed.

@@ -1,0 +1,43 @@
+2025-04-08 11:43:27,383 - INFO - Environment image sweb.env.x86_64.1c1a6945f732f9391228c5:latest found for pytest-dev__pytest-5840
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-5840:latest for pytest-dev__pytest-5840
+2025-04-08 11:44:17,776 - INFO - Creating container for pytest-dev__pytest-5840...
+2025-04-08 11:44:17,958 - INFO - Container for pytest-dev__pytest-5840 created: 93cdbb8b8db96f1bab2e0f88a36c420bdee0cb3bac5c32ca3b68e641e173eb7f
+2025-04-08 11:44:19,474 - INFO - Container for pytest-dev__pytest-5840 started: 93cdbb8b8db96f1bab2e0f88a36c420bdee0cb3bac5c32ca3b68e641e173eb7f
+2025-04-08 11:44:19,476 - INFO - Intermediate patch for pytest-dev__pytest-5840 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5840/patch.diff, now applying to container...
+2025-04-08 11:44:20,675 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:44:20,959 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/pathlib.py
+
+2025-04-08 11:44:21,579 - INFO - Git diff before:
+diff --git a/src/_pytest/pathlib.py b/src/_pytest/pathlib.py
+index 0403b6947..76d8cd124 100644
+--- a/src/_pytest/pathlib.py
++++ b/src/_pytest/pathlib.py
+@@ -343,4 +343,4 @@ def unique_path(path):
+ 
+     This is needed only for ``py.path.local``; ``pathlib.Path`` handles this
+     natively with ``resolve()``."""
+-    return type(path)(normcase(str(path.realpath())))
++    return type(path)(str(path.realpath()))
+2025-04-08 11:44:21,579 - INFO - Eval script for pytest-dev__pytest-5840 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5840/eval.sh; copying to container...
+2025-04-08 11:45:03,358 - INFO - Test runtime: 41.10 seconds
+2025-04-08 11:45:03,359 - INFO - Test output for pytest-dev__pytest-5840 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5840/test_output.txt
+2025-04-08 11:45:03,675 - INFO - Git diff after:
+diff --git a/src/_pytest/pathlib.py b/src/_pytest/pathlib.py
+index 0403b6947..76d8cd124 100644
+--- a/src/_pytest/pathlib.py
++++ b/src/_pytest/pathlib.py
+@@ -343,4 +343,4 @@ def unique_path(path):
+ 
+     This is needed only for ``py.path.local``; ``pathlib.Path`` handles this
+     natively with ``resolve()``."""
+-    return type(path)(normcase(str(path.realpath())))
++    return type(path)(str(path.realpath()))
+2025-04-08 11:45:03,675 - INFO - Grading answer for pytest-dev__pytest-5840...
+2025-04-08 11:45:03,676 - INFO - report: {'pytest-dev__pytest-5840': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-5840: resolved: False
+2025-04-08 11:45:03,676 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-5840.241028_solver...
+2025-04-08 11:45:19,875 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-5840.241028_solver...
+2025-04-08 11:45:20,269 - INFO - Container sweb.eval.pytest-dev__pytest-5840.241028_solver removed.
+2025-04-08 11:45:20,269 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-5840:latest...
+2025-04-08 11:45:20,462 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-5840:latest removed.

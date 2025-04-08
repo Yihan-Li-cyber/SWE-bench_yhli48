@@ -1,0 +1,45 @@
+2025-04-08 11:44:41,967 - INFO - Environment image sweb.env.x86_64.8f1f7b974f0c57c7aeba39:latest found for pytest-dev__pytest-7982
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-7982:latest for pytest-dev__pytest-7982
+2025-04-08 11:45:30,655 - INFO - Creating container for pytest-dev__pytest-7982...
+2025-04-08 11:45:30,766 - INFO - Container for pytest-dev__pytest-7982 created: 87e43d8393212f3db863c1d9150c5211e501f3a6daf5f445dcbaac29a9d20d85
+2025-04-08 11:45:32,370 - INFO - Container for pytest-dev__pytest-7982 started: 87e43d8393212f3db863c1d9150c5211e501f3a6daf5f445dcbaac29a9d20d85
+2025-04-08 11:45:32,370 - INFO - Intermediate patch for pytest-dev__pytest-7982 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7982/patch.diff, now applying to container...
+2025-04-08 11:45:33,582 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:45:34,071 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/pathlib.py
+
+2025-04-08 11:45:34,778 - INFO - Git diff before:
+diff --git a/src/_pytest/pathlib.py b/src/_pytest/pathlib.py
+index f0bdb1481..b96cba069 100644
+--- a/src/_pytest/pathlib.py
++++ b/src/_pytest/pathlib.py
+@@ -558,7 +558,7 @@ def visit(
+     entries = sorted(os.scandir(path), key=lambda entry: entry.name)
+     yield from entries
+     for entry in entries:
+-        if entry.is_dir(follow_symlinks=False) and recurse(entry):
++        if entry.is_dir() and recurse(entry):
+             yield from visit(entry.path, recurse)
+2025-04-08 11:45:34,854 - INFO - Eval script for pytest-dev__pytest-7982 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7982/eval.sh; copying to container...
+2025-04-08 11:46:34,753 - INFO - Test runtime: 59.08 seconds
+2025-04-08 11:46:34,755 - INFO - Test output for pytest-dev__pytest-7982 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7982/test_output.txt
+2025-04-08 11:46:35,276 - INFO - Git diff after:
+diff --git a/src/_pytest/pathlib.py b/src/_pytest/pathlib.py
+index f0bdb1481..b96cba069 100644
+--- a/src/_pytest/pathlib.py
++++ b/src/_pytest/pathlib.py
+@@ -558,7 +558,7 @@ def visit(
+     entries = sorted(os.scandir(path), key=lambda entry: entry.name)
+     yield from entries
+     for entry in entries:
+-        if entry.is_dir(follow_symlinks=False) and recurse(entry):
++        if entry.is_dir() and recurse(entry):
+             yield from visit(entry.path, recurse)
+2025-04-08 11:46:35,276 - INFO - Grading answer for pytest-dev__pytest-7982...
+2025-04-08 11:46:35,353 - INFO - report: {'pytest-dev__pytest-7982': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-7982: resolved: False
+2025-04-08 11:46:35,353 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-7982.241028_solver...
+2025-04-08 11:46:51,855 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-7982.241028_solver...
+2025-04-08 11:46:52,175 - INFO - Container sweb.eval.pytest-dev__pytest-7982.241028_solver removed.
+2025-04-08 11:46:52,175 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7982:latest...
+2025-04-08 11:46:52,465 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7982:latest removed.

@@ -1,0 +1,73 @@
+2025-04-08 11:33:34,922 - INFO - Environment image sweb.env.x86_64.62bfc5a3a7fdf6d9876424:latest found for pydata__xarray-6744
+Building instance image sweb.eval.x86_64.pydata__xarray-6744:latest for pydata__xarray-6744
+2025-04-08 11:34:55,363 - INFO - Creating container for pydata__xarray-6744...
+2025-04-08 11:34:55,578 - INFO - Container for pydata__xarray-6744 created: de372380ae56ac97a2c3708436e3a3a83b1d2c8648fe2c9331beff09256b68f8
+2025-04-08 11:34:57,066 - INFO - Container for pydata__xarray-6744 started: de372380ae56ac97a2c3708436e3a3a83b1d2c8648fe2c9331beff09256b68f8
+2025-04-08 11:34:57,067 - INFO - Intermediate patch for pydata__xarray-6744 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6744/patch.diff, now applying to container...
+2025-04-08 11:34:58,073 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:34:58,274 - INFO - >>>>> Applied Patch:
+patching file xarray/core/rolling.py
+
+2025-04-08 11:34:59,070 - INFO - Git diff before:
+diff --git a/xarray/core/rolling.py b/xarray/core/rolling.py
+index aef290f6..ff638587 100644
+--- a/xarray/core/rolling.py
++++ b/xarray/core/rolling.py
+@@ -270,9 +270,19 @@ class DataArrayRolling(Rolling["DataArray"]):
+     def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
+         if self.ndim > 1:
+             raise ValueError("__iter__ is only supported for 1d-rolling")
++        window_size = int(self.window[0])
++        offset = (window_size - 1) // 2 if self.center[0] else 0
++        
+         stops = np.arange(1, len(self.window_labels) + 1)
+-        starts = stops - int(self.window[0])
+-        starts[: int(self.window[0])] = 0
++        starts = stops - window_size
++        
++        if self.center[0]:
++            starts += offset
++            stops += offset
++        
++        starts = np.clip(starts, 0, len(self.window_labels))
++        stops = np.clip(stops, 0, len(self.window_labels))
++        
+         for (label, start, stop) in zip(self.window_labels, starts, stops):
+             window = self.obj.isel({self.dim[0]: slice(start, stop)})
+2025-04-08 11:34:59,070 - INFO - Eval script for pydata__xarray-6744 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6744/eval.sh; copying to container...
+2025-04-08 11:44:24,562 - INFO - Test runtime: 564.79 seconds
+2025-04-08 11:44:24,563 - INFO - Test output for pydata__xarray-6744 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6744/test_output.txt
+2025-04-08 11:44:24,866 - INFO - Git diff after:
+diff --git a/xarray/core/rolling.py b/xarray/core/rolling.py
+index aef290f6..ff638587 100644
+--- a/xarray/core/rolling.py
++++ b/xarray/core/rolling.py
+@@ -270,9 +270,19 @@ class DataArrayRolling(Rolling["DataArray"]):
+     def __iter__(self) -> Iterator[tuple[RollingKey, DataArray]]:
+         if self.ndim > 1:
+             raise ValueError("__iter__ is only supported for 1d-rolling")
++        window_size = int(self.window[0])
++        offset = (window_size - 1) // 2 if self.center[0] else 0
++        
+         stops = np.arange(1, len(self.window_labels) + 1)
+-        starts = stops - int(self.window[0])
+-        starts[: int(self.window[0])] = 0
++        starts = stops - window_size
++        
++        if self.center[0]:
++            starts += offset
++            stops += offset
++        
++        starts = np.clip(starts, 0, len(self.window_labels))
++        stops = np.clip(stops, 0, len(self.window_labels))
++        
+         for (label, start, stop) in zip(self.window_labels, starts, stops):
+             window = self.obj.isel({self.dim[0]: slice(start, stop)})
+2025-04-08 11:44:24,867 - INFO - Grading answer for pydata__xarray-6744...
+2025-04-08 11:44:24,871 - INFO - report: {'pydata__xarray-6744': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-6744: resolved: False
+2025-04-08 11:44:24,872 - INFO - Attempting to stop container sweb.eval.pydata__xarray-6744.241028_solver...
+2025-04-08 11:44:40,957 - INFO - Attempting to remove container sweb.eval.pydata__xarray-6744.241028_solver...
+2025-04-08 11:44:41,477 - INFO - Container sweb.eval.pydata__xarray-6744.241028_solver removed.
+2025-04-08 11:44:41,477 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-6744:latest...
+2025-04-08 11:44:41,771 - INFO - Image sweb.eval.x86_64.pydata__xarray-6744:latest removed.

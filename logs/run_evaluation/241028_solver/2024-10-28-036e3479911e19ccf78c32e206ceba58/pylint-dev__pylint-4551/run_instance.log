@@ -1,0 +1,175 @@
+2025-04-08 11:38:00,585 - INFO - Environment image sweb.env.x86_64.d905bb51fb68acc5d4221b:latest found for pylint-dev__pylint-4551
+Building instance image sweb.eval.x86_64.pylint-dev__pylint-4551:latest for pylint-dev__pylint-4551
+2025-04-08 11:38:36,575 - INFO - Creating container for pylint-dev__pylint-4551...
+2025-04-08 11:38:36,685 - INFO - Container for pylint-dev__pylint-4551 created: 7fbf153e50c298f4df8811d9bec9044acca90d45730434060a9001fd4a5cef40
+2025-04-08 11:38:37,678 - INFO - Container for pylint-dev__pylint-4551 started: 7fbf153e50c298f4df8811d9bec9044acca90d45730434060a9001fd4a5cef40
+2025-04-08 11:38:37,679 - INFO - Intermediate patch for pylint-dev__pylint-4551 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4551/patch.diff, now applying to container...
+2025-04-08 11:38:38,671 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:38:38,881 - INFO - >>>>> Applied Patch:
+patching file pylint/pyreverse/inspector.py
+patching file pylint/pyreverse/writer.py
+patching file test_type_hints.py
+
+2025-04-08 11:38:39,970 - INFO - Git diff before:
+diff --git a/pylint/pyreverse/inspector.py b/pylint/pyreverse/inspector.py
+index 8fa122022..224d20462 100644
+--- a/pylint/pyreverse/inspector.py
++++ b/pylint/pyreverse/inspector.py
+@@ -166,6 +166,15 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+             for assignattr in assignattrs:
+                 if not isinstance(assignattr, astroid.Unknown):
+                     self.handle_assignattr_type(assignattr, node)
++        
++        # Handle instance attributes from __init__ parameters
++        init_method = node.local_attr('__init__')[0] if '__init__' in node.locals else None
++        if init_method and isinstance(init_method, astroid.FunctionDef):
++            args = init_method.args
++            if args and args.args and args.annotations:
++                for name, annotation in zip(args.args[1:], args.annotations[1:]):  # Skip self
++                    if annotation:
++                        node.instance_attrs_type[name.name].append(annotation)
+         # resolve implemented interface
+         try:
+             node.implements = list(interfaces(node, self.inherited_interfaces))
+@@ -176,6 +185,7 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+         """visit an astroid.Function node
+ 
+         * set the locals_type mapping
++        * set type annotations for arguments
+         * optionally tag the node with a unique id
+         """
+         if hasattr(node, "locals_type"):
+@@ -183,6 +193,20 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+         node.locals_type = collections.defaultdict(list)
+         if self.tag:
+             node.uid = self.generate_id()
++        
++        # Handle argument type annotations
++        args = node.args
++        if args:
++            # Handle positional args
++            if args.args and args.annotations:
++                for name, annotation in zip(args.args, args.annotations):
++                    if annotation:
++                        node.locals_type[name.name].append(annotation)
++            # Handle keyword-only args
++            if args.kwonlyargs and args.kwonlyargs_annotations:
++                for name, annotation in zip(args.kwonlyargs, args.kwonlyargs_annotations):
++                    if annotation:
++                        node.locals_type[name.name].append(annotation)
+ 
+     link_project = visit_project
+     link_module = visit_module
+diff --git a/pylint/pyreverse/writer.py b/pylint/pyreverse/writer.py
+index 0d80bb9ca..9b0d73d02 100644
+--- a/pylint/pyreverse/writer.py
++++ b/pylint/pyreverse/writer.py
+@@ -135,7 +135,20 @@ class DotWriter(DiagramWriter):
+             label = r"{}|{}\l|".format(label, r"\l".join(obj.attrs))
+             for func in obj.methods:
+                 if func.args.args:
+-                    args = [arg.name for arg in func.args.args if arg.name != "self"]
++                    args = []
++                    for arg in func.args.args:
++                        if arg.name == "self":
++                            continue
++                        arg_type = func.locals_type.get(arg.name, [])
++                        if arg_type:
++                            type_node = arg_type[0]
++                            if hasattr(type_node, 'name'):
++                                type_name = type_node.name
++                            else:
++                                type_name = type_node.as_string()
++                            args.append(f"{arg.name}: {type_name}")
++                        else:
++                            args.append(arg.name)
+                 else:
+                     args = []
+                 label = r"{}{}({})\l".format(label, func.name, ", ".join(args))
+2025-04-08 11:38:39,971 - INFO - Eval script for pylint-dev__pylint-4551 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4551/eval.sh; copying to container...
+2025-04-08 11:39:00,192 - INFO - Test runtime: 19.62 seconds
+2025-04-08 11:39:00,193 - INFO - Test output for pylint-dev__pylint-4551 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4551/test_output.txt
+2025-04-08 11:39:00,479 - INFO - Git diff after:
+diff --git a/pylint/pyreverse/inspector.py b/pylint/pyreverse/inspector.py
+index 8fa122022..224d20462 100644
+--- a/pylint/pyreverse/inspector.py
++++ b/pylint/pyreverse/inspector.py
+@@ -166,6 +166,15 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+             for assignattr in assignattrs:
+                 if not isinstance(assignattr, astroid.Unknown):
+                     self.handle_assignattr_type(assignattr, node)
++        
++        # Handle instance attributes from __init__ parameters
++        init_method = node.local_attr('__init__')[0] if '__init__' in node.locals else None
++        if init_method and isinstance(init_method, astroid.FunctionDef):
++            args = init_method.args
++            if args and args.args and args.annotations:
++                for name, annotation in zip(args.args[1:], args.annotations[1:]):  # Skip self
++                    if annotation:
++                        node.instance_attrs_type[name.name].append(annotation)
+         # resolve implemented interface
+         try:
+             node.implements = list(interfaces(node, self.inherited_interfaces))
+@@ -176,6 +185,7 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+         """visit an astroid.Function node
+ 
+         * set the locals_type mapping
++        * set type annotations for arguments
+         * optionally tag the node with a unique id
+         """
+         if hasattr(node, "locals_type"):
+@@ -183,6 +193,20 @@ class Linker(IdGeneratorMixIn, utils.LocalsVisitor):
+         node.locals_type = collections.defaultdict(list)
+         if self.tag:
+             node.uid = self.generate_id()
++        
++        # Handle argument type annotations
++        args = node.args
++        if args:
++            # Handle positional args
++            if args.args and args.annotations:
++                for name, annotation in zip(args.args, args.annotations):
++                    if annotation:
++                        node.locals_type[name.name].append(annotation)
++            # Handle keyword-only args
++            if args.kwonlyargs and args.kwonlyargs_annotations:
++                for name, annotation in zip(args.kwonlyargs, args.kwonlyargs_annotations):
++                    if annotation:
++                        node.locals_type[name.name].append(annotation)
+ 
+     link_project = visit_project
+     link_module = visit_module
+diff --git a/pylint/pyreverse/writer.py b/pylint/pyreverse/writer.py
+index 0d80bb9ca..9b0d73d02 100644
+--- a/pylint/pyreverse/writer.py
++++ b/pylint/pyreverse/writer.py
+@@ -135,7 +135,20 @@ class DotWriter(DiagramWriter):
+             label = r"{}|{}\l|".format(label, r"\l".join(obj.attrs))
+             for func in obj.methods:
+                 if func.args.args:
+-                    args = [arg.name for arg in func.args.args if arg.name != "self"]
++                    args = []
++                    for arg in func.args.args:
++                        if arg.name == "self":
++                            continue
++                        arg_type = func.locals_type.get(arg.name, [])
++                        if arg_type:
++                            type_node = arg_type[0]
++                            if hasattr(type_node, 'name'):
++                                type_name = type_node.name
++                            else:
++                                type_name = type_node.as_string()
++                            args.append(f"{arg.name}: {type_name}")
++                        else:
++                            args.append(arg.name)
+                 else:
+                     args = []
+                 label = r"{}{}({})\l".format(label, func.name, ", ".join(args))
+2025-04-08 11:39:00,480 - INFO - Grading answer for pylint-dev__pylint-4551...
+2025-04-08 11:39:00,480 - INFO - report: {'pylint-dev__pylint-4551': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pylint-dev__pylint-4551: resolved: False
+2025-04-08 11:39:00,480 - INFO - Attempting to stop container sweb.eval.pylint-dev__pylint-4551.241028_solver...
+2025-04-08 11:39:16,862 - INFO - Attempting to remove container sweb.eval.pylint-dev__pylint-4551.241028_solver...
+2025-04-08 11:39:16,878 - INFO - Container sweb.eval.pylint-dev__pylint-4551.241028_solver removed.
+2025-04-08 11:39:16,878 - INFO - Attempting to remove image sweb.eval.x86_64.pylint-dev__pylint-4551:latest...
+2025-04-08 11:39:17,280 - INFO - Image sweb.eval.x86_64.pylint-dev__pylint-4551:latest removed.

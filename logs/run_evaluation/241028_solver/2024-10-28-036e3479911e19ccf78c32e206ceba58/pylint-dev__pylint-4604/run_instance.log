@@ -1,0 +1,53 @@
+2025-04-08 11:38:28,968 - INFO - Environment image sweb.env.x86_64.d905bb51fb68acc5d4221b:latest found for pylint-dev__pylint-4604
+Building instance image sweb.eval.x86_64.pylint-dev__pylint-4604:latest for pylint-dev__pylint-4604
+2025-04-08 11:39:04,575 - INFO - Creating container for pylint-dev__pylint-4604...
+2025-04-08 11:39:04,677 - INFO - Container for pylint-dev__pylint-4604 created: b9ef011cecc14f30ef13aef65de8ed85d17b9d952c557ce297b0dee80f195fd9
+2025-04-08 11:39:05,567 - INFO - Container for pylint-dev__pylint-4604 started: b9ef011cecc14f30ef13aef65de8ed85d17b9d952c557ce297b0dee80f195fd9
+2025-04-08 11:39:05,567 - INFO - Intermediate patch for pylint-dev__pylint-4604 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4604/patch.diff, now applying to container...
+2025-04-08 11:39:06,375 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:39:06,567 - INFO - >>>>> Applied Patch:
+patching file pylint/checkers/variables.py
+
+2025-04-08 11:39:07,469 - INFO - Git diff before:
+diff --git a/pylint/checkers/variables.py b/pylint/checkers/variables.py
+index 3ddafd599..4091debe7 100644
+--- a/pylint/checkers/variables.py
++++ b/pylint/checkers/variables.py
+@@ -1826,6 +1826,11 @@ class VariablesChecker(BaseChecker):
+             self._type_annotation_names.append(type_annotation.name)
+             return
+ 
++        if isinstance(type_annotation, astroid.Attribute):
++            if isinstance(type_annotation.expr, astroid.Name):
++                self._type_annotation_names.append(type_annotation.expr.name)
++            return
++
+         if not isinstance(type_annotation, astroid.Subscript):
+             return
+2025-04-08 11:39:07,470 - INFO - Eval script for pylint-dev__pylint-4604 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4604/eval.sh; copying to container...
+2025-04-08 11:39:31,675 - INFO - Test runtime: 23.60 seconds
+2025-04-08 11:39:31,675 - INFO - Test output for pylint-dev__pylint-4604 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pylint-dev__pylint-4604/test_output.txt
+2025-04-08 11:39:32,275 - INFO - Git diff after:
+diff --git a/pylint/checkers/variables.py b/pylint/checkers/variables.py
+index 3ddafd599..4091debe7 100644
+--- a/pylint/checkers/variables.py
++++ b/pylint/checkers/variables.py
+@@ -1826,6 +1826,11 @@ class VariablesChecker(BaseChecker):
+             self._type_annotation_names.append(type_annotation.name)
+             return
+ 
++        if isinstance(type_annotation, astroid.Attribute):
++            if isinstance(type_annotation.expr, astroid.Name):
++                self._type_annotation_names.append(type_annotation.expr.name)
++            return
++
+         if not isinstance(type_annotation, astroid.Subscript):
+             return
+2025-04-08 11:39:32,275 - INFO - Grading answer for pylint-dev__pylint-4604...
+2025-04-08 11:39:32,275 - INFO - report: {'pylint-dev__pylint-4604': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pylint-dev__pylint-4604: resolved: False
+2025-04-08 11:39:32,276 - INFO - Attempting to stop container sweb.eval.pylint-dev__pylint-4604.241028_solver...
+2025-04-08 11:39:48,463 - INFO - Attempting to remove container sweb.eval.pylint-dev__pylint-4604.241028_solver...
+2025-04-08 11:39:48,483 - INFO - Container sweb.eval.pylint-dev__pylint-4604.241028_solver removed.
+2025-04-08 11:39:48,483 - INFO - Attempting to remove image sweb.eval.x86_64.pylint-dev__pylint-4604:latest...
+2025-04-08 11:39:50,328 - INFO - Image sweb.eval.x86_64.pylint-dev__pylint-4604:latest removed.

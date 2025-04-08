@@ -1,0 +1,47 @@
+2025-04-08 11:41:24,471 - INFO - Environment image sweb.env.x86_64.7f83a0ba1392a745c061ce:latest found for pytest-dev__pytest-10081
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-10081:latest for pytest-dev__pytest-10081
+2025-04-08 11:42:15,180 - INFO - Creating container for pytest-dev__pytest-10081...
+2025-04-08 11:42:15,276 - INFO - Container for pytest-dev__pytest-10081 created: bfcc57617442d98795ed8cd9b02063adee73fe0b804ea3a8856913a6ac833a5b
+2025-04-08 11:42:16,869 - INFO - Container for pytest-dev__pytest-10081 started: bfcc57617442d98795ed8cd9b02063adee73fe0b804ea3a8856913a6ac833a5b
+2025-04-08 11:42:16,870 - INFO - Intermediate patch for pytest-dev__pytest-10081 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10081/patch.diff, now applying to container...
+2025-04-08 11:42:17,770 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:42:17,967 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/unittest.py
+
+2025-04-08 11:42:18,681 - INFO - Git diff before:
+diff --git a/src/_pytest/unittest.py b/src/_pytest/unittest.py
+index 851e4943b..57471bec3 100644
+--- a/src/_pytest/unittest.py
++++ b/src/_pytest/unittest.py
+@@ -316,7 +316,7 @@ class TestCaseFunction(Function):
+             # Arguably we could always postpone tearDown(), but this changes the moment where the
+             # TestCase instance interacts with the results object, so better to only do it
+             # when absolutely needed.
+-            if self.config.getoption("usepdb") and not _is_skipped(self.obj):
++            if self.config.getoption("usepdb") and not (_is_skipped(self.obj) or _is_skipped(self._testcase.__class__)):
+                 self._explicit_tearDown = self._testcase.tearDown
+                 setattr(self._testcase, "tearDown", lambda *args: None)
+2025-04-08 11:42:18,681 - INFO - Eval script for pytest-dev__pytest-10081 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10081/eval.sh; copying to container...
+2025-04-08 11:43:10,376 - INFO - Test runtime: 51.08 seconds
+2025-04-08 11:43:10,377 - INFO - Test output for pytest-dev__pytest-10081 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10081/test_output.txt
+2025-04-08 11:43:10,768 - INFO - Git diff after:
+diff --git a/src/_pytest/unittest.py b/src/_pytest/unittest.py
+index 851e4943b..57471bec3 100644
+--- a/src/_pytest/unittest.py
++++ b/src/_pytest/unittest.py
+@@ -316,7 +316,7 @@ class TestCaseFunction(Function):
+             # Arguably we could always postpone tearDown(), but this changes the moment where the
+             # TestCase instance interacts with the results object, so better to only do it
+             # when absolutely needed.
+-            if self.config.getoption("usepdb") and not _is_skipped(self.obj):
++            if self.config.getoption("usepdb") and not (_is_skipped(self.obj) or _is_skipped(self._testcase.__class__)):
+                 self._explicit_tearDown = self._testcase.tearDown
+                 setattr(self._testcase, "tearDown", lambda *args: None)
+2025-04-08 11:43:10,768 - INFO - Grading answer for pytest-dev__pytest-10081...
+2025-04-08 11:43:10,769 - INFO - report: {'pytest-dev__pytest-10081': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-10081: resolved: False
+2025-04-08 11:43:10,769 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-10081.241028_solver...
+2025-04-08 11:43:26,682 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-10081.241028_solver...
+2025-04-08 11:43:27,072 - INFO - Container sweb.eval.pytest-dev__pytest-10081.241028_solver removed.
+2025-04-08 11:43:27,072 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-10081:latest...
+2025-04-08 11:43:27,372 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-10081:latest removed.

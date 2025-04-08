@@ -1,0 +1,76 @@
+2025-04-08 11:41:35,269 - INFO - Environment image sweb.env.x86_64.7f83a0ba1392a745c061ce:latest found for pytest-dev__pytest-10356
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-10356:latest for pytest-dev__pytest-10356
+2025-04-08 11:42:26,058 - INFO - Creating container for pytest-dev__pytest-10356...
+2025-04-08 11:42:26,272 - INFO - Container for pytest-dev__pytest-10356 created: 8473164748ac942be1bd131e8b783a57080a614de246970c878b7c4ddc34162e
+2025-04-08 11:42:27,574 - INFO - Container for pytest-dev__pytest-10356 started: 8473164748ac942be1bd131e8b783a57080a614de246970c878b7c4ddc34162e
+2025-04-08 11:42:27,575 - INFO - Intermediate patch for pytest-dev__pytest-10356 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10356/patch.diff, now applying to container...
+2025-04-08 11:42:28,471 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:42:28,675 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/mark/structures.py
+patching file test_marker_inheritance.py
+
+2025-04-08 11:42:29,364 - INFO - Git diff before:
+diff --git a/src/_pytest/mark/structures.py b/src/_pytest/mark/structures.py
+index 800a25c92..f6da46445 100644
+--- a/src/_pytest/mark/structures.py
++++ b/src/_pytest/mark/structures.py
+@@ -357,9 +357,20 @@ class MarkDecorator:
+ 
+ def get_unpacked_marks(obj: object) -> Iterable[Mark]:
+     """Obtain the unpacked marks that are stored on an object."""
+-    mark_list = getattr(obj, "pytestmark", [])
+-    if not isinstance(mark_list, list):
+-        mark_list = [mark_list]
++    mark_list = []
++    # If it's a class, collect marks from the entire MRO chain
++    if isinstance(obj, type):
++        for cls in obj.__mro__:
++            cls_marks = getattr(cls, "pytestmark", [])
++            if not isinstance(cls_marks, list):
++                cls_marks = [cls_marks]
++            mark_list.extend(cls_marks)
++    else:
++        # For non-class objects, use the direct marks
++        marks = getattr(obj, "pytestmark", [])
++        if not isinstance(marks, list):
++            marks = [marks]
++        mark_list.extend(marks)
+     return normalize_mark_list(mark_list)
+2025-04-08 11:42:29,365 - INFO - Eval script for pytest-dev__pytest-10356 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10356/eval.sh; copying to container...
+2025-04-08 11:43:18,656 - INFO - Test runtime: 48.69 seconds
+2025-04-08 11:43:18,657 - INFO - Test output for pytest-dev__pytest-10356 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-10356/test_output.txt
+2025-04-08 11:43:18,879 - INFO - Git diff after:
+diff --git a/src/_pytest/mark/structures.py b/src/_pytest/mark/structures.py
+index 800a25c92..f6da46445 100644
+--- a/src/_pytest/mark/structures.py
++++ b/src/_pytest/mark/structures.py
+@@ -357,9 +357,20 @@ class MarkDecorator:
+ 
+ def get_unpacked_marks(obj: object) -> Iterable[Mark]:
+     """Obtain the unpacked marks that are stored on an object."""
+-    mark_list = getattr(obj, "pytestmark", [])
+-    if not isinstance(mark_list, list):
+-        mark_list = [mark_list]
++    mark_list = []
++    # If it's a class, collect marks from the entire MRO chain
++    if isinstance(obj, type):
++        for cls in obj.__mro__:
++            cls_marks = getattr(cls, "pytestmark", [])
++            if not isinstance(cls_marks, list):
++                cls_marks = [cls_marks]
++            mark_list.extend(cls_marks)
++    else:
++        # For non-class objects, use the direct marks
++        marks = getattr(obj, "pytestmark", [])
++        if not isinstance(marks, list):
++            marks = [marks]
++        mark_list.extend(marks)
+     return normalize_mark_list(mark_list)
+2025-04-08 11:43:18,879 - INFO - Grading answer for pytest-dev__pytest-10356...
+2025-04-08 11:43:18,882 - INFO - report: {'pytest-dev__pytest-10356': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-10356: resolved: False
+2025-04-08 11:43:18,882 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-10356.241028_solver...
+2025-04-08 11:43:35,176 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-10356.241028_solver...
+2025-04-08 11:43:35,568 - INFO - Container sweb.eval.pytest-dev__pytest-10356.241028_solver removed.
+2025-04-08 11:43:35,569 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-10356:latest...
+2025-04-08 11:43:35,876 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-10356:latest removed.

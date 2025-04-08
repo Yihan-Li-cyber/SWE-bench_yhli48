@@ -1,0 +1,60 @@
+2025-04-08 11:33:34,896 - INFO - Environment image sweb.env.x86_64.f45b85486922bdccb83010:latest found for pydata__xarray-6461
+Building instance image sweb.eval.x86_64.pydata__xarray-6461:latest for pydata__xarray-6461
+2025-04-08 11:34:50,370 - INFO - Creating container for pydata__xarray-6461...
+2025-04-08 11:34:50,688 - INFO - Container for pydata__xarray-6461 created: d73ec3da0a68ae6cf27536de8e33ea4f881c5ef70684911c071d75efcfe8cec2
+2025-04-08 11:34:52,965 - INFO - Container for pydata__xarray-6461 started: d73ec3da0a68ae6cf27536de8e33ea4f881c5ef70684911c071d75efcfe8cec2
+2025-04-08 11:34:52,982 - INFO - Intermediate patch for pydata__xarray-6461 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6461/patch.diff, now applying to container...
+2025-04-08 11:34:54,401 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:34:54,964 - INFO - >>>>> Applied Patch:
+patching file test_where.py
+patching file xarray/core/computation.py
+
+2025-04-08 11:34:55,775 - INFO - Git diff before:
+diff --git a/xarray/core/computation.py b/xarray/core/computation.py
+index 7676d8e5..909118e8 100644
+--- a/xarray/core/computation.py
++++ b/xarray/core/computation.py
+@@ -1829,7 +1829,12 @@ def where(cond, x, y, keep_attrs=None):
+     if keep_attrs is True:
+         # keep the attributes of x, the second parameter, by default to
+         # be consistent with the `where` method of `DataArray` and `Dataset`
+-        keep_attrs = lambda attrs, context: attrs[1]
++        def _get_attrs(attrs, context):
++            # If x (attrs[1]) is a scalar, it won't have attributes
++            if len(attrs) <= 1:
++                return {}
++            return attrs[1]
++        keep_attrs = _get_attrs
+ 
+     # alignment for three arguments is complicated, so don't support it yet
+     return apply_ufunc(
+2025-04-08 11:34:55,776 - INFO - Eval script for pydata__xarray-6461 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6461/eval.sh; copying to container...
+2025-04-08 11:36:51,783 - INFO - Test runtime: 115.02 seconds
+2025-04-08 11:36:51,783 - INFO - Test output for pydata__xarray-6461 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6461/test_output.txt
+2025-04-08 11:36:51,985 - INFO - Git diff after:
+diff --git a/xarray/core/computation.py b/xarray/core/computation.py
+index 7676d8e5..909118e8 100644
+--- a/xarray/core/computation.py
++++ b/xarray/core/computation.py
+@@ -1829,7 +1829,12 @@ def where(cond, x, y, keep_attrs=None):
+     if keep_attrs is True:
+         # keep the attributes of x, the second parameter, by default to
+         # be consistent with the `where` method of `DataArray` and `Dataset`
+-        keep_attrs = lambda attrs, context: attrs[1]
++        def _get_attrs(attrs, context):
++            # If x (attrs[1]) is a scalar, it won't have attributes
++            if len(attrs) <= 1:
++                return {}
++            return attrs[1]
++        keep_attrs = _get_attrs
+ 
+     # alignment for three arguments is complicated, so don't support it yet
+     return apply_ufunc(
+2025-04-08 11:36:51,986 - INFO - Grading answer for pydata__xarray-6461...
+2025-04-08 11:36:51,987 - INFO - report: {'pydata__xarray-6461': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-6461: resolved: False
+2025-04-08 11:36:51,987 - INFO - Attempting to stop container sweb.eval.pydata__xarray-6461.241028_solver...
+2025-04-08 11:37:07,965 - INFO - Attempting to remove container sweb.eval.pydata__xarray-6461.241028_solver...
+2025-04-08 11:37:08,175 - INFO - Container sweb.eval.pydata__xarray-6461.241028_solver removed.
+2025-04-08 11:37:08,175 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-6461:latest...
+2025-04-08 11:37:08,466 - INFO - Image sweb.eval.x86_64.pydata__xarray-6461:latest removed.

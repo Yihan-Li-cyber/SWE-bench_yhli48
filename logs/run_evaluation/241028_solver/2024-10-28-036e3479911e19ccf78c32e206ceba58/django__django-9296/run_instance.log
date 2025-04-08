@@ -1,0 +1,53 @@
+2025-04-08 13:11:47,263 - INFO - Environment image sweb.env.x86_64.a18371b03f944585b4f08c:latest found for django__django-9296
+Building instance image sweb.eval.x86_64.django__django-9296:latest for django__django-9296
+2025-04-08 13:14:51,564 - INFO - Creating container for django__django-9296...
+2025-04-08 13:14:51,881 - INFO - Container for django__django-9296 created: ef428f240d212269eca29a77ada027163935ba34cbd63ede336df02ee6e5ebca
+2025-04-08 13:14:53,270 - INFO - Container for django__django-9296 started: ef428f240d212269eca29a77ada027163935ba34cbd63ede336df02ee6e5ebca
+2025-04-08 13:14:53,272 - INFO - Intermediate patch for django__django-9296 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-9296/patch.diff, now applying to container...
+2025-04-08 13:14:54,366 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:14:54,576 - INFO - >>>>> Applied Patch:
+patching file django/core/paginator.py
+
+2025-04-08 13:14:59,986 - INFO - Git diff before:
+diff --git a/django/core/paginator.py b/django/core/paginator.py
+index 1f92da5d4f..47e315603b 100644
+--- a/django/core/paginator.py
++++ b/django/core/paginator.py
+@@ -26,6 +26,10 @@ class EmptyPage(InvalidPage):
+ 
+ class Paginator:
+ 
++    def __iter__(self):
++        for page_num in self.page_range:
++            yield self.page(page_num)
++
+     def __init__(self, object_list, per_page, orphans=0,
+                  allow_empty_first_page=True):
+         self.object_list = object_list
+2025-04-08 13:14:59,986 - INFO - Eval script for django__django-9296 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-9296/eval.sh; copying to container...
+2025-04-08 13:15:46,784 - INFO - Test runtime: 45.81 seconds
+2025-04-08 13:15:46,784 - INFO - Test output for django__django-9296 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-9296/test_output.txt
+2025-04-08 13:15:47,263 - INFO - Git diff after:
+diff --git a/django/core/paginator.py b/django/core/paginator.py
+index 1f92da5d4f..47e315603b 100644
+--- a/django/core/paginator.py
++++ b/django/core/paginator.py
+@@ -26,6 +26,10 @@ class EmptyPage(InvalidPage):
+ 
+ class Paginator:
+ 
++    def __iter__(self):
++        for page_num in self.page_range:
++            yield self.page(page_num)
++
+     def __init__(self, object_list, per_page, orphans=0,
+                  allow_empty_first_page=True):
+         self.object_list = object_list
+2025-04-08 13:15:47,263 - INFO - Grading answer for django__django-9296...
+2025-04-08 13:15:47,265 - INFO - report: {'django__django-9296': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-9296: resolved: False
+2025-04-08 13:15:47,266 - INFO - Attempting to stop container sweb.eval.django__django-9296.241028_solver...
+2025-04-08 13:16:05,082 - INFO - Attempting to remove container sweb.eval.django__django-9296.241028_solver...
+2025-04-08 13:16:05,359 - INFO - Container sweb.eval.django__django-9296.241028_solver removed.
+2025-04-08 13:16:05,360 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-9296:latest...
+2025-04-08 13:16:08,073 - INFO - Image sweb.eval.x86_64.django__django-9296:latest removed.

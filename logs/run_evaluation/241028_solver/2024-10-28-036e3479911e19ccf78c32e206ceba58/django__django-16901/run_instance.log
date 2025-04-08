@@ -1,0 +1,36 @@
+2025-04-08 13:43:31,322 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16901
+Building instance image sweb.eval.x86_64.django__django-16901:latest for django__django-16901
+2025-04-08 13:47:22,222 - INFO - Creating container for django__django-16901...
+2025-04-08 13:47:22,523 - INFO - Container for django__django-16901 created: 0567ef345c2cd1071fd44066af7a1fe09292fce64af2a67a77a4158d46f33adc
+2025-04-08 13:47:24,227 - INFO - Container for django__django-16901 started: 0567ef345c2cd1071fd44066af7a1fe09292fce64af2a67a77a4158d46f33adc
+2025-04-08 13:47:24,228 - INFO - Intermediate patch for django__django-16901 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16901/patch.diff, now applying to container...
+2025-04-08 13:47:25,430 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:47:25,726 - INFO - >>>>> Applied Patch:
+patching file django/db/models/sql/where.py
+
+2025-04-08 13:47:31,640 - INFO - Git diff before:
+diff --git a/django/db/models/sql/where.py b/django/db/models/sql/where.py
+index aaab1730b7..3d1b9df4ae 100644
+--- a/django/db/models/sql/where.py
++++ b/django/db/models/sql/where.py
+@@ -5,7 +5,8 @@ import operator
+ from functools import reduce
+ 
+ from django.core.exceptions import EmptyResultSet, FullResultSet
+-from django.db.models.expressions import Case, When
++from django.db.models.expressions import Case, Value, When
++from django.db.models.functions import Mod
+ from django.db.models.lookups import Exact
+ from django.utils import tree
+ from django.utils.functional import cached_property
+@@ -135,7 +136,8 @@ class WhereNode(tree.Node):
+                 operator.add,
+                 (Case(When(c, then=1), default=0) for c in self.children),
+             )
+-            rhs = Exact(1, rhs_sum)
++            # Use modulo 2 to check for odd number of true values
++            rhs = Exact(1, Mod(rhs_sum, Value(2)))
+             return self.__class__([lhs, rhs], AND, self.negated).as_sql(
+                 compiler, connection
+             )
+2025-04-08 13:47:31,640 - INFO - Eval script for django__django-16901 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16901/eval.sh; copying to container...

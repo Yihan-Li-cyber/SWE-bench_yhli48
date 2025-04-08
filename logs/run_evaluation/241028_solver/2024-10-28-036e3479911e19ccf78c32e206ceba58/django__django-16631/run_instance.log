@@ -1,0 +1,231 @@
+2025-04-08 13:32:52,849 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16631
+Building instance image sweb.eval.x86_64.django__django-16631:latest for django__django-16631
+2025-04-08 13:37:00,229 - INFO - Creating container for django__django-16631...
+2025-04-08 13:37:00,429 - INFO - Container for django__django-16631 created: 5d4588562673c83211f1eb3f2fd09616c0da6ca241986fd32641ef8b65e436b8
+2025-04-08 13:37:02,426 - INFO - Container for django__django-16631 started: 5d4588562673c83211f1eb3f2fd09616c0da6ca241986fd32641ef8b65e436b8
+2025-04-08 13:37:02,426 - INFO - Intermediate patch for django__django-16631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16631/patch.diff, now applying to container...
+2025-04-08 13:37:04,531 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:37:04,926 - INFO - >>>>> Applied Patch:
+patching file django/contrib/auth/__init__.py
+patching file django/contrib/auth/base_user.py
+patching file django/utils/crypto.py
+
+2025-04-08 13:37:11,736 - INFO - Git diff before:
+diff --git a/django/contrib/auth/__init__.py b/django/contrib/auth/__init__.py
+index 155330c596..332bde239a 100644
+--- a/django/contrib/auth/__init__.py
++++ b/django/contrib/auth/__init__.py
+@@ -5,7 +5,7 @@ from django.apps import apps as django_apps
+ from django.conf import settings
+ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
+ from django.middleware.csrf import rotate_token
+-from django.utils.crypto import constant_time_compare
++from django.utils.crypto import constant_time_compare, salted_hmac_fallbacks
+ from django.utils.module_loading import import_string
+ from django.views.decorators.debug import sensitive_variables
+ 
+@@ -199,10 +199,20 @@ def get_user(request):
+             # Verify the session
+             if hasattr(user, "get_session_auth_hash"):
+                 session_hash = request.session.get(HASH_SESSION_KEY)
+-                session_hash_verified = session_hash and constant_time_compare(
+-                    session_hash, user.get_session_auth_hash()
+-                )
+-                if not session_hash_verified:
++                if session_hash:
++                    hmacs = salted_hmac_fallbacks(
++                        "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash",
++                        user.password,
++                        algorithm="sha256",
++                    )
++                    session_hash_verified = any(
++                        constant_time_compare(session_hash, hmac.hexdigest())
++                        for hmac in hmacs
++                    )
++                    if not session_hash_verified:
++                        request.session.flush()
++                        user = None
++                else:
+                     request.session.flush()
+                     user = None
+ 
+diff --git a/django/contrib/auth/base_user.py b/django/contrib/auth/base_user.py
+index 5ee30bf59c..38d8f53da7 100644
+--- a/django/contrib/auth/base_user.py
++++ b/django/contrib/auth/base_user.py
+@@ -136,11 +136,14 @@ class AbstractBaseUser(models.Model):
+         Return an HMAC of the password field.
+         """
+         key_salt = "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
+-        return salted_hmac(
++        hmacs = salted_hmac_fallbacks(
+             key_salt,
+             self.password,
+             algorithm="sha256",
+-        ).hexdigest()
++        )
++        # Return the first HMAC (using current SECRET_KEY) for new sessions,
++        # but allow any of the HMACs to match when validating existing sessions
++        return hmacs[0].hexdigest()
+ 
+     @classmethod
+     def get_email_field_name(cls):
+diff --git a/django/utils/crypto.py b/django/utils/crypto.py
+index 1c0e7001c6..75039e4e74 100644
+--- a/django/utils/crypto.py
++++ b/django/utils/crypto.py
+@@ -26,6 +26,15 @@ def salted_hmac(key_salt, value, secret=None, *, algorithm="sha1"):
+     if secret is None:
+         secret = settings.SECRET_KEY
+ 
++    return _salted_hmac_with_secret(key_salt, value, secret, algorithm=algorithm)
++
++
++def _salted_hmac_with_secret(key_salt, value, secret, *, algorithm="sha1"):
++    """
++    Return the HMAC of 'value', using a key generated from key_salt and a
++    provided secret. Default algorithm is SHA1, but any algorithm name
++    supported by hashlib can be passed.
++    """
+     key_salt = force_bytes(key_salt)
+     secret = force_bytes(secret)
+     try:
+@@ -44,6 +53,25 @@ def salted_hmac(key_salt, value, secret=None, *, algorithm="sha1"):
+     return hmac.new(key, msg=force_bytes(value), digestmod=hasher)
+ 
+ 
++def salted_hmac_fallbacks(key_salt, value, *, algorithm="sha1"):
++    """
++    Return a list of HMACs of 'value', using keys generated from key_salt and
++    settings.SECRET_KEY + settings.SECRET_KEY_FALLBACKS. Default algorithm is SHA1,
++    but any algorithm name supported by hashlib can be passed.
++
++    A different key_salt should be passed in for every application of HMAC.
++    """
++    hmacs = []
++    secrets = [settings.SECRET_KEY]
++    if hasattr(settings, 'SECRET_KEY_FALLBACKS'):
++        secrets.extend(settings.SECRET_KEY_FALLBACKS)
++    
++    for secret in secrets:
++        hmacs.append(_salted_hmac_with_secret(key_salt, value, secret, algorithm=algorithm))
++    
++    return hmacs
++
++
+ RANDOM_STRING_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+2025-04-08 13:37:11,737 - INFO - Eval script for django__django-16631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16631/eval.sh; copying to container...
+2025-04-08 13:37:56,214 - INFO - Test runtime: 43.49 seconds
+2025-04-08 13:37:56,214 - INFO - Test output for django__django-16631 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16631/test_output.txt
+2025-04-08 13:37:56,530 - INFO - Git diff after:
+diff --git a/django/contrib/auth/__init__.py b/django/contrib/auth/__init__.py
+index 155330c596..332bde239a 100644
+--- a/django/contrib/auth/__init__.py
++++ b/django/contrib/auth/__init__.py
+@@ -5,7 +5,7 @@ from django.apps import apps as django_apps
+ from django.conf import settings
+ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
+ from django.middleware.csrf import rotate_token
+-from django.utils.crypto import constant_time_compare
++from django.utils.crypto import constant_time_compare, salted_hmac_fallbacks
+ from django.utils.module_loading import import_string
+ from django.views.decorators.debug import sensitive_variables
+ 
+@@ -199,10 +199,20 @@ def get_user(request):
+             # Verify the session
+             if hasattr(user, "get_session_auth_hash"):
+                 session_hash = request.session.get(HASH_SESSION_KEY)
+-                session_hash_verified = session_hash and constant_time_compare(
+-                    session_hash, user.get_session_auth_hash()
+-                )
+-                if not session_hash_verified:
++                if session_hash:
++                    hmacs = salted_hmac_fallbacks(
++                        "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash",
++                        user.password,
++                        algorithm="sha256",
++                    )
++                    session_hash_verified = any(
++                        constant_time_compare(session_hash, hmac.hexdigest())
++                        for hmac in hmacs
++                    )
++                    if not session_hash_verified:
++                        request.session.flush()
++                        user = None
++                else:
+                     request.session.flush()
+                     user = None
+ 
+diff --git a/django/contrib/auth/base_user.py b/django/contrib/auth/base_user.py
+index 5ee30bf59c..38d8f53da7 100644
+--- a/django/contrib/auth/base_user.py
++++ b/django/contrib/auth/base_user.py
+@@ -136,11 +136,14 @@ class AbstractBaseUser(models.Model):
+         Return an HMAC of the password field.
+         """
+         key_salt = "django.contrib.auth.models.AbstractBaseUser.get_session_auth_hash"
+-        return salted_hmac(
++        hmacs = salted_hmac_fallbacks(
+             key_salt,
+             self.password,
+             algorithm="sha256",
+-        ).hexdigest()
++        )
++        # Return the first HMAC (using current SECRET_KEY) for new sessions,
++        # but allow any of the HMACs to match when validating existing sessions
++        return hmacs[0].hexdigest()
+ 
+     @classmethod
+     def get_email_field_name(cls):
+diff --git a/django/utils/crypto.py b/django/utils/crypto.py
+index 1c0e7001c6..75039e4e74 100644
+--- a/django/utils/crypto.py
++++ b/django/utils/crypto.py
+@@ -26,6 +26,15 @@ def salted_hmac(key_salt, value, secret=None, *, algorithm="sha1"):
+     if secret is None:
+         secret = settings.SECRET_KEY
+ 
++    return _salted_hmac_with_secret(key_salt, value, secret, algorithm=algorithm)
++
++
++def _salted_hmac_with_secret(key_salt, value, secret, *, algorithm="sha1"):
++    """
++    Return the HMAC of 'value', using a key generated from key_salt and a
++    provided secret. Default algorithm is SHA1, but any algorithm name
++    supported by hashlib can be passed.
++    """
+     key_salt = force_bytes(key_salt)
+     secret = force_bytes(secret)
+     try:
+@@ -44,6 +53,25 @@ def salted_hmac(key_salt, value, secret=None, *, algorithm="sha1"):
+     return hmac.new(key, msg=force_bytes(value), digestmod=hasher)
+ 
+ 
++def salted_hmac_fallbacks(key_salt, value, *, algorithm="sha1"):
++    """
++    Return a list of HMACs of 'value', using keys generated from key_salt and
++    settings.SECRET_KEY + settings.SECRET_KEY_FALLBACKS. Default algorithm is SHA1,
++    but any algorithm name supported by hashlib can be passed.
++
++    A different key_salt should be passed in for every application of HMAC.
++    """
++    hmacs = []
++    secrets = [settings.SECRET_KEY]
++    if hasattr(settings, 'SECRET_KEY_FALLBACKS'):
++        secrets.extend(settings.SECRET_KEY_FALLBACKS)
++    
++    for secret in secrets:
++        hmacs.append(_salted_hmac_with_secret(key_salt, value, secret, algorithm=algorithm))
++    
++    return hmacs
++
++
+ RANDOM_STRING_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+2025-04-08 13:37:56,530 - INFO - Grading answer for django__django-16631...
+2025-04-08 13:37:56,530 - INFO - report: {'django__django-16631': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16631: resolved: False
+2025-04-08 13:37:56,531 - INFO - Attempting to stop container sweb.eval.django__django-16631.241028_solver...
+2025-04-08 13:38:12,522 - INFO - Attempting to remove container sweb.eval.django__django-16631.241028_solver...
+2025-04-08 13:38:13,927 - INFO - Container sweb.eval.django__django-16631.241028_solver removed.
+2025-04-08 13:38:13,927 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16631:latest...
+2025-04-08 13:38:18,820 - INFO - Image sweb.eval.x86_64.django__django-16631:latest removed.

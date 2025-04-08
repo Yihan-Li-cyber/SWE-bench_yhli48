@@ -1,0 +1,149 @@
+2025-04-08 11:33:34,915 - INFO - Environment image sweb.env.x86_64.62bfc5a3a7fdf6d9876424:latest found for pydata__xarray-6721
+Building instance image sweb.eval.x86_64.pydata__xarray-6721:latest for pydata__xarray-6721
+2025-04-08 11:34:52,678 - INFO - Creating container for pydata__xarray-6721...
+2025-04-08 11:34:53,163 - INFO - Container for pydata__xarray-6721 created: e7bf57439e3ae1ce56649e3e4d305d44a007ac1b4997229894c6aaa30b63b5e5
+2025-04-08 11:34:54,769 - INFO - Container for pydata__xarray-6721 started: e7bf57439e3ae1ce56649e3e4d305d44a007ac1b4997229894c6aaa30b63b5e5
+2025-04-08 11:34:54,769 - INFO - Intermediate patch for pydata__xarray-6721 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6721/patch.diff, now applying to container...
+2025-04-08 11:34:56,064 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:34:56,361 - INFO - >>>>> Applied Patch:
+patching file test_zarr_chunks.py
+patching file xarray/backends/zarr.py
+patching file xarray/core/common.py
+
+2025-04-08 11:34:57,065 - INFO - Git diff before:
+diff --git a/xarray/backends/zarr.py b/xarray/backends/zarr.py
+index a73483b4..60fccedc 100644
+--- a/xarray/backends/zarr.py
++++ b/xarray/backends/zarr.py
+@@ -55,7 +55,7 @@ def encode_zarr_attr_value(value):
+ 
+ 
+ class ZarrArrayWrapper(BackendArray):
+-    __slots__ = ("datastore", "dtype", "shape", "variable_name")
++    __slots__ = ("datastore", "dtype", "shape", "variable_name", "_chunks")
+ 
+     def __init__(self, variable_name, datastore):
+         self.datastore = datastore
+@@ -66,6 +66,7 @@ class ZarrArrayWrapper(BackendArray):
+ 
+         dtype = array.dtype
+         self.dtype = dtype
++        self._chunks = array.chunks
+ 
+     def get_array(self):
+         return self.datastore.zarr_group[self.variable_name]
+@@ -84,6 +85,11 @@ class ZarrArrayWrapper(BackendArray):
+         # if self.ndim == 0:
+         # could possibly have a work-around for 0d data here
+ 
++    @property
++    def chunks(self):
++        """zarr chunks property"""
++        return self._chunks
++
+ 
+ def _determine_zarr_chunks(enc_chunks, var_chunks, ndim, name, safe_chunks):
+     """
+diff --git a/xarray/core/common.py b/xarray/core/common.py
+index 3c328f42..47a3010b 100644
+--- a/xarray/core/common.py
++++ b/xarray/core/common.py
+@@ -2023,14 +2023,18 @@ def get_chunksizes(
+ 
+     chunks: dict[Any, tuple[int, ...]] = {}
+     for v in variables:
+-        if hasattr(v.data, "chunks"):
+-            for dim, c in v.chunksizes.items():
+-                if dim in chunks and c != chunks[dim]:
+-                    raise ValueError(
+-                        f"Object has inconsistent chunks along dimension {dim}. "
+-                        "This can be fixed by calling unify_chunks()."
+-                    )
+-                chunks[dim] = c
++        # Special handling for zarr arrays to avoid loading data
++        if hasattr(v._data, "chunks"):
++            # Get chunks directly from the array wrapper
++            var_chunks = v._data.chunks
++            if var_chunks is not None:
++                for dim, c in zip(v.dims, var_chunks):
++                    if dim in chunks and c != chunks[dim]:
++                        raise ValueError(
++                            f"Object has inconsistent chunks along dimension {dim}. "
++                            "This can be fixed by calling unify_chunks()."
++                        )
++                    chunks[dim] = c
+     return Frozen(chunks)
+2025-04-08 11:34:57,066 - INFO - Eval script for pydata__xarray-6721 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6721/eval.sh; copying to container...
+2025-04-08 11:42:53,971 - INFO - Test runtime: 476.19 seconds
+2025-04-08 11:42:53,971 - INFO - Test output for pydata__xarray-6721 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6721/test_output.txt
+2025-04-08 11:42:54,263 - INFO - Git diff after:
+diff --git a/xarray/backends/zarr.py b/xarray/backends/zarr.py
+index a73483b4..60fccedc 100644
+--- a/xarray/backends/zarr.py
++++ b/xarray/backends/zarr.py
+@@ -55,7 +55,7 @@ def encode_zarr_attr_value(value):
+ 
+ 
+ class ZarrArrayWrapper(BackendArray):
+-    __slots__ = ("datastore", "dtype", "shape", "variable_name")
++    __slots__ = ("datastore", "dtype", "shape", "variable_name", "_chunks")
+ 
+     def __init__(self, variable_name, datastore):
+         self.datastore = datastore
+@@ -66,6 +66,7 @@ class ZarrArrayWrapper(BackendArray):
+ 
+         dtype = array.dtype
+         self.dtype = dtype
++        self._chunks = array.chunks
+ 
+     def get_array(self):
+         return self.datastore.zarr_group[self.variable_name]
+@@ -84,6 +85,11 @@ class ZarrArrayWrapper(BackendArray):
+         # if self.ndim == 0:
+         # could possibly have a work-around for 0d data here
+ 
++    @property
++    def chunks(self):
++        """zarr chunks property"""
++        return self._chunks
++
+ 
+ def _determine_zarr_chunks(enc_chunks, var_chunks, ndim, name, safe_chunks):
+     """
+diff --git a/xarray/core/common.py b/xarray/core/common.py
+index 3c328f42..47a3010b 100644
+--- a/xarray/core/common.py
++++ b/xarray/core/common.py
+@@ -2023,14 +2023,18 @@ def get_chunksizes(
+ 
+     chunks: dict[Any, tuple[int, ...]] = {}
+     for v in variables:
+-        if hasattr(v.data, "chunks"):
+-            for dim, c in v.chunksizes.items():
+-                if dim in chunks and c != chunks[dim]:
+-                    raise ValueError(
+-                        f"Object has inconsistent chunks along dimension {dim}. "
+-                        "This can be fixed by calling unify_chunks()."
+-                    )
+-                chunks[dim] = c
++        # Special handling for zarr arrays to avoid loading data
++        if hasattr(v._data, "chunks"):
++            # Get chunks directly from the array wrapper
++            var_chunks = v._data.chunks
++            if var_chunks is not None:
++                for dim, c in zip(v.dims, var_chunks):
++                    if dim in chunks and c != chunks[dim]:
++                        raise ValueError(
++                            f"Object has inconsistent chunks along dimension {dim}. "
++                            "This can be fixed by calling unify_chunks()."
++                        )
++                    chunks[dim] = c
+     return Frozen(chunks)
+2025-04-08 11:42:54,263 - INFO - Grading answer for pydata__xarray-6721...
+2025-04-08 11:42:54,264 - INFO - report: {'pydata__xarray-6721': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-6721: resolved: False
+2025-04-08 11:42:54,264 - INFO - Attempting to stop container sweb.eval.pydata__xarray-6721.241028_solver...
+2025-04-08 11:43:10,658 - INFO - Attempting to remove container sweb.eval.pydata__xarray-6721.241028_solver...
+2025-04-08 11:43:11,068 - INFO - Container sweb.eval.pydata__xarray-6721.241028_solver removed.
+2025-04-08 11:43:11,068 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-6721:latest...
+2025-04-08 11:43:11,363 - INFO - Image sweb.eval.x86_64.pydata__xarray-6721:latest removed.

@@ -1,0 +1,50 @@
+2025-04-08 11:33:34,961 - INFO - Environment image sweb.env.x86_64.62bfc5a3a7fdf6d9876424:latest found for pydata__xarray-6992
+Building instance image sweb.eval.x86_64.pydata__xarray-6992:latest for pydata__xarray-6992
+2025-04-08 11:34:50,490 - INFO - Creating container for pydata__xarray-6992...
+2025-04-08 11:34:50,702 - INFO - Container for pydata__xarray-6992 created: 5ba2f34c9421f83da9af384bf718b8673112e2471b27265d590de0998685bf72
+2025-04-08 11:34:52,883 - INFO - Container for pydata__xarray-6992 started: 5ba2f34c9421f83da9af384bf718b8673112e2471b27265d590de0998685bf72
+2025-04-08 11:34:52,884 - INFO - Intermediate patch for pydata__xarray-6992 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6992/patch.diff, now applying to container...
+2025-04-08 11:34:54,173 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 11:34:54,571 - INFO - >>>>> Applied Patch:
+patching file test_repro.py
+patching file xarray/core/dataset.py
+
+2025-04-08 11:34:55,366 - INFO - Git diff before:
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 620f32f8..1dfe3235 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -365,7 +365,7 @@ class DataVariables(Mapping[Any, "DataArray"]):
+         )
+ 
+     def __len__(self) -> int:
+-        return len(self._dataset._variables) - len(self._dataset._coord_names)
++        return sum(1 for k in self._dataset._variables if k not in self._dataset._coord_names)
+ 
+     def __contains__(self, key: Hashable) -> bool:
+         return key in self._dataset._variables and key not in self._dataset._coord_names
+2025-04-08 11:34:55,368 - INFO - Eval script for pydata__xarray-6992 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6992/eval.sh; copying to container...
+2025-04-08 11:38:11,782 - INFO - Test runtime: 195.22 seconds
+2025-04-08 11:38:11,782 - INFO - Test output for pydata__xarray-6992 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-6992/test_output.txt
+2025-04-08 11:38:12,068 - INFO - Git diff after:
+diff --git a/xarray/core/dataset.py b/xarray/core/dataset.py
+index 620f32f8..1dfe3235 100644
+--- a/xarray/core/dataset.py
++++ b/xarray/core/dataset.py
+@@ -365,7 +365,7 @@ class DataVariables(Mapping[Any, "DataArray"]):
+         )
+ 
+     def __len__(self) -> int:
+-        return len(self._dataset._variables) - len(self._dataset._coord_names)
++        return sum(1 for k in self._dataset._variables if k not in self._dataset._coord_names)
+ 
+     def __contains__(self, key: Hashable) -> bool:
+         return key in self._dataset._variables and key not in self._dataset._coord_names
+2025-04-08 11:38:12,069 - INFO - Grading answer for pydata__xarray-6992...
+2025-04-08 11:38:12,071 - INFO - report: {'pydata__xarray-6992': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-6992: resolved: False
+2025-04-08 11:38:12,071 - INFO - Attempting to stop container sweb.eval.pydata__xarray-6992.241028_solver...
+2025-04-08 11:38:28,260 - INFO - Attempting to remove container sweb.eval.pydata__xarray-6992.241028_solver...
+2025-04-08 11:38:28,678 - INFO - Container sweb.eval.pydata__xarray-6992.241028_solver removed.
+2025-04-08 11:38:28,678 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-6992:latest...
+2025-04-08 11:38:28,962 - INFO - Image sweb.eval.x86_64.pydata__xarray-6992:latest removed.

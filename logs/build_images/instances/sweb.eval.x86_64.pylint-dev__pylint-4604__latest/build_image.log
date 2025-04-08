@@ -1,4 +1,4 @@
-2025-04-04 12:22:15,353 - INFO - Building image sweb.eval.x86_64.pylint-dev__pylint-4604:latest
+2025-04-08 11:38:28,970 - INFO - Building image sweb.eval.x86_64.pylint-dev__pylint-4604:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.env.x86_64.d905bb51fb68acc5d4221b:latest
 
@@ -9,7 +9,7 @@ RUN /bin/bash /root/setup_repo.sh
 WORKDIR /testbed/
 
 Adding (1) setup scripts to image build repo
-2025-04-04 12:22:15,353 - INFO - [SETUP SCRIPT] setup_repo.sh:
+2025-04-08 11:38:28,970 - INFO - [SETUP SCRIPT] setup_repo.sh:
 #!/bin/bash
 set -euxo pipefail
 git clone -o origin https://github.com/pylint-dev/pylint.git /testbed
@@ -22,59 +22,132 @@ conda activate testbed
 echo "Current environment: $CONDA_DEFAULT_ENV"
 python -m pip install -e .
 
-2025-04-04 12:22:15,354 - INFO - Building docker image sweb.eval.x86_64.pylint-dev__pylint-4604:latest in logs/build_images/instances/sweb.eval.x86_64.pylint-dev__pylint-4604__latest with platform linux/x86_64
-2025-04-04 12:22:15,361 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.d905bb51fb68acc5d4221b:latest
-2025-04-04 12:22:15,362 - INFO - 
-2025-04-04 12:22:15,362 - INFO - ---> 2d609f8a9ed9
-2025-04-04 12:22:15,362 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
-2025-04-04 12:22:15,362 - INFO - 
-2025-04-04 12:22:15,548 - INFO - ---> 9d7e39f87940
-2025-04-04 12:22:15,548 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
-2025-04-04 12:22:15,548 - INFO - 
-2025-04-04 12:22:15,571 - INFO - ---> Running in 0db5def4a92e
-2025-04-04 12:22:16,310 - INFO - ---> Removed intermediate container 0db5def4a92e
-2025-04-04 12:22:16,310 - INFO - ---> 68055b780e68
-2025-04-04 12:22:16,310 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
-2025-04-04 12:22:16,310 - INFO - 
-2025-04-04 12:22:16,384 - INFO - ---> Running in 0a8da4160b5b
-2025-04-04 12:22:16,790 - INFO - + git clone -o origin https://github.com/pylint-dev/pylint.git /testbed
-2025-04-04 12:22:16,794 - INFO - Cloning into '/testbed'...
-2025-04-04 12:22:21,388 - INFO - + chmod -R 777 /testbed
-2025-04-04 12:22:21,514 - INFO - + cd /testbed
+2025-04-08 11:38:28,971 - INFO - Building docker image sweb.eval.x86_64.pylint-dev__pylint-4604:latest in logs/build_images/instances/sweb.eval.x86_64.pylint-dev__pylint-4604__latest with platform linux/x86_64
+2025-04-08 11:38:28,983 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.d905bb51fb68acc5d4221b:latest
+2025-04-08 11:38:28,984 - INFO - 
+2025-04-08 11:38:28,984 - INFO - ---> e974b2cf854b
+2025-04-08 11:38:28,984 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
+2025-04-08 11:38:28,984 - INFO - 
+2025-04-08 11:38:29,261 - INFO - ---> 562d219d3e66
+2025-04-08 11:38:29,262 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
+2025-04-08 11:38:29,262 - INFO - 
+2025-04-08 11:38:29,365 - INFO - ---> Running in 10dd63efd780
+2025-04-08 11:38:31,074 - INFO - ---> Removed intermediate container 10dd63efd780
+2025-04-08 11:38:31,074 - INFO - ---> b87506d6b4ef
+2025-04-08 11:38:31,074 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
+2025-04-08 11:38:31,074 - INFO - 
+2025-04-08 11:38:31,178 - INFO - ---> Running in 61a3dc815c38
+2025-04-08 11:38:32,490 - INFO - + git clone -o origin https://github.com/pylint-dev/pylint.git /testbed
+2025-04-08 11:38:32,490 - INFO - Cloning into '/testbed'...
+2025-04-08 11:38:47,559 - INFO - Updating files:  52% (2015/3861)
+2025-04-08 11:38:47,562 - INFO - Updating files:  53% (2047/3861)
+2025-04-08 11:38:47,566 - INFO - Updating files:  54% (2085/3861)
+2025-04-08 11:38:47,569 - INFO - Updating files:  55% (2124/3861)
+2025-04-08 11:38:47,572 - INFO - Updating files:  56% (2163/3861)
+2025-04-08 11:38:47,576 - INFO - Updating files:  57% (2201/3861)
+2025-04-08 11:38:47,579 - INFO - Updating files:  58% (2240/3861)
+2025-04-08 11:38:47,582 - INFO - Updating files:  59% (2278/3861)
+2025-04-08 11:38:47,662 - INFO - Updating files:  60% (2317/3861)
+2025-04-08 11:38:47,666 - INFO - Updating files:  61% (2356/3861)
+2025-04-08 11:38:47,669 - INFO - Updating files:  62% (2394/3861)
+2025-04-08 11:38:47,673 - INFO - Updating files:  63% (2433/3861)
+2025-04-08 11:38:47,676 - INFO - Updating files:  64% (2472/3861)
+2025-04-08 11:38:47,681 - INFO - Updating files:  65% (2510/3861)
+2025-04-08 11:38:47,761 - INFO - Updating files:  66% (2549/3861)
+2025-04-08 11:38:47,763 - INFO - Updating files:  67% (2587/3861)
+2025-04-08 11:38:47,767 - INFO - Updating files:  68% (2626/3861)
+2025-04-08 11:38:47,771 - INFO - Updating files:  69% (2665/3861)
+2025-04-08 11:38:47,774 - INFO - Updating files:  70% (2703/3861)
+2025-04-08 11:38:47,777 - INFO - Updating files:  71% (2742/3861)
+2025-04-08 11:38:47,780 - INFO - Updating files:  72% (2780/3861)
+2025-04-08 11:38:47,783 - INFO - Updating files:  73% (2819/3861)
+2025-04-08 11:38:47,862 - INFO - Updating files:  74% (2858/3861)
+2025-04-08 11:38:47,865 - INFO - Updating files:  75% (2896/3861)
+2025-04-08 11:38:47,869 - INFO - Updating files:  76% (2935/3861)
+2025-04-08 11:38:47,873 - INFO - Updating files:  77% (2973/3861)
+2025-04-08 11:38:47,877 - INFO - Updating files:  78% (3012/3861)
+2025-04-08 11:38:47,881 - INFO - Updating files:  79% (3051/3861)
+2025-04-08 11:38:47,960 - INFO - Updating files:  80% (3089/3861)
+2025-04-08 11:38:47,963 - INFO - Updating files:  81% (3128/3861)
+2025-04-08 11:38:47,966 - INFO - Updating files:  82% (3167/3861)
+2025-04-08 11:38:47,969 - INFO - Updating files:  83% (3205/3861)
+2025-04-08 11:38:47,973 - INFO - Updating files:  84% (3244/3861)
+2025-04-08 11:38:47,976 - INFO - Updating files:  85% (3282/3861)
+2025-04-08 11:38:47,979 - INFO - Updating files:  86% (3321/3861)
+2025-04-08 11:38:47,983 - INFO - Updating files:  87% (3360/3861)
+2025-04-08 11:38:48,062 - INFO - Updating files:  88% (3398/3861)
+2025-04-08 11:38:48,066 - INFO - Updating files:  89% (3437/3861)
+2025-04-08 11:38:48,069 - INFO - Updating files:  90% (3475/3861)
+2025-04-08 11:38:48,072 - INFO - Updating files:  91% (3514/3861)
+2025-04-08 11:38:48,075 - INFO - Updating files:  92% (3553/3861)
+2025-04-08 11:38:48,078 - INFO - Updating files:  93% (3591/3861)
+2025-04-08 11:38:48,082 - INFO - Updating files:  94% (3630/3861)
+2025-04-08 11:38:48,162 - INFO - Updating files:  95% (3668/3861)
+2025-04-08 11:38:48,166 - INFO - Updating files:  96% (3707/3861)
+2025-04-08 11:38:48,169 - INFO - Updating files:  97% (3746/3861)
+2025-04-08 11:38:48,174 - INFO - Updating files:  98% (3784/3861)
+2025-04-08 11:38:48,179 - INFO - Updating files:  99% (3823/3861)
+2025-04-08 11:38:48,182 - INFO - Updating files: 100% (3861/3861)Updating files: 100% (3861/3861), done.
+2025-04-08 11:38:48,273 - INFO - + chmod -R 777 /testbed
+2025-04-08 11:38:48,662 - INFO - + cd /testbed
 + git reset --hard 1e55ae64624d28c5fe8b63ad7979880ee2e6ef3f
-2025-04-04 12:22:22,019 - INFO - HEAD is now at 1e55ae646 Add type annotations to pyreverse (#4551)
-2025-04-04 12:22:22,025 - INFO - + git remote remove origin
-2025-04-04 12:22:22,066 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-08 11:38:49,679 - INFO - Updating files:  77% (3383/4354)
+2025-04-08 11:38:49,682 - INFO - Updating files:  78% (3397/4354)
+2025-04-08 11:38:49,763 - INFO - Updating files:  79% (3440/4354)
+2025-04-08 11:38:49,770 - INFO - Updating files:  80% (3484/4354)
+2025-04-08 11:38:49,776 - INFO - Updating files:  81% (3527/4354)
+2025-04-08 11:38:49,781 - INFO - Updating files:  82% (3571/4354)
+2025-04-08 11:38:49,862 - INFO - Updating files:  83% (3614/4354)
+2025-04-08 11:38:49,866 - INFO - Updating files:  84% (3658/4354)
+2025-04-08 11:38:49,873 - INFO - Updating files:  85% (3701/4354)
+2025-04-08 11:38:49,879 - INFO - Updating files:  86% (3745/4354)
+2025-04-08 11:38:49,885 - INFO - Updating files:  87% (3788/4354)
+2025-04-08 11:38:49,890 - INFO - Updating files:  88% (3832/4354)
+2025-04-08 11:38:49,896 - INFO - Updating files:  89% (3876/4354)
+2025-04-08 11:38:49,958 - INFO - Updating files:  90% (3919/4354)
+2025-04-08 11:38:49,961 - INFO - Updating files:  91% (3963/4354)
+2025-04-08 11:38:49,966 - INFO - Updating files:  92% (4006/4354)
+2025-04-08 11:38:49,972 - INFO - Updating files:  93% (4050/4354)
+2025-04-08 11:38:49,977 - INFO - Updating files:  94% (4093/4354)
+2025-04-08 11:38:49,982 - INFO - Updating files:  95% (4137/4354)
+2025-04-08 11:38:50,064 - INFO - Updating files:  96% (4180/4354)
+2025-04-08 11:38:50,069 - INFO - Updating files:  97% (4224/4354)
+2025-04-08 11:38:50,074 - INFO - Updating files:  98% (4267/4354)
+2025-04-08 11:38:50,079 - INFO - Updating files:  99% (4311/4354)
+2025-04-08 11:38:50,159 - INFO - Updating files: 100% (4354/4354)Updating files: 100% (4354/4354), done.
+2025-04-08 11:38:50,164 - INFO - HEAD is now at 1e55ae646 Add type annotations to pyreverse (#4551)
+2025-04-08 11:38:50,168 - INFO - + git remote remove origin
+2025-04-08 11:38:50,176 - INFO - + source /opt/miniconda3/bin/activate
 ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
-2025-04-04 12:22:22,067 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
-+++ CONDA_EXE=/opt/miniconda3/bin/conda
-+++ export _CE_M=
+2025-04-08 11:38:50,176 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-08 11:38:50,177 - INFO - +++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-08 11:38:50,177 - INFO - +++ export _CE_M=
 +++ _CE_M=
 +++ export _CE_CONDA=
 +++ _CE_CONDA=
-+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-08 11:38:50,177 - INFO - +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-2025-04-04 12:22:22,067 - INFO - +++ '[' -z '' ']'
+2025-04-08 11:38:50,177 - INFO - +++ '[' -z '' ']'
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-04 12:22:22,068 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 12:22:22,070 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 12:22:22,073 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-08 11:38:50,178 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-08 11:38:50,179 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-08 11:38:50,181 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-2025-04-04 12:22:22,073 - INFO - ++ conda activate
+++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
-++ '[' -n '' ']'
+2025-04-08 11:38:50,181 - INFO - ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 12:22:22,074 - INFO - +++ PS1=
+2025-04-08 11:38:50,182 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 12:22:22,074 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 12:22:22,302 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-08 11:38:50,182 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-08 11:38:50,979 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -99,7 +172,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export CONDA_PREFIX=/opt/miniconda3
 +++ CONDA_PREFIX=/opt/miniconda3
-+++ export CONDA_SHLVL=1
+2025-04-08 11:38:50,980 - INFO - +++ export CONDA_SHLVL=1
 +++ CONDA_SHLVL=1
 +++ export CONDA_DEFAULT_ENV=base
 +++ CONDA_DEFAULT_ENV=base
@@ -111,7 +184,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ _CE_M=
 +++ export _CE_CONDA=
 +++ _CE_CONDA=
-2025-04-04 12:22:22,303 - INFO - +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
++++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
 ++ '[' -n '' ']'
@@ -123,10 +196,10 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-04 12:22:22,305 - INFO - ++ PS1='(base) '
+2025-04-08 11:38:50,980 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 12:22:22,306 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 12:22:22,585 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-08 11:38:50,981 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-08 11:38:51,765 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -173,31 +246,31 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-+ echo 'Current environment: testbed'
+2025-04-08 11:38:51,766 - INFO - + echo 'Current environment: testbed'
 + python -m pip install -e .
-2025-04-04 12:22:22,586 - INFO - Current environment: testbed
-2025-04-04 12:22:23,223 - INFO - Obtaining file:///testbed
-2025-04-04 12:22:23,224 - INFO - Preparing metadata (setup.py): started
-2025-04-04 12:22:23,696 - INFO - Preparing metadata (setup.py): finished with status 'done'
-2025-04-04 12:22:23,728 - INFO - Requirement already satisfied: astroid<2.7,>=2.6.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (2.6.5)
-Requirement already satisfied: isort<6,>=4.2.5 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (5.9.2)
-Requirement already satisfied: mccabe<0.7,>=0.6 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (0.6.1)
-Requirement already satisfied: toml>=0.7.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (0.10.2)
-2025-04-04 12:22:23,731 - INFO - Requirement already satisfied: lazy-object-proxy>=1.4.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (1.10.0)
-2025-04-04 12:22:23,732 - INFO - Requirement already satisfied: wrapt<1.13,>=1.11 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (1.12.1)
-2025-04-04 12:22:23,732 - INFO - Requirement already satisfied: setuptools>=20.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (75.8.0)
-2025-04-04 12:22:23,864 - INFO - Installing collected packages: pylint
-2025-04-04 12:22:23,868 - INFO - DEPRECATION: Legacy editable install of pylint==2.9.0.dev1 from file:///testbed (setup.py develop) is deprecated. pip 25.1 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457
-2025-04-04 12:22:23,868 - INFO - Running setup.py develop for pylint
-2025-04-04 12:22:24,523 - INFO - Successfully installed pylint
-2025-04-04 12:22:24,523 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 12:22:26,464 - INFO - ---> Removed intermediate container 0a8da4160b5b
-2025-04-04 12:22:26,465 - INFO - ---> 9aae20ae8507
-2025-04-04 12:22:26,465 - INFO - Step 5/5 : WORKDIR /testbed/
-2025-04-04 12:22:26,465 - INFO - 
-2025-04-04 12:22:26,688 - INFO - ---> Running in c9178f472153
-2025-04-04 12:22:26,806 - INFO - ---> Removed intermediate container c9178f472153
-2025-04-04 12:22:26,806 - INFO - ---> 0b4d68623265
-2025-04-04 12:22:26,806 - INFO - Successfully built 0b4d68623265
-2025-04-04 12:22:26,811 - INFO - Successfully tagged sweb.eval.x86_64.pylint-dev__pylint-4604:latest
-2025-04-04 12:22:26,811 - INFO - Image built successfully!
+2025-04-08 11:38:51,766 - INFO - Current environment: testbed
+2025-04-08 11:38:54,171 - INFO - Obtaining file:///testbed
+2025-04-08 11:38:54,173 - INFO - Preparing metadata (setup.py): started
+2025-04-08 11:38:55,775 - INFO - Preparing metadata (setup.py): finished with status 'done'
+2025-04-08 11:38:55,798 - INFO - Requirement already satisfied: astroid<2.7,>=2.6.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (2.6.5)
+2025-04-08 11:38:55,799 - INFO - Requirement already satisfied: isort<6,>=4.2.5 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (5.9.2)
+2025-04-08 11:38:55,861 - INFO - Requirement already satisfied: mccabe<0.7,>=0.6 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (0.6.1)
+2025-04-08 11:38:55,861 - INFO - Requirement already satisfied: toml>=0.7.1 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from pylint==2.9.0.dev1) (0.10.2)
+2025-04-08 11:38:55,866 - INFO - Requirement already satisfied: lazy-object-proxy>=1.4.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (1.10.0)
+2025-04-08 11:38:55,867 - INFO - Requirement already satisfied: wrapt<1.13,>=1.11 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (1.12.1)
+2025-04-08 11:38:55,867 - INFO - Requirement already satisfied: setuptools>=20.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from astroid<2.7,>=2.6.0->pylint==2.9.0.dev1) (75.8.0)
+2025-04-08 11:38:56,660 - INFO - Installing collected packages: pylint
+2025-04-08 11:38:56,665 - INFO - DEPRECATION: Legacy editable install of pylint==2.9.0.dev1 from file:///testbed (setup.py develop) is deprecated. pip 25.1 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457
+2025-04-08 11:38:56,665 - INFO - Running setup.py develop for pylint
+2025-04-08 11:38:59,169 - INFO - Successfully installed pylint
+2025-04-08 11:38:59,169 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-08 11:39:04,359 - INFO - ---> Removed intermediate container 61a3dc815c38
+2025-04-08 11:39:04,359 - INFO - ---> b4bba43597cb
+2025-04-08 11:39:04,360 - INFO - Step 5/5 : WORKDIR /testbed/
+2025-04-08 11:39:04,360 - INFO - 
+2025-04-08 11:39:04,466 - INFO - ---> Running in 2178f8aff9bd
+2025-04-08 11:39:04,570 - INFO - ---> Removed intermediate container 2178f8aff9bd
+2025-04-08 11:39:04,570 - INFO - ---> 282e910842ac
+2025-04-08 11:39:04,570 - INFO - Successfully built 282e910842ac
+2025-04-08 11:39:04,574 - INFO - Successfully tagged sweb.eval.x86_64.pylint-dev__pylint-4604:latest
+2025-04-08 11:39:04,574 - INFO - Image built successfully!

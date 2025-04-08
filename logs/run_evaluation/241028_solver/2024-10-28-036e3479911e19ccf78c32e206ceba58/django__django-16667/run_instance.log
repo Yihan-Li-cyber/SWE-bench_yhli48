@@ -1,0 +1,65 @@
+2025-04-08 13:38:21,231 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16667
+Building instance image sweb.eval.x86_64.django__django-16667:latest for django__django-16667
+2025-04-08 13:42:07,199 - INFO - Creating container for django__django-16667...
+2025-04-08 13:42:07,327 - INFO - Container for django__django-16667 created: e4cca111bc026f015fdda233abb51904631e0e0269b4087ed76b20cccd5eb45b
+2025-04-08 13:42:09,415 - INFO - Container for django__django-16667 started: e4cca111bc026f015fdda233abb51904631e0e0269b4087ed76b20cccd5eb45b
+2025-04-08 13:42:09,418 - INFO - Intermediate patch for django__django-16667 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16667/patch.diff, now applying to container...
+2025-04-08 13:42:11,228 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:42:11,920 - INFO - >>>>> Applied Patch:
+patching file django/forms/widgets.py
+
+2025-04-08 13:42:18,921 - INFO - Git diff before:
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 842b73e95c..37c35f9345 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -1156,8 +1156,14 @@ class SelectDateWidget(Widget):
+             input_format = get_format("DATE_INPUT_FORMATS")[0]
+             input_format = formats.sanitize_strftime_format(input_format)
+             try:
+-                date_value = datetime.date(int(y), int(m), int(d))
+-            except ValueError:
++                # Validate integer bounds before creating date
++                year = int(y)
++                month = int(m)
++                day = int(d)
++                if not (1 <= month <= 12 and 1 <= day <= 31 and datetime.MINYEAR <= year <= datetime.MAXYEAR):
++                    raise ValueError
++                date_value = datetime.date(year, month, day)
++            except (ValueError, OverflowError):
+                 # Return pseudo-ISO dates with zeros for any unselected values,
+                 # e.g. '2017-0-23'.
+                 return "%s-%s-%s" % (y or 0, m or 0, d or 0)
+2025-04-08 13:42:18,922 - INFO - Eval script for django__django-16667 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16667/eval.sh; copying to container...
+2025-04-08 13:43:06,620 - INFO - Test runtime: 46.80 seconds
+2025-04-08 13:43:06,621 - INFO - Test output for django__django-16667 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16667/test_output.txt
+2025-04-08 13:43:07,031 - INFO - Git diff after:
+diff --git a/django/forms/widgets.py b/django/forms/widgets.py
+index 842b73e95c..37c35f9345 100644
+--- a/django/forms/widgets.py
++++ b/django/forms/widgets.py
+@@ -1156,8 +1156,14 @@ class SelectDateWidget(Widget):
+             input_format = get_format("DATE_INPUT_FORMATS")[0]
+             input_format = formats.sanitize_strftime_format(input_format)
+             try:
+-                date_value = datetime.date(int(y), int(m), int(d))
+-            except ValueError:
++                # Validate integer bounds before creating date
++                year = int(y)
++                month = int(m)
++                day = int(d)
++                if not (1 <= month <= 12 and 1 <= day <= 31 and datetime.MINYEAR <= year <= datetime.MAXYEAR):
++                    raise ValueError
++                date_value = datetime.date(year, month, day)
++            except (ValueError, OverflowError):
+                 # Return pseudo-ISO dates with zeros for any unselected values,
+                 # e.g. '2017-0-23'.
+                 return "%s-%s-%s" % (y or 0, m or 0, d or 0)
+2025-04-08 13:43:07,031 - INFO - Grading answer for django__django-16667...
+2025-04-08 13:43:07,032 - INFO - report: {'django__django-16667': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16667: resolved: False
+2025-04-08 13:43:07,032 - INFO - Attempting to stop container sweb.eval.django__django-16667.241028_solver...
+2025-04-08 13:43:23,824 - INFO - Attempting to remove container sweb.eval.django__django-16667.241028_solver...
+2025-04-08 13:43:24,026 - INFO - Container sweb.eval.django__django-16667.241028_solver removed.
+2025-04-08 13:43:24,026 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16667:latest...
+2025-04-08 13:43:29,017 - INFO - Image sweb.eval.x86_64.django__django-16667:latest removed.

@@ -1,0 +1,45 @@
+2025-04-08 13:32:52,745 - INFO - Environment image sweb.env.x86_64.c70909fdac4897d1c685df:latest found for django__django-16595
+Building instance image sweb.eval.x86_64.django__django-16595:latest for django__django-16595
+2025-04-08 13:36:48,213 - INFO - Creating container for django__django-16595...
+2025-04-08 13:36:48,334 - INFO - Container for django__django-16595 created: f1e4c3f618d4e7d73e330512a0ee279e29bb207959d236282f7965fe18eb02b0
+2025-04-08 13:36:49,712 - INFO - Container for django__django-16595 started: f1e4c3f618d4e7d73e330512a0ee279e29bb207959d236282f7965fe18eb02b0
+2025-04-08 13:36:49,713 - INFO - Intermediate patch for django__django-16595 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16595/patch.diff, now applying to container...
+2025-04-08 13:36:51,011 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 13:36:51,229 - INFO - >>>>> Applied Patch:
+patching file django/db/migrations/operations/fields.py
+
+2025-04-08 13:36:56,917 - INFO - Git diff before:
+diff --git a/django/db/migrations/operations/fields.py b/django/db/migrations/operations/fields.py
+index cd3aab43ad..70ba7757ad 100644
+--- a/django/db/migrations/operations/fields.py
++++ b/django/db/migrations/operations/fields.py
+@@ -264,6 +264,8 @@ class AlterField(FieldOperation):
+                     field=self.field,
+                 ),
+             ]
++        if isinstance(operation, AlterField) and self.is_same_field_operation(operation):
++            return [operation]
+         return super().reduce(operation, app_label)
+2025-04-08 13:36:56,918 - INFO - Eval script for django__django-16595 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16595/eval.sh; copying to container...
+2025-04-08 13:37:42,735 - INFO - Test runtime: 44.91 seconds
+2025-04-08 13:37:42,735 - INFO - Test output for django__django-16595 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/django__django-16595/test_output.txt
+2025-04-08 13:37:43,226 - INFO - Git diff after:
+diff --git a/django/db/migrations/operations/fields.py b/django/db/migrations/operations/fields.py
+index cd3aab43ad..70ba7757ad 100644
+--- a/django/db/migrations/operations/fields.py
++++ b/django/db/migrations/operations/fields.py
+@@ -264,6 +264,8 @@ class AlterField(FieldOperation):
+                     field=self.field,
+                 ),
+             ]
++        if isinstance(operation, AlterField) and self.is_same_field_operation(operation):
++            return [operation]
+         return super().reduce(operation, app_label)
+2025-04-08 13:37:43,226 - INFO - Grading answer for django__django-16595...
+2025-04-08 13:37:43,226 - INFO - report: {'django__django-16595': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for django__django-16595: resolved: False
+2025-04-08 13:37:43,227 - INFO - Attempting to stop container sweb.eval.django__django-16595.241028_solver...
+2025-04-08 13:37:59,116 - INFO - Attempting to remove container sweb.eval.django__django-16595.241028_solver...
+2025-04-08 13:37:59,213 - INFO - Container sweb.eval.django__django-16595.241028_solver removed.
+2025-04-08 13:37:59,213 - INFO - Attempting to remove image sweb.eval.x86_64.django__django-16595:latest...
+2025-04-08 13:38:01,033 - INFO - Image sweb.eval.x86_64.django__django-16595:latest removed.
