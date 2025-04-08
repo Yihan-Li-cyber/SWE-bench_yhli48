@@ -1,2 +1,76 @@
-2025-04-08 13:11:47,303 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20676
+2025-04-08 14:35:55,823 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20676
 Building instance image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest for matplotlib__matplotlib-20676
+2025-04-08 14:59:27,923 - INFO - Creating container for matplotlib__matplotlib-20676...
+2025-04-08 14:59:28,118 - INFO - Container for matplotlib__matplotlib-20676 created: 59e4324f75d842c54e241270f9eaf7c9b6297d2c0fa6717bdc63af5696f26858
+2025-04-08 14:59:29,421 - INFO - Container for matplotlib__matplotlib-20676 started: 59e4324f75d842c54e241270f9eaf7c9b6297d2c0fa6717bdc63af5696f26858
+2025-04-08 14:59:29,422 - INFO - Intermediate patch for matplotlib__matplotlib-20676 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20676/patch.diff, now applying to container...
+2025-04-08 14:59:30,742 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 14:59:31,125 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/widgets.py
+patching file test_span.py
+
+2025-04-08 14:59:38,536 - INFO - Git diff before:
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index a199e45d40..5db09d6d33 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -2138,6 +2138,10 @@ class SpanSelector(_SelectorWidget):
+             self.canvas = ax.figure.canvas
+             self.connect_default_events()
+ 
++        # Store original limits
++        xlim = ax.get_xlim()
++        ylim = ax.get_ylim()
++        
+         if self.direction == 'horizontal':
+             trans = ax.get_xaxis_transform()
+             w, h = 0, 1
+@@ -2150,6 +2154,10 @@ class SpanSelector(_SelectorWidget):
+                                **self._rectprops)
+ 
+         self.ax.add_patch(self._rect)
++        
++        # Restore original limits
++        ax.set_xlim(xlim)
++        ax.set_ylim(ylim)
+         if len(self.artists) > 0:
+             self.artists[0] = self._rect
+         else:
+2025-04-08 14:59:38,537 - INFO - Eval script for matplotlib__matplotlib-20676 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20676/eval.sh; copying to container...
+2025-04-08 15:01:26,438 - INFO - Test runtime: 106.89 seconds
+2025-04-08 15:01:26,438 - INFO - Test output for matplotlib__matplotlib-20676 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20676/test_output.txt
+2025-04-08 15:01:26,937 - INFO - Git diff after:
+diff --git a/lib/matplotlib/widgets.py b/lib/matplotlib/widgets.py
+index a199e45d40..5db09d6d33 100644
+--- a/lib/matplotlib/widgets.py
++++ b/lib/matplotlib/widgets.py
+@@ -2138,6 +2138,10 @@ class SpanSelector(_SelectorWidget):
+             self.canvas = ax.figure.canvas
+             self.connect_default_events()
+ 
++        # Store original limits
++        xlim = ax.get_xlim()
++        ylim = ax.get_ylim()
++        
+         if self.direction == 'horizontal':
+             trans = ax.get_xaxis_transform()
+             w, h = 0, 1
+@@ -2150,6 +2154,10 @@ class SpanSelector(_SelectorWidget):
+                                **self._rectprops)
+ 
+         self.ax.add_patch(self._rect)
++        
++        # Restore original limits
++        ax.set_xlim(xlim)
++        ax.set_ylim(ylim)
+         if len(self.artists) > 0:
+             self.artists[0] = self._rect
+         else:
+2025-04-08 15:01:26,937 - INFO - Grading answer for matplotlib__matplotlib-20676...
+2025-04-08 15:01:26,938 - INFO - report: {'matplotlib__matplotlib-20676': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-20676: resolved: False
+2025-04-08 15:01:26,938 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-20676.241028_solver...
+2025-04-08 15:01:46,229 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-20676.241028_solver...
+2025-04-08 15:01:46,421 - INFO - Container sweb.eval.matplotlib__matplotlib-20676.241028_solver removed.
+2025-04-08 15:01:46,421 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest...
+2025-04-08 15:02:02,018 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-20676:latest removed.

@@ -1,2 +1,83 @@
-2025-04-08 13:11:47,264 - INFO - Environment image sweb.env.x86_64.15374367de368534f261e3:latest found for matplotlib__matplotlib-14623
+2025-04-08 14:35:55,784 - INFO - Environment image sweb.env.x86_64.15374367de368534f261e3:latest found for matplotlib__matplotlib-14623
 Building instance image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest for matplotlib__matplotlib-14623
+2025-04-08 14:58:15,844 - INFO - Creating container for matplotlib__matplotlib-14623...
+2025-04-08 14:58:16,026 - INFO - Container for matplotlib__matplotlib-14623 created: 0fa4cef1aca67d63709950b289cf48cc0c47b183bfd486ab0472a2a858744543
+2025-04-08 14:58:17,227 - INFO - Container for matplotlib__matplotlib-14623 started: 0fa4cef1aca67d63709950b289cf48cc0c47b183bfd486ab0472a2a858744543
+2025-04-08 14:58:17,227 - INFO - Intermediate patch for matplotlib__matplotlib-14623 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-14623/patch.diff, now applying to container...
+2025-04-08 14:58:18,331 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 14:58:18,627 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/axis.py
+
+2025-04-08 14:58:26,019 - INFO - Git diff before:
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index 2bb9e41586..786a8f8748 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -1005,10 +1005,22 @@ class Axis(martist.Artist):
+         left for the x-axis and to the bottom for the y-axis.
+         """
+         a, b = self.get_view_interval()
+-        if inverted:
+-            self.set_view_interval(max(a, b), min(a, b), ignore=True)
++        if self.get_scale() == 'log':
++            # For log scale, compare the transformed values
++            transform = self._scale.get_transform()
++            a_trans = transform.transform_non_affine(np.array([a]))[0]
++            b_trans = transform.transform_non_affine(np.array([b]))[0]
++            if inverted:
++                self.set_view_interval(a if a_trans > b_trans else b,
++                                     b if a_trans > b_trans else a, ignore=True)
++            else:
++                self.set_view_interval(a if a_trans < b_trans else b,
++                                     b if a_trans < b_trans else a, ignore=True)
+         else:
+-            self.set_view_interval(min(a, b), max(a, b), ignore=True)
++            if inverted:
++                self.set_view_interval(max(a, b), min(a, b), ignore=True)
++            else:
++                self.set_view_interval(min(a, b), max(a, b), ignore=True)
+ 
+     def set_default_intervals(self):
+         """
+2025-04-08 14:58:26,020 - INFO - Eval script for matplotlib__matplotlib-14623 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-14623/eval.sh; copying to container...
+2025-04-08 15:08:34,734 - INFO - Test runtime: 608.01 seconds
+2025-04-08 15:08:34,735 - INFO - Test output for matplotlib__matplotlib-14623 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-14623/test_output.txt
+2025-04-08 15:08:35,120 - INFO - Git diff after:
+diff --git a/lib/matplotlib/axis.py b/lib/matplotlib/axis.py
+index 2bb9e41586..786a8f8748 100644
+--- a/lib/matplotlib/axis.py
++++ b/lib/matplotlib/axis.py
+@@ -1005,10 +1005,22 @@ class Axis(martist.Artist):
+         left for the x-axis and to the bottom for the y-axis.
+         """
+         a, b = self.get_view_interval()
+-        if inverted:
+-            self.set_view_interval(max(a, b), min(a, b), ignore=True)
++        if self.get_scale() == 'log':
++            # For log scale, compare the transformed values
++            transform = self._scale.get_transform()
++            a_trans = transform.transform_non_affine(np.array([a]))[0]
++            b_trans = transform.transform_non_affine(np.array([b]))[0]
++            if inverted:
++                self.set_view_interval(a if a_trans > b_trans else b,
++                                     b if a_trans > b_trans else a, ignore=True)
++            else:
++                self.set_view_interval(a if a_trans < b_trans else b,
++                                     b if a_trans < b_trans else a, ignore=True)
+         else:
+-            self.set_view_interval(min(a, b), max(a, b), ignore=True)
++            if inverted:
++                self.set_view_interval(max(a, b), min(a, b), ignore=True)
++            else:
++                self.set_view_interval(min(a, b), max(a, b), ignore=True)
+ 
+     def set_default_intervals(self):
+         """
+2025-04-08 15:08:35,120 - INFO - Grading answer for matplotlib__matplotlib-14623...
+2025-04-08 15:08:35,123 - INFO - report: {'matplotlib__matplotlib-14623': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-14623: resolved: False
+2025-04-08 15:08:35,125 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-14623.241028_solver...
+2025-04-08 15:08:51,741 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-14623.241028_solver...
+2025-04-08 15:08:52,026 - INFO - Container sweb.eval.matplotlib__matplotlib-14623.241028_solver removed.
+2025-04-08 15:08:52,026 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest...
+2025-04-08 15:09:13,247 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-14623:latest removed.

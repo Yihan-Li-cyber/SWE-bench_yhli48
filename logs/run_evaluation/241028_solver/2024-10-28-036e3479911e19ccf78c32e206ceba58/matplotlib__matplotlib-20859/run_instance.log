@@ -1,2 +1,78 @@
-2025-04-08 13:18:12,071 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20859
+2025-04-08 14:40:45,834 - INFO - Environment image sweb.env.x86_64.b382c45e0a94d34ef0fc86:latest found for matplotlib__matplotlib-20859
 Building instance image sweb.eval.x86_64.matplotlib__matplotlib-20859:latest for matplotlib__matplotlib-20859
+2025-04-08 15:03:25,538 - INFO - Creating container for matplotlib__matplotlib-20859...
+2025-04-08 15:03:25,933 - INFO - Container for matplotlib__matplotlib-20859 created: 4502ed0c35cb6cdaf22fc941bbe40d60ca65ce57a24ec76431776bbaecfde8cb
+2025-04-08 15:03:28,243 - INFO - Container for matplotlib__matplotlib-20859 started: 4502ed0c35cb6cdaf22fc941bbe40d60ca65ce57a24ec76431776bbaecfde8cb
+2025-04-08 15:03:28,244 - INFO - Intermediate patch for matplotlib__matplotlib-20859 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20859/patch.diff, now applying to container...
+2025-04-08 15:03:30,339 - INFO - Failed to apply patch to container, trying again...
+2025-04-08 15:03:30,836 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/legend.py
+patching file test_subfig_legend.py
+
+2025-04-08 15:03:38,927 - INFO - Git diff before:
+diff --git a/lib/matplotlib/legend.py b/lib/matplotlib/legend.py
+index 44ab024698..aaa2e3089a 100644
+--- a/lib/matplotlib/legend.py
++++ b/lib/matplotlib/legend.py
+@@ -360,7 +360,7 @@ class Legend(Artist):
+         """
+         # local import only to avoid circularity
+         from matplotlib.axes import Axes
+-        from matplotlib.figure import Figure
++        from matplotlib.figure import Figure, FigureBase
+ 
+         super().__init__()
+ 
+@@ -434,11 +434,11 @@ class Legend(Artist):
+             self.isaxes = True
+             self.axes = parent
+             self.set_figure(parent.figure)
+-        elif isinstance(parent, Figure):
++        elif isinstance(parent, FigureBase):
+             self.isaxes = False
+             self.set_figure(parent)
+         else:
+-            raise TypeError("Legend needs either Axes or Figure as parent")
++            raise TypeError("Legend needs either Axes or FigureBase as parent")
+         self.parent = parent
+ 
+         self._loc_used_default = loc is None
+2025-04-08 15:03:38,927 - INFO - Eval script for matplotlib__matplotlib-20859 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20859/eval.sh; copying to container...
+2025-04-08 15:06:49,438 - INFO - Test runtime: 189.10 seconds
+2025-04-08 15:06:49,438 - INFO - Test output for matplotlib__matplotlib-20859 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-20859/test_output.txt
+2025-04-08 15:06:49,843 - INFO - Git diff after:
+diff --git a/lib/matplotlib/legend.py b/lib/matplotlib/legend.py
+index 44ab024698..aaa2e3089a 100644
+--- a/lib/matplotlib/legend.py
++++ b/lib/matplotlib/legend.py
+@@ -360,7 +360,7 @@ class Legend(Artist):
+         """
+         # local import only to avoid circularity
+         from matplotlib.axes import Axes
+-        from matplotlib.figure import Figure
++        from matplotlib.figure import Figure, FigureBase
+ 
+         super().__init__()
+ 
+@@ -434,11 +434,11 @@ class Legend(Artist):
+             self.isaxes = True
+             self.axes = parent
+             self.set_figure(parent.figure)
+-        elif isinstance(parent, Figure):
++        elif isinstance(parent, FigureBase):
+             self.isaxes = False
+             self.set_figure(parent)
+         else:
+-            raise TypeError("Legend needs either Axes or Figure as parent")
++            raise TypeError("Legend needs either Axes or FigureBase as parent")
+         self.parent = parent
+ 
+         self._loc_used_default = loc is None
+2025-04-08 15:06:49,843 - INFO - Grading answer for matplotlib__matplotlib-20859...
+2025-04-08 15:06:49,844 - INFO - report: {'matplotlib__matplotlib-20859': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-20859: resolved: False
+2025-04-08 15:06:49,844 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-20859.241028_solver...
+2025-04-08 15:07:09,020 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-20859.241028_solver...
+2025-04-08 15:07:09,127 - INFO - Container sweb.eval.matplotlib__matplotlib-20859.241028_solver removed.
+2025-04-08 15:07:09,127 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-20859:latest...
+2025-04-08 15:07:26,528 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-20859:latest removed.
