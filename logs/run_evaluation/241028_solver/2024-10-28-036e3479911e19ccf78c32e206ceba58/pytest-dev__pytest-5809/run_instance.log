@@ -1,40 +1,49 @@
-2025-04-08 11:43:27,376 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.088a7e628bda9770f9757b:latest/json
+2025-04-09 08:01:06,188 - INFO - Environment image sweb.env.x86_64.088a7e628bda9770f9757b:latest found for pytest-dev__pytest-5809
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-5809:latest for pytest-dev__pytest-5809
+2025-04-09 08:01:59,030 - INFO - Creating container for pytest-dev__pytest-5809...
+2025-04-09 08:01:59,150 - INFO - Container for pytest-dev__pytest-5809 created: 6ad2dcf13e1a7bb93f906736d443d3df515f004655ea7f73aaa24d5b284d9bbe
+2025-04-09 08:02:00,228 - INFO - Container for pytest-dev__pytest-5809 started: 6ad2dcf13e1a7bb93f906736d443d3df515f004655ea7f73aaa24d5b284d9bbe
+2025-04-09 08:02:00,229 - INFO - Intermediate patch for pytest-dev__pytest-5809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5809/patch.diff, now applying to container...
+2025-04-09 08:02:01,123 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 08:02:01,329 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/pastebin.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.088a7e628bda9770f9757b:latest/json: Not Found ("No such image: sweb.env.x86_64.088a7e628bda9770f9757b:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image pytest-dev__pytest-5809: Environment image sweb.env.x86_64.088a7e628bda9770f9757b:latest not found for pytest-dev__pytest-5809
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5809/run_instance.log) for more information.
-
-2025-04-08 11:43:27,377 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-5809:latest...
-2025-04-08 11:43:27,379 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-5809:latest not found, removing has no effect.
+2025-04-09 08:02:02,028 - INFO - Git diff before:
+diff --git a/src/_pytest/pastebin.py b/src/_pytest/pastebin.py
+index 41576a615..79b0d9d40 100644
+--- a/src/_pytest/pastebin.py
++++ b/src/_pytest/pastebin.py
+@@ -79,7 +79,7 @@ def create_new_paste(contents):
+ 
+     params = {
+         "code": contents,
+-        "lexer": "python3" if sys.version_info[0] >= 3 else "python",
++        "lexer": "text",
+         "expiry": "1week",
+     }
+     url = "https://bpaste.net"
+2025-04-09 08:02:02,029 - INFO - Eval script for pytest-dev__pytest-5809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5809/eval.sh; copying to container...
+2025-04-09 08:02:34,624 - INFO - Test runtime: 31.78 seconds
+2025-04-09 08:02:34,624 - INFO - Test output for pytest-dev__pytest-5809 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-5809/test_output.txt
+2025-04-09 08:02:34,828 - INFO - Git diff after:
+diff --git a/src/_pytest/pastebin.py b/src/_pytest/pastebin.py
+index 41576a615..79b0d9d40 100644
+--- a/src/_pytest/pastebin.py
++++ b/src/_pytest/pastebin.py
+@@ -79,7 +79,7 @@ def create_new_paste(contents):
+ 
+     params = {
+         "code": contents,
+-        "lexer": "python3" if sys.version_info[0] >= 3 else "python",
++        "lexer": "text",
+         "expiry": "1week",
+     }
+     url = "https://bpaste.net"
+2025-04-09 08:02:34,829 - INFO - Grading answer for pytest-dev__pytest-5809...
+2025-04-09 08:02:34,829 - INFO - report: {'pytest-dev__pytest-5809': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-5809: resolved: False
+2025-04-09 08:02:34,829 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-5809.241028_solver...
+2025-04-09 08:02:51,722 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-5809.241028_solver...
+2025-04-09 08:02:51,837 - INFO - Container sweb.eval.pytest-dev__pytest-5809.241028_solver removed.
+2025-04-09 08:02:51,837 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-5809:latest...
+2025-04-09 08:02:52,140 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-5809:latest removed.

@@ -1,4 +1,4 @@
-2025-04-08 16:35:20,935 - INFO - Building image sweb.eval.x86_64.matplotlib__matplotlib-25287:latest
+2025-04-09 09:49:41,832 - INFO - Building image sweb.eval.x86_64.matplotlib__matplotlib-25287:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.env.x86_64.efa6065ed5bf204410fd53:latest
 
@@ -9,7 +9,7 @@ RUN /bin/bash /root/setup_repo.sh
 WORKDIR /testbed/
 
 Adding (1) setup scripts to image build repo
-2025-04-08 16:35:20,935 - INFO - [SETUP SCRIPT] setup_repo.sh:
+2025-04-09 09:49:41,834 - INFO - [SETUP SCRIPT] setup_repo.sh:
 #!/bin/bash
 set -euxo pipefail
 git clone -o origin https://github.com/matplotlib/matplotlib.git /testbed
@@ -23,200 +23,192 @@ echo "Current environment: $CONDA_DEFAULT_ENV"
 apt-get -y update && apt-get -y upgrade && DEBIAN_FRONTEND=noninteractive apt-get install -y imagemagick ffmpeg texlive texlive-latex-extra texlive-fonts-recommended texlive-xetex texlive-luatex cm-super dvipng
 python -m pip install -e .
 
-2025-04-08 16:35:20,936 - INFO - Building docker image sweb.eval.x86_64.matplotlib__matplotlib-25287:latest in logs/build_images/instances/sweb.eval.x86_64.matplotlib__matplotlib-25287__latest with platform linux/x86_64
-2025-04-08 16:35:21,017 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.efa6065ed5bf204410fd53:latest
-2025-04-08 16:35:21,018 - INFO - 
-2025-04-08 16:35:21,018 - INFO - ---> b9b30f6c1f5e
-2025-04-08 16:35:21,018 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
-2025-04-08 16:35:21,018 - INFO - 
-2025-04-08 16:35:21,313 - INFO - ---> ec4baa95b80d
-2025-04-08 16:35:21,313 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
-2025-04-08 16:35:21,315 - INFO - 
-2025-04-08 16:35:21,435 - INFO - ---> Running in 9f8d4128d8a3
-2025-04-08 16:35:23,531 - INFO - ---> Removed intermediate container 9f8d4128d8a3
-2025-04-08 16:35:23,536 - INFO - ---> 0ef0e2647697
-2025-04-08 16:35:23,537 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
-2025-04-08 16:35:23,537 - INFO - 
-2025-04-08 16:35:23,631 - INFO - ---> Running in 3a2396baa8d0
-2025-04-08 16:35:24,738 - INFO - + git clone -o origin https://github.com/matplotlib/matplotlib.git /testbed
-2025-04-08 16:35:24,811 - INFO - Cloning into '/testbed'...
-2025-04-08 16:36:59,325 - INFO - Updating files:  33% (1486/4453)
-2025-04-08 16:36:59,412 - INFO - Updating files:  34% (1515/4453)
-2025-04-08 16:36:59,431 - INFO - Updating files:  35% (1559/4453)
-2025-04-08 16:36:59,519 - INFO - Updating files:  36% (1604/4453)
-2025-04-08 16:36:59,530 - INFO - Updating files:  37% (1648/4453)
-2025-04-08 16:36:59,922 - INFO - Updating files:  38% (1693/4453)
-2025-04-08 16:36:59,931 - INFO - Updating files:  39% (1737/4453)
-2025-04-08 16:37:00,016 - INFO - Updating files:  40% (1782/4453)
-2025-04-08 16:37:00,026 - INFO - Updating files:  41% (1826/4453)
-2025-04-08 16:37:00,210 - INFO - Updating files:  42% (1871/4453)
-2025-04-08 16:37:00,224 - INFO - Updating files:  43% (1915/4453)
-2025-04-08 16:37:00,228 - INFO - Updating files:  44% (1960/4453)
-2025-04-08 16:37:00,322 - INFO - Updating files:  45% (2004/4453)
-2025-04-08 16:37:00,323 - INFO - Updating files:  45% (2009/4453)
-2025-04-08 16:37:00,414 - INFO - Updating files:  46% (2049/4453)
-2025-04-08 16:37:00,522 - INFO - Updating files:  47% (2093/4453)
-2025-04-08 16:37:00,609 - INFO - Updating files:  48% (2138/4453)
-2025-04-08 16:37:00,714 - INFO - Updating files:  49% (2182/4453)
-2025-04-08 16:37:00,727 - INFO - Updating files:  50% (2227/4453)
-2025-04-08 16:37:00,815 - INFO - Updating files:  51% (2272/4453)
-2025-04-08 16:37:00,832 - INFO - Updating files:  52% (2316/4453)
-2025-04-08 16:37:00,921 - INFO - Updating files:  53% (2361/4453)
-2025-04-08 16:37:01,009 - INFO - Updating files:  54% (2405/4453)
-2025-04-08 16:37:01,017 - INFO - Updating files:  55% (2450/4453)
-2025-04-08 16:37:01,023 - INFO - Updating files:  56% (2494/4453)
-2025-04-08 16:37:01,030 - INFO - Updating files:  57% (2539/4453)
-2025-04-08 16:37:01,114 - INFO - Updating files:  58% (2583/4453)
-2025-04-08 16:37:01,120 - INFO - Updating files:  59% (2628/4453)
-2025-04-08 16:37:01,126 - INFO - Updating files:  60% (2672/4453)
-2025-04-08 16:37:01,133 - INFO - Updating files:  61% (2717/4453)
-2025-04-08 16:37:01,216 - INFO - Updating files:  62% (2761/4453)
-2025-04-08 16:37:01,224 - INFO - Updating files:  63% (2806/4453)
-2025-04-08 16:37:01,231 - INFO - Updating files:  64% (2850/4453)
-2025-04-08 16:37:01,313 - INFO - Updating files:  65% (2895/4453)
-2025-04-08 16:37:01,324 - INFO - Updating files:  66% (2939/4453)Updating files:  66% (2957/4453)
-2025-04-08 16:37:01,329 - INFO - Updating files:  67% (2984/4453)
-2025-04-08 16:37:01,413 - INFO - Updating files:  68% (3029/4453)
-2025-04-08 16:37:01,416 - INFO - Updating files:  69% (3073/4453)
-2025-04-08 16:37:01,422 - INFO - Updating files:  70% (3118/4453)
-2025-04-08 16:37:01,428 - INFO - Updating files:  71% (3162/4453)
-2025-04-08 16:37:01,510 - INFO - Updating files:  72% (3207/4453)
-2025-04-08 16:37:01,516 - INFO - Updating files:  73% (3251/4453)
-2025-04-08 16:37:01,524 - INFO - Updating files:  74% (3296/4453)
-2025-04-08 16:37:01,527 - INFO - Updating files:  75% (3340/4453)
-2025-04-08 16:37:01,533 - INFO - Updating files:  76% (3385/4453)
-2025-04-08 16:37:01,615 - INFO - Updating files:  77% (3429/4453)
-2025-04-08 16:37:01,621 - INFO - Updating files:  78% (3474/4453)
-2025-04-08 16:37:01,629 - INFO - Updating files:  79% (3518/4453)
-2025-04-08 16:37:01,718 - INFO - Updating files:  80% (3563/4453)
-2025-04-08 16:37:01,719 - INFO - Updating files:  81% (3607/4453)
-2025-04-08 16:37:01,728 - INFO - Updating files:  82% (3652/4453)
-2025-04-08 16:37:01,816 - INFO - Updating files:  83% (3696/4453)Updating files:  84% (3741/4453)
-2025-04-08 16:37:01,822 - INFO - Updating files:  85% (3786/4453)
-2025-04-08 16:37:01,828 - INFO - Updating files:  86% (3830/4453)
-2025-04-08 16:37:01,912 - INFO - Updating files:  87% (3875/4453)
-2025-04-08 16:37:01,932 - INFO - Updating files:  88% (3919/4453)
-2025-04-08 16:37:02,111 - INFO - Updating files:  89% (3964/4453)
-2025-04-08 16:37:02,133 - INFO - Updating files:  90% (4008/4453)
-2025-04-08 16:37:02,230 - INFO - Updating files:  91% (4053/4453)
-2025-04-08 16:37:02,324 - INFO - Updating files:  91% (4094/4453)
-2025-04-08 16:37:02,325 - INFO - Updating files:  92% (4097/4453)
-2025-04-08 16:37:02,417 - INFO - Updating files:  93% (4142/4453)
-2025-04-08 16:37:02,427 - INFO - Updating files:  94% (4186/4453)
-2025-04-08 16:37:02,514 - INFO - Updating files:  95% (4231/4453)
-2025-04-08 16:37:02,525 - INFO - Updating files:  96% (4275/4453)
-2025-04-08 16:37:02,629 - INFO - Updating files:  97% (4320/4453)
-2025-04-08 16:37:02,731 - INFO - Updating files:  98% (4364/4453)
-2025-04-08 16:37:02,824 - INFO - Updating files:  99% (4409/4453)
-2025-04-08 16:37:02,909 - INFO - Updating files: 100% (4453/4453)Updating files: 100% (4453/4453), done.
-2025-04-08 16:37:03,014 - INFO - + chmod -R 777 /testbed
-2025-04-08 16:37:03,330 - INFO - + cd /testbed
+2025-04-09 09:49:41,850 - INFO - Building docker image sweb.eval.x86_64.matplotlib__matplotlib-25287:latest in logs/build_images/instances/sweb.eval.x86_64.matplotlib__matplotlib-25287__latest with platform linux/x86_64
+2025-04-09 09:49:42,006 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.efa6065ed5bf204410fd53:latest
+2025-04-09 09:49:42,043 - INFO - 
+2025-04-09 09:49:42,044 - INFO - ---> e26d33133646
+2025-04-09 09:49:42,079 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
+2025-04-09 09:49:42,080 - INFO - 
+2025-04-09 09:49:42,541 - INFO - ---> 308af7c69b7b
+2025-04-09 09:49:42,541 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
+2025-04-09 09:49:42,541 - INFO - 
+2025-04-09 09:49:42,614 - INFO - ---> Running in 7ffe8e360786
+2025-04-09 09:49:47,401 - INFO - ---> Removed intermediate container 7ffe8e360786
+2025-04-09 09:49:47,401 - INFO - ---> 92aa083112d8
+2025-04-09 09:49:47,402 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
+2025-04-09 09:49:47,402 - INFO - 
+2025-04-09 09:49:47,512 - INFO - ---> Running in ed599c99504a
+2025-04-09 09:49:49,720 - INFO - + git clone -o origin https://github.com/matplotlib/matplotlib.git /testbed
+2025-04-09 09:49:49,722 - INFO - Cloning into '/testbed'...
+2025-04-09 09:53:28,908 - INFO - Updating files:  33% (1491/4451)
+2025-04-09 09:53:28,912 - INFO - Updating files:  34% (1514/4451)
+2025-04-09 09:53:28,921 - INFO - Updating files:  35% (1558/4451)
+2025-04-09 09:53:29,014 - INFO - Updating files:  36% (1603/4451)
+2025-04-09 09:53:29,100 - INFO - Updating files:  37% (1647/4451)
+2025-04-09 09:53:29,313 - INFO - Updating files:  38% (1692/4451)
+2025-04-09 09:53:29,319 - INFO - Updating files:  39% (1736/4451)
+2025-04-09 09:53:29,404 - INFO - Updating files:  40% (1781/4451)
+2025-04-09 09:53:29,413 - INFO - Updating files:  41% (1825/4451)
+2025-04-09 09:53:29,421 - INFO - Updating files:  42% (1870/4451)
+2025-04-09 09:53:29,505 - INFO - Updating files:  43% (1914/4451)
+2025-04-09 09:53:29,511 - INFO - Updating files:  44% (1959/4451)
+2025-04-09 09:53:29,603 - INFO - Updating files:  45% (2003/4451)
+2025-04-09 09:53:29,614 - INFO - Updating files:  46% (2048/4451)
+2025-04-09 09:53:29,720 - INFO - Updating files:  47% (2092/4451)
+2025-04-09 09:53:29,809 - INFO - Updating files:  48% (2137/4451)
+2025-04-09 09:53:29,913 - INFO - Updating files:  48% (2179/4451)
+2025-04-09 09:53:29,914 - INFO - Updating files:  49% (2181/4451)
+2025-04-09 09:53:30,002 - INFO - Updating files:  50% (2226/4451)
+2025-04-09 09:53:30,014 - INFO - Updating files:  51% (2271/4451)
+2025-04-09 09:53:30,103 - INFO - Updating files:  52% (2315/4451)
+2025-04-09 09:53:30,119 - INFO - Updating files:  53% (2360/4451)
+2025-04-09 09:53:30,207 - INFO - Updating files:  54% (2404/4451)
+2025-04-09 09:53:30,220 - INFO - Updating files:  55% (2449/4451)
+2025-04-09 09:53:30,303 - INFO - Updating files:  56% (2493/4451)
+2025-04-09 09:53:30,310 - INFO - Updating files:  57% (2538/4451)
+2025-04-09 09:53:30,316 - INFO - Updating files:  58% (2582/4451)
+2025-04-09 09:53:30,323 - INFO - Updating files:  59% (2627/4451)
+2025-04-09 09:53:30,405 - INFO - Updating files:  60% (2671/4451)
+2025-04-09 09:53:30,413 - INFO - Updating files:  61% (2716/4451)
+2025-04-09 09:53:30,421 - INFO - Updating files:  62% (2760/4451)
+2025-04-09 09:53:30,506 - INFO - Updating files:  63% (2805/4451)
+2025-04-09 09:53:30,514 - INFO - Updating files:  64% (2849/4451)
+2025-04-09 09:53:30,523 - INFO - Updating files:  65% (2894/4451)
+2025-04-09 09:53:30,605 - INFO - Updating files:  66% (2938/4451)
+2025-04-09 09:53:30,612 - INFO - Updating files:  67% (2983/4451)
+2025-04-09 09:53:30,618 - INFO - Updating files:  68% (3027/4451)
+2025-04-09 09:53:30,700 - INFO - Updating files:  69% (3072/4451)
+2025-04-09 09:53:30,700 - INFO - Updating files:  70% (3116/4451)Updating files:  71% (3161/4451)Updating files:  72% (3205/4451)
+2025-04-09 09:53:30,707 - INFO - Updating files:  73% (3250/4451)
+2025-04-09 09:53:30,714 - INFO - Updating files:  74% (3294/4451)
+2025-04-09 09:53:30,721 - INFO - Updating files:  75% (3339/4451)
+2025-04-09 09:53:30,803 - INFO - Updating files:  76% (3383/4451)
+2025-04-09 09:53:30,811 - INFO - Updating files:  77% (3428/4451)
+2025-04-09 09:53:30,817 - INFO - Updating files:  78% (3472/4451)
+2025-04-09 09:53:30,824 - INFO - Updating files:  79% (3517/4451)
+2025-04-09 09:53:30,907 - INFO - Updating files:  80% (3561/4451)
+2025-04-09 09:53:30,912 - INFO - Updating files:  81% (3606/4451)
+2025-04-09 09:53:30,917 - INFO - Updating files:  82% (3650/4451)
+2025-04-09 09:53:30,932 - INFO - Updating files:  83% (3695/4451)
+2025-04-09 09:53:31,006 - INFO - Updating files:  84% (3739/4451)
+2025-04-09 09:53:31,013 - INFO - Updating files:  85% (3784/4451)
+2025-04-09 09:53:31,018 - INFO - Updating files:  86% (3828/4451)
+2025-04-09 09:53:31,026 - INFO - Updating files:  87% (3873/4451)
+2025-04-09 09:53:31,111 - INFO - Updating files:  88% (3917/4451)
+2025-04-09 09:53:31,212 - INFO - Updating files:  89% (3962/4451)
+2025-04-09 09:53:31,306 - INFO - Updating files:  90% (4006/4451)
+2025-04-09 09:53:31,321 - INFO - Updating files:  91% (4051/4451)
+2025-04-09 09:53:31,413 - INFO - Updating files:  92% (4095/4451)
+2025-04-09 09:53:31,423 - INFO - Updating files:  93% (4140/4451)
+2025-04-09 09:53:31,508 - INFO - Updating files:  94% (4184/4451)
+2025-04-09 09:53:31,518 - INFO - Updating files:  95% (4229/4451)
+2025-04-09 09:53:31,528 - INFO - Updating files:  96% (4273/4451)
+2025-04-09 09:53:31,542 - INFO - Updating files:  97% (4318/4451)
+2025-04-09 09:53:31,623 - INFO - Updating files:  98% (4362/4451)
+2025-04-09 09:53:31,713 - INFO - Updating files:  99% (4407/4451)
+2025-04-09 09:53:31,722 - INFO - Updating files: 100% (4451/4451)Updating files: 100% (4451/4451), done.
+2025-04-09 09:53:31,811 - INFO - + chmod -R 777 /testbed
+2025-04-09 09:53:32,112 - INFO - + cd /testbed
 + git reset --hard f8ffce6d44127d4ea7d6491262ab30046b03294b
-2025-04-08 16:37:04,609 - INFO - Updating files:  33% (1843/5430)
-2025-04-08 16:37:04,609 - INFO - Updating files:  34% (1847/5430)
-2025-04-08 16:37:04,614 - INFO - Updating files:  35% (1901/5430)
-2025-04-08 16:37:04,624 - INFO - Updating files:  36% (1955/5430)
-2025-04-08 16:37:04,629 - INFO - Updating files:  37% (2010/5430)
-2025-04-08 16:37:04,714 - INFO - Updating files:  38% (2064/5430)
-2025-04-08 16:37:04,723 - INFO - Updating files:  39% (2118/5430)
-2025-04-08 16:37:04,734 - INFO - Updating files:  40% (2172/5430)
-2025-04-08 16:37:04,856 - INFO - Updating files:  41% (2227/5430)
-2025-04-08 16:37:04,915 - INFO - Updating files:  42% (2281/5430)
-2025-04-08 16:37:04,930 - INFO - Updating files:  43% (2335/5430)
-2025-04-08 16:37:05,115 - INFO - Updating files:  44% (2390/5430)
-2025-04-08 16:37:05,222 - INFO - Updating files:  45% (2444/5430)
-2025-04-08 16:37:05,313 - INFO - Updating files:  46% (2498/5430)
-2025-04-08 16:37:05,608 - INFO - Updating files:  47% (2553/5430)
-2025-04-08 16:37:05,609 - INFO - Updating files:  47% (2555/5430)
-2025-04-08 16:37:05,630 - INFO - Updating files:  48% (2607/5430)
-2025-04-08 16:37:05,713 - INFO - Updating files:  49% (2661/5430)
-2025-04-08 16:37:05,728 - INFO - Updating files:  50% (2715/5430)
-2025-04-08 16:37:05,818 - INFO - Updating files:  51% (2770/5430)
-2025-04-08 16:37:05,920 - INFO - Updating files:  52% (2824/5430)
-2025-04-08 16:37:06,015 - INFO - Updating files:  53% (2878/5430)
-2025-04-08 16:37:06,224 - INFO - Updating files:  54% (2933/5430)
-2025-04-08 16:37:06,310 - INFO - Updating files:  55% (2987/5430)
-2025-04-08 16:37:06,329 - INFO - Updating files:  56% (3041/5430)
-2025-04-08 16:37:06,431 - INFO - Updating files:  57% (3096/5430)
-2025-04-08 16:37:06,523 - INFO - Updating files:  58% (3150/5430)
-2025-04-08 16:37:06,610 - INFO - Updating files:  58% (3184/5430)
-2025-04-08 16:37:06,616 - INFO - Updating files:  59% (3204/5430)
-2025-04-08 16:37:06,721 - INFO - Updating files:  60% (3258/5430)
-2025-04-08 16:37:06,728 - INFO - Updating files:  61% (3313/5430)
-2025-04-08 16:37:06,819 - INFO - Updating files:  62% (3367/5430)
-2025-04-08 16:37:06,830 - INFO - Updating files:  63% (3421/5430)
-2025-04-08 16:37:06,916 - INFO - Updating files:  64% (3476/5430)
-2025-04-08 16:37:06,926 - INFO - Updating files:  65% (3530/5430)
-2025-04-08 16:37:06,931 - INFO - Updating files:  66% (3584/5430)
-2025-04-08 16:37:07,018 - INFO - Updating files:  67% (3639/5430)
-2025-04-08 16:37:07,029 - INFO - Updating files:  68% (3693/5430)
-2025-04-08 16:37:07,116 - INFO - Updating files:  69% (3747/5430)
-2025-04-08 16:37:07,128 - INFO - Updating files:  70% (3801/5430)
-2025-04-08 16:37:07,211 - INFO - Updating files:  71% (3856/5430)
-2025-04-08 16:37:07,221 - INFO - Updating files:  72% (3910/5430)
-2025-04-08 16:37:07,232 - INFO - Updating files:  73% (3964/5430)
-2025-04-08 16:37:07,318 - INFO - Updating files:  74% (4019/5430)
-2025-04-08 16:37:07,329 - INFO - Updating files:  75% (4073/5430)
-2025-04-08 16:37:07,414 - INFO - Updating files:  76% (4127/5430)
-2025-04-08 16:37:07,425 - INFO - Updating files:  77% (4182/5430)
-2025-04-08 16:37:07,511 - INFO - Updating files:  78% (4236/5430)
-2025-04-08 16:37:07,520 - INFO - Updating files:  79% (4290/5430)
-2025-04-08 16:37:07,530 - INFO - Updating files:  80% (4344/5430)
-2025-04-08 16:37:07,609 - INFO - Updating files:  80% (4367/5430)
-2025-04-08 16:37:07,615 - INFO - Updating files:  81% (4399/5430)
-2025-04-08 16:37:07,625 - INFO - Updating files:  82% (4453/5430)
-2025-04-08 16:37:07,717 - INFO - Updating files:  83% (4507/5430)
-2025-04-08 16:37:07,722 - INFO - Updating files:  84% (4562/5430)
-2025-04-08 16:37:07,731 - INFO - Updating files:  85% (4616/5430)
-2025-04-08 16:37:07,826 - INFO - Updating files:  86% (4670/5430)
-2025-04-08 16:37:07,831 - INFO - Updating files:  87% (4725/5430)
-2025-04-08 16:37:07,916 - INFO - Updating files:  88% (4779/5430)
-2025-04-08 16:37:07,931 - INFO - Updating files:  89% (4833/5430)
-2025-04-08 16:37:08,117 - INFO - Updating files:  90% (4887/5430)
-2025-04-08 16:37:08,213 - INFO - Updating files:  91% (4942/5430)
-2025-04-08 16:37:08,311 - INFO - Updating files:  92% (4996/5430)
-2025-04-08 16:37:08,418 - INFO - Updating files:  93% (5050/5430)
-2025-04-08 16:37:08,510 - INFO - Updating files:  94% (5105/5430)
-2025-04-08 16:37:08,524 - INFO - Updating files:  95% (5159/5430)
-2025-04-08 16:37:08,610 - INFO - Updating files:  95% (5191/5430)
-2025-04-08 16:37:08,615 - INFO - Updating files:  96% (5213/5430)
-2025-04-08 16:37:08,719 - INFO - Updating files:  97% (5268/5430)
-2025-04-08 16:37:08,817 - INFO - Updating files:  98% (5322/5430)
-2025-04-08 16:37:08,829 - INFO - Updating files:  99% (5376/5430)
-2025-04-08 16:37:08,914 - INFO - Updating files: 100% (5430/5430)Updating files: 100% (5430/5430), done.
-2025-04-08 16:37:08,927 - INFO - HEAD is now at f8ffce6d44 Merge pull request #25280 from QuLogic/new-gtk4-css
-2025-04-08 16:37:09,026 - INFO - + git remote remove origin
-2025-04-08 16:37:09,118 - INFO - + source /opt/miniconda3/bin/activate
-++ _CONDA_ROOT=/opt/miniconda3
-++ . /opt/miniconda3/etc/profile.d/conda.sh
-2025-04-08 16:37:09,119 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
-+++ CONDA_EXE=/opt/miniconda3/bin/conda
-+++ export _CE_M=
-+++ _CE_M=
-2025-04-08 16:37:09,119 - INFO - +++ export _CE_CONDA=
-+++ _CE_CONDA=
-+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-2025-04-08 16:37:09,120 - INFO - +++ '[' -z '' ']'
-+++ export CONDA_SHLVL=0
-+++ CONDA_SHLVL=0
-+++ '[' -n '' ']'
-2025-04-08 16:37:09,122 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-08 16:37:09,125 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-08 16:37:09,126 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-+++ export PATH
-+++ '[' -z '' ']'
-+++ PS1=
-++ conda activate
-2025-04-08 16:37:09,127 - INFO - ++ local cmd=activate
-++ case "$cmd" in
-++ __conda_activate activate
-++ '[' -n '' ']'
-++ local ask_conda
-2025-04-08 16:37:09,128 - INFO - +++ PS1=
+2025-04-09 09:53:33,310 - INFO - Updating files:  39% (2161/5428)
+2025-04-09 09:53:33,312 - INFO - Updating files:  40% (2172/5428)
+2025-04-09 09:53:33,325 - INFO - Updating files:  41% (2226/5428)
+2025-04-09 09:53:33,411 - INFO - Updating files:  42% (2280/5428)
+2025-04-09 09:53:33,425 - INFO - Updating files:  43% (2335/5428)
+2025-04-09 09:53:33,605 - INFO - Updating files:  44% (2389/5428)
+2025-04-09 09:53:33,703 - INFO - Updating files:  45% (2443/5428)
+2025-04-09 09:53:33,718 - INFO - Updating files:  46% (2497/5428)
+2025-04-09 09:53:34,018 - INFO - Updating files:  47% (2552/5428)
+2025-04-09 09:53:34,107 - INFO - Updating files:  48% (2606/5428)
+2025-04-09 09:53:34,216 - INFO - Updating files:  49% (2660/5428)
+2025-04-09 09:53:34,217 - INFO - Updating files:  50% (2714/5428)
+2025-04-09 09:53:34,310 - INFO - Updating files:  50% (2767/5428)
+2025-04-09 09:53:34,311 - INFO - Updating files:  51% (2769/5428)
+2025-04-09 09:53:34,416 - INFO - Updating files:  52% (2823/5428)
+2025-04-09 09:53:34,513 - INFO - Updating files:  53% (2877/5428)
+2025-04-09 09:53:34,620 - INFO - Updating files:  54% (2932/5428)
+2025-04-09 09:53:34,720 - INFO - Updating files:  55% (2986/5428)
+2025-04-09 09:53:34,811 - INFO - Updating files:  56% (3040/5428)
+2025-04-09 09:53:34,913 - INFO - Updating files:  57% (3094/5428)
+2025-04-09 09:53:35,003 - INFO - Updating files:  58% (3149/5428)
+2025-04-09 09:53:35,020 - INFO - Updating files:  59% (3203/5428)
+2025-04-09 09:53:35,112 - INFO - Updating files:  60% (3257/5428)
+2025-04-09 09:53:35,207 - INFO - Updating files:  61% (3312/5428)
+2025-04-09 09:53:35,216 - INFO - Updating files:  62% (3366/5428)
+2025-04-09 09:53:35,302 - INFO - Updating files:  63% (3420/5428)
+2025-04-09 09:53:35,310 - INFO - Updating files:  63% (3457/5428)
+2025-04-09 09:53:35,313 - INFO - Updating files:  64% (3474/5428)
+2025-04-09 09:53:35,405 - INFO - Updating files:  65% (3529/5428)
+2025-04-09 09:53:35,412 - INFO - Updating files:  66% (3583/5428)
+2025-04-09 09:53:35,423 - INFO - Updating files:  67% (3637/5428)
+2025-04-09 09:53:35,509 - INFO - Updating files:  68% (3692/5428)
+2025-04-09 09:53:35,521 - INFO - Updating files:  69% (3746/5428)
+2025-04-09 09:53:35,610 - INFO - Updating files:  70% (3800/5428)
+2025-04-09 09:53:35,623 - INFO - Updating files:  71% (3854/5428)
+2025-04-09 09:53:35,709 - INFO - Updating files:  72% (3909/5428)
+2025-04-09 09:53:35,720 - INFO - Updating files:  73% (3963/5428)
+2025-04-09 09:53:35,807 - INFO - Updating files:  74% (4017/5428)
+2025-04-09 09:53:35,818 - INFO - Updating files:  75% (4071/5428)
+2025-04-09 09:53:35,905 - INFO - Updating files:  76% (4126/5428)
+2025-04-09 09:53:35,922 - INFO - Updating files:  77% (4180/5428)
+2025-04-09 09:53:36,004 - INFO - Updating files:  78% (4234/5428)
+2025-04-09 09:53:36,015 - INFO - Updating files:  79% (4289/5428)
+2025-04-09 09:53:36,101 - INFO - Updating files:  80% (4343/5428)
+2025-04-09 09:53:36,111 - INFO - Updating files:  81% (4397/5428)
+2025-04-09 09:53:36,121 - INFO - Updating files:  82% (4451/5428)
+2025-04-09 09:53:36,207 - INFO - Updating files:  83% (4506/5428)
+2025-04-09 09:53:36,218 - INFO - Updating files:  84% (4560/5428)
+2025-04-09 09:53:36,308 - INFO - Updating files:  85% (4614/5428)
+2025-04-09 09:53:36,313 - INFO - Updating files:  85% (4622/5428)
+2025-04-09 09:53:36,322 - INFO - Updating files:  86% (4669/5428)
+2025-04-09 09:53:36,410 - INFO - Updating files:  87% (4723/5428)
+2025-04-09 09:53:36,422 - INFO - Updating files:  88% (4777/5428)
+2025-04-09 09:53:36,514 - INFO - Updating files:  89% (4831/5428)
+2025-04-09 09:53:36,623 - INFO - Updating files:  90% (4886/5428)
+2025-04-09 09:53:36,711 - INFO - Updating files:  91% (4940/5428)
+2025-04-09 09:53:36,809 - INFO - Updating files:  92% (4994/5428)
+2025-04-09 09:53:36,913 - INFO - Updating files:  93% (5049/5428)
+2025-04-09 09:53:37,005 - INFO - Updating files:  94% (5103/5428)
+2025-04-09 09:53:37,021 - INFO - Updating files:  95% (5157/5428)
+2025-04-09 09:53:37,114 - INFO - Updating files:  96% (5211/5428)
+2025-04-09 09:53:37,219 - INFO - Updating files:  97% (5266/5428)
+2025-04-09 09:53:37,310 - INFO - Updating files:  97% (5284/5428)
+2025-04-09 09:53:37,317 - INFO - Updating files:  98% (5320/5428)
+2025-04-09 09:53:37,406 - INFO - Updating files:  99% (5374/5428)
+2025-04-09 09:53:37,418 - INFO - Updating files: 100% (5428/5428)Updating files: 100% (5428/5428), done.
+2025-04-09 09:53:37,510 - INFO - HEAD is now at f8ffce6d44 Merge pull request #25280 from QuLogic/new-gtk4-css
+2025-04-09 09:53:37,602 - INFO - + git remote remove origin
+2025-04-09 09:53:37,619 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-09 09:53:37,621 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-09 09:53:37,621 - INFO - ++ . /opt/miniconda3/etc/profile.d/conda.sh
+2025-04-09 09:53:37,621 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-09 09:53:37,622 - INFO - +++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-09 09:53:37,622 - INFO - +++ export _CE_M=
+2025-04-09 09:53:37,622 - INFO - +++ _CE_M=
+2025-04-09 09:53:37,623 - INFO - +++ export _CE_CONDA=
+2025-04-09 09:53:37,623 - INFO - +++ _CE_CONDA=
+2025-04-09 09:53:37,623 - INFO - +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-09 09:53:37,624 - INFO - +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-09 09:53:37,624 - INFO - +++ '[' -z '' ']'
+2025-04-09 09:53:37,625 - INFO - +++ export CONDA_SHLVL=0
+2025-04-09 09:53:37,625 - INFO - +++ CONDA_SHLVL=0
+2025-04-09 09:53:37,625 - INFO - +++ '[' -n '' ']'
+2025-04-09 09:53:37,627 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-09 09:53:37,629 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-09 09:53:37,630 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-09 09:53:37,631 - INFO - +++ export PATH
+2025-04-09 09:53:37,631 - INFO - +++ '[' -z '' ']'
+2025-04-09 09:53:37,631 - INFO - +++ PS1=
+2025-04-09 09:53:37,632 - INFO - ++ conda activate
+2025-04-09 09:53:37,632 - INFO - ++ local cmd=activate
+2025-04-09 09:53:37,632 - INFO - ++ case "$cmd" in
+2025-04-09 09:53:37,633 - INFO - ++ __conda_activate activate
+2025-04-09 09:53:37,633 - INFO - ++ '[' -n '' ']'
+2025-04-09 09:53:37,633 - INFO - ++ local ask_conda
+2025-04-09 09:53:37,634 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-08 16:37:09,128 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-08 16:37:10,027 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-09 09:53:37,635 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-09 09:53:38,422 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -225,8 +217,8 @@ export CONDA_PROMPT_MODIFIER='\''(base) '\''
 export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
-2025-04-08 16:37:10,028 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-2025-04-08 16:37:10,028 - INFO - ++ eval 'PS1='\''(base) '\''
+2025-04-09 09:53:38,423 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+2025-04-09 09:53:38,423 - INFO - ++ eval 'PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -235,19 +227,19 @@ export CONDA_PROMPT_MODIFIER='\''(base) '\''
 export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
-2025-04-08 16:37:10,028 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-2025-04-08 16:37:10,028 - INFO - +++ PS1='(base) '
-2025-04-08 16:37:10,028 - INFO - +++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-2025-04-08 16:37:10,028 - INFO - +++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-2025-04-08 16:37:10,028 - INFO - +++ export CONDA_PREFIX=/opt/miniconda3
+2025-04-09 09:53:38,500 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+2025-04-09 09:53:38,501 - INFO - +++ PS1='(base) '
++++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++ export CONDA_PREFIX=/opt/miniconda3
 +++ CONDA_PREFIX=/opt/miniconda3
-2025-04-08 16:37:10,028 - INFO - +++ export CONDA_SHLVL=1
-2025-04-08 16:37:10,028 - INFO - +++ CONDA_SHLVL=1
-2025-04-08 16:37:10,029 - INFO - +++ export CONDA_DEFAULT_ENV=base
++++ export CONDA_SHLVL=1
++++ CONDA_SHLVL=1
++++ export CONDA_DEFAULT_ENV=base
 +++ CONDA_DEFAULT_ENV=base
-2025-04-08 16:37:10,029 - INFO - +++ export 'CONDA_PROMPT_MODIFIER=(base) '
++++ export 'CONDA_PROMPT_MODIFIER=(base) '
 +++ CONDA_PROMPT_MODIFIER='(base) '
-2025-04-08 16:37:10,030 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
++++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
@@ -265,10 +257,10 @@ export _CE_CONDA='\'''\''
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-08 16:37:10,030 - INFO - ++ PS1='(base) '
+2025-04-09 09:53:38,502 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-08 16:37:10,030 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-08 16:37:11,027 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-09 09:53:38,502 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-09 09:53:39,424 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -309,53 +301,1462 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\''
 ++ CONDA_PREFIX_1=/opt/miniconda3
 ++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
-2025-04-08 16:37:11,027 - INFO - ++ export _CE_M=
+++ export _CE_M=
 ++ _CE_M=
 ++ export _CE_CONDA=
 ++ _CE_CONDA=
 ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-++ . /opt/miniconda3/envs/testbed/etc/conda/activate.d/libglib_activate.sh
-2025-04-08 16:37:11,027 - INFO - +++ export GSETTINGS_SCHEMA_DIR_CONDA_BACKUP=
+2025-04-09 09:53:39,424 - INFO - ++ . /opt/miniconda3/envs/testbed/etc/conda/activate.d/libglib_activate.sh
+2025-04-09 09:53:39,424 - INFO - +++ export GSETTINGS_SCHEMA_DIR_CONDA_BACKUP=
 +++ GSETTINGS_SCHEMA_DIR_CONDA_BACKUP=
 +++ export GSETTINGS_SCHEMA_DIR=/opt/miniconda3/envs/testbed/share/glib-2.0/schemas
 +++ GSETTINGS_SCHEMA_DIR=/opt/miniconda3/envs/testbed/share/glib-2.0/schemas
 ++ . /opt/miniconda3/envs/testbed/etc/conda/activate.d/libxml2_activate.sh
-2025-04-08 16:37:11,027 - INFO - +++ test -n ''
++++ test -n ''
 +++ xml_catalog_files_libxml2=
 +++ XML_CATALOG_FILES=
-+++ conda_catalog_files=
+2025-04-09 09:53:39,424 - INFO - +++ conda_catalog_files=
 +++ ifs_libxml2=' 	
 '
 +++ IFS=' '
 +++ rem=/opt/miniconda3/envs/testbed
 +++ for pre in ${rem}
-2025-04-08 16:37:11,028 - INFO - +++ test '' = /opt/miniconda3/envs/testbed
-+++ conda_catalog_files=/opt/miniconda3/envs/testbed
-+++ rem=
-+++ IFS=' 	
+2025-04-09 09:53:39,424 - INFO - +++ test '' = /opt/miniconda3/envs/testbed
+2025-04-09 09:53:39,424 - INFO - +++ conda_catalog_files=/opt/miniconda3/envs/testbed
+2025-04-09 09:53:39,424 - INFO - +++ rem=
+2025-04-09 09:53:39,424 - INFO - +++ IFS=' 	
 '
 +++ conda_catalog_files='file:///opt/miniconda3/envs/testbed/etc/xml/catalog file:///etc/xml/catalog'
-+++ export 'XML_CATALOG_FILES=file:///opt/miniconda3/envs/testbed/etc/xml/catalog file:///etc/xml/catalog'
-+++ XML_CATALOG_FILES='file:///opt/miniconda3/envs/testbed/etc/xml/catalog file:///etc/xml/catalog'
-2025-04-08 16:37:11,028 - INFO - +++ unset conda_catalog_files ifs_libxml2 rem
-2025-04-08 16:37:11,028 - INFO - + __conda_hashr
-2025-04-08 16:37:11,028 - INFO - + '[' -n '' ']'
-+ '[' -n '' ']'
-+ hash -r
-2025-04-08 16:37:11,028 - INFO - + echo 'Current environment: testbed'
-+ apt-get -y update
-2025-04-08 16:37:11,028 - INFO - Current environment: testbed
-2025-04-08 16:37:11,511 - INFO - Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
-2025-04-08 16:37:11,709 - INFO - Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
-2025-04-08 16:37:12,110 - INFO - Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
-2025-04-08 16:37:12,310 - INFO - Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
-2025-04-08 16:37:13,216 - INFO - Get:5 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
-2025-04-08 16:37:13,420 - INFO - Get:6 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
-2025-04-08 16:37:14,210 - INFO - Get:7 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1243 kB]
-2025-04-08 16:37:15,112 - INFO - Get:8 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [2788 kB]
-2025-04-08 16:37:15,515 - INFO - Get:9 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [4000 kB]
-2025-04-08 16:37:15,729 - INFO - Get:10 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [47.7 kB]
-2025-04-08 16:37:16,124 - INFO - Get:11 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
-2025-04-08 16:37:16,124 - INFO - Get:12 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]
-2025-04-08 16:37:16,324 - INFO - Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3097 kB]
+2025-04-09 09:53:39,425 - INFO - +++ export 'XML_CATALOG_FILES=file:///opt/miniconda3/envs/testbed/etc/xml/catalog file:///etc/xml/catalog'
+2025-04-09 09:53:39,425 - INFO - +++ XML_CATALOG_FILES='file:///opt/miniconda3/envs/testbed/etc/xml/catalog file:///etc/xml/catalog'
+2025-04-09 09:53:39,425 - INFO - +++ unset conda_catalog_files ifs_libxml2 rem
+2025-04-09 09:53:39,425 - INFO - + __conda_hashr
+2025-04-09 09:53:39,425 - INFO - + '[' -n '' ']'
+2025-04-09 09:53:39,425 - INFO - + '[' -n '' ']'
+2025-04-09 09:53:39,425 - INFO - + hash -r
+2025-04-09 09:53:39,425 - INFO - + echo 'Current environment: testbed'
+2025-04-09 09:53:39,425 - INFO - Current environment: testbed
+2025-04-09 09:53:39,425 - INFO - + apt-get -y update
+2025-04-09 09:53:39,772 - INFO - Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+2025-04-09 09:53:39,895 - INFO - Get:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+2025-04-09 09:53:40,204 - INFO - Get:3 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+2025-04-09 09:53:40,605 - INFO - Get:4 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+2025-04-09 09:53:41,301 - INFO - Get:5 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1243 kB]
+2025-04-09 09:53:41,303 - INFO - Get:6 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]
+2025-04-09 09:53:42,104 - INFO - Get:7 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [4000 kB]
+2025-04-09 09:53:42,306 - INFO - Get:8 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
+2025-04-09 09:53:42,407 - INFO - Get:9 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+2025-04-09 09:53:42,514 - INFO - Get:10 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [47.7 kB]
+2025-04-09 09:53:42,515 - INFO - Get:11 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [2788 kB]
+2025-04-09 09:53:47,704 - INFO - Get:12 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3099 kB]
+2025-04-09 09:53:48,215 - INFO - Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1542 kB]
+2025-04-09 09:53:48,507 - INFO - Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [4154 kB]
+2025-04-09 09:53:49,204 - INFO - Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [55.7 kB]
+2025-04-09 09:53:49,206 - INFO - Get:17 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [82.7 kB]
+2025-04-09 09:53:49,208 - INFO - Get:18 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [35.2 kB]
+2025-04-09 09:53:53,026 - INFO - Fetched 37.4 MB in 13s (2772 kB/s)
+Reading package lists...
+2025-04-09 09:53:59,805 - INFO - 
+2025-04-09 09:53:59,906 - INFO - + apt-get -y upgrade
+2025-04-09 09:54:00,119 - INFO - Reading package lists...
+2025-04-09 09:54:06,922 - INFO - 
+2025-04-09 09:54:07,014 - INFO - Building dependency tree...
+2025-04-09 09:54:08,508 - INFO - Reading state information...
+2025-04-09 09:54:08,509 - INFO - 
+2025-04-09 09:54:08,924 - INFO - Calculating upgrade...
+2025-04-09 09:54:09,815 - INFO - 
+2025-04-09 09:54:11,421 - INFO - 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+2025-04-09 09:54:11,422 - INFO - + DEBIAN_FRONTEND=noninteractive
++ apt-get install -y imagemagick ffmpeg texlive texlive-latex-extra texlive-fonts-recommended texlive-xetex texlive-luatex cm-super dvipng
+2025-04-09 09:54:11,618 - INFO - Reading package lists...
+2025-04-09 09:54:18,225 - INFO - 
+2025-04-09 09:54:18,317 - INFO - Building dependency tree...
+2025-04-09 09:54:20,214 - INFO - Reading state information...
+2025-04-09 09:54:20,214 - INFO - 
+2025-04-09 09:54:22,023 - INFO - The following additional packages will be installed:
+  adwaita-icon-theme alsa-topology-conf alsa-ucm-conf at-spi2-core
+  cm-super-minimal dbus dbus-user-session dconf-gsettings-backend
+  dconf-service dmsetup dvisvgm fontconfig fonts-droid-fallback fonts-lato
+  fonts-lmodern fonts-noto-mono fonts-texgyre fonts-urw-base35 ghostscript
+  gir1.2-glib-2.0 gsettings-desktop-schemas gsfonts gtk-update-icon-cache
+  hicolor-icon-theme humanity-icon-theme i965-va-driver imagemagick-6-common
+  imagemagick-6.q16 intel-media-va-driver libaacs0 libaom3 libapache-pom-java
+  libapparmor1 libargon2-1 libasound2 libasound2-data libass9 libasyncns0
+  libatk-bridge2.0-0 libatk1.0-0 libatk1.0-data libatspi2.0-0
+  libauthen-sasl-perl libavahi-client3 libavahi-common-data libavahi-common3
+  libavc1394-0 libavcodec58 libavdevice58 libavfilter7 libavformat58
+  libavutil56 libbdplus0 libblas3 libbluray2 libbs2b0 libcaca0
+  libcairo-gobject2 libcairo2 libcdio-cdda2 libcdio-paranoia2 libcdio19
+  libchromaprint1 libclone-perl libcodec2-1.0 libcolord2
+  libcommons-logging-java libcommons-parent-java libcryptsetup12 libcups2
+  libdata-dump-perl libdatrie1 libdav1d5 libdbus-1-3 libdc1394-25 libdconf1
+  libde265-0 libdecor-0-0 libdecor-0-plugin-1-cairo libdevmapper1.02.1
+  libdjvulibre-text libdjvulibre21 libdrm-amdgpu1 libdrm-common libdrm-intel1
+  libdrm-nouveau2 libdrm-radeon1 libdrm2 libelf1 libencode-locale-perl
+  libepoxy0 libfftw3-double3 libfile-basedir-perl libfile-desktopentry-perl
+  libfile-listing-perl libfile-mimeinfo-perl libflac8 libflite1
+  libfont-afm-perl libfontbox-java libfontenc1 libfribidi0 libgbm1
+  libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-bin libgdk-pixbuf2.0-common
+  libgfortran5 libgirepository-1.0-1 libgl1 libgl1-amber-dri libgl1-mesa-dri
+  libglapi-mesa libglib2.0-0 libglib2.0-data libglvnd0 libglx-mesa0 libglx0
+  libgme0 libgraphite2-3 libgs9 libgs9-common libgsm1 libgtk-3-0 libgtk-3-bin
+  libgtk-3-common libgtkd-3-0 libharfbuzz0b libheif1 libhtml-form-perl
+  libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl
+  libhttp-message-perl libhttp-negotiate-perl libice6 libicu70 libidn12
+  libiec61883-0 libigdgmm12 libijs-0.35 libilmbase25 libio-html-perl
+  libio-socket-ssl-perl libio-stringy-perl libip4tc2 libipc-system-simple-perl
+  libjack-jackd2-0 libjbig2dec0 libjson-c5 libjxr-tools libjxr0 libkmod2
+  libkpathsea6 liblapack3 liblcms2-2 liblilv-0-0 libllvm11 libllvm15
+  liblqr-1-0 libltdl7 liblwp-mediatypes-perl liblwp-protocol-https-perl
+  libmagickcore-6.q16-6 libmagickcore-6.q16-6-extra libmagickwand-6.q16-6
+  libmailtools-perl libmfx1 libmp3lame0 libmpg123-0 libmysofa1
+  libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl
+  libnetpbm10 libnorm1 libnss-systemd libnuma1 libogg0 libopenal-data
+  libopenal1 libopenexr25 libopenjp2-7 libopenmpt0 libopus0 libpam-systemd
+  libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpaper-utils
+  libpaper1 libpciaccess0 libpdfbox-java libpgm-5.3-0 libphobos2-ldc-shared98
+  libpixman-1-0 libpocketsphinx3 libpostproc55 libptexenc1 libpulse0
+  librabbitmq4 libraw1394-11 librsvg2-2 librsvg2-common librubberband2
+  libruby3.0 libsamplerate0 libsdl2-2.0-0 libsensors-config libsensors5
+  libserd-0-0 libshine3 libslang2 libsm6 libsnappy1v5 libsndfile1 libsndio7.0
+  libsodium23 libsord-0-0 libsoxr0 libspeex1 libsphinxbase3 libsratom-0-0
+  libsrt1.4-gnutls libssh-gcrypt-4 libswresample3 libswscale5 libsynctex2
+  libtcl8.6 libteckit0 libtexlua53 libtexluajit2 libtext-iconv-perl
+  libthai-data libthai0 libtheora0 libtie-ixhash-perl libtimedate-perl
+  libtk8.6 libtry-tiny-perl libtwolame0 libudfread0 libunwind8 liburi-perl
+  libusb-1.0-0 libva-drm2 libva-x11-2 libva2 libvdpau1 libvidstab1.1
+  libvorbis0a libvorbisenc2 libvorbisfile3 libvpx7 libvte-2.91-0
+  libvte-2.91-common libvted-3-0 libwayland-client0 libwayland-cursor0
+  libwayland-egl1 libwayland-server0 libwebpdemux2 libwebpmux3
+  libwmflite-0.2-7 libwoff1 libwww-perl libwww-robotrules-perl
+  libx11-protocol-perl libx11-xcb1 libx264-163 libx265-199 libxaw7
+  libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0
+  libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0
+  libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2 libxi6
+  libxinerama1 libxkbcommon0 libxkbfile1 libxml-parser-perl libxml-twig-perl
+  libxml-xpathengine-perl libxml2 libxmu6 libxrandr2 libxrender1 libxshmfence1
+  libxss1 libxt6 libxtst6 libxv1 libxvidcore4 libxxf86dga1 libxxf86vm1
+2025-04-09 09:54:22,024 - INFO - libyaml-0-2 libzimg2 libzmq5 libzvbi-common libzvbi0 libzzip-0-13 lmodern
+  mesa-va-drivers mesa-vdpau-drivers netpbm networkd-dispatcher
+  ocl-icd-libopencl1 perl-openssl-defaults pfb2t1c2pfb pocketsphinx-en-us
+  poppler-data preview-latex-style python3-dbus python3-gi rake ruby
+  ruby-net-telnet ruby-rubygems ruby-webrick ruby-xmlrpc ruby3.0
+2025-04-09 09:54:22,025 - INFO - rubygems-integration session-migration shared-mime-info systemd systemd-sysv
+  systemd-timesyncd t1utils tcl tcl8.6 teckit tex-common tex-gyre texlive-base
+  texlive-binaries texlive-latex-base texlive-latex-recommended
+  texlive-pictures texlive-plain-generic tilix tilix-common tipa tk tk8.6
+  ubuntu-mono unzip va-driver-all vdpau-driver-all x11-common x11-utils
+  x11-xserver-utils xdg-user-dirs xdg-utils xfonts-encodings xfonts-utils
+  xkb-data zip
+2025-04-09 09:54:22,101 - INFO - Suggested packages:
+  ffmpeg-doc fonts-noto fonts-freefont-otf | fonts-freefont-ttf ghostscript-x
+  i965-va-driver-shaders imagemagick-doc autotrace cups-bsd | lpr | lprng
+  enscript gimp gnuplot grads graphviz groff-base hp2xx html2ps libwmf-bin
+  mplayer povray radiance sane-utils transfig ufraw-batch libasound2-plugins
+  alsa-utils libdigest-hmac-perl libgssapi-perl libcuda1 libnvcuvid1
+  libnvidia-encode1 libbluray-bdj colord libavalon-framework-java
+  libcommons-logging-java-doc libexcalibur-logkit-java liblog4j1.2-java
+  cups-common libfftw3-bin libfftw3-dev gvfs jackd2 liblcms2-utils
+  libcrypt-ssleay-perl inkscape libportaudio2 opus-tools pciutils pulseaudio
+  libraw1394-doc librsvg2-bin lm-sensors serdi sndiod sordi speex
+  libsub-name-perl libbusiness-isbn-perl libauthen-ntlm-perl
+  libunicode-map8-perl libunicode-string-perl xml-twig-tools iw
+  | wireless-tools opencl-icd poppler-utils fonts-japanese-mincho
+  | fonts-ipafont-mincho fonts-japanese-gothic | fonts-ipafont-gothic
+  fonts-arphic-ukai fonts-arphic-uming fonts-nanum python-dbus-doc ri ruby-dev
+  bundler systemd-container libtss2-esys-3.0.2-0 libtss2-mu0 libtss2-rc0
+  policykit-1 tcl-tclreadline debhelper perl-tk xpdf | pdf-viewer xzdec
+  texlive-fonts-recommended-doc texlive-latex-base-doc python3-pygments
+  icc-profiles libfile-which-perl libspreadsheet-parseexcel-perl
+  texlive-latex-extra-doc texlive-latex-recommended-doc texlive-pstricks
+  dot2tex prerex texlive-pictures-doc vprerex default-jre-headless
+  python-nautilus tipa-doc libvdpau-va-gl1 mesa-utils nickle cairo-5c
+  xorg-docs-core
+2025-04-09 09:54:27,115 - INFO - The following NEW packages will be installed:
+  adwaita-icon-theme alsa-topology-conf alsa-ucm-conf at-spi2-core cm-super
+  cm-super-minimal dbus dbus-user-session dconf-gsettings-backend
+  dconf-service dmsetup dvipng dvisvgm ffmpeg fontconfig fonts-droid-fallback
+  fonts-lato fonts-lmodern fonts-noto-mono fonts-texgyre fonts-urw-base35
+2025-04-09 09:54:27,138 - INFO - ghostscript gir1.2-glib-2.0 gsettings-desktop-schemas gsfonts
+  gtk-update-icon-cache hicolor-icon-theme humanity-icon-theme i965-va-driver
+  imagemagick imagemagick-6-common imagemagick-6.q16 intel-media-va-driver
+  libaacs0 libaom3 libapache-pom-java libapparmor1 libargon2-1 libasound2
+  libasound2-data libass9 libasyncns0 libatk-bridge2.0-0 libatk1.0-0
+  libatk1.0-data libatspi2.0-0 libauthen-sasl-perl libavahi-client3
+  libavahi-common-data libavahi-common3 libavc1394-0 libavcodec58
+  libavdevice58 libavfilter7 libavformat58 libavutil56 libbdplus0 libblas3
+  libbluray2 libbs2b0 libcaca0 libcairo-gobject2 libcairo2 libcdio-cdda2
+  libcdio-paranoia2 libcdio19 libchromaprint1 libclone-perl libcodec2-1.0
+  libcolord2 libcommons-logging-java libcommons-parent-java libcryptsetup12
+  libcups2 libdata-dump-perl libdatrie1 libdav1d5 libdbus-1-3 libdc1394-25
+  libdconf1 libde265-0 libdecor-0-0 libdecor-0-plugin-1-cairo
+  libdevmapper1.02.1 libdjvulibre-text libdjvulibre21 libdrm-amdgpu1
+  libdrm-common libdrm-intel1 libdrm-nouveau2 libdrm-radeon1 libdrm2 libelf1
+  libencode-locale-perl libepoxy0 libfftw3-double3 libfile-basedir-perl
+  libfile-desktopentry-perl libfile-listing-perl libfile-mimeinfo-perl
+  libflac8 libflite1 libfont-afm-perl libfontbox-java libfontenc1 libfribidi0
+  libgbm1 libgdk-pixbuf-2.0-0 libgdk-pixbuf2.0-bin libgdk-pixbuf2.0-common
+  libgfortran5 libgirepository-1.0-1 libgl1 libgl1-amber-dri libgl1-mesa-dri
+  libglapi-mesa libglib2.0-0 libglib2.0-data libglvnd0 libglx-mesa0 libglx0
+  libgme0 libgraphite2-3 libgs9 libgs9-common libgsm1 libgtk-3-0 libgtk-3-bin
+  libgtk-3-common libgtkd-3-0 libharfbuzz0b libheif1 libhtml-form-perl
+  libhtml-format-perl libhtml-parser-perl libhtml-tagset-perl
+  libhtml-tree-perl libhttp-cookies-perl libhttp-daemon-perl libhttp-date-perl
+  libhttp-message-perl libhttp-negotiate-perl libice6 libicu70 libidn12
+  libiec61883-0 libigdgmm12 libijs-0.35 libilmbase25 libio-html-perl
+  libio-socket-ssl-perl libio-stringy-perl libip4tc2 libipc-system-simple-perl
+  libjack-jackd2-0 libjbig2dec0 libjson-c5 libjxr-tools libjxr0 libkmod2
+  libkpathsea6 liblapack3 liblcms2-2 liblilv-0-0 libllvm11 libllvm15
+  liblqr-1-0 libltdl7 liblwp-mediatypes-perl liblwp-protocol-https-perl
+  libmagickcore-6.q16-6 libmagickcore-6.q16-6-extra libmagickwand-6.q16-6
+  libmailtools-perl libmfx1 libmp3lame0 libmpg123-0 libmysofa1
+2025-04-09 09:54:27,139 - INFO - libnet-dbus-perl libnet-http-perl libnet-smtp-ssl-perl libnet-ssleay-perl
+  libnetpbm10 libnorm1 libnss-systemd libnuma1 libogg0 libopenal-data
+  libopenal1 libopenexr25 libopenjp2-7 libopenmpt0 libopus0 libpam-systemd
+  libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 libpaper-utils
+  libpaper1 libpciaccess0 libpdfbox-java libpgm-5.3-0 libphobos2-ldc-shared98
+  libpixman-1-0 libpocketsphinx3 libpostproc55 libptexenc1 libpulse0
+2025-04-09 09:54:27,139 - INFO - librabbitmq4 libraw1394-11 librsvg2-2 librsvg2-common librubberband2
+2025-04-09 09:54:27,139 - INFO - libruby3.0 libsamplerate0 libsdl2-2.0-0 libsensors-config libsensors5
+  libserd-0-0 libshine3 libslang2 libsm6 libsnappy1v5 libsndfile1 libsndio7.0
+  libsodium23 libsord-0-0 libsoxr0 libspeex1 libsphinxbase3 libsratom-0-0
+  libsrt1.4-gnutls libssh-gcrypt-4 libswresample3 libswscale5 libsynctex2
+  libtcl8.6 libteckit0 libtexlua53 libtexluajit2 libtext-iconv-perl
+  libthai-data libthai0 libtheora0 libtie-ixhash-perl libtimedate-perl
+2025-04-09 09:54:27,140 - INFO - libtk8.6 libtry-tiny-perl libtwolame0 libudfread0 libunwind8 liburi-perl
+  libusb-1.0-0 libva-drm2 libva-x11-2 libva2 libvdpau1 libvidstab1.1
+  libvorbis0a libvorbisenc2 libvorbisfile3 libvpx7 libvte-2.91-0
+  libvte-2.91-common libvted-3-0 libwayland-client0 libwayland-cursor0
+  libwayland-egl1 libwayland-server0 libwebpdemux2 libwebpmux3
+  libwmflite-0.2-7 libwoff1 libwww-perl libwww-robotrules-perl
+  libx11-protocol-perl libx11-xcb1 libx264-163 libx265-199 libxaw7
+  libxcb-dri2-0 libxcb-dri3-0 libxcb-glx0 libxcb-present0 libxcb-randr0
+  libxcb-render0 libxcb-shape0 libxcb-shm0 libxcb-sync1 libxcb-xfixes0
+  libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxft2 libxi6
+  libxinerama1 libxkbcommon0 libxkbfile1 libxml-parser-perl libxml-twig-perl
+  libxml-xpathengine-perl libxml2 libxmu6 libxrandr2 libxrender1 libxshmfence1
+2025-04-09 09:54:27,140 - INFO - libxss1 libxt6 libxtst6 libxv1 libxvidcore4 libxxf86dga1 libxxf86vm1
+2025-04-09 09:54:27,140 - INFO - libyaml-0-2 libzimg2 libzmq5 libzvbi-common libzvbi0 libzzip-0-13 lmodern
+2025-04-09 09:54:27,140 - INFO - mesa-va-drivers mesa-vdpau-drivers netpbm networkd-dispatcher
+2025-04-09 09:54:27,140 - INFO - ocl-icd-libopencl1 perl-openssl-defaults pfb2t1c2pfb pocketsphinx-en-us
+2025-04-09 09:54:27,140 - INFO - poppler-data preview-latex-style python3-dbus python3-gi rake ruby
+  ruby-net-telnet ruby-rubygems ruby-webrick ruby-xmlrpc ruby3.0
+2025-04-09 09:54:27,140 - INFO - rubygems-integration session-migration shared-mime-info systemd systemd-sysv
+  systemd-timesyncd t1utils tcl tcl8.6 teckit tex-common tex-gyre texlive
+  texlive-base texlive-binaries texlive-fonts-recommended texlive-latex-base
+  texlive-latex-extra texlive-latex-recommended texlive-luatex
+  texlive-pictures texlive-plain-generic texlive-xetex tilix tilix-common tipa
+2025-04-09 09:54:27,140 - INFO - tk tk8.6 ubuntu-mono unzip va-driver-all vdpau-driver-all x11-common
+  x11-utils x11-xserver-utils xdg-user-dirs xdg-utils xfonts-encodings
+2025-04-09 09:54:27,141 - INFO - xfonts-utils xkb-data zip
+2025-04-09 09:54:27,573 - INFO - 0 upgraded, 381 newly installed, 0 to remove and 0 not upgraded.
+Need to get 434 MB of archives.
+After this operation, 1379 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libapparmor1 amd64 3.0.4-2ubuntu2.4 [39.7 kB]
+2025-04-09 09:54:27,792 - INFO - Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 libargon2-1 amd64 0~20171227-0.3 [19.5 kB]
+2025-04-09 09:54:27,810 - INFO - Get:3 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdevmapper1.02.1 amd64 2:1.02.175-2.1ubuntu5 [139 kB]
+2025-04-09 09:54:28,002 - INFO - Get:4 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libjson-c5 amd64 0.15-3~ubuntu1.22.04.2 [33.5 kB]
+2025-04-09 09:54:28,002 - INFO - Get:5 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcryptsetup12 amd64 2:2.4.3-1ubuntu1.3 [211 kB]
+2025-04-09 09:54:28,104 - INFO - Get:6 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libip4tc2 amd64 1.8.7-1ubuntu5.2 [19.9 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy/main amd64 libkmod2 amd64 29-1ubuntu1 [48.0 kB]
+2025-04-09 09:54:28,107 - INFO - Get:8 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 systemd amd64 249.11-0ubuntu3.15 [4581 kB]
+2025-04-09 09:54:28,462 - INFO - Get:9 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 systemd-sysv amd64 249.11-0ubuntu3.15 [10.5 kB]
+2025-04-09 09:54:28,462 - INFO - Get:10 http://archive.ubuntu.com/ubuntu jammy/main amd64 fonts-droid-fallback all 1:6.0.1r16-1.1build1 [1805 kB]
+2025-04-09 09:54:28,515 - INFO - Get:11 http://archive.ubuntu.com/ubuntu jammy/main amd64 fonts-lato all 2.0-2.1 [2696 kB]
+2025-04-09 09:54:28,632 - INFO - Get:12 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfftw3-double3 amd64 3.3.8-2ubuntu8 [770 kB]
+2025-04-09 09:54:28,807 - INFO - Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libaom3 amd64 3.3.0-1ubuntu0.1 [1748 kB]
+2025-04-09 09:54:28,974 - INFO - Get:14 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libdav1d5 amd64 0.9.2-1 [463 kB]
+2025-04-09 09:54:29,012 - INFO - Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libde265-0 amd64 1.0.8-1ubuntu0.3 [290 kB]
+2025-04-09 09:54:29,017 - INFO - Get:16 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnuma1 amd64 2.0.14-3ubuntu2 [22.5 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libx265-199 amd64 3.5-2 [1170 kB]
+2025-04-09 09:54:29,028 - INFO - Get:18 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libheif1 amd64 1.12.0-2build1 [196 kB]
+2025-04-09 09:54:29,033 - INFO - Get:19 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblcms2-2 amd64 2.12~rc1-2build2 [159 kB]
+2025-04-09 09:54:29,033 - INFO - Get:20 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libglib2.0-0 amd64 2.72.4-0ubuntu2.4 [1465 kB]
+2025-04-09 09:54:29,113 - INFO - Get:21 http://archive.ubuntu.com/ubuntu jammy/universe amd64 liblqr-1-0 amd64 0.4.2-2.1 [27.7 kB]
+2025-04-09 09:54:29,113 - INFO - Get:22 http://archive.ubuntu.com/ubuntu jammy/main amd64 libltdl7 amd64 2.4.6-15build2 [39.6 kB]
+2025-04-09 09:54:29,113 - INFO - Get:23 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libopenjp2-7 amd64 2.4.0-6ubuntu0.3 [158 kB]
+2025-04-09 09:54:29,315 - INFO - Get:24 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwebpdemux2 amd64 1.2.2-2ubuntu0.22.04.2 [9964 B]
+2025-04-09 09:54:29,316 - INFO - Get:25 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwebpmux3 amd64 1.2.2-2ubuntu0.22.04.2 [20.5 kB]
+2025-04-09 09:54:29,320 - INFO - Get:26 http://archive.ubuntu.com/ubuntu jammy/main amd64 libicu70 amd64 70.1-2 [10.6 MB]
+2025-04-09 09:54:31,011 - INFO - Get:27 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libxml2 amd64 2.9.13+dfsg-1ubuntu0.6 [762 kB]
+2025-04-09 09:54:31,020 - INFO - Get:28 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 imagemagick-6-common all 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [64.3 kB]
+2025-04-09 09:54:31,021 - INFO - Get:29 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libmagickcore-6.q16-6 amd64 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [1795 kB]
+2025-04-09 09:54:31,109 - INFO - Get:30 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libmagickwand-6.q16-6 amd64 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [328 kB]
+2025-04-09 09:54:31,175 - INFO - Get:31 http://archive.ubuntu.com/ubuntu jammy/main amd64 poppler-data all 0.4.11-1 [2171 kB]
+2025-04-09 09:54:31,317 - INFO - Get:32 http://archive.ubuntu.com/ubuntu jammy/universe amd64 tex-common all 6.17 [33.7 kB]
+2025-04-09 09:54:31,452 - INFO - Get:33 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdbus-1-3 amd64 1.12.20-2ubuntu4.1 [189 kB]
+2025-04-09 09:54:31,453 - INFO - Get:34 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 dbus amd64 1.12.20-2ubuntu4.1 [158 kB]
+2025-04-09 09:54:31,455 - INFO - Get:35 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 dmsetup amd64 2:1.02.175-2.1ubuntu5 [81.7 kB]
+2025-04-09 09:54:31,456 - INFO - Get:36 http://archive.ubuntu.com/ubuntu jammy/main amd64 libgirepository-1.0-1 amd64 1.72.0-1 [55.6 kB]
+2025-04-09 09:54:31,457 - INFO - Get:37 http://archive.ubuntu.com/ubuntu jammy/main amd64 gir1.2-glib-2.0 amd64 1.72.0-1 [164 kB]
+2025-04-09 09:54:31,459 - INFO - Get:38 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libelf1 amd64 0.186-1ubuntu0.1 [51.1 kB]
+2025-04-09 09:54:31,460 - INFO - Get:39 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libfribidi0 amd64 1.0.8-2ubuntu3.1 [26.1 kB]
+2025-04-09 09:54:31,461 - INFO - Get:40 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libglib2.0-data all 2.72.4-0ubuntu2.4 [4582 B]
+Get:41 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libnss-systemd amd64 249.11-0ubuntu3.15 [133 kB]
+2025-04-09 09:54:31,601 - INFO - Get:42 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpam-systemd amd64 249.11-0ubuntu3.15 [203 kB]
+2025-04-09 09:54:31,639 - INFO - Get:43 http://archive.ubuntu.com/ubuntu jammy/main amd64 libslang2 amd64 2.3.2-5build4 [468 kB]
+2025-04-09 09:54:31,793 - INFO - Get:44 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtext-iconv-perl amd64 1.7-7build3 [14.3 kB]
+Get:45 http://archive.ubuntu.com/ubuntu jammy/main amd64 libyaml-0-2 amd64 0.2.2-1build2 [51.6 kB]
+2025-04-09 09:54:31,794 - INFO - Get:46 http://archive.ubuntu.com/ubuntu jammy/main amd64 python3-dbus amd64 1.2.18-3build1 [99.5 kB]
+2025-04-09 09:54:32,104 - INFO - Get:47 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-gi amd64 3.42.1-0ubuntu1 [229 kB]
+2025-04-09 09:54:32,106 - INFO - Get:48 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 networkd-dispatcher all 2.1-2ubuntu0.22.04.2 [15.8 kB]
+2025-04-09 09:54:32,144 - INFO - Get:49 http://archive.ubuntu.com/ubuntu jammy/main amd64 shared-mime-info amd64 2.1-2 [454 kB]
+2025-04-09 09:54:32,148 - INFO - Get:50 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 systemd-timesyncd amd64 249.11-0ubuntu3.15 [31.2 kB]
+2025-04-09 09:54:32,148 - INFO - Get:51 http://archive.ubuntu.com/ubuntu jammy/main amd64 xdg-user-dirs amd64 0.17-2ubuntu4 [53.9 kB]
+2025-04-09 09:54:32,150 - INFO - Get:52 http://archive.ubuntu.com/ubuntu jammy/main amd64 xkb-data all 2.33-1 [394 kB]
+2025-04-09 09:54:32,153 - INFO - Get:53 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm-common all 2.4.113-2~ubuntu0.22.04.1 [5450 B]
+2025-04-09 09:54:32,154 - INFO - Get:54 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm2 amd64 2.4.113-2~ubuntu0.22.04.1 [38.1 kB]
+Get:55 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libusb-1.0-0 amd64 2:1.0.25-1ubuntu2 [52.7 kB]
+2025-04-09 09:54:32,202 - INFO - Get:56 http://archive.ubuntu.com/ubuntu jammy/main amd64 hicolor-icon-theme all 0.17-2 [9976 B]
+2025-04-09 09:54:32,311 - INFO - Get:57 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgdk-pixbuf2.0-common all 2.42.8+dfsg-1ubuntu0.3 [5630 B]
+Get:58 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgdk-pixbuf-2.0-0 amd64 2.42.8+dfsg-1ubuntu0.3 [148 kB]
+2025-04-09 09:54:32,312 - INFO - Get:59 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 gtk-update-icon-cache amd64 3.24.33-1ubuntu2.2 [31.4 kB]
+2025-04-09 09:54:32,313 - INFO - Get:60 http://archive.ubuntu.com/ubuntu jammy/main amd64 humanity-icon-theme all 0.6.16 [1282 kB]
+2025-04-09 09:54:32,604 - INFO - Get:61 http://archive.ubuntu.com/ubuntu jammy/main amd64 ubuntu-mono all 20.10-0ubuntu2 [153 kB]
+2025-04-09 09:54:32,633 - INFO - Get:62 http://archive.ubuntu.com/ubuntu jammy/main amd64 adwaita-icon-theme all 41.0-1ubuntu1 [3444 kB]
+2025-04-09 09:54:33,469 - INFO - Get:63 http://archive.ubuntu.com/ubuntu jammy/main amd64 alsa-topology-conf all 1.2.5.1-2 [15.5 kB]
+2025-04-09 09:54:33,470 - INFO - Get:64 http://archive.ubuntu.com/ubuntu jammy/main amd64 libasound2-data all 1.2.6.1-1ubuntu1 [19.1 kB]
+2025-04-09 09:54:33,472 - INFO - Get:65 http://archive.ubuntu.com/ubuntu jammy/main amd64 libasound2 amd64 1.2.6.1-1ubuntu1 [390 kB]
+2025-04-09 09:54:33,477 - INFO - Get:66 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 alsa-ucm-conf all 1.2.6.3-1ubuntu1.12 [43.5 kB]
+2025-04-09 09:54:33,478 - INFO - Get:67 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxi6 amd64 2:1.8-1build1 [32.6 kB]
+2025-04-09 09:54:33,478 - INFO - Get:68 http://archive.ubuntu.com/ubuntu jammy/main amd64 libatspi2.0-0 amd64 2.44.0-3 [80.9 kB]
+2025-04-09 09:54:33,480 - INFO - Get:69 http://archive.ubuntu.com/ubuntu jammy/main amd64 x11-common all 1:7.7+23ubuntu2 [23.4 kB]
+2025-04-09 09:54:33,481 - INFO - Get:70 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxtst6 amd64 2:1.2.3-1build4 [13.4 kB]
+2025-04-09 09:54:33,482 - INFO - Get:71 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 dbus-user-session amd64 1.12.20-2ubuntu4.1 [9442 B]
+2025-04-09 09:54:33,541 - INFO - Get:72 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdconf1 amd64 0.40.0-3 [40.5 kB]
+2025-04-09 09:54:33,618 - INFO - Get:73 http://archive.ubuntu.com/ubuntu jammy/main amd64 dconf-service amd64 0.40.0-3 [28.5 kB]
+2025-04-09 09:54:33,620 - INFO - Get:74 http://archive.ubuntu.com/ubuntu jammy/main amd64 dconf-gsettings-backend amd64 0.40.0-3 [22.8 kB]
+2025-04-09 09:54:33,620 - INFO - Get:75 http://archive.ubuntu.com/ubuntu jammy/main amd64 session-migration amd64 0.3.6 [9774 B]
+2025-04-09 09:54:33,621 - INFO - Get:76 http://archive.ubuntu.com/ubuntu jammy/main amd64 gsettings-desktop-schemas all 42.0-1ubuntu1 [31.1 kB]
+2025-04-09 09:54:33,627 - INFO - Get:77 http://archive.ubuntu.com/ubuntu jammy/main amd64 at-spi2-core amd64 2.44.0-3 [54.4 kB]
+2025-04-09 09:54:33,725 - INFO - Get:78 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpaper1 amd64 1.1.28build2 [13.8 kB]
+2025-04-09 09:54:33,757 - INFO - Get:79 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpaper-utils amd64 1.1.28build2 [8674 B]
+2025-04-09 09:54:33,757 - INFO - Get:80 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libkpathsea6 amd64 2021.20210626.59705-1ubuntu0.2 [60.4 kB]
+2025-04-09 09:54:33,759 - INFO - Get:81 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libptexenc1 amd64 2021.20210626.59705-1ubuntu0.2 [39.1 kB]
+2025-04-09 09:54:33,760 - INFO - Get:82 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsynctex2 amd64 2021.20210626.59705-1ubuntu0.2 [55.6 kB]
+2025-04-09 09:54:33,760 - INFO - Get:83 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libtexlua53 amd64 2021.20210626.59705-1ubuntu0.2 [120 kB]
+2025-04-09 09:54:33,772 - INFO - Get:84 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libtexluajit2 amd64 2021.20210626.59705-1ubuntu0.2 [267 kB]
+2025-04-09 09:54:33,897 - INFO - Get:85 http://archive.ubuntu.com/ubuntu jammy/main amd64 t1utils amd64 1.41-4build2 [61.3 kB]
+2025-04-09 09:54:33,898 - INFO - Get:86 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpixman-1-0 amd64 0.40.0-1ubuntu0.22.04.1 [264 kB]
+2025-04-09 09:54:33,901 - INFO - Get:87 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-render0 amd64 1.14-3ubuntu3 [16.4 kB]
+2025-04-09 09:54:33,902 - INFO - Get:88 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-shm0 amd64 1.14-3ubuntu3 [5780 B]
+2025-04-09 09:54:33,902 - INFO - Get:89 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxrender1 amd64 1:0.9.10-1build4 [19.7 kB]
+2025-04-09 09:54:33,903 - INFO - Get:90 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcairo2 amd64 1.16.0-5ubuntu2 [628 kB]
+2025-04-09 09:54:34,057 - INFO - Get:91 http://archive.ubuntu.com/ubuntu jammy/main amd64 libgraphite2-3 amd64 1.3.14-1build2 [71.3 kB]
+2025-04-09 09:54:34,058 - INFO - Get:92 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libharfbuzz0b amd64 2.7.4-1ubuntu3.2 [353 kB]
+2025-04-09 09:54:34,149 - INFO - Get:93 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libteckit0 amd64 2.5.11+ds1-1 [421 kB]
+2025-04-09 09:54:34,160 - INFO - Get:94 http://archive.ubuntu.com/ubuntu jammy/main amd64 libice6 amd64 2:1.0.10-1build2 [42.6 kB]
+2025-04-09 09:54:34,161 - INFO - Get:95 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsm6 amd64 2:1.2.3-1build2 [16.7 kB]
+2025-04-09 09:54:34,162 - INFO - Get:96 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxt6 amd64 1:1.2.1-1 [177 kB]
+2025-04-09 09:54:34,165 - INFO - Get:97 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxmu6 amd64 2:1.1.3-3 [49.6 kB]
+2025-04-09 09:54:34,166 - INFO - Get:98 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxaw7 amd64 2:1.0.14-1 [191 kB]
+2025-04-09 09:54:34,174 - INFO - Get:99 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libzzip-0-13 amd64 0.13.72+dfsg.1-1.1 [27.0 kB]
+2025-04-09 09:54:34,177 - INFO - Get:100 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 texlive-binaries amd64 2021.20210626.59705-1ubuntu0.2 [9860 kB]
+2025-04-09 09:54:35,122 - INFO - Get:101 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 xdg-utils all 1.1.3-4.1ubuntu3~22.04.1 [61.9 kB]
+2025-04-09 09:54:35,300 - INFO - Get:102 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-base all 2021.20220204-1 [21.0 MB]
+2025-04-09 09:54:43,602 - INFO - Get:103 http://archive.ubuntu.com/ubuntu jammy/universe amd64 fonts-lmodern all 2.004.5-6.1 [4532 kB]
+2025-04-09 09:54:44,245 - INFO - Get:104 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-latex-base all 2021.20220204-1 [1128 kB]
+2025-04-09 09:54:44,408 - INFO - Get:105 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-latex-recommended all 2021.20220204-1 [14.4 MB]
+2025-04-09 09:54:46,114 - INFO - Get:106 http://archive.ubuntu.com/ubuntu jammy/universe amd64 cm-super-minimal all 0.3.4-17 [5777 kB]
+2025-04-09 09:54:46,701 - INFO - Get:107 http://archive.ubuntu.com/ubuntu jammy/universe amd64 pfb2t1c2pfb amd64 0.3-11 [9342 B]
+2025-04-09 09:54:46,704 - INFO - Get:108 http://archive.ubuntu.com/ubuntu jammy/universe amd64 cm-super all 0.3.4-17 [20.2 MB]
+2025-04-09 09:54:48,735 - INFO - Get:109 http://archive.ubuntu.com/ubuntu jammy/main amd64 fonts-urw-base35 all 20200910-1 [6367 kB]
+2025-04-09 09:54:49,003 - INFO - Get:110 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgs9-common all 9.55.0~dfsg1-0ubuntu5.11 [753 kB]
+2025-04-09 09:54:49,102 - INFO - Get:111 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libavahi-common-data amd64 0.8-5ubuntu5.2 [23.8 kB]
+2025-04-09 09:54:49,103 - INFO - Get:112 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libavahi-common3 amd64 0.8-5ubuntu5.2 [23.9 kB]
+2025-04-09 09:54:49,104 - INFO - Get:113 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libavahi-client3 amd64 0.8-5ubuntu5.2 [28.0 kB]
+2025-04-09 09:54:49,105 - INFO - Get:114 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcups2 amd64 2.4.1op1-1ubuntu4.11 [263 kB]
+2025-04-09 09:54:49,107 - INFO - Get:115 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libidn12 amd64 1.38-4ubuntu1 [60.0 kB]
+2025-04-09 09:54:49,108 - INFO - Get:116 http://archive.ubuntu.com/ubuntu jammy/main amd64 libijs-0.35 amd64 0.35-15build2 [16.5 kB]
+2025-04-09 09:54:49,109 - INFO - Get:117 http://archive.ubuntu.com/ubuntu jammy/main amd64 libjbig2dec0 amd64 0.19-3build2 [64.7 kB]
+2025-04-09 09:54:49,110 - INFO - Get:118 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgs9 amd64 9.55.0~dfsg1-0ubuntu5.11 [5031 kB]
+2025-04-09 09:54:49,306 - INFO - Get:119 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ghostscript amd64 9.55.0~dfsg1-0ubuntu5.11 [49.4 kB]
+2025-04-09 09:54:49,307 - INFO - Get:120 http://archive.ubuntu.com/ubuntu jammy/universe amd64 dvipng amd64 1.15-1.1 [78.9 kB]
+2025-04-09 09:54:49,307 - INFO - Get:121 http://archive.ubuntu.com/ubuntu jammy/main amd64 libwoff1 amd64 1.0.2-1build4 [45.2 kB]
+2025-04-09 09:54:49,307 - INFO - Get:122 http://archive.ubuntu.com/ubuntu jammy/universe amd64 dvisvgm amd64 2.13.1-1 [1221 kB]
+2025-04-09 09:54:49,416 - INFO - Get:123 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libva2 amd64 2.14.0-1 [65.0 kB]
+2025-04-09 09:54:49,418 - INFO - Get:124 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libmfx1 amd64 22.3.0-1 [3105 kB]
+2025-04-09 09:54:49,608 - INFO - Get:125 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libva-drm2 amd64 2.14.0-1 [7502 B]
+2025-04-09 09:54:49,609 - INFO - Get:126 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxfixes3 amd64 1:6.0.0-1 [11.7 kB]
+2025-04-09 09:54:49,610 - INFO - Get:127 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libva-x11-2 amd64 2.14.0-1 [12.6 kB]
+2025-04-09 09:54:49,611 - INFO - Get:128 http://archive.ubuntu.com/ubuntu jammy/main amd64 libvdpau1 amd64 1.4-3build2 [27.0 kB]
+2025-04-09 09:54:49,613 - INFO - Get:129 http://archive.ubuntu.com/ubuntu jammy/universe amd64 ocl-icd-libopencl1 amd64 2.2.14-3 [39.1 kB]
+2025-04-09 09:54:49,616 - INFO - Get:130 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libavutil56 amd64 7:4.4.2-0ubuntu0.22.04.1 [290 kB]
+2025-04-09 09:54:49,619 - INFO - Get:131 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libcodec2-1.0 amd64 1.0.1-3 [8435 kB]
+2025-04-09 09:54:50,104 - INFO - Get:132 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libgsm1 amd64 1.0.19-1 [27.7 kB]
+Get:133 http://archive.ubuntu.com/ubuntu jammy/main amd64 libmp3lame0 amd64 3.100-3build2 [141 kB]
+2025-04-09 09:54:50,116 - INFO - Get:134 http://archive.ubuntu.com/ubuntu jammy/main amd64 libopus0 amd64 1.3.1-0.1build2 [203 kB]
+Get:135 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcairo-gobject2 amd64 1.16.0-5ubuntu2 [19.4 kB]
+Get:136 http://archive.ubuntu.com/ubuntu jammy/main amd64 fontconfig amd64 2.13.1-4.2ubuntu5 [177 kB]
+Get:137 http://archive.ubuntu.com/ubuntu jammy/main amd64 libthai-data all 0.1.29-1build1 [162 kB]
+2025-04-09 09:54:50,117 - INFO - Get:138 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdatrie1 amd64 0.2.13-2 [19.9 kB]
+2025-04-09 09:54:50,117 - INFO - Get:139 http://archive.ubuntu.com/ubuntu jammy/main amd64 libthai0 amd64 0.1.29-1build1 [19.2 kB]
+2025-04-09 09:54:50,118 - INFO - Get:140 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpango-1.0-0 amd64 1.50.6+ds-2ubuntu1 [230 kB]
+2025-04-09 09:54:50,178 - INFO - Get:141 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpangoft2-1.0-0 amd64 1.50.6+ds-2ubuntu1 [54.0 kB]
+2025-04-09 09:54:50,373 - INFO - Get:142 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpangocairo-1.0-0 amd64 1.50.6+ds-2ubuntu1 [39.8 kB]
+Get:143 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 librsvg2-2 amd64 2.52.5+dfsg-3ubuntu0.2 [2974 kB]
+2025-04-09 09:54:50,405 - INFO - Get:144 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libshine3 amd64 3.1.1-2 [23.2 kB]
+2025-04-09 09:54:50,405 - INFO - Get:145 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsnappy1v5 amd64 1.1.8-1build3 [17.5 kB]
+Get:146 http://archive.ubuntu.com/ubuntu jammy/main amd64 libspeex1 amd64 1.2~rc1.2-1.1ubuntu3 [57.9 kB]
+2025-04-09 09:54:50,406 - INFO - Get:147 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsoxr0 amd64 0.1.3-4build2 [79.8 kB]
+2025-04-09 09:54:50,407 - INFO - Get:148 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libswresample3 amd64 7:4.4.2-0ubuntu0.22.04.1 [62.2 kB]
+2025-04-09 09:54:50,408 - INFO - Get:149 http://archive.ubuntu.com/ubuntu jammy/main amd64 libogg0 amd64 1.3.5-0ubuntu3 [22.9 kB]
+2025-04-09 09:54:50,408 - INFO - Get:150 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtheora0 amd64 1.1.1+dfsg.1-15ubuntu4 [209 kB]
+2025-04-09 09:54:50,809 - INFO - Get:151 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtwolame0 amd64 0.4.0-2build2 [52.5 kB]
+2025-04-09 09:54:50,810 - INFO - Get:152 http://archive.ubuntu.com/ubuntu jammy/main amd64 libvorbis0a amd64 1.3.7-1build2 [99.2 kB]
+2025-04-09 09:54:50,816 - INFO - Get:153 http://archive.ubuntu.com/ubuntu jammy/main amd64 libvorbisenc2 amd64 1.3.7-1build2 [82.6 kB]
+2025-04-09 09:54:50,819 - INFO - Get:154 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libvpx7 amd64 1.11.0-2ubuntu2.3 [1078 kB]
+2025-04-09 09:54:50,918 - INFO - Get:155 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libx264-163 amd64 2:0.163.3060+git5db6aa6-2build1 [591 kB]
+2025-04-09 09:54:50,926 - INFO - Get:156 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libxvidcore4 amd64 2:1.3.7-1 [201 kB]
+2025-04-09 09:54:50,963 - INFO - Get:157 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libzvbi-common all 0.2.35-19 [35.5 kB]
+2025-04-09 09:54:50,964 - INFO - Get:158 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libzvbi0 amd64 0.2.35-19 [262 kB]
+2025-04-09 09:54:50,967 - INFO - Get:159 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libavcodec58 amd64 7:4.4.2-0ubuntu0.22.04.1 [5567 kB]
+2025-04-09 09:54:51,219 - INFO - Get:160 http://archive.ubuntu.com/ubuntu jammy/main amd64 libraw1394-11 amd64 2.1.2-2build2 [27.0 kB]
+2025-04-09 09:54:51,221 - INFO - Get:161 http://archive.ubuntu.com/ubuntu jammy/main amd64 libavc1394-0 amd64 0.5.4-5build2 [17.0 kB]
+Get:162 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libass9 amd64 1:0.15.2-1 [97.5 kB]
+2025-04-09 09:54:51,222 - INFO - Get:163 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libudfread0 amd64 1.1.2-1 [16.2 kB]
+2025-04-09 09:54:51,223 - INFO - Get:164 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libbluray2 amd64 1:1.3.1-1 [159 kB]
+2025-04-09 09:54:51,303 - INFO - Get:165 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libchromaprint1 amd64 1.5.1-2 [28.4 kB]
+2025-04-09 09:54:51,304 - INFO - Get:166 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libgme0 amd64 0.6.3-2 [127 kB]
+2025-04-09 09:54:51,306 - INFO - Get:167 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libmpg123-0 amd64 1.29.3-1ubuntu0.1 [172 kB]
+2025-04-09 09:54:51,308 - INFO - Get:168 http://archive.ubuntu.com/ubuntu jammy/main amd64 libvorbisfile3 amd64 1.3.7-1build2 [17.1 kB]
+2025-04-09 09:54:51,309 - INFO - Get:169 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libopenmpt0 amd64 0.6.1-1 [592 kB]
+2025-04-09 09:54:51,323 - INFO - Get:170 http://archive.ubuntu.com/ubuntu jammy/main amd64 librabbitmq4 amd64 0.10.0-1ubuntu2 [39.3 kB]
+2025-04-09 09:54:51,400 - INFO - Get:171 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libsrt1.4-gnutls amd64 1.4.4-4 [309 kB]
+2025-04-09 09:54:51,403 - INFO - Get:172 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libssh-gcrypt-4 amd64 0.9.6-2ubuntu0.22.04.3 [223 kB]
+2025-04-09 09:54:51,440 - INFO - Get:173 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libnorm1 amd64 1.5.9+dfsg-2 [221 kB]
+2025-04-09 09:54:51,503 - INFO - Get:174 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libpgm-5.3-0 amd64 5.3.128~dfsg-2 [161 kB]
+2025-04-09 09:54:51,505 - INFO - Get:175 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsodium23 amd64 1.0.18-1build2 [164 kB]
+2025-04-09 09:54:51,507 - INFO - Get:176 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libzmq5 amd64 4.3.4-2 [256 kB]
+2025-04-09 09:54:51,509 - INFO - Get:177 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libavformat58 amd64 7:4.4.2-0ubuntu0.22.04.1 [1103 kB]
+2025-04-09 09:54:51,523 - INFO - Get:178 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libbs2b0 amd64 3.1.0+dfsg-2.2build1 [10.2 kB]
+2025-04-09 09:54:51,524 - INFO - Get:179 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libflite1 amd64 2.2-3 [13.7 MB]
+2025-04-09 09:54:52,507 - INFO - Get:180 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libserd-0-0 amd64 0.30.10-2 [40.8 kB]
+2025-04-09 09:54:52,508 - INFO - Get:181 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libsord-0-0 amd64 0.16.8-2 [21.2 kB]
+2025-04-09 09:54:52,509 - INFO - Get:182 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libsratom-0-0 amd64 0.6.8-1 [17.0 kB]
+2025-04-09 09:54:52,510 - INFO - Get:183 http://archive.ubuntu.com/ubuntu jammy/universe amd64 liblilv-0-0 amd64 0.24.12-2 [42.8 kB]
+2025-04-09 09:54:52,510 - INFO - Get:184 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libmysofa1 amd64 1.2.1~dfsg0-1 [1157 kB]
+2025-04-09 09:54:52,529 - INFO - Get:185 http://archive.ubuntu.com/ubuntu jammy/main amd64 libblas3 amd64 3.10.0-2ubuntu1 [228 kB]
+2025-04-09 09:54:52,533 - INFO - Get:186 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgfortran5 amd64 12.3.0-1ubuntu1~22.04 [879 kB]
+2025-04-09 09:54:52,615 - INFO - Get:187 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblapack3 amd64 3.10.0-2ubuntu1 [2504 kB]
+2025-04-09 09:54:52,641 - INFO - Get:188 http://archive.ubuntu.com/ubuntu jammy/main amd64 libasyncns0 amd64 0.8-6build2 [12.8 kB]
+2025-04-09 09:54:52,641 - INFO - Get:189 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libflac8 amd64 1.3.3-2ubuntu0.2 [111 kB]
+2025-04-09 09:54:52,643 - INFO - Get:190 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsndfile1 amd64 1.0.31-2ubuntu0.2 [196 kB]
+2025-04-09 09:54:52,702 - INFO - Get:191 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libx11-xcb1 amd64 2:1.7.5-1ubuntu0.3 [7802 B]
+Get:192 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpulse0 amd64 1:15.99.1+dfsg1-1ubuntu2.2 [298 kB]
+2025-04-09 09:54:52,704 - INFO - Get:193 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libsphinxbase3 amd64 0.8+5prealpha+1-13build1 [126 kB]
+2025-04-09 09:54:52,705 - INFO - Get:194 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libpocketsphinx3 amd64 0.8.0+real5prealpha+1-14ubuntu1 [132 kB]
+2025-04-09 09:54:52,706 - INFO - Get:195 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libpostproc55 amd64 7:4.4.2-0ubuntu0.22.04.1 [60.1 kB]
+2025-04-09 09:54:52,717 - INFO - Get:196 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsamplerate0 amd64 0.2.2-1build1 [1359 kB]
+2025-04-09 09:54:52,808 - INFO - Get:197 http://archive.ubuntu.com/ubuntu jammy/universe amd64 librubberband2 amd64 2.0.0-2 [90.0 kB]
+2025-04-09 09:54:52,833 - INFO - Get:198 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libswscale5 amd64 7:4.4.2-0ubuntu0.22.04.1 [180 kB]
+2025-04-09 09:54:52,836 - INFO - Get:199 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libvidstab1.1 amd64 1.1.0-2 [35.0 kB]
+2025-04-09 09:54:52,837 - INFO - Get:200 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libzimg2 amd64 3.0.3+ds1-1 [241 kB]
+2025-04-09 09:54:52,839 - INFO - Get:201 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libavfilter7 amd64 7:4.4.2-0ubuntu0.22.04.1 [1496 kB]
+2025-04-09 09:54:52,907 - INFO - Get:202 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcaca0 amd64 0.99.beta19-2.2ubuntu4 [224 kB]
+2025-04-09 09:54:53,095 - INFO - Get:203 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcdio19 amd64 2.1.0-3ubuntu0.2 [63.6 kB]
+2025-04-09 09:54:53,336 - INFO - Get:204 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcdio-cdda2 amd64 10.2+2.0.0-1build3 [16.7 kB]
+2025-04-09 09:54:53,387 - INFO - Get:205 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcdio-paranoia2 amd64 10.2+2.0.0-1build3 [15.9 kB]
+2025-04-09 09:54:53,387 - INFO - Get:206 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libdc1394-25 amd64 2.2.6-4 [88.8 kB]
+2025-04-09 09:54:53,401 - INFO - Get:207 http://archive.ubuntu.com/ubuntu jammy/main amd64 libglvnd0 amd64 1.4.0-1 [73.6 kB]
+2025-04-09 09:54:53,502 - INFO - Get:208 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libglapi-mesa amd64 23.2.1-1ubuntu3.1~22.04.3 [35.4 kB]
+2025-04-09 09:54:53,503 - INFO - Get:209 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-dri2-0 amd64 1.14-3ubuntu3 [7206 B]
+2025-04-09 09:54:53,503 - INFO - Get:210 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-dri3-0 amd64 1.14-3ubuntu3 [6968 B]
+2025-04-09 09:54:53,503 - INFO - Get:211 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-glx0 amd64 1.14-3ubuntu3 [25.9 kB]
+2025-04-09 09:54:53,504 - INFO - Get:212 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-present0 amd64 1.14-3ubuntu3 [5734 B]
+2025-04-09 09:54:53,506 - INFO - Get:213 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-randr0 amd64 1.14-3ubuntu3 [18.3 kB]
+2025-04-09 09:54:53,507 - INFO - Get:214 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-sync1 amd64 1.14-3ubuntu3 [9416 B]
+2025-04-09 09:54:53,600 - INFO - Get:215 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-xfixes0 amd64 1.14-3ubuntu3 [9996 B]
+2025-04-09 09:54:53,602 - INFO - Get:216 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxshmfence1 amd64 1.3-1build4 [5394 B]
+2025-04-09 09:54:53,721 - INFO - Get:217 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxxf86vm1 amd64 1:1.1.4-1build3 [10.4 kB]
+Get:218 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm-amdgpu1 amd64 2.4.113-2~ubuntu0.22.04.1 [19.9 kB]
+Get:219 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpciaccess0 amd64 0.16-3 [19.1 kB]
+2025-04-09 09:54:53,723 - INFO - Get:220 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm-intel1 amd64 2.4.113-2~ubuntu0.22.04.1 [66.7 kB]
+2025-04-09 09:54:53,725 - INFO - Get:221 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm-nouveau2 amd64 2.4.113-2~ubuntu0.22.04.1 [17.5 kB]
+Get:222 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libdrm-radeon1 amd64 2.4.113-2~ubuntu0.22.04.1 [21.6 kB]
+2025-04-09 09:54:53,725 - INFO - Get:223 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libllvm15 amd64 1:15.0.7-0ubuntu0.22.04.3 [25.4 MB]
+2025-04-09 09:54:55,021 - INFO - Get:224 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsensors-config all 1:3.6.0-7ubuntu1 [5274 B]
+Get:225 http://archive.ubuntu.com/ubuntu jammy/main amd64 libsensors5 amd64 1:3.6.0-7ubuntu1 [26.3 kB]
+2025-04-09 09:54:55,022 - INFO - Get:226 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgl1-mesa-dri amd64 23.2.1-1ubuntu3.1~22.04.3 [8860 kB]
+2025-04-09 09:54:55,323 - INFO - Get:227 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libglx-mesa0 amd64 23.2.1-1ubuntu3.1~22.04.3 [158 kB]
+2025-04-09 09:54:55,402 - INFO - Get:228 http://archive.ubuntu.com/ubuntu jammy/main amd64 libglx0 amd64 1.4.0-1 [41.0 kB]
+Get:229 http://archive.ubuntu.com/ubuntu jammy/main amd64 libgl1 amd64 1.4.0-1 [110 kB]
+2025-04-09 09:54:55,403 - INFO - Get:230 http://archive.ubuntu.com/ubuntu jammy/main amd64 libiec61883-0 amd64 1.2.0-4build3 [25.9 kB]
+2025-04-09 09:54:55,405 - INFO - Get:231 http://archive.ubuntu.com/ubuntu jammy/main amd64 libjack-jackd2-0 amd64 1.9.20~dfsg-1 [293 kB]
+2025-04-09 09:54:55,409 - INFO - Get:232 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libopenal-data all 1:1.19.1-2build3 [164 kB]
+2025-04-09 09:54:55,411 - INFO - Get:233 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libsndio7.0 amd64 1.8.1-1.1 [29.3 kB]
+2025-04-09 09:54:55,413 - INFO - Get:234 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libopenal1 amd64 1:1.19.1-2build3 [535 kB]
+2025-04-09 09:54:55,490 - INFO - Get:235 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwayland-client0 amd64 1.20.0-1ubuntu0.1 [25.9 kB]
+2025-04-09 09:54:55,491 - INFO - Get:236 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdecor-0-0 amd64 0.1.0-3build1 [15.1 kB]
+2025-04-09 09:54:55,491 - INFO - Get:237 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwayland-server0 amd64 1.20.0-1ubuntu0.1 [34.3 kB]
+2025-04-09 09:54:55,601 - INFO - Get:238 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgbm1 amd64 23.2.1-1ubuntu3.1~22.04.3 [33.5 kB]
+2025-04-09 09:54:55,603 - INFO - Get:239 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwayland-cursor0 amd64 1.20.0-1ubuntu0.1 [10.7 kB]
+2025-04-09 09:54:55,604 - INFO - Get:240 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libwayland-egl1 amd64 1.20.0-1ubuntu0.1 [5582 B]
+2025-04-09 09:54:55,605 - INFO - Get:241 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcursor1 amd64 1:1.2.0-2build4 [20.9 kB]
+2025-04-09 09:54:55,606 - INFO - Get:242 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxinerama1 amd64 2:1.1.4-3 [7382 B]
+2025-04-09 09:54:55,692 - INFO - Get:243 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxkbcommon0 amd64 1.4.0-1 [125 kB]
+2025-04-09 09:54:55,701 - INFO - Get:244 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxrandr2 amd64 2:1.5.2-1build1 [20.4 kB]
+2025-04-09 09:54:55,702 - INFO - Get:245 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxss1 amd64 1:1.2.3-1build2 [8476 B]
+2025-04-09 09:54:55,702 - INFO - Get:246 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsdl2-2.0-0 amd64 2.0.20+dfsg-2ubuntu1.22.04.1 [582 kB]
+2025-04-09 09:54:55,708 - INFO - Get:247 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcb-shape0 amd64 1.14-3ubuntu3 [6158 B]
+2025-04-09 09:54:55,733 - INFO - Get:248 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxv1 amd64 2:1.0.11-1build2 [11.2 kB]
+2025-04-09 09:54:55,801 - INFO - Get:249 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libavdevice58 amd64 7:4.4.2-0ubuntu0.22.04.1 [87.5 kB]
+2025-04-09 09:54:55,802 - INFO - Get:250 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 ffmpeg amd64 7:4.4.2-0ubuntu0.22.04.1 [1696 kB]
+2025-04-09 09:54:55,965 - INFO - Get:251 http://archive.ubuntu.com/ubuntu jammy/main amd64 fonts-noto-mono all 20201225-1build1 [397 kB]
+2025-04-09 09:54:55,968 - INFO - Get:252 http://archive.ubuntu.com/ubuntu jammy/universe amd64 fonts-texgyre all 20180621-3.1 [10.2 MB]
+2025-04-09 09:54:56,595 - INFO - Get:253 http://archive.ubuntu.com/ubuntu jammy/universe amd64 gsfonts all 1:8.11+urwcyr1.0.7~pre44-4.5 [3120 kB]
+2025-04-09 09:54:56,701 - INFO - Get:254 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 imagemagick-6.q16 amd64 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [224 kB]
+2025-04-09 09:54:56,736 - INFO - Get:255 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 imagemagick amd64 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [14.6 kB]
+2025-04-09 09:54:56,739 - INFO - Get:256 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libigdgmm12 amd64 22.1.2+ds1-1 [139 kB]
+2025-04-09 09:54:56,743 - INFO - Get:257 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 intel-media-va-driver amd64 22.3.1+dfsg1-1ubuntu2 [2283 kB]
+2025-04-09 09:54:56,810 - INFO - Get:258 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libaacs0 amd64 0.11.1-1 [64.1 kB]
+2025-04-09 09:54:56,811 - INFO - Get:259 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libapache-pom-java all 18-1 [4720 B]
+2025-04-09 09:54:56,812 - INFO - Get:260 http://archive.ubuntu.com/ubuntu jammy/main amd64 libatk1.0-data all 2.36.0-3build1 [2824 B]
+2025-04-09 09:54:56,813 - INFO - Get:261 http://archive.ubuntu.com/ubuntu jammy/main amd64 libatk1.0-0 amd64 2.36.0-3build1 [51.9 kB]
+2025-04-09 09:54:56,814 - INFO - Get:262 http://archive.ubuntu.com/ubuntu jammy/main amd64 libatk-bridge2.0-0 amd64 2.38.0-3 [66.6 kB]
+2025-04-09 09:54:56,816 - INFO - Get:263 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libbdplus0 amd64 0.2.0-1 [52.2 kB]
+2025-04-09 09:54:56,904 - INFO - Get:264 http://archive.ubuntu.com/ubuntu jammy/main amd64 libclone-perl amd64 0.45-1build3 [11.0 kB]
+2025-04-09 09:54:56,905 - INFO - Get:265 http://archive.ubuntu.com/ubuntu jammy/main amd64 libcolord2 amd64 1.4.6-1 [155 kB]
+2025-04-09 09:54:56,906 - INFO - Get:266 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libcommons-parent-java all 43-1 [10.8 kB]
+2025-04-09 09:54:56,979 - INFO - Get:267 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libcommons-logging-java all 1.2-2 [60.3 kB]
+2025-04-09 09:54:56,981 - INFO - Get:268 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdata-dump-perl all 1.25-1 [25.9 kB]
+2025-04-09 09:54:56,982 - INFO - Get:269 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdecor-0-plugin-1-cairo amd64 0.1.0-3build1 [20.4 kB]
+2025-04-09 09:54:56,985 - INFO - Get:270 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdjvulibre-text all 3.5.28-2build2 [50.9 kB]
+2025-04-09 09:54:56,989 - INFO - Get:271 http://archive.ubuntu.com/ubuntu jammy/main amd64 libdjvulibre21 amd64 3.5.28-2build2 [624 kB]
+2025-04-09 09:54:56,992 - INFO - Get:272 http://archive.ubuntu.com/ubuntu jammy/main amd64 libencode-locale-perl all 1.05-1.1 [11.8 kB]
+2025-04-09 09:54:57,000 - INFO - Get:273 http://archive.ubuntu.com/ubuntu jammy/main amd64 libepoxy0 amd64 1.5.10-1 [237 kB]
+2025-04-09 09:54:57,033 - INFO - Get:274 http://archive.ubuntu.com/ubuntu jammy/main amd64 libipc-system-simple-perl all 1.30-1 [23.2 kB]
+2025-04-09 09:54:57,138 - INFO - Get:275 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfile-basedir-perl all 0.09-1 [15.7 kB]
+Get:276 http://archive.ubuntu.com/ubuntu jammy/main amd64 liburi-perl all 5.10-1 [78.8 kB]
+2025-04-09 09:54:57,139 - INFO - Get:277 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfile-desktopentry-perl all 0.22-2 [17.8 kB]
+Get:278 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtimedate-perl all 2.3300-2 [34.0 kB]
+2025-04-09 09:54:57,140 - INFO - Get:279 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhttp-date-perl all 6.05-1 [9920 B]
+2025-04-09 09:54:57,141 - INFO - Get:280 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfile-listing-perl all 6.14-1 [11.2 kB]
+2025-04-09 09:54:57,194 - INFO - Get:281 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfile-mimeinfo-perl all 0.31-1 [43.5 kB]
+2025-04-09 09:54:57,195 - INFO - Get:282 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfont-afm-perl all 1.20-3 [13.6 kB]
+2025-04-09 09:54:57,196 - INFO - Get:283 http://archive.ubuntu.com/ubuntu jammy/main amd64 libfontenc1 amd64 1:1.1.4-1build3 [14.7 kB]
+2025-04-09 09:54:57,205 - INFO - Get:284 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgdk-pixbuf2.0-bin amd64 2.42.8+dfsg-1ubuntu0.3 [14.2 kB]
+2025-04-09 09:54:57,209 - INFO - Get:285 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgl1-amber-dri amd64 21.3.9-0ubuntu1~22.04.1 [4218 kB]
+2025-04-09 09:54:57,503 - INFO - Get:286 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxcomposite1 amd64 1:0.4.5-1build2 [7192 B]
+2025-04-09 09:54:57,503 - INFO - Get:287 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxdamage1 amd64 1:1.1.5-2build2 [7154 B]
+Get:288 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgtk-3-common all 3.24.33-1ubuntu2.2 [239 kB]
+2025-04-09 09:54:57,506 - INFO - Get:289 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgtk-3-0 amd64 3.24.33-1ubuntu2.2 [3053 kB]
+2025-04-09 09:54:57,680 - INFO - Get:290 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libgtk-3-bin amd64 3.24.33-1ubuntu2.2 [69.6 kB]
+2025-04-09 09:54:57,682 - INFO - Get:291 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libllvm11 amd64 1:11.1.0-6 [19.6 MB]
+2025-04-09 09:54:58,732 - INFO - Get:292 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libphobos2-ldc-shared98 amd64 1:1.28.0-1ubuntu1 [1487 kB]
+2025-04-09 09:54:58,834 - INFO - Get:293 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libgtkd-3-0 amd64 3.10.0-1ubuntu1 [1963 kB]
+2025-04-09 09:54:58,914 - INFO - Get:294 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhtml-tagset-perl all 3.20-4 [12.5 kB]
+2025-04-09 09:54:58,915 - INFO - Get:295 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhtml-parser-perl amd64 3.76-1build2 [88.4 kB]
+2025-04-09 09:54:58,916 - INFO - Get:296 http://archive.ubuntu.com/ubuntu jammy/main amd64 libio-html-perl all 1.004-2 [15.4 kB]
+2025-04-09 09:54:58,917 - INFO - Get:297 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblwp-mediatypes-perl all 6.04-1 [19.5 kB]
+2025-04-09 09:54:58,919 - INFO - Get:298 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhttp-message-perl all 6.36-1 [76.8 kB]
+2025-04-09 09:54:58,920 - INFO - Get:299 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhtml-form-perl all 6.07-1 [22.2 kB]
+2025-04-09 09:54:58,920 - INFO - Get:300 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhtml-tree-perl all 5.07-2 [200 kB]
+2025-04-09 09:54:58,921 - INFO - Get:301 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhtml-format-perl all 2.12-1.1 [41.3 kB]
+2025-04-09 09:54:58,966 - INFO - Get:302 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhttp-cookies-perl all 6.10-1 [18.4 kB]
+2025-04-09 09:54:59,001 - INFO - Get:303 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libhttp-daemon-perl all 6.13-1ubuntu0.1 [22.9 kB]
+2025-04-09 09:54:59,143 - INFO - Get:304 http://archive.ubuntu.com/ubuntu jammy/main amd64 libhttp-negotiate-perl all 6.01-1 [12.5 kB]
+2025-04-09 09:54:59,216 - INFO - Get:305 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libilmbase25 amd64 2.5.7-2 [175 kB]
+2025-04-09 09:54:59,525 - INFO - Get:306 http://archive.ubuntu.com/ubuntu jammy/main amd64 perl-openssl-defaults amd64 5build2 [7542 B]
+2025-04-09 09:54:59,526 - INFO - Get:307 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnet-ssleay-perl amd64 1.92-1build2 [327 kB]
+2025-04-09 09:54:59,610 - INFO - Get:308 http://archive.ubuntu.com/ubuntu jammy/main amd64 libio-socket-ssl-perl all 2.074-2 [192 kB]
+2025-04-09 09:54:59,702 - INFO - Get:309 http://archive.ubuntu.com/ubuntu jammy/main amd64 libio-stringy-perl all 2.111-3 [55.8 kB]
+2025-04-09 09:54:59,704 - INFO - Get:310 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libjxr0 amd64 1.2~git20170615.f752187-5 [174 kB]
+2025-04-09 09:54:59,710 - INFO - Get:311 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libjxr-tools amd64 1.2~git20170615.f752187-5 [16.0 kB]
+2025-04-09 09:54:59,711 - INFO - Get:312 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnet-http-perl all 6.22-1 [23.2 kB]
+2025-04-09 09:54:59,711 - INFO - Get:313 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtry-tiny-perl all 0.31-1 [21.8 kB]
+2025-04-09 09:54:59,712 - INFO - Get:314 http://archive.ubuntu.com/ubuntu jammy/main amd64 libwww-robotrules-perl all 6.02-1 [12.6 kB]
+2025-04-09 09:54:59,712 - INFO - Get:315 http://archive.ubuntu.com/ubuntu jammy/main amd64 libwww-perl all 6.61-1 [141 kB]
+2025-04-09 09:54:59,713 - INFO - Get:316 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblwp-protocol-https-perl all 6.10-1 [10.9 kB]
+2025-04-09 09:54:59,718 - INFO - Get:317 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libopenexr25 amd64 2.5.7-1 [780 kB]
+2025-04-09 09:54:59,871 - INFO - Get:318 http://archive.ubuntu.com/ubuntu jammy/main amd64 libwmflite-0.2-7 amd64 0.2.12-5ubuntu1 [68.9 kB]
+2025-04-09 09:54:59,873 - INFO - Get:319 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 libmagickcore-6.q16-6-extra amd64 8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5 [70.1 kB]
+2025-04-09 09:54:59,874 - INFO - Get:320 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnet-smtp-ssl-perl all 1.04-1 [5948 B]
+2025-04-09 09:54:59,876 - INFO - Get:321 http://archive.ubuntu.com/ubuntu jammy/main amd64 libmailtools-perl all 2.21-1 [80.7 kB]
+2025-04-09 09:54:59,879 - INFO - Get:322 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxml-parser-perl amd64 2.46-3build1 [212 kB]
+2025-04-09 09:54:59,902 - INFO - Get:323 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxml-twig-perl all 1:3.52-1 [157 kB]
+2025-04-09 09:54:59,910 - INFO - Get:324 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnet-dbus-perl amd64 1.2.0-1build3 [181 kB]
+2025-04-09 09:54:59,910 - INFO - Get:325 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libnetpbm10 amd64 2:10.0-15.4 [59.1 kB]
+Get:326 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 librsvg2-common amd64 2.52.5+dfsg-3ubuntu0.2 [17.7 kB]
+2025-04-09 09:54:59,943 - INFO - Get:327 http://archive.ubuntu.com/ubuntu jammy/main amd64 rubygems-integration all 1.18 [5336 B]
+2025-04-09 09:55:00,020 - INFO - Get:328 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ruby3.0 amd64 3.0.2-7ubuntu2.10 [50.1 kB]
+2025-04-09 09:55:00,022 - INFO - Get:329 http://archive.ubuntu.com/ubuntu jammy/main amd64 ruby-rubygems all 3.3.5-2 [228 kB]
+2025-04-09 09:55:00,026 - INFO - Get:330 http://archive.ubuntu.com/ubuntu jammy/main amd64 ruby amd64 1:3.0~exp1 [5100 B]
+2025-04-09 09:55:00,026 - INFO - Get:331 http://archive.ubuntu.com/ubuntu jammy/main amd64 rake all 13.0.6-2 [61.7 kB]
+Get:332 http://archive.ubuntu.com/ubuntu jammy/main amd64 ruby-net-telnet all 0.1.1-2 [12.6 kB]
+Get:333 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ruby-webrick all 1.7.0-3ubuntu0.1 [52.1 kB]
+2025-04-09 09:55:00,028 - INFO - Get:334 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ruby-xmlrpc all 0.3.2-1ubuntu0.1 [24.9 kB]
+2025-04-09 09:55:00,029 - INFO - Get:335 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libruby3.0 amd64 3.0.2-7ubuntu2.10 [5114 kB]
+2025-04-09 09:55:00,567 - INFO - Get:336 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtcl8.6 amd64 8.6.12+dfsg-1build1 [990 kB]
+2025-04-09 09:55:00,584 - INFO - Get:337 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtie-ixhash-perl all 1.23-2.1 [11.3 kB]
+Get:338 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxft2 amd64 2.3.4-1 [41.8 kB]
+2025-04-09 09:55:00,589 - INFO - Get:339 http://archive.ubuntu.com/ubuntu jammy/main amd64 libtk8.6 amd64 8.6.12-1build1 [784 kB]
+2025-04-09 09:55:00,604 - INFO - Get:340 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libunwind8 amd64 1.3.2-2build2.1 [54.5 kB]
+2025-04-09 09:55:00,605 - INFO - Get:341 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libvte-2.91-common amd64 0.68.0-1ubuntu0.1 [9408 B]
+2025-04-09 09:55:00,605 - INFO - Get:342 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libvte-2.91-0 amd64 0.68.0-1ubuntu0.1 [214 kB]
+2025-04-09 09:55:00,607 - INFO - Get:343 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libvted-3-0 amd64 3.10.0-1ubuntu1 [54.1 kB]
+2025-04-09 09:55:00,608 - INFO - Get:344 http://archive.ubuntu.com/ubuntu jammy/main amd64 libx11-protocol-perl all 0.56-7.1 [138 kB]
+2025-04-09 09:55:00,804 - INFO - Get:345 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxkbfile1 amd64 1:1.1.0-1build3 [71.8 kB]
+Get:346 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxml-xpathengine-perl all 0.14-1 [31.8 kB]
+Get:347 http://archive.ubuntu.com/ubuntu jammy/main amd64 libxxf86dga1 amd64 2:1.1.5-0ubuntu3 [12.6 kB]
+Get:348 http://archive.ubuntu.com/ubuntu jammy/main amd64 xfonts-encodings all 1:1.0.5-0ubuntu2 [578 kB]
+2025-04-09 09:55:00,908 - INFO - Get:349 http://archive.ubuntu.com/ubuntu jammy/main amd64 xfonts-utils amd64 1:7.7+6build2 [94.6 kB]
+Get:350 http://archive.ubuntu.com/ubuntu jammy/universe amd64 lmodern all 2.004.5-6.1 [9471 kB]
+2025-04-09 09:55:01,704 - INFO - Get:351 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 mesa-va-drivers amd64 23.2.1-1ubuntu3.1~22.04.3 [4100 kB]
+2025-04-09 09:55:01,905 - INFO - Get:352 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 mesa-vdpau-drivers amd64 23.2.1-1ubuntu3.1~22.04.3 [3820 kB]
+2025-04-09 09:55:02,112 - INFO - Get:353 http://archive.ubuntu.com/ubuntu jammy/universe amd64 netpbm amd64 2:10.0-15.4 [1007 kB]
+2025-04-09 09:55:02,124 - INFO - Get:354 http://archive.ubuntu.com/ubuntu jammy/universe amd64 preview-latex-style all 12.2-1ubuntu1 [185 kB]
+2025-04-09 09:55:02,126 - INFO - Get:355 http://archive.ubuntu.com/ubuntu jammy/main amd64 tcl8.6 amd64 8.6.12+dfsg-1build1 [15.0 kB]
+2025-04-09 09:55:02,126 - INFO - Get:356 http://archive.ubuntu.com/ubuntu jammy/main amd64 tcl amd64 8.6.11+1build2 [4678 B]
+2025-04-09 09:55:02,126 - INFO - Get:357 http://archive.ubuntu.com/ubuntu jammy/universe amd64 teckit amd64 2.5.11+ds1-1 [699 kB]
+2025-04-09 09:55:02,206 - INFO - Get:358 http://archive.ubuntu.com/ubuntu jammy/universe amd64 tex-gyre all 20180621-3.1 [6209 kB]
+2025-04-09 09:55:02,528 - INFO - Get:359 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-fonts-recommended all 2021.20220204-1 [4972 kB]
+2025-04-09 09:55:02,866 - INFO - Get:360 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive all 2021.20220204-1 [14.3 kB]
+2025-04-09 09:55:02,868 - INFO - Get:361 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libfontbox-java all 1:1.8.16-2 [207 kB]
+2025-04-09 09:55:02,875 - INFO - Get:362 http://archive.ubuntu.com/ubuntu jammy/universe amd64 libpdfbox-java all 1:1.8.16-2 [5199 kB]
+2025-04-09 09:55:03,209 - INFO - Get:363 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-pictures all 2021.20220204-1 [8720 kB]
+2025-04-09 09:55:03,711 - INFO - Get:364 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-latex-extra all 2021.20220204-1 [13.9 MB]
+2025-04-09 09:55:04,337 - INFO - Get:365 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-luatex all 2021.20220204-1 [17.4 MB]
+2025-04-09 09:55:04,825 - INFO - Get:366 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-plain-generic all 2021.20220204-1 [27.5 MB]
+2025-04-09 09:55:06,051 - INFO - Get:367 http://archive.ubuntu.com/ubuntu jammy/universe amd64 tipa all 2:1.3-21 [2967 kB]
+2025-04-09 09:55:06,260 - INFO - Get:368 http://archive.ubuntu.com/ubuntu jammy/universe amd64 texlive-xetex all 2021.20220204-1 [12.4 MB]
+2025-04-09 09:55:06,707 - INFO - Get:369 http://archive.ubuntu.com/ubuntu jammy/universe amd64 tilix-common all 1.9.4-2build1 [281 kB]
+2025-04-09 09:55:06,710 - INFO - Get:370 http://archive.ubuntu.com/ubuntu jammy/universe amd64 tilix amd64 1.9.4-2build1 [681 kB]
+2025-04-09 09:55:06,717 - INFO - Get:371 http://archive.ubuntu.com/ubuntu jammy/main amd64 tk8.6 amd64 8.6.12-1build1 [12.8 kB]
+2025-04-09 09:55:06,718 - INFO - Get:372 http://archive.ubuntu.com/ubuntu jammy/main amd64 tk amd64 8.6.11+1build2 [3058 B]
+2025-04-09 09:55:06,718 - INFO - Get:373 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 unzip amd64 6.0-26ubuntu3.2 [175 kB]
+2025-04-09 09:55:06,732 - INFO - Get:374 http://archive.ubuntu.com/ubuntu jammy/universe amd64 i965-va-driver amd64 2.4.1+dfsg1-1 [302 kB]
+2025-04-09 09:55:06,734 - INFO - Get:375 http://archive.ubuntu.com/ubuntu jammy/universe amd64 va-driver-all amd64 2.14.0-1 [3984 B]
+2025-04-09 09:55:06,735 - INFO - Get:376 http://archive.ubuntu.com/ubuntu jammy/main amd64 vdpau-driver-all amd64 1.4-3build2 [4510 B]
+Get:377 http://archive.ubuntu.com/ubuntu jammy/main amd64 x11-utils amd64 7.7+5build2 [206 kB]
+2025-04-09 09:55:06,780 - INFO - Get:378 http://archive.ubuntu.com/ubuntu jammy/main amd64 x11-xserver-utils amd64 7.7+9build1 [170 kB]
+2025-04-09 09:55:06,849 - INFO - Get:379 http://archive.ubuntu.com/ubuntu jammy/main amd64 zip amd64 3.0-12build2 [176 kB]
+2025-04-09 09:55:06,853 - INFO - Get:380 http://archive.ubuntu.com/ubuntu jammy/main amd64 libauthen-sasl-perl all 2.1600-1.1 [43.1 kB]
+2025-04-09 09:55:06,854 - INFO - Get:381 http://archive.ubuntu.com/ubuntu jammy/universe amd64 pocketsphinx-en-us all 0.8.0+real5prealpha+1-14ubuntu1 [27.6 MB]
+2025-04-09 09:55:09,107 - INFO - debconf: delaying package configuration, since apt-utils is not installed
+2025-04-09 09:55:09,367 - INFO - Fetched 434 MB in 41s (10.7 MB/s)
+2025-04-09 09:55:09,486 - INFO - Selecting previously unselected package libapparmor1:amd64.
+(Reading database ...
+2025-04-09 09:55:09,504 - INFO - (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%
+2025-04-09 09:55:09,533 - INFO - (Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 27018 files and directories currently installed.)
+2025-04-09 09:55:09,601 - INFO - Preparing to unpack .../0-libapparmor1_3.0.4-2ubuntu2.4_amd64.deb ...
+2025-04-09 09:55:09,609 - INFO - Unpacking libapparmor1:amd64 (3.0.4-2ubuntu2.4) ...
+2025-04-09 09:55:09,714 - INFO - Selecting previously unselected package libargon2-1:amd64.
+2025-04-09 09:55:09,719 - INFO - Preparing to unpack .../1-libargon2-1_0~20171227-0.3_amd64.deb ...
+2025-04-09 09:55:09,724 - INFO - Unpacking libargon2-1:amd64 (0~20171227-0.3) ...
+2025-04-09 09:55:09,970 - INFO - Selecting previously unselected package libdevmapper1.02.1:amd64.
+2025-04-09 09:55:09,974 - INFO - Preparing to unpack .../2-libdevmapper1.02.1_2%3a1.02.175-2.1ubuntu5_amd64.deb ...
+2025-04-09 09:55:10,001 - INFO - Unpacking libdevmapper1.02.1:amd64 (2:1.02.175-2.1ubuntu5) ...
+2025-04-09 09:55:10,108 - INFO - Selecting previously unselected package libjson-c5:amd64.
+2025-04-09 09:55:10,111 - INFO - Preparing to unpack .../3-libjson-c5_0.15-3~ubuntu1.22.04.2_amd64.deb ...
+2025-04-09 09:55:10,115 - INFO - Unpacking libjson-c5:amd64 (0.15-3~ubuntu1.22.04.2) ...
+2025-04-09 09:55:10,307 - INFO - Selecting previously unselected package libcryptsetup12:amd64.
+2025-04-09 09:55:10,314 - INFO - Preparing to unpack .../4-libcryptsetup12_2%3a2.4.3-1ubuntu1.3_amd64.deb ...
+2025-04-09 09:55:10,317 - INFO - Unpacking libcryptsetup12:amd64 (2:2.4.3-1ubuntu1.3) ...
+2025-04-09 09:55:10,512 - INFO - Selecting previously unselected package libip4tc2:amd64.
+2025-04-09 09:55:10,518 - INFO - Preparing to unpack .../5-libip4tc2_1.8.7-1ubuntu5.2_amd64.deb ...
+2025-04-09 09:55:10,520 - INFO - Unpacking libip4tc2:amd64 (1.8.7-1ubuntu5.2) ...
+2025-04-09 09:55:10,628 - INFO - Selecting previously unselected package libkmod2:amd64.
+2025-04-09 09:55:10,632 - INFO - Preparing to unpack .../6-libkmod2_29-1ubuntu1_amd64.deb ...
+2025-04-09 09:55:10,788 - INFO - Unpacking libkmod2:amd64 (29-1ubuntu1) ...
+2025-04-09 09:55:11,066 - INFO - Selecting previously unselected package systemd.
+2025-04-09 09:55:11,103 - INFO - Preparing to unpack .../7-systemd_249.11-0ubuntu3.15_amd64.deb ...
+2025-04-09 09:55:11,212 - INFO - Unpacking systemd (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:13,647 - INFO - Setting up libapparmor1:amd64 (3.0.4-2ubuntu2.4) ...
+2025-04-09 09:55:13,790 - INFO - Setting up libargon2-1:amd64 (0~20171227-0.3) ...
+2025-04-09 09:55:13,815 - INFO - Setting up libdevmapper1.02.1:amd64 (2:1.02.175-2.1ubuntu5) ...
+2025-04-09 09:55:13,896 - INFO - Setting up libjson-c5:amd64 (0.15-3~ubuntu1.22.04.2) ...
+2025-04-09 09:55:13,932 - INFO - Setting up libcryptsetup12:amd64 (2:2.4.3-1ubuntu1.3) ...
+2025-04-09 09:55:13,954 - INFO - Setting up libip4tc2:amd64 (1.8.7-1ubuntu5.2) ...
+2025-04-09 09:55:14,000 - INFO - Setting up libkmod2:amd64 (29-1ubuntu1) ...
+Setting up systemd (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:14,014 - INFO - Created symlink /etc/systemd/system/getty.target.wants/getty@tty1.service → /lib/systemd/system/getty@.service.
+2025-04-09 09:55:14,018 - INFO - Created symlink /etc/systemd/system/multi-user.target.wants/remote-fs.target → /lib/systemd/system/remote-fs.target.
+2025-04-09 09:55:14,025 - INFO - Created symlink /etc/systemd/system/dbus-org.freedesktop.resolve1.service → /lib/systemd/system/systemd-resolved.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/systemd-resolved.service → /lib/systemd/system/systemd-resolved.service.
+2025-04-09 09:55:14,032 - INFO - ln: failed to create symbolic link '/etc/resolv.conf': Device or resource busy
+2025-04-09 09:55:14,172 - INFO - Created symlink /etc/systemd/system/sysinit.target.wants/systemd-pstore.service → /lib/systemd/system/systemd-pstore.service.
+2025-04-09 09:55:14,181 - INFO - Initializing machine ID from random generator.
+2025-04-09 09:55:16,257 - INFO - Selecting previously unselected package systemd-sysv.
+(Reading database ...
+2025-04-09 09:55:16,261 - INFO - (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%
+2025-04-09 09:55:16,264 - INFO - (Reading database ... 70%
+2025-04-09 09:55:16,265 - INFO - (Reading database ... 75%
+2025-04-09 09:55:16,267 - INFO - (Reading database ... 80%
+2025-04-09 09:55:16,269 - INFO - (Reading database ... 85%
+2025-04-09 09:55:16,271 - INFO - (Reading database ... 90%
+2025-04-09 09:55:16,272 - INFO - (Reading database ... 95%
+2025-04-09 09:55:16,277 - INFO - (Reading database ... 100%(Reading database ... 27832 files and directories currently installed.)
+2025-04-09 09:55:16,282 - INFO - Preparing to unpack .../000-systemd-sysv_249.11-0ubuntu3.15_amd64.deb ...
+Unpacking systemd-sysv (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:16,404 - INFO - Selecting previously unselected package fonts-droid-fallback.
+2025-04-09 09:55:16,408 - INFO - Preparing to unpack .../001-fonts-droid-fallback_1%3a6.0.1r16-1.1build1_all.deb ...
+2025-04-09 09:55:16,512 - INFO - Unpacking fonts-droid-fallback (1:6.0.1r16-1.1build1) ...
+2025-04-09 09:55:17,628 - INFO - Selecting previously unselected package fonts-lato.
+2025-04-09 09:55:17,631 - INFO - Preparing to unpack .../002-fonts-lato_2.0-2.1_all.deb ...
+2025-04-09 09:55:17,632 - INFO - 
+2025-04-09 09:55:17,634 - INFO - Unpacking fonts-lato (2.0-2.1) ...
+2025-04-09 09:55:19,151 - INFO - Selecting previously unselected package libfftw3-double3:amd64.
+2025-04-09 09:55:19,154 - INFO - Preparing to unpack .../003-libfftw3-double3_3.3.8-2ubuntu8_amd64.deb ...
+2025-04-09 09:55:19,159 - INFO - Unpacking libfftw3-double3:amd64 (3.3.8-2ubuntu8) ...
+2025-04-09 09:55:19,627 - INFO - Selecting previously unselected package libaom3:amd64.
+2025-04-09 09:55:19,633 - INFO - Preparing to unpack .../004-libaom3_3.3.0-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:55:19,811 - INFO - Unpacking libaom3:amd64 (3.3.0-1ubuntu0.1) ...
+2025-04-09 09:55:20,207 - INFO - Selecting previously unselected package libdav1d5:amd64.
+2025-04-09 09:55:20,210 - INFO - Preparing to unpack .../005-libdav1d5_0.9.2-1_amd64.deb ...
+2025-04-09 09:55:20,212 - INFO - Unpacking libdav1d5:amd64 (0.9.2-1) ...
+2025-04-09 09:55:20,540 - INFO - Selecting previously unselected package libde265-0:amd64.
+2025-04-09 09:55:20,603 - INFO - Preparing to unpack .../006-libde265-0_1.0.8-1ubuntu0.3_amd64.deb ...
+2025-04-09 09:55:21,016 - INFO - Unpacking libde265-0:amd64 (1.0.8-1ubuntu0.3) ...
+2025-04-09 09:55:23,200 - INFO - Selecting previously unselected package libnuma1:amd64.
+2025-04-09 09:55:23,204 - INFO - Preparing to unpack .../007-libnuma1_2.0.14-3ubuntu2_amd64.deb ...
+2025-04-09 09:55:23,705 - INFO - Unpacking libnuma1:amd64 (2.0.14-3ubuntu2) ...
+2025-04-09 09:55:24,522 - INFO - Selecting previously unselected package libx265-199:amd64.
+2025-04-09 09:55:24,526 - INFO - Preparing to unpack .../008-libx265-199_3.5-2_amd64.deb ...
+2025-04-09 09:55:24,878 - INFO - Unpacking libx265-199:amd64 (3.5-2) ...
+2025-04-09 09:55:25,439 - INFO - Selecting previously unselected package libheif1:amd64.
+2025-04-09 09:55:25,500 - INFO - Preparing to unpack .../009-libheif1_1.12.0-2build1_amd64.deb ...
+2025-04-09 09:55:25,502 - INFO - Unpacking libheif1:amd64 (1.12.0-2build1) ...
+2025-04-09 09:55:25,726 - INFO - Selecting previously unselected package liblcms2-2:amd64.
+2025-04-09 09:55:25,799 - INFO - Preparing to unpack .../010-liblcms2-2_2.12~rc1-2build2_amd64.deb ...
+2025-04-09 09:55:25,828 - INFO - Unpacking liblcms2-2:amd64 (2.12~rc1-2build2) ...
+2025-04-09 09:55:26,102 - INFO - Selecting previously unselected package libglib2.0-0:amd64.
+2025-04-09 09:55:26,106 - INFO - Preparing to unpack .../011-libglib2.0-0_2.72.4-0ubuntu2.4_amd64.deb ...
+2025-04-09 09:55:26,199 - INFO - Unpacking libglib2.0-0:amd64 (2.72.4-0ubuntu2.4) ...
+2025-04-09 09:55:26,584 - INFO - Selecting previously unselected package liblqr-1-0:amd64.
+2025-04-09 09:55:26,600 - INFO - Preparing to unpack .../012-liblqr-1-0_0.4.2-2.1_amd64.deb ...
+2025-04-09 09:55:26,600 - INFO - Unpacking liblqr-1-0:amd64 (0.4.2-2.1) ...
+2025-04-09 09:55:26,779 - INFO - Selecting previously unselected package libltdl7:amd64.
+2025-04-09 09:55:26,783 - INFO - Preparing to unpack .../013-libltdl7_2.4.6-15build2_amd64.deb ...
+2025-04-09 09:55:26,799 - INFO - Unpacking libltdl7:amd64 (2.4.6-15build2) ...
+2025-04-09 09:55:27,468 - INFO - Selecting previously unselected package libopenjp2-7:amd64.
+2025-04-09 09:55:27,470 - INFO - 
+2025-04-09 09:55:27,473 - INFO - Preparing to unpack .../014-libopenjp2-7_2.4.0-6ubuntu0.3_amd64.deb ...
+2025-04-09 09:55:27,701 - INFO - Unpacking libopenjp2-7:amd64 (2.4.0-6ubuntu0.3) ...
+2025-04-09 09:55:27,848 - INFO - Selecting previously unselected package libwebpdemux2:amd64.
+2025-04-09 09:55:27,852 - INFO - Preparing to unpack .../015-libwebpdemux2_1.2.2-2ubuntu0.22.04.2_amd64.deb ...
+2025-04-09 09:55:27,854 - INFO - Unpacking libwebpdemux2:amd64 (1.2.2-2ubuntu0.22.04.2) ...
+2025-04-09 09:55:28,020 - INFO - Selecting previously unselected package libwebpmux3:amd64.
+2025-04-09 09:55:28,024 - INFO - Preparing to unpack .../016-libwebpmux3_1.2.2-2ubuntu0.22.04.2_amd64.deb ...
+2025-04-09 09:55:28,101 - INFO - Unpacking libwebpmux3:amd64 (1.2.2-2ubuntu0.22.04.2) ...
+2025-04-09 09:55:28,356 - INFO - Selecting previously unselected package libicu70:amd64.
+Preparing to unpack .../017-libicu70_70.1-2_amd64.deb ...
+2025-04-09 09:55:28,400 - INFO - Unpacking libicu70:amd64 (70.1-2) ...
+2025-04-09 09:55:30,072 - INFO - Selecting previously unselected package libxml2:amd64.
+2025-04-09 09:55:30,076 - INFO - Preparing to unpack .../018-libxml2_2.9.13+dfsg-1ubuntu0.6_amd64.deb ...
+2025-04-09 09:55:30,077 - INFO - Unpacking libxml2:amd64 (2.9.13+dfsg-1ubuntu0.6) ...
+2025-04-09 09:55:30,479 - INFO - Selecting previously unselected package imagemagick-6-common.
+2025-04-09 09:55:30,483 - INFO - Preparing to unpack .../019-imagemagick-6-common_8%3a6.9.11.60+dfsg-1.3ubuntu0.22.04.5_all.deb ...
+2025-04-09 09:55:30,490 - INFO - Unpacking imagemagick-6-common (8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5) ...
+2025-04-09 09:55:31,008 - INFO - Selecting previously unselected package libmagickcore-6.q16-6:amd64.
+2025-04-09 09:55:31,011 - INFO - Preparing to unpack .../020-libmagickcore-6.q16-6_8%3a6.9.11.60+dfsg-1.3ubuntu0.22.04.5_amd64.deb ...
+2025-04-09 09:55:31,018 - INFO - Unpacking libmagickcore-6.q16-6:amd64 (8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5) ...
+2025-04-09 09:55:31,816 - INFO - Selecting previously unselected package libmagickwand-6.q16-6:amd64.
+2025-04-09 09:55:31,823 - INFO - Preparing to unpack .../021-libmagickwand-6.q16-6_8%3a6.9.11.60+dfsg-1.3ubuntu0.22.04.5_amd64.deb ...
+2025-04-09 09:55:31,905 - INFO - Unpacking libmagickwand-6.q16-6:amd64 (8:6.9.11.60+dfsg-1.3ubuntu0.22.04.5) ...
+2025-04-09 09:55:32,244 - INFO - Selecting previously unselected package poppler-data.
+Preparing to unpack .../022-poppler-data_0.4.11-1_all.deb ...
+2025-04-09 09:55:32,302 - INFO - Unpacking poppler-data (0.4.11-1) ...
+2025-04-09 09:55:33,702 - INFO - Selecting previously unselected package tex-common.
+2025-04-09 09:55:33,707 - INFO - Preparing to unpack .../023-tex-common_6.17_all.deb ...
+2025-04-09 09:55:33,713 - INFO - Unpacking tex-common (6.17) ...
+2025-04-09 09:55:34,146 - INFO - Selecting previously unselected package libdbus-1-3:amd64.
+2025-04-09 09:55:34,150 - INFO - Preparing to unpack .../024-libdbus-1-3_1.12.20-2ubuntu4.1_amd64.deb ...
+2025-04-09 09:55:34,151 - INFO - 
+2025-04-09 09:55:34,153 - INFO - Unpacking libdbus-1-3:amd64 (1.12.20-2ubuntu4.1) ...
+2025-04-09 09:55:34,316 - INFO - Selecting previously unselected package dbus.
+2025-04-09 09:55:34,319 - INFO - Preparing to unpack .../025-dbus_1.12.20-2ubuntu4.1_amd64.deb ...
+2025-04-09 09:55:34,409 - INFO - Unpacking dbus (1.12.20-2ubuntu4.1) ...
+2025-04-09 09:55:34,645 - INFO - Selecting previously unselected package dmsetup.
+2025-04-09 09:55:34,650 - INFO - Preparing to unpack .../026-dmsetup_2%3a1.02.175-2.1ubuntu5_amd64.deb ...
+2025-04-09 09:55:34,653 - INFO - Unpacking dmsetup (2:1.02.175-2.1ubuntu5) ...
+2025-04-09 09:55:34,853 - INFO - Selecting previously unselected package libgirepository-1.0-1:amd64.
+2025-04-09 09:55:34,900 - INFO - Preparing to unpack .../027-libgirepository-1.0-1_1.72.0-1_amd64.deb ...
+2025-04-09 09:55:34,905 - INFO - Unpacking libgirepository-1.0-1:amd64 (1.72.0-1) ...
+2025-04-09 09:55:35,018 - INFO - Selecting previously unselected package gir1.2-glib-2.0:amd64.
+2025-04-09 09:55:35,021 - INFO - Preparing to unpack .../028-gir1.2-glib-2.0_1.72.0-1_amd64.deb ...
+2025-04-09 09:55:35,200 - INFO - Unpacking gir1.2-glib-2.0:amd64 (1.72.0-1) ...
+2025-04-09 09:55:35,440 - INFO - Selecting previously unselected package libelf1:amd64.
+2025-04-09 09:55:35,444 - INFO - Preparing to unpack .../029-libelf1_0.186-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:55:35,516 - INFO - Unpacking libelf1:amd64 (0.186-1ubuntu0.1) ...
+2025-04-09 09:55:35,621 - INFO - Selecting previously unselected package libfribidi0:amd64.
+2025-04-09 09:55:35,626 - INFO - Preparing to unpack .../030-libfribidi0_1.0.8-2ubuntu3.1_amd64.deb ...
+2025-04-09 09:55:35,630 - INFO - Unpacking libfribidi0:amd64 (1.0.8-2ubuntu3.1) ...
+2025-04-09 09:55:35,835 - INFO - Selecting previously unselected package libglib2.0-data.
+2025-04-09 09:55:35,839 - INFO - Preparing to unpack .../031-libglib2.0-data_2.72.4-0ubuntu2.4_all.deb ...
+2025-04-09 09:55:35,842 - INFO - Unpacking libglib2.0-data (2.72.4-0ubuntu2.4) ...
+2025-04-09 09:55:36,078 - INFO - Selecting previously unselected package libnss-systemd:amd64.
+2025-04-09 09:55:36,113 - INFO - Preparing to unpack .../032-libnss-systemd_249.11-0ubuntu3.15_amd64.deb ...
+2025-04-09 09:55:36,115 - INFO - Unpacking libnss-systemd:amd64 (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:36,346 - INFO - Selecting previously unselected package libpam-systemd:amd64.
+2025-04-09 09:55:36,349 - INFO - Preparing to unpack .../033-libpam-systemd_249.11-0ubuntu3.15_amd64.deb ...
+2025-04-09 09:55:36,391 - INFO - Unpacking libpam-systemd:amd64 (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:36,512 - INFO - Selecting previously unselected package libslang2:amd64.
+2025-04-09 09:55:36,515 - INFO - Preparing to unpack .../034-libslang2_2.3.2-5build4_amd64.deb ...
+2025-04-09 09:55:36,516 - INFO - 
+2025-04-09 09:55:36,518 - INFO - Unpacking libslang2:amd64 (2.3.2-5build4) ...
+2025-04-09 09:55:36,845 - INFO - Selecting previously unselected package libtext-iconv-perl.
+2025-04-09 09:55:36,849 - INFO - Preparing to unpack .../035-libtext-iconv-perl_1.7-7build3_amd64.deb ...
+2025-04-09 09:55:36,853 - INFO - Unpacking libtext-iconv-perl (1.7-7build3) ...
+2025-04-09 09:55:37,044 - INFO - Selecting previously unselected package libyaml-0-2:amd64.
+2025-04-09 09:55:37,047 - INFO - Preparing to unpack .../036-libyaml-0-2_0.2.2-1build2_amd64.deb ...
+2025-04-09 09:55:37,101 - INFO - Unpacking libyaml-0-2:amd64 (0.2.2-1build2) ...
+2025-04-09 09:55:37,213 - INFO - Selecting previously unselected package python3-dbus.
+2025-04-09 09:55:37,215 - INFO - Preparing to unpack .../037-python3-dbus_1.2.18-3build1_amd64.deb ...
+2025-04-09 09:55:37,218 - INFO - Unpacking python3-dbus (1.2.18-3build1) ...
+2025-04-09 09:55:37,453 - INFO - Selecting previously unselected package python3-gi.
+2025-04-09 09:55:37,457 - INFO - Preparing to unpack .../038-python3-gi_3.42.1-0ubuntu1_amd64.deb ...
+2025-04-09 09:55:37,507 - INFO - Unpacking python3-gi (3.42.1-0ubuntu1) ...
+2025-04-09 09:55:37,800 - INFO - Selecting previously unselected package networkd-dispatcher.
+2025-04-09 09:55:37,808 - INFO - Preparing to unpack .../039-networkd-dispatcher_2.1-2ubuntu0.22.04.2_all.deb ...
+2025-04-09 09:55:37,812 - INFO - Unpacking networkd-dispatcher (2.1-2ubuntu0.22.04.2) ...
+2025-04-09 09:55:37,812 - INFO - 
+2025-04-09 09:55:38,003 - INFO - Selecting previously unselected package shared-mime-info.
+2025-04-09 09:55:38,008 - INFO - Preparing to unpack .../040-shared-mime-info_2.1-2_amd64.deb ...
+2025-04-09 09:55:38,010 - INFO - Unpacking shared-mime-info (2.1-2) ...
+2025-04-09 09:55:38,352 - INFO - Selecting previously unselected package systemd-timesyncd.
+Preparing to unpack .../041-systemd-timesyncd_249.11-0ubuntu3.15_amd64.deb ...
+2025-04-09 09:55:38,403 - INFO - Unpacking systemd-timesyncd (249.11-0ubuntu3.15) ...
+2025-04-09 09:55:38,812 - INFO - Selecting previously unselected package xdg-user-dirs.
+2025-04-09 09:55:38,815 - INFO - Preparing to unpack .../042-xdg-user-dirs_0.17-2ubuntu4_amd64.deb ...
+2025-04-09 09:55:38,824 - INFO - Unpacking xdg-user-dirs (0.17-2ubuntu4) ...
+2025-04-09 09:55:39,406 - INFO - Selecting previously unselected package xkb-data.
+2025-04-09 09:55:39,411 - INFO - Preparing to unpack .../043-xkb-data_2.33-1_all.deb ...
+2025-04-09 09:55:39,412 - INFO - Unpacking xkb-data (2.33-1) ...
+2025-04-09 09:55:40,135 - INFO - Selecting previously unselected package libdrm-common.
+2025-04-09 09:55:40,139 - INFO - Preparing to unpack .../044-libdrm-common_2.4.113-2~ubuntu0.22.04.1_all.deb ...
+2025-04-09 09:55:40,180 - INFO - Unpacking libdrm-common (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:55:40,409 - INFO - Selecting previously unselected package libdrm2:amd64.
+2025-04-09 09:55:40,413 - INFO - Preparing to unpack .../045-libdrm2_2.4.113-2~ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:55:40,415 - INFO - 
+2025-04-09 09:55:40,418 - INFO - Unpacking libdrm2:amd64 (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:55:40,646 - INFO - Selecting previously unselected package libusb-1.0-0:amd64.
+2025-04-09 09:55:40,651 - INFO - Preparing to unpack .../046-libusb-1.0-0_2%3a1.0.25-1ubuntu2_amd64.deb ...
+2025-04-09 09:55:40,652 - INFO - 
+2025-04-09 09:55:40,656 - INFO - Unpacking libusb-1.0-0:amd64 (2:1.0.25-1ubuntu2) ...
+2025-04-09 09:55:40,814 - INFO - Selecting previously unselected package hicolor-icon-theme.
+2025-04-09 09:55:40,819 - INFO - Preparing to unpack .../047-hicolor-icon-theme_0.17-2_all.deb ...
+2025-04-09 09:55:40,821 - INFO - Unpacking hicolor-icon-theme (0.17-2) ...
+2025-04-09 09:55:41,724 - INFO - Selecting previously unselected package libgdk-pixbuf2.0-common.
+Preparing to unpack .../048-libgdk-pixbuf2.0-common_2.42.8+dfsg-1ubuntu0.3_all.deb ...
+2025-04-09 09:55:41,800 - INFO - Unpacking libgdk-pixbuf2.0-common (2.42.8+dfsg-1ubuntu0.3) ...
+2025-04-09 09:55:41,980 - INFO - Selecting previously unselected package libgdk-pixbuf-2.0-0:amd64.
+2025-04-09 09:55:41,986 - INFO - Preparing to unpack .../049-libgdk-pixbuf-2.0-0_2.42.8+dfsg-1ubuntu0.3_amd64.deb ...
+2025-04-09 09:55:41,986 - INFO - Unpacking libgdk-pixbuf-2.0-0:amd64 (2.42.8+dfsg-1ubuntu0.3) ...
+2025-04-09 09:55:42,400 - INFO - Selecting previously unselected package gtk-update-icon-cache.
+Preparing to unpack .../050-gtk-update-icon-cache_3.24.33-1ubuntu2.2_amd64.deb ...
+2025-04-09 09:55:42,451 - INFO - Unpacking gtk-update-icon-cache (3.24.33-1ubuntu2.2) ...
+2025-04-09 09:55:42,620 - INFO - Selecting previously unselected package humanity-icon-theme.
+2025-04-09 09:55:42,654 - INFO - Preparing to unpack .../051-humanity-icon-theme_0.6.16_all.deb ...
+2025-04-09 09:55:42,693 - INFO - Unpacking humanity-icon-theme (0.6.16) ...
+2025-04-09 09:55:54,844 - INFO - Selecting previously unselected package ubuntu-mono.
+2025-04-09 09:55:54,853 - INFO - Preparing to unpack .../052-ubuntu-mono_20.10-0ubuntu2_all.deb ...
+2025-04-09 09:55:54,905 - INFO - Unpacking ubuntu-mono (20.10-0ubuntu2) ...
+2025-04-09 09:55:59,916 - INFO - Selecting previously unselected package adwaita-icon-theme.
+2025-04-09 09:56:00,000 - INFO - Preparing to unpack .../053-adwaita-icon-theme_41.0-1ubuntu1_all.deb ...
+2025-04-09 09:56:00,004 - INFO - Unpacking adwaita-icon-theme (41.0-1ubuntu1) ...
+2025-04-09 09:56:03,147 - INFO - Selecting previously unselected package alsa-topology-conf.
+2025-04-09 09:56:03,154 - INFO - Preparing to unpack .../054-alsa-topology-conf_1.2.5.1-2_all.deb ...
+2025-04-09 09:56:03,304 - INFO - Unpacking alsa-topology-conf (1.2.5.1-2) ...
+2025-04-09 09:56:03,514 - INFO - Selecting previously unselected package libasound2-data.
+2025-04-09 09:56:03,521 - INFO - Preparing to unpack .../055-libasound2-data_1.2.6.1-1ubuntu1_all.deb ...
+2025-04-09 09:56:03,600 - INFO - Unpacking libasound2-data (1.2.6.1-1ubuntu1) ...
+2025-04-09 09:56:03,904 - INFO - Selecting previously unselected package libasound2:amd64.
+2025-04-09 09:56:03,915 - INFO - Preparing to unpack .../056-libasound2_1.2.6.1-1ubuntu1_amd64.deb ...
+2025-04-09 09:56:03,973 - INFO - Unpacking libasound2:amd64 (1.2.6.1-1ubuntu1) ...
+2025-04-09 09:56:04,214 - INFO - Selecting previously unselected package alsa-ucm-conf.
+2025-04-09 09:56:04,222 - INFO - Preparing to unpack .../057-alsa-ucm-conf_1.2.6.3-1ubuntu1.12_all.deb ...
+2025-04-09 09:56:04,224 - INFO - Unpacking alsa-ucm-conf (1.2.6.3-1ubuntu1.12) ...
+2025-04-09 09:56:05,200 - INFO - Selecting previously unselected package libxi6:amd64.
+2025-04-09 09:56:05,209 - INFO - Preparing to unpack .../058-libxi6_2%3a1.8-1build1_amd64.deb ...
+2025-04-09 09:56:05,270 - INFO - Unpacking libxi6:amd64 (2:1.8-1build1) ...
+2025-04-09 09:56:05,401 - INFO - Selecting previously unselected package libatspi2.0-0:amd64.
+2025-04-09 09:56:05,408 - INFO - Preparing to unpack .../059-libatspi2.0-0_2.44.0-3_amd64.deb ...
+2025-04-09 09:56:05,411 - INFO - Unpacking libatspi2.0-0:amd64 (2.44.0-3) ...
+2025-04-09 09:56:05,614 - INFO - Selecting previously unselected package x11-common.
+2025-04-09 09:56:05,621 - INFO - Preparing to unpack .../060-x11-common_1%3a7.7+23ubuntu2_all.deb ...
+2025-04-09 09:56:05,629 - INFO - Unpacking x11-common (1:7.7+23ubuntu2) ...
+2025-04-09 09:56:05,823 - INFO - Selecting previously unselected package libxtst6:amd64.
+2025-04-09 09:56:05,904 - INFO - Preparing to unpack .../061-libxtst6_2%3a1.2.3-1build4_amd64.deb ...
+2025-04-09 09:56:05,910 - INFO - Unpacking libxtst6:amd64 (2:1.2.3-1build4) ...
+2025-04-09 09:56:06,106 - INFO - Selecting previously unselected package dbus-user-session.
+2025-04-09 09:56:06,115 - INFO - Preparing to unpack .../062-dbus-user-session_1.12.20-2ubuntu4.1_amd64.deb ...
+2025-04-09 09:56:06,120 - INFO - Unpacking dbus-user-session (1.12.20-2ubuntu4.1) ...
+2025-04-09 09:56:06,400 - INFO - Selecting previously unselected package libdconf1:amd64.
+Preparing to unpack .../063-libdconf1_0.40.0-3_amd64.deb ...
+2025-04-09 09:56:06,403 - INFO - Unpacking libdconf1:amd64 (0.40.0-3) ...
+2025-04-09 09:56:06,513 - INFO - Selecting previously unselected package dconf-service.
+2025-04-09 09:56:06,521 - INFO - Preparing to unpack .../064-dconf-service_0.40.0-3_amd64.deb ...
+2025-04-09 09:56:06,523 - INFO - Unpacking dconf-service (0.40.0-3) ...
+2025-04-09 09:56:06,709 - INFO - Selecting previously unselected package dconf-gsettings-backend:amd64.
+2025-04-09 09:56:06,721 - INFO - Preparing to unpack .../065-dconf-gsettings-backend_0.40.0-3_amd64.deb ...
+2025-04-09 09:56:06,721 - INFO - 
+2025-04-09 09:56:06,803 - INFO - Unpacking dconf-gsettings-backend:amd64 (0.40.0-3) ...
+2025-04-09 09:56:06,918 - INFO - Selecting previously unselected package session-migration.
+2025-04-09 09:56:06,922 - INFO - Preparing to unpack .../066-session-migration_0.3.6_amd64.deb ...
+2025-04-09 09:56:06,931 - INFO - Unpacking session-migration (0.3.6) ...
+2025-04-09 09:56:07,209 - INFO - Selecting previously unselected package gsettings-desktop-schemas.
+2025-04-09 09:56:07,215 - INFO - Preparing to unpack .../067-gsettings-desktop-schemas_42.0-1ubuntu1_all.deb ...
+2025-04-09 09:56:07,217 - INFO - Unpacking gsettings-desktop-schemas (42.0-1ubuntu1) ...
+2025-04-09 09:56:07,700 - INFO - Selecting previously unselected package at-spi2-core.
+Preparing to unpack .../068-at-spi2-core_2.44.0-3_amd64.deb ...
+Unpacking at-spi2-core (2.44.0-3) ...
+2025-04-09 09:56:07,825 - INFO - Selecting previously unselected package libpaper1:amd64.
+2025-04-09 09:56:07,905 - INFO - Preparing to unpack .../069-libpaper1_1.1.28build2_amd64.deb ...
+2025-04-09 09:56:07,908 - INFO - Unpacking libpaper1:amd64 (1.1.28build2) ...
+2025-04-09 09:56:08,021 - INFO - Selecting previously unselected package libpaper-utils.
+2025-04-09 09:56:08,044 - INFO - Preparing to unpack .../070-libpaper-utils_1.1.28build2_amd64.deb ...
+Unpacking libpaper-utils (1.1.28build2) ...
+2025-04-09 09:56:08,206 - INFO - Selecting previously unselected package libkpathsea6:amd64.
+2025-04-09 09:56:08,213 - INFO - Preparing to unpack .../071-libkpathsea6_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:08,216 - INFO - Unpacking libkpathsea6:amd64 (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:08,505 - INFO - Selecting previously unselected package libptexenc1:amd64.
+2025-04-09 09:56:08,508 - INFO - 
+2025-04-09 09:56:08,512 - INFO - Preparing to unpack .../072-libptexenc1_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:08,547 - INFO - Unpacking libptexenc1:amd64 (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:08,625 - INFO - Selecting previously unselected package libsynctex2:amd64.
+2025-04-09 09:56:08,703 - INFO - Preparing to unpack .../073-libsynctex2_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:08,773 - INFO - Unpacking libsynctex2:amd64 (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:08,823 - INFO - Selecting previously unselected package libtexlua53:amd64.
+2025-04-09 09:56:08,903 - INFO - Preparing to unpack .../074-libtexlua53_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:08,906 - INFO - Unpacking libtexlua53:amd64 (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:09,064 - INFO - Selecting previously unselected package libtexluajit2:amd64.
+2025-04-09 09:56:09,105 - INFO - Preparing to unpack .../075-libtexluajit2_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:09,200 - INFO - Unpacking libtexluajit2:amd64 (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:09,341 - INFO - Selecting previously unselected package t1utils.
+2025-04-09 09:56:09,346 - INFO - Preparing to unpack .../076-t1utils_1.41-4build2_amd64.deb ...
+2025-04-09 09:56:09,347 - INFO - 
+2025-04-09 09:56:09,350 - INFO - Unpacking t1utils (1.41-4build2) ...
+2025-04-09 09:56:09,350 - INFO - 
+2025-04-09 09:56:09,523 - INFO - Selecting previously unselected package libpixman-1-0:amd64.
+2025-04-09 09:56:09,524 - INFO - Preparing to unpack .../077-libpixman-1-0_0.40.0-1ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:56:09,526 - INFO - Unpacking libpixman-1-0:amd64 (0.40.0-1ubuntu0.22.04.1) ...
+2025-04-09 09:56:09,720 - INFO - Selecting previously unselected package libxcb-render0:amd64.
+2025-04-09 09:56:09,801 - INFO - Preparing to unpack .../078-libxcb-render0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:56:09,801 - INFO - 
+2025-04-09 09:56:09,804 - INFO - Unpacking libxcb-render0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:56:09,922 - INFO - Selecting previously unselected package libxcb-shm0:amd64.
+2025-04-09 09:56:09,928 - INFO - Preparing to unpack .../079-libxcb-shm0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:56:10,013 - INFO - Unpacking libxcb-shm0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:56:10,201 - INFO - Selecting previously unselected package libxrender1:amd64.
+2025-04-09 09:56:10,213 - INFO - Preparing to unpack .../080-libxrender1_1%3a0.9.10-1build4_amd64.deb ...
+2025-04-09 09:56:10,280 - INFO - Unpacking libxrender1:amd64 (1:0.9.10-1build4) ...
+2025-04-09 09:56:10,414 - INFO - Selecting previously unselected package libcairo2:amd64.
+Preparing to unpack .../081-libcairo2_1.16.0-5ubuntu2_amd64.deb ...
+2025-04-09 09:56:10,420 - INFO - Unpacking libcairo2:amd64 (1.16.0-5ubuntu2) ...
+2025-04-09 09:56:10,810 - INFO - Selecting previously unselected package libgraphite2-3:amd64.
+2025-04-09 09:56:10,816 - INFO - Preparing to unpack .../082-libgraphite2-3_1.3.14-1build2_amd64.deb ...
+2025-04-09 09:56:10,834 - INFO - Unpacking libgraphite2-3:amd64 (1.3.14-1build2) ...
+2025-04-09 09:56:11,042 - INFO - Selecting previously unselected package libharfbuzz0b:amd64.
+2025-04-09 09:56:11,051 - INFO - Preparing to unpack .../083-libharfbuzz0b_2.7.4-1ubuntu3.2_amd64.deb ...
+2025-04-09 09:56:11,104 - INFO - Unpacking libharfbuzz0b:amd64 (2.7.4-1ubuntu3.2) ...
+2025-04-09 09:56:11,312 - INFO - Selecting previously unselected package libteckit0:amd64.
+2025-04-09 09:56:11,319 - INFO - Preparing to unpack .../084-libteckit0_2.5.11+ds1-1_amd64.deb ...
+2025-04-09 09:56:11,319 - INFO - 
+2025-04-09 09:56:11,321 - INFO - Unpacking libteckit0:amd64 (2.5.11+ds1-1) ...
+2025-04-09 09:56:11,322 - INFO - 
+2025-04-09 09:56:11,608 - INFO - Selecting previously unselected package libice6:amd64.
+2025-04-09 09:56:11,616 - INFO - Preparing to unpack .../085-libice6_2%3a1.0.10-1build2_amd64.deb ...
+2025-04-09 09:56:11,620 - INFO - Unpacking libice6:amd64 (2:1.0.10-1build2) ...
+2025-04-09 09:56:11,819 - INFO - Selecting previously unselected package libsm6:amd64.
+2025-04-09 09:56:11,820 - INFO - 
+2025-04-09 09:56:11,900 - INFO - Preparing to unpack .../086-libsm6_2%3a1.2.3-1build2_amd64.deb ...
+2025-04-09 09:56:11,904 - INFO - Unpacking libsm6:amd64 (2:1.2.3-1build2) ...
+2025-04-09 09:56:12,102 - INFO - Selecting previously unselected package libxt6:amd64.
+2025-04-09 09:56:12,109 - INFO - Preparing to unpack .../087-libxt6_1%3a1.2.1-1_amd64.deb ...
+2025-04-09 09:56:12,111 - INFO - Unpacking libxt6:amd64 (1:1.2.1-1) ...
+2025-04-09 09:56:12,305 - INFO - Selecting previously unselected package libxmu6:amd64.
+2025-04-09 09:56:12,314 - INFO - Preparing to unpack .../088-libxmu6_2%3a1.1.3-3_amd64.deb ...
+2025-04-09 09:56:12,374 - INFO - Unpacking libxmu6:amd64 (2:1.1.3-3) ...
+2025-04-09 09:56:12,504 - INFO - Selecting previously unselected package libxaw7:amd64.
+2025-04-09 09:56:12,514 - INFO - Preparing to unpack .../089-libxaw7_2%3a1.0.14-1_amd64.deb ...
+2025-04-09 09:56:12,520 - INFO - Unpacking libxaw7:amd64 (2:1.0.14-1) ...
+2025-04-09 09:56:12,711 - INFO - Selecting previously unselected package libzzip-0-13:amd64.
+2025-04-09 09:56:12,717 - INFO - Preparing to unpack .../090-libzzip-0-13_0.13.72+dfsg.1-1.1_amd64.deb ...
+2025-04-09 09:56:12,753 - INFO - Unpacking libzzip-0-13:amd64 (0.13.72+dfsg.1-1.1) ...
+2025-04-09 09:56:12,959 - INFO - Selecting previously unselected package texlive-binaries.
+2025-04-09 09:56:13,001 - INFO - Preparing to unpack .../091-texlive-binaries_2021.20210626.59705-1ubuntu0.2_amd64.deb ...
+2025-04-09 09:56:13,049 - INFO - Unpacking texlive-binaries (2021.20210626.59705-1ubuntu0.2) ...
+2025-04-09 09:56:15,301 - INFO - Selecting previously unselected package xdg-utils.
+2025-04-09 09:56:15,306 - INFO - Preparing to unpack .../092-xdg-utils_1.1.3-4.1ubuntu3~22.04.1_all.deb ...
+2025-04-09 09:56:15,309 - INFO - Unpacking xdg-utils (1.1.3-4.1ubuntu3~22.04.1) ...
+2025-04-09 09:56:15,519 - INFO - Selecting previously unselected package texlive-base.
+2025-04-09 09:56:15,525 - INFO - Preparing to unpack .../093-texlive-base_2021.20220204-1_all.deb ...
+2025-04-09 09:56:15,703 - INFO - Unpacking texlive-base (2021.20220204-1) ...
+2025-04-09 09:56:28,344 - INFO - Selecting previously unselected package fonts-lmodern.
+2025-04-09 09:56:28,349 - INFO - Preparing to unpack .../094-fonts-lmodern_2.004.5-6.1_all.deb ...
+2025-04-09 09:56:28,451 - INFO - Unpacking fonts-lmodern (2.004.5-6.1) ...
+2025-04-09 09:56:30,979 - INFO - Selecting previously unselected package texlive-latex-base.
+2025-04-09 09:56:31,016 - INFO - Preparing to unpack .../095-texlive-latex-base_2021.20220204-1_all.deb ...
+2025-04-09 09:56:31,028 - INFO - Unpacking texlive-latex-base (2021.20220204-1) ...
+2025-04-09 09:56:34,360 - INFO - Selecting previously unselected package texlive-latex-recommended.
+2025-04-09 09:56:34,387 - INFO - Preparing to unpack .../096-texlive-latex-recommended_2021.20220204-1_all.deb ...
+2025-04-09 09:56:34,457 - INFO - Unpacking texlive-latex-recommended (2021.20220204-1) ...
+2025-04-09 09:56:42,572 - INFO - Selecting previously unselected package cm-super-minimal.
+Preparing to unpack .../097-cm-super-minimal_0.3.4-17_all.deb ...
+Unpacking cm-super-minimal (0.3.4-17) ...
+2025-04-09 09:56:43,373 - INFO - Selecting previously unselected package pfb2t1c2pfb.
+2025-04-09 09:56:43,383 - INFO - Preparing to unpack .../098-pfb2t1c2pfb_0.3-11_amd64.deb ...
+2025-04-09 09:56:43,384 - INFO - 
+2025-04-09 09:56:43,387 - INFO - Unpacking pfb2t1c2pfb (0.3-11) ...
+2025-04-09 09:56:43,514 - INFO - Selecting previously unselected package cm-super.
+2025-04-09 09:56:43,523 - INFO - Preparing to unpack .../099-cm-super_0.3.4-17_all.deb ...
+2025-04-09 09:56:43,600 - INFO - Unpacking cm-super (0.3.4-17) ...
+2025-04-09 09:56:47,269 - INFO - Selecting previously unselected package fonts-urw-base35.
+2025-04-09 09:56:47,299 - INFO - Preparing to unpack .../100-fonts-urw-base35_20200910-1_all.deb ...
+2025-04-09 09:56:47,623 - INFO - Unpacking fonts-urw-base35 (20200910-1) ...
+2025-04-09 09:56:49,857 - INFO - Selecting previously unselected package libgs9-common.
+2025-04-09 09:56:49,866 - INFO - Preparing to unpack .../101-libgs9-common_9.55.0~dfsg1-0ubuntu5.11_all.deb ...
+2025-04-09 09:56:49,921 - INFO - Unpacking libgs9-common (9.55.0~dfsg1-0ubuntu5.11) ...
+2025-04-09 09:56:50,711 - INFO - Selecting previously unselected package libavahi-common-data:amd64.
+2025-04-09 09:56:50,725 - INFO - Preparing to unpack .../102-libavahi-common-data_0.8-5ubuntu5.2_amd64.deb ...
+2025-04-09 09:56:50,736 - INFO - 
+2025-04-09 09:56:50,801 - INFO - Unpacking libavahi-common-data:amd64 (0.8-5ubuntu5.2) ...
+2025-04-09 09:56:51,018 - INFO - Selecting previously unselected package libavahi-common3:amd64.
+2025-04-09 09:56:51,100 - INFO - Preparing to unpack .../103-libavahi-common3_0.8-5ubuntu5.2_amd64.deb ...
+2025-04-09 09:56:51,135 - INFO - Unpacking libavahi-common3:amd64 (0.8-5ubuntu5.2) ...
+2025-04-09 09:56:51,310 - INFO - Selecting previously unselected package libavahi-client3:amd64.
+2025-04-09 09:56:51,316 - INFO - Preparing to unpack .../104-libavahi-client3_0.8-5ubuntu5.2_amd64.deb ...
+2025-04-09 09:56:51,324 - INFO - Unpacking libavahi-client3:amd64 (0.8-5ubuntu5.2) ...
+2025-04-09 09:56:51,603 - INFO - Selecting previously unselected package libcups2:amd64.
+2025-04-09 09:56:51,612 - INFO - Preparing to unpack .../105-libcups2_2.4.1op1-1ubuntu4.11_amd64.deb ...
+2025-04-09 09:56:51,613 - INFO - Unpacking libcups2:amd64 (2.4.1op1-1ubuntu4.11) ...
+2025-04-09 09:56:51,816 - INFO - Selecting previously unselected package libidn12:amd64.
+2025-04-09 09:56:51,825 - INFO - Preparing to unpack .../106-libidn12_1.38-4ubuntu1_amd64.deb ...
+2025-04-09 09:56:51,902 - INFO - Unpacking libidn12:amd64 (1.38-4ubuntu1) ...
+2025-04-09 09:56:52,056 - INFO - Selecting previously unselected package libijs-0.35:amd64.
+2025-04-09 09:56:52,105 - INFO - Preparing to unpack .../107-libijs-0.35_0.35-15build2_amd64.deb ...
+2025-04-09 09:56:52,112 - INFO - Unpacking libijs-0.35:amd64 (0.35-15build2) ...
+2025-04-09 09:56:52,304 - INFO - Selecting previously unselected package libjbig2dec0:amd64.
+2025-04-09 09:56:52,309 - INFO - Preparing to unpack .../108-libjbig2dec0_0.19-3build2_amd64.deb ...
+2025-04-09 09:56:52,349 - INFO - Unpacking libjbig2dec0:amd64 (0.19-3build2) ...
+2025-04-09 09:56:52,561 - INFO - Selecting previously unselected package libgs9:amd64.
+2025-04-09 09:56:52,600 - INFO - Preparing to unpack .../109-libgs9_9.55.0~dfsg1-0ubuntu5.11_amd64.deb ...
+2025-04-09 09:56:52,637 - INFO - Unpacking libgs9:amd64 (9.55.0~dfsg1-0ubuntu5.11) ...
+2025-04-09 09:56:53,699 - INFO - Selecting previously unselected package ghostscript.
+2025-04-09 09:56:53,704 - INFO - Preparing to unpack .../110-ghostscript_9.55.0~dfsg1-0ubuntu5.11_amd64.deb ...
+2025-04-09 09:56:53,709 - INFO - Unpacking ghostscript (9.55.0~dfsg1-0ubuntu5.11) ...
+2025-04-09 09:56:54,003 - INFO - Selecting previously unselected package dvipng.
+2025-04-09 09:56:54,014 - INFO - Preparing to unpack .../111-dvipng_1.15-1.1_amd64.deb ...
+2025-04-09 09:56:54,024 - INFO - Unpacking dvipng (1.15-1.1) ...
+2025-04-09 09:56:54,302 - INFO - Selecting previously unselected package libwoff1:amd64.
+2025-04-09 09:56:54,320 - INFO - Preparing to unpack .../112-libwoff1_1.0.2-1build4_amd64.deb ...
+2025-04-09 09:56:54,326 - INFO - Unpacking libwoff1:amd64 (1.0.2-1build4) ...
+2025-04-09 09:56:54,517 - INFO - Selecting previously unselected package dvisvgm.
+2025-04-09 09:56:54,524 - INFO - Preparing to unpack .../113-dvisvgm_2.13.1-1_amd64.deb ...
+2025-04-09 09:56:54,529 - INFO - Unpacking dvisvgm (2.13.1-1) ...
+2025-04-09 09:56:54,935 - INFO - Selecting previously unselected package libva2:amd64.
+2025-04-09 09:56:55,002 - INFO - Preparing to unpack .../114-libva2_2.14.0-1_amd64.deb ...
+2025-04-09 09:56:55,004 - INFO - Unpacking libva2:amd64 (2.14.0-1) ...
+2025-04-09 09:56:55,204 - INFO - Selecting previously unselected package libmfx1:amd64.
+2025-04-09 09:56:55,212 - INFO - Preparing to unpack .../115-libmfx1_22.3.0-1_amd64.deb ...
+2025-04-09 09:56:55,217 - INFO - Unpacking libmfx1:amd64 (22.3.0-1) ...
+2025-04-09 09:56:56,213 - INFO - Selecting previously unselected package libva-drm2:amd64.
+2025-04-09 09:56:56,225 - INFO - Preparing to unpack .../116-libva-drm2_2.14.0-1_amd64.deb ...
+2025-04-09 09:56:56,305 - INFO - Unpacking libva-drm2:amd64 (2.14.0-1) ...
+2025-04-09 09:56:56,416 - INFO - Selecting previously unselected package libxfixes3:amd64.
+2025-04-09 09:56:56,424 - INFO - Preparing to unpack .../117-libxfixes3_1%3a6.0.0-1_amd64.deb ...
+2025-04-09 09:56:56,501 - INFO - Unpacking libxfixes3:amd64 (1:6.0.0-1) ...
+2025-04-09 09:56:56,719 - INFO - Selecting previously unselected package libva-x11-2:amd64.
+2025-04-09 09:56:56,801 - INFO - Preparing to unpack .../118-libva-x11-2_2.14.0-1_amd64.deb ...
+2025-04-09 09:56:56,822 - INFO - Unpacking libva-x11-2:amd64 (2.14.0-1) ...
+2025-04-09 09:56:57,008 - INFO - Selecting previously unselected package libvdpau1:amd64.
+2025-04-09 09:56:57,016 - INFO - Preparing to unpack .../119-libvdpau1_1.4-3build2_amd64.deb ...
+2025-04-09 09:56:57,099 - INFO - Unpacking libvdpau1:amd64 (1.4-3build2) ...
+2025-04-09 09:56:57,215 - INFO - Selecting previously unselected package ocl-icd-libopencl1:amd64.
+2025-04-09 09:56:57,225 - INFO - Preparing to unpack .../120-ocl-icd-libopencl1_2.2.14-3_amd64.deb ...
+2025-04-09 09:56:57,309 - INFO - Unpacking ocl-icd-libopencl1:amd64 (2.2.14-3) ...
+2025-04-09 09:56:57,504 - INFO - Selecting previously unselected package libavutil56:amd64.
+2025-04-09 09:56:57,512 - INFO - Preparing to unpack .../121-libavutil56_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:56:57,516 - INFO - Unpacking libavutil56:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:56:57,779 - INFO - Selecting previously unselected package libcodec2-1.0:amd64.
+2025-04-09 09:56:57,780 - INFO - 
+2025-04-09 09:56:57,811 - INFO - Preparing to unpack .../122-libcodec2-1.0_1.0.1-3_amd64.deb ...
+Unpacking libcodec2-1.0:amd64 (1.0.1-3) ...
+2025-04-09 09:56:58,515 - INFO - Selecting previously unselected package libgsm1:amd64.
+2025-04-09 09:56:58,523 - INFO - Preparing to unpack .../123-libgsm1_1.0.19-1_amd64.deb ...
+2025-04-09 09:56:58,600 - INFO - Unpacking libgsm1:amd64 (1.0.19-1) ...
+2025-04-09 09:56:58,814 - INFO - Selecting previously unselected package libmp3lame0:amd64.
+2025-04-09 09:56:58,821 - INFO - Preparing to unpack .../124-libmp3lame0_3.100-3build2_amd64.deb ...
+2025-04-09 09:56:58,837 - INFO - Unpacking libmp3lame0:amd64 (3.100-3build2) ...
+2025-04-09 09:56:59,013 - INFO - Selecting previously unselected package libopus0:amd64.
+2025-04-09 09:56:59,021 - INFO - Preparing to unpack .../125-libopus0_1.3.1-0.1build2_amd64.deb ...
+2025-04-09 09:56:59,100 - INFO - Unpacking libopus0:amd64 (1.3.1-0.1build2) ...
+2025-04-09 09:56:59,318 - INFO - Selecting previously unselected package libcairo-gobject2:amd64.
+2025-04-09 09:56:59,319 - INFO - Preparing to unpack .../126-libcairo-gobject2_1.16.0-5ubuntu2_amd64.deb ...
+2025-04-09 09:56:59,325 - INFO - Unpacking libcairo-gobject2:amd64 (1.16.0-5ubuntu2) ...
+2025-04-09 09:56:59,600 - INFO - Selecting previously unselected package fontconfig.
+2025-04-09 09:56:59,619 - INFO - Preparing to unpack .../127-fontconfig_2.13.1-4.2ubuntu5_amd64.deb ...
+2025-04-09 09:56:59,623 - INFO - Unpacking fontconfig (2.13.1-4.2ubuntu5) ...
+2025-04-09 09:56:59,816 - INFO - Selecting previously unselected package libthai-data.
+2025-04-09 09:56:59,825 - INFO - Preparing to unpack .../128-libthai-data_0.1.29-1build1_all.deb ...
+2025-04-09 09:56:59,903 - INFO - Unpacking libthai-data (0.1.29-1build1) ...
+2025-04-09 09:57:00,104 - INFO - Selecting previously unselected package libdatrie1:amd64.
+2025-04-09 09:57:00,114 - INFO - Preparing to unpack .../129-libdatrie1_0.2.13-2_amd64.deb ...
+2025-04-09 09:57:00,117 - INFO - Unpacking libdatrie1:amd64 (0.2.13-2) ...
+2025-04-09 09:57:00,307 - INFO - Selecting previously unselected package libthai0:amd64.
+2025-04-09 09:57:00,318 - INFO - Preparing to unpack .../130-libthai0_0.1.29-1build1_amd64.deb ...
+2025-04-09 09:57:00,325 - INFO - Unpacking libthai0:amd64 (0.1.29-1build1) ...
+2025-04-09 09:57:00,599 - INFO - Selecting previously unselected package libpango-1.0-0:amd64.
+Preparing to unpack .../131-libpango-1.0-0_1.50.6+ds-2ubuntu1_amd64.deb ...
+2025-04-09 09:57:00,613 - INFO - Unpacking libpango-1.0-0:amd64 (1.50.6+ds-2ubuntu1) ...
+2025-04-09 09:57:00,914 - INFO - Selecting previously unselected package libpangoft2-1.0-0:amd64.
+2025-04-09 09:57:00,924 - INFO - Preparing to unpack .../132-libpangoft2-1.0-0_1.50.6+ds-2ubuntu1_amd64.deb ...
+2025-04-09 09:57:01,001 - INFO - Unpacking libpangoft2-1.0-0:amd64 (1.50.6+ds-2ubuntu1) ...
+2025-04-09 09:57:01,199 - INFO - Selecting previously unselected package libpangocairo-1.0-0:amd64.
+2025-04-09 09:57:01,208 - INFO - Preparing to unpack .../133-libpangocairo-1.0-0_1.50.6+ds-2ubuntu1_amd64.deb ...
+2025-04-09 09:57:01,212 - INFO - Unpacking libpangocairo-1.0-0:amd64 (1.50.6+ds-2ubuntu1) ...
+2025-04-09 09:57:01,413 - INFO - Selecting previously unselected package librsvg2-2:amd64.
+2025-04-09 09:57:01,501 - INFO - Preparing to unpack .../134-librsvg2-2_2.52.5+dfsg-3ubuntu0.2_amd64.deb ...
+2025-04-09 09:57:01,502 - INFO - Unpacking librsvg2-2:amd64 (2.52.5+dfsg-3ubuntu0.2) ...
+2025-04-09 09:57:02,508 - INFO - Selecting previously unselected package libshine3:amd64.
+2025-04-09 09:57:02,509 - INFO - Preparing to unpack .../135-libshine3_3.1.1-2_amd64.deb ...
+Unpacking libshine3:amd64 (3.1.1-2) ...
+2025-04-09 09:57:03,007 - INFO - Selecting previously unselected package libsnappy1v5:amd64.
+2025-04-09 09:57:03,014 - INFO - Preparing to unpack .../136-libsnappy1v5_1.1.8-1build3_amd64.deb ...
+2025-04-09 09:57:03,017 - INFO - Unpacking libsnappy1v5:amd64 (1.1.8-1build3) ...
+2025-04-09 09:57:03,299 - INFO - Selecting previously unselected package libspeex1:amd64.
+2025-04-09 09:57:03,307 - INFO - Preparing to unpack .../137-libspeex1_1.2~rc1.2-1.1ubuntu3_amd64.deb ...
+2025-04-09 09:57:03,307 - INFO - 
+2025-04-09 09:57:03,313 - INFO - Unpacking libspeex1:amd64 (1.2~rc1.2-1.1ubuntu3) ...
+2025-04-09 09:57:03,642 - INFO - Selecting previously unselected package libsoxr0:amd64.
+2025-04-09 09:57:03,654 - INFO - Preparing to unpack .../138-libsoxr0_0.1.3-4build2_amd64.deb ...
+2025-04-09 09:57:03,730 - INFO - Unpacking libsoxr0:amd64 (0.1.3-4build2) ...
+2025-04-09 09:57:03,731 - INFO - 
+2025-04-09 09:57:03,906 - INFO - Selecting previously unselected package libswresample3:amd64.
+2025-04-09 09:57:03,913 - INFO - Preparing to unpack .../139-libswresample3_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:03,918 - INFO - Unpacking libswresample3:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:04,218 - INFO - Selecting previously unselected package libogg0:amd64.
+Preparing to unpack .../140-libogg0_1.3.5-0ubuntu3_amd64.deb ...
+2025-04-09 09:57:04,220 - INFO - Unpacking libogg0:amd64 (1.3.5-0ubuntu3) ...
+2025-04-09 09:57:04,616 - INFO - Selecting previously unselected package libtheora0:amd64.
+2025-04-09 09:57:04,618 - INFO - Preparing to unpack .../141-libtheora0_1.1.1+dfsg.1-15ubuntu4_amd64.deb ...
+2025-04-09 09:57:04,720 - INFO - Unpacking libtheora0:amd64 (1.1.1+dfsg.1-15ubuntu4) ...
+2025-04-09 09:57:04,920 - INFO - Selecting previously unselected package libtwolame0:amd64.
+2025-04-09 09:57:05,002 - INFO - Preparing to unpack .../142-libtwolame0_0.4.0-2build2_amd64.deb ...
+2025-04-09 09:57:05,005 - INFO - Unpacking libtwolame0:amd64 (0.4.0-2build2) ...
+2025-04-09 09:57:05,124 - INFO - Selecting previously unselected package libvorbis0a:amd64.
+2025-04-09 09:57:05,206 - INFO - Preparing to unpack .../143-libvorbis0a_1.3.7-1build2_amd64.deb ...
+2025-04-09 09:57:05,223 - INFO - Unpacking libvorbis0a:amd64 (1.3.7-1build2) ...
+2025-04-09 09:57:05,544 - INFO - Selecting previously unselected package libvorbisenc2:amd64.
+2025-04-09 09:57:05,552 - INFO - Preparing to unpack .../144-libvorbisenc2_1.3.7-1build2_amd64.deb ...
+2025-04-09 09:57:05,600 - INFO - Unpacking libvorbisenc2:amd64 (1.3.7-1build2) ...
+2025-04-09 09:57:06,927 - INFO - Selecting previously unselected package libvpx7:amd64.
+2025-04-09 09:57:07,003 - INFO - Preparing to unpack .../145-libvpx7_1.11.0-2ubuntu2.3_amd64.deb ...
+2025-04-09 09:57:07,065 - INFO - Unpacking libvpx7:amd64 (1.11.0-2ubuntu2.3) ...
+2025-04-09 09:57:07,421 - INFO - Selecting previously unselected package libx264-163:amd64.
+Preparing to unpack .../146-libx264-163_2%3a0.163.3060+git5db6aa6-2build1_amd64.deb ...
+2025-04-09 09:57:07,500 - INFO - Unpacking libx264-163:amd64 (2:0.163.3060+git5db6aa6-2build1) ...
+2025-04-09 09:57:07,710 - INFO - Selecting previously unselected package libxvidcore4:amd64.
+Preparing to unpack .../147-libxvidcore4_2%3a1.3.7-1_amd64.deb ...
+2025-04-09 09:57:07,714 - INFO - Unpacking libxvidcore4:amd64 (2:1.3.7-1) ...
+2025-04-09 09:57:08,008 - INFO - Selecting previously unselected package libzvbi-common.
+2025-04-09 09:57:08,014 - INFO - Preparing to unpack .../148-libzvbi-common_0.2.35-19_all.deb ...
+2025-04-09 09:57:08,015 - INFO - 
+2025-04-09 09:57:08,021 - INFO - Unpacking libzvbi-common (0.2.35-19) ...
+2025-04-09 09:57:08,312 - INFO - Selecting previously unselected package libzvbi0:amd64.
+2025-04-09 09:57:08,320 - INFO - Preparing to unpack .../149-libzvbi0_0.2.35-19_amd64.deb ...
+2025-04-09 09:57:08,323 - INFO - Unpacking libzvbi0:amd64 (0.2.35-19) ...
+2025-04-09 09:57:08,699 - INFO - Selecting previously unselected package libavcodec58:amd64.
+2025-04-09 09:57:08,702 - INFO - Preparing to unpack .../150-libavcodec58_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:08,803 - INFO - Unpacking libavcodec58:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:09,658 - INFO - Selecting previously unselected package libraw1394-11:amd64.
+2025-04-09 09:57:09,666 - INFO - Preparing to unpack .../151-libraw1394-11_2.1.2-2build2_amd64.deb ...
+2025-04-09 09:57:09,668 - INFO - Unpacking libraw1394-11:amd64 (2.1.2-2build2) ...
+2025-04-09 09:57:09,822 - INFO - Selecting previously unselected package libavc1394-0:amd64.
+2025-04-09 09:57:09,901 - INFO - Preparing to unpack .../152-libavc1394-0_0.5.4-5build2_amd64.deb ...
+2025-04-09 09:57:09,909 - INFO - Unpacking libavc1394-0:amd64 (0.5.4-5build2) ...
+2025-04-09 09:57:10,105 - INFO - Selecting previously unselected package libass9:amd64.
+2025-04-09 09:57:10,117 - INFO - Preparing to unpack .../153-libass9_1%3a0.15.2-1_amd64.deb ...
+2025-04-09 09:57:10,118 - INFO - 
+2025-04-09 09:57:10,124 - INFO - Unpacking libass9:amd64 (1:0.15.2-1) ...
+2025-04-09 09:57:10,412 - INFO - Selecting previously unselected package libudfread0:amd64.
+Preparing to unpack .../154-libudfread0_1.1.2-1_amd64.deb ...
+2025-04-09 09:57:10,504 - INFO - Unpacking libudfread0:amd64 (1.1.2-1) ...
+2025-04-09 09:57:10,702 - INFO - Selecting previously unselected package libbluray2:amd64.
+2025-04-09 09:57:10,709 - INFO - Preparing to unpack .../155-libbluray2_1%3a1.3.1-1_amd64.deb ...
+2025-04-09 09:57:10,729 - INFO - Unpacking libbluray2:amd64 (1:1.3.1-1) ...
+2025-04-09 09:57:11,108 - INFO - Selecting previously unselected package libchromaprint1:amd64.
+2025-04-09 09:57:11,118 - INFO - Preparing to unpack .../156-libchromaprint1_1.5.1-2_amd64.deb ...
+2025-04-09 09:57:11,200 - INFO - Unpacking libchromaprint1:amd64 (1.5.1-2) ...
+2025-04-09 09:57:11,412 - INFO - Selecting previously unselected package libgme0:amd64.
+2025-04-09 09:57:11,499 - INFO - Preparing to unpack .../157-libgme0_0.6.3-2_amd64.deb ...
+2025-04-09 09:57:11,501 - INFO - Unpacking libgme0:amd64 (0.6.3-2) ...
+2025-04-09 09:57:11,717 - INFO - Selecting previously unselected package libmpg123-0:amd64.
+2025-04-09 09:57:11,724 - INFO - Preparing to unpack .../158-libmpg123-0_1.29.3-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:57:11,752 - INFO - Unpacking libmpg123-0:amd64 (1.29.3-1ubuntu0.1) ...
+2025-04-09 09:57:11,920 - INFO - Selecting previously unselected package libvorbisfile3:amd64.
+2025-04-09 09:57:11,921 - INFO - Preparing to unpack .../159-libvorbisfile3_1.3.7-1build2_amd64.deb ...
+2025-04-09 09:57:11,927 - INFO - Unpacking libvorbisfile3:amd64 (1.3.7-1build2) ...
+2025-04-09 09:57:12,200 - INFO - Selecting previously unselected package libopenmpt0:amd64.
+2025-04-09 09:57:12,204 - INFO - Preparing to unpack .../160-libopenmpt0_0.6.1-1_amd64.deb ...
+2025-04-09 09:57:12,208 - INFO - Unpacking libopenmpt0:amd64 (0.6.1-1) ...
+2025-04-09 09:57:12,501 - INFO - Selecting previously unselected package librabbitmq4:amd64.
+2025-04-09 09:57:12,509 - INFO - Preparing to unpack .../161-librabbitmq4_0.10.0-1ubuntu2_amd64.deb ...
+2025-04-09 09:57:12,516 - INFO - Unpacking librabbitmq4:amd64 (0.10.0-1ubuntu2) ...
+2025-04-09 09:57:12,736 - INFO - Selecting previously unselected package libsrt1.4-gnutls:amd64.
+2025-04-09 09:57:12,737 - INFO - Preparing to unpack .../162-libsrt1.4-gnutls_1.4.4-4_amd64.deb ...
+2025-04-09 09:57:12,744 - INFO - Unpacking libsrt1.4-gnutls:amd64 (1.4.4-4) ...
+2025-04-09 09:57:13,012 - INFO - Selecting previously unselected package libssh-gcrypt-4:amd64.
+2025-04-09 09:57:13,022 - INFO - Preparing to unpack .../163-libssh-gcrypt-4_0.9.6-2ubuntu0.22.04.3_amd64.deb ...
+2025-04-09 09:57:13,026 - INFO - Unpacking libssh-gcrypt-4:amd64 (0.9.6-2ubuntu0.22.04.3) ...
+2025-04-09 09:57:13,299 - INFO - Selecting previously unselected package libnorm1:amd64.
+2025-04-09 09:57:13,312 - INFO - Preparing to unpack .../164-libnorm1_1.5.9+dfsg-2_amd64.deb ...
+2025-04-09 09:57:13,316 - INFO - Unpacking libnorm1:amd64 (1.5.9+dfsg-2) ...
+2025-04-09 09:57:13,709 - INFO - Selecting previously unselected package libpgm-5.3-0:amd64.
+2025-04-09 09:57:13,717 - INFO - Preparing to unpack .../165-libpgm-5.3-0_5.3.128~dfsg-2_amd64.deb ...
+2025-04-09 09:57:13,720 - INFO - Unpacking libpgm-5.3-0:amd64 (5.3.128~dfsg-2) ...
+2025-04-09 09:57:14,014 - INFO - Selecting previously unselected package libsodium23:amd64.
+2025-04-09 09:57:14,021 - INFO - Preparing to unpack .../166-libsodium23_1.0.18-1build2_amd64.deb ...
+2025-04-09 09:57:14,025 - INFO - Unpacking libsodium23:amd64 (1.0.18-1build2) ...
+2025-04-09 09:57:14,220 - INFO - Selecting previously unselected package libzmq5:amd64.
+2025-04-09 09:57:14,301 - INFO - Preparing to unpack .../167-libzmq5_4.3.4-2_amd64.deb ...
+2025-04-09 09:57:14,417 - INFO - Unpacking libzmq5:amd64 (4.3.4-2) ...
+2025-04-09 09:57:14,602 - INFO - Selecting previously unselected package libavformat58:amd64.
+2025-04-09 09:57:14,609 - INFO - Preparing to unpack .../168-libavformat58_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:14,614 - INFO - Unpacking libavformat58:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:15,012 - INFO - Selecting previously unselected package libbs2b0:amd64.
+2025-04-09 09:57:15,021 - INFO - Preparing to unpack .../169-libbs2b0_3.1.0+dfsg-2.2build1_amd64.deb ...
+2025-04-09 09:57:15,099 - INFO - Unpacking libbs2b0:amd64 (3.1.0+dfsg-2.2build1) ...
+2025-04-09 09:57:15,217 - INFO - Selecting previously unselected package libflite1:amd64.
+2025-04-09 09:57:15,224 - INFO - Preparing to unpack .../170-libflite1_2.2-3_amd64.deb ...
+2025-04-09 09:57:15,302 - INFO - Unpacking libflite1:amd64 (2.2-3) ...
+2025-04-09 09:57:17,014 - INFO - Selecting previously unselected package libserd-0-0:amd64.
+2025-04-09 09:57:17,021 - INFO - Preparing to unpack .../171-libserd-0-0_0.30.10-2_amd64.deb ...
+2025-04-09 09:57:17,022 - INFO - 
+2025-04-09 09:57:17,024 - INFO - Unpacking libserd-0-0:amd64 (0.30.10-2) ...
+2025-04-09 09:57:17,024 - INFO - 
+2025-04-09 09:57:17,317 - INFO - Selecting previously unselected package libsord-0-0:amd64.
+2025-04-09 09:57:17,403 - INFO - Preparing to unpack .../172-libsord-0-0_0.16.8-2_amd64.deb ...
+2025-04-09 09:57:17,407 - INFO - Unpacking libsord-0-0:amd64 (0.16.8-2) ...
+2025-04-09 09:57:17,633 - INFO - Selecting previously unselected package libsratom-0-0:amd64.
+2025-04-09 09:57:17,707 - INFO - Preparing to unpack .../173-libsratom-0-0_0.6.8-1_amd64.deb ...
+2025-04-09 09:57:17,718 - INFO - Unpacking libsratom-0-0:amd64 (0.6.8-1) ...
+2025-04-09 09:57:17,831 - INFO - Selecting previously unselected package liblilv-0-0:amd64.
+2025-04-09 09:57:17,899 - INFO - Preparing to unpack .../174-liblilv-0-0_0.24.12-2_amd64.deb ...
+2025-04-09 09:57:17,903 - INFO - Unpacking liblilv-0-0:amd64 (0.24.12-2) ...
+2025-04-09 09:57:18,212 - INFO - Selecting previously unselected package libmysofa1:amd64.
+2025-04-09 09:57:18,213 - INFO - 
+2025-04-09 09:57:18,218 - INFO - Preparing to unpack .../175-libmysofa1_1.2.1~dfsg0-1_amd64.deb ...
+2025-04-09 09:57:18,271 - INFO - Unpacking libmysofa1:amd64 (1.2.1~dfsg0-1) ...
+2025-04-09 09:57:18,520 - INFO - Selecting previously unselected package libblas3:amd64.
+2025-04-09 09:57:18,528 - INFO - Preparing to unpack .../176-libblas3_3.10.0-2ubuntu1_amd64.deb ...
+2025-04-09 09:57:18,608 - INFO - Unpacking libblas3:amd64 (3.10.0-2ubuntu1) ...
+2025-04-09 09:57:18,841 - INFO - Selecting previously unselected package libgfortran5:amd64.
+2025-04-09 09:57:18,904 - INFO - Preparing to unpack .../177-libgfortran5_12.3.0-1ubuntu1~22.04_amd64.deb ...
+2025-04-09 09:57:18,908 - INFO - Unpacking libgfortran5:amd64 (12.3.0-1ubuntu1~22.04) ...
+2025-04-09 09:57:19,419 - INFO - Selecting previously unselected package liblapack3:amd64.
+2025-04-09 09:57:19,424 - INFO - Preparing to unpack .../178-liblapack3_3.10.0-2ubuntu1_amd64.deb ...
+2025-04-09 09:57:19,505 - INFO - Unpacking liblapack3:amd64 (3.10.0-2ubuntu1) ...
+2025-04-09 09:57:20,245 - INFO - Selecting previously unselected package libasyncns0:amd64.
+2025-04-09 09:57:20,264 - INFO - Preparing to unpack .../179-libasyncns0_0.8-6build2_amd64.deb ...
+2025-04-09 09:57:20,301 - INFO - Unpacking libasyncns0:amd64 (0.8-6build2) ...
+2025-04-09 09:57:20,499 - INFO - Selecting previously unselected package libflac8:amd64.
+2025-04-09 09:57:20,509 - INFO - Preparing to unpack .../180-libflac8_1.3.3-2ubuntu0.2_amd64.deb ...
+2025-04-09 09:57:20,512 - INFO - Unpacking libflac8:amd64 (1.3.3-2ubuntu0.2) ...
+2025-04-09 09:57:20,802 - INFO - Selecting previously unselected package libsndfile1:amd64.
+2025-04-09 09:57:20,809 - INFO - Preparing to unpack .../181-libsndfile1_1.0.31-2ubuntu0.2_amd64.deb ...
+2025-04-09 09:57:20,815 - INFO - Unpacking libsndfile1:amd64 (1.0.31-2ubuntu0.2) ...
+2025-04-09 09:57:21,063 - INFO - Selecting previously unselected package libx11-xcb1:amd64.
+2025-04-09 09:57:21,080 - INFO - Preparing to unpack .../182-libx11-xcb1_2%3a1.7.5-1ubuntu0.3_amd64.deb ...
+2025-04-09 09:57:21,103 - INFO - Unpacking libx11-xcb1:amd64 (2:1.7.5-1ubuntu0.3) ...
+2025-04-09 09:57:21,499 - INFO - Selecting previously unselected package libpulse0:amd64.
+2025-04-09 09:57:21,510 - INFO - Preparing to unpack .../183-libpulse0_1%3a15.99.1+dfsg1-1ubuntu2.2_amd64.deb ...
+2025-04-09 09:57:21,604 - INFO - Unpacking libpulse0:amd64 (1:15.99.1+dfsg1-1ubuntu2.2) ...
+2025-04-09 09:57:21,920 - INFO - Selecting previously unselected package libsphinxbase3:amd64.
+2025-04-09 09:57:22,001 - INFO - Preparing to unpack .../184-libsphinxbase3_0.8+5prealpha+1-13build1_amd64.deb ...
+2025-04-09 09:57:22,008 - INFO - Unpacking libsphinxbase3:amd64 (0.8+5prealpha+1-13build1) ...
+2025-04-09 09:57:22,214 - INFO - Selecting previously unselected package libpocketsphinx3:amd64.
+2025-04-09 09:57:22,224 - INFO - Preparing to unpack .../185-libpocketsphinx3_0.8.0+real5prealpha+1-14ubuntu1_amd64.deb ...
+2025-04-09 09:57:22,306 - INFO - Unpacking libpocketsphinx3:amd64 (0.8.0+real5prealpha+1-14ubuntu1) ...
+2025-04-09 09:57:22,426 - INFO - Selecting previously unselected package libpostproc55:amd64.
+2025-04-09 09:57:22,505 - INFO - Preparing to unpack .../186-libpostproc55_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:22,506 - INFO - 
+2025-04-09 09:57:22,508 - INFO - Unpacking libpostproc55:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:22,699 - INFO - Selecting previously unselected package libsamplerate0:amd64.
+2025-04-09 09:57:22,705 - INFO - Preparing to unpack .../187-libsamplerate0_0.2.2-1build1_amd64.deb ...
+2025-04-09 09:57:22,710 - INFO - Unpacking libsamplerate0:amd64 (0.2.2-1build1) ...
+2025-04-09 09:57:22,836 - INFO - Selecting previously unselected package librubberband2:amd64.
+2025-04-09 09:57:22,907 - INFO - Preparing to unpack .../188-librubberband2_2.0.0-2_amd64.deb ...
+2025-04-09 09:57:22,910 - INFO - Unpacking librubberband2:amd64 (2.0.0-2) ...
+2025-04-09 09:57:23,120 - INFO - Selecting previously unselected package libswscale5:amd64.
+Preparing to unpack .../189-libswscale5_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:23,124 - INFO - Unpacking libswscale5:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:23,400 - INFO - Selecting previously unselected package libvidstab1.1:amd64.
+2025-04-09 09:57:23,401 - INFO - 
+2025-04-09 09:57:23,409 - INFO - Preparing to unpack .../190-libvidstab1.1_1.1.0-2_amd64.deb ...
+2025-04-09 09:57:23,415 - INFO - Unpacking libvidstab1.1:amd64 (1.1.0-2) ...
+2025-04-09 09:57:23,622 - INFO - Selecting previously unselected package libzimg2:amd64.
+2025-04-09 09:57:23,699 - INFO - Preparing to unpack .../191-libzimg2_3.0.3+ds1-1_amd64.deb ...
+2025-04-09 09:57:23,747 - INFO - Unpacking libzimg2:amd64 (3.0.3+ds1-1) ...
+2025-04-09 09:57:23,905 - INFO - Selecting previously unselected package libavfilter7:amd64.
+2025-04-09 09:57:23,917 - INFO - Preparing to unpack .../192-libavfilter7_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:23,999 - INFO - Unpacking libavfilter7:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:24,323 - INFO - Selecting previously unselected package libcaca0:amd64.
+2025-04-09 09:57:24,399 - INFO - Preparing to unpack .../193-libcaca0_0.99.beta19-2.2ubuntu4_amd64.deb ...
+2025-04-09 09:57:24,402 - INFO - Unpacking libcaca0:amd64 (0.99.beta19-2.2ubuntu4) ...
+2025-04-09 09:57:24,623 - INFO - Selecting previously unselected package libcdio19:amd64.
+2025-04-09 09:57:24,631 - INFO - Preparing to unpack .../194-libcdio19_2.1.0-3ubuntu0.2_amd64.deb ...
+2025-04-09 09:57:24,634 - INFO - Unpacking libcdio19:amd64 (2.1.0-3ubuntu0.2) ...
+2025-04-09 09:57:24,824 - INFO - Selecting previously unselected package libcdio-cdda2:amd64.
+2025-04-09 09:57:24,905 - INFO - Preparing to unpack .../195-libcdio-cdda2_10.2+2.0.0-1build3_amd64.deb ...
+2025-04-09 09:57:24,910 - INFO - Unpacking libcdio-cdda2:amd64 (10.2+2.0.0-1build3) ...
+2025-04-09 09:57:25,111 - INFO - Selecting previously unselected package libcdio-paranoia2:amd64.
+2025-04-09 09:57:25,121 - INFO - Preparing to unpack .../196-libcdio-paranoia2_10.2+2.0.0-1build3_amd64.deb ...
+2025-04-09 09:57:25,123 - INFO - Unpacking libcdio-paranoia2:amd64 (10.2+2.0.0-1build3) ...
+2025-04-09 09:57:25,380 - INFO - Selecting previously unselected package libdc1394-25:amd64.
+2025-04-09 09:57:25,387 - INFO - Preparing to unpack .../197-libdc1394-25_2.2.6-4_amd64.deb ...
+2025-04-09 09:57:25,405 - INFO - Unpacking libdc1394-25:amd64 (2.2.6-4) ...
+2025-04-09 09:57:25,561 - INFO - Selecting previously unselected package libglvnd0:amd64.
+2025-04-09 09:57:25,600 - INFO - Preparing to unpack .../198-libglvnd0_1.4.0-1_amd64.deb ...
+2025-04-09 09:57:25,604 - INFO - Unpacking libglvnd0:amd64 (1.4.0-1) ...
+2025-04-09 09:57:25,604 - INFO - 
+2025-04-09 09:57:25,813 - INFO - Selecting previously unselected package libglapi-mesa:amd64.
+2025-04-09 09:57:25,822 - INFO - Preparing to unpack .../199-libglapi-mesa_23.2.1-1ubuntu3.1~22.04.3_amd64.deb ...
+2025-04-09 09:57:25,900 - INFO - Unpacking libglapi-mesa:amd64 (23.2.1-1ubuntu3.1~22.04.3) ...
+2025-04-09 09:57:26,114 - INFO - Selecting previously unselected package libxcb-dri2-0:amd64.
+2025-04-09 09:57:26,115 - INFO - Preparing to unpack .../200-libxcb-dri2-0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:26,120 - INFO - Unpacking libxcb-dri2-0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:26,333 - INFO - Selecting previously unselected package libxcb-dri3-0:amd64.
+2025-04-09 09:57:26,406 - INFO - Preparing to unpack .../201-libxcb-dri3-0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:26,435 - INFO - Unpacking libxcb-dri3-0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:26,553 - INFO - Selecting previously unselected package libxcb-glx0:amd64.
+2025-04-09 09:57:26,599 - INFO - Preparing to unpack .../202-libxcb-glx0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:26,603 - INFO - Unpacking libxcb-glx0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:26,807 - INFO - Selecting previously unselected package libxcb-present0:amd64.
+2025-04-09 09:57:26,812 - INFO - Preparing to unpack .../203-libxcb-present0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:26,815 - INFO - Unpacking libxcb-present0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:26,963 - INFO - Selecting previously unselected package libxcb-randr0:amd64.
+2025-04-09 09:57:27,017 - INFO - Preparing to unpack .../204-libxcb-randr0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:27,022 - INFO - Unpacking libxcb-randr0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:27,209 - INFO - Selecting previously unselected package libxcb-sync1:amd64.
+2025-04-09 09:57:27,219 - INFO - Preparing to unpack .../205-libxcb-sync1_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:27,220 - INFO - Unpacking libxcb-sync1:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:27,410 - INFO - Selecting previously unselected package libxcb-xfixes0:amd64.
+2025-04-09 09:57:27,418 - INFO - Preparing to unpack .../206-libxcb-xfixes0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:27,506 - INFO - Unpacking libxcb-xfixes0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:27,612 - INFO - Selecting previously unselected package libxshmfence1:amd64.
+2025-04-09 09:57:27,621 - INFO - Preparing to unpack .../207-libxshmfence1_1.3-1build4_amd64.deb ...
+2025-04-09 09:57:27,623 - INFO - Unpacking libxshmfence1:amd64 (1.3-1build4) ...
+2025-04-09 09:57:27,854 - INFO - Selecting previously unselected package libxxf86vm1:amd64.
+2025-04-09 09:57:27,864 - INFO - Preparing to unpack .../208-libxxf86vm1_1%3a1.1.4-1build3_amd64.deb ...
+2025-04-09 09:57:27,904 - INFO - Unpacking libxxf86vm1:amd64 (1:1.1.4-1build3) ...
+2025-04-09 09:57:28,100 - INFO - Selecting previously unselected package libdrm-amdgpu1:amd64.
+2025-04-09 09:57:28,108 - INFO - Preparing to unpack .../209-libdrm-amdgpu1_2.4.113-2~ubuntu0.22.04.1_amd64.deb ...
+Unpacking libdrm-amdgpu1:amd64 (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:57:28,228 - INFO - Selecting previously unselected package libpciaccess0:amd64.
+2025-04-09 09:57:28,303 - INFO - Preparing to unpack .../210-libpciaccess0_0.16-3_amd64.deb ...
+2025-04-09 09:57:28,309 - INFO - Unpacking libpciaccess0:amd64 (0.16-3) ...
+2025-04-09 09:57:28,547 - INFO - Selecting previously unselected package libdrm-intel1:amd64.
+2025-04-09 09:57:28,587 - INFO - Preparing to unpack .../211-libdrm-intel1_2.4.113-2~ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:28,608 - INFO - Unpacking libdrm-intel1:amd64 (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:57:28,711 - INFO - Selecting previously unselected package libdrm-nouveau2:amd64.
+2025-04-09 09:57:28,718 - INFO - Preparing to unpack .../212-libdrm-nouveau2_2.4.113-2~ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:28,721 - INFO - Unpacking libdrm-nouveau2:amd64 (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:57:28,918 - INFO - Selecting previously unselected package libdrm-radeon1:amd64.
+2025-04-09 09:57:28,928 - INFO - Preparing to unpack .../213-libdrm-radeon1_2.4.113-2~ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:28,929 - INFO - 
+2025-04-09 09:57:29,003 - INFO - Unpacking libdrm-radeon1:amd64 (2.4.113-2~ubuntu0.22.04.1) ...
+2025-04-09 09:57:29,105 - INFO - Selecting previously unselected package libllvm15:amd64.
+2025-04-09 09:57:29,115 - INFO - Preparing to unpack .../214-libllvm15_1%3a15.0.7-0ubuntu0.22.04.3_amd64.deb ...
+2025-04-09 09:57:29,117 - INFO - Unpacking libllvm15:amd64 (1:15.0.7-0ubuntu0.22.04.3) ...
+2025-04-09 09:57:33,899 - INFO - Selecting previously unselected package libsensors-config.
+2025-04-09 09:57:33,907 - INFO - Preparing to unpack .../215-libsensors-config_1%3a3.6.0-7ubuntu1_all.deb ...
+2025-04-09 09:57:33,910 - INFO - Unpacking libsensors-config (1:3.6.0-7ubuntu1) ...
+2025-04-09 09:57:34,026 - INFO - Selecting previously unselected package libsensors5:amd64.
+2025-04-09 09:57:34,103 - INFO - Preparing to unpack .../216-libsensors5_1%3a3.6.0-7ubuntu1_amd64.deb ...
+2025-04-09 09:57:34,328 - INFO - Unpacking libsensors5:amd64 (1:3.6.0-7ubuntu1) ...
+2025-04-09 09:57:34,603 - INFO - Selecting previously unselected package libgl1-mesa-dri:amd64.
+2025-04-09 09:57:34,611 - INFO - Preparing to unpack .../217-libgl1-mesa-dri_23.2.1-1ubuntu3.1~22.04.3_amd64.deb ...
+2025-04-09 09:57:34,612 - INFO - 
+2025-04-09 09:57:34,702 - INFO - Unpacking libgl1-mesa-dri:amd64 (23.2.1-1ubuntu3.1~22.04.3) ...
+2025-04-09 09:57:36,207 - INFO - Selecting previously unselected package libglx-mesa0:amd64.
+2025-04-09 09:57:36,213 - INFO - Preparing to unpack .../218-libglx-mesa0_23.2.1-1ubuntu3.1~22.04.3_amd64.deb ...
+2025-04-09 09:57:36,221 - INFO - Unpacking libglx-mesa0:amd64 (23.2.1-1ubuntu3.1~22.04.3) ...
+2025-04-09 09:57:36,499 - INFO - Selecting previously unselected package libglx0:amd64.
+2025-04-09 09:57:36,509 - INFO - Preparing to unpack .../219-libglx0_1.4.0-1_amd64.deb ...
+2025-04-09 09:57:36,510 - INFO - Unpacking libglx0:amd64 (1.4.0-1) ...
+2025-04-09 09:57:36,709 - INFO - Selecting previously unselected package libgl1:amd64.
+2025-04-09 09:57:36,714 - INFO - Preparing to unpack .../220-libgl1_1.4.0-1_amd64.deb ...
+2025-04-09 09:57:36,718 - INFO - Unpacking libgl1:amd64 (1.4.0-1) ...
+2025-04-09 09:57:36,942 - INFO - Selecting previously unselected package libiec61883-0:amd64.
+2025-04-09 09:57:37,000 - INFO - Preparing to unpack .../221-libiec61883-0_1.2.0-4build3_amd64.deb ...
+2025-04-09 09:57:37,002 - INFO - Unpacking libiec61883-0:amd64 (1.2.0-4build3) ...
+2025-04-09 09:57:37,216 - INFO - Selecting previously unselected package libjack-jackd2-0:amd64.
+2025-04-09 09:57:37,221 - INFO - Preparing to unpack .../222-libjack-jackd2-0_1.9.20~dfsg-1_amd64.deb ...
+2025-04-09 09:57:37,249 - INFO - Unpacking libjack-jackd2-0:amd64 (1.9.20~dfsg-1) ...
+2025-04-09 09:57:37,468 - INFO - Selecting previously unselected package libopenal-data.
+2025-04-09 09:57:37,508 - INFO - Preparing to unpack .../223-libopenal-data_1%3a1.19.1-2build3_all.deb ...
+2025-04-09 09:57:37,514 - INFO - Unpacking libopenal-data (1:1.19.1-2build3) ...
+2025-04-09 09:57:37,704 - INFO - Selecting previously unselected package libsndio7.0:amd64.
+2025-04-09 09:57:37,707 - INFO - Preparing to unpack .../224-libsndio7.0_1.8.1-1.1_amd64.deb ...
+2025-04-09 09:57:37,712 - INFO - Unpacking libsndio7.0:amd64 (1.8.1-1.1) ...
+2025-04-09 09:57:37,899 - INFO - Selecting previously unselected package libopenal1:amd64.
+2025-04-09 09:57:37,909 - INFO - Preparing to unpack .../225-libopenal1_1%3a1.19.1-2build3_amd64.deb ...
+2025-04-09 09:57:37,916 - INFO - Unpacking libopenal1:amd64 (1:1.19.1-2build3) ...
+2025-04-09 09:57:38,209 - INFO - Selecting previously unselected package libwayland-client0:amd64.
+2025-04-09 09:57:38,217 - INFO - Preparing to unpack .../226-libwayland-client0_1.20.0-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:57:38,220 - INFO - Unpacking libwayland-client0:amd64 (1.20.0-1ubuntu0.1) ...
+2025-04-09 09:57:38,409 - INFO - Selecting previously unselected package libdecor-0-0:amd64.
+2025-04-09 09:57:38,409 - INFO - 
+2025-04-09 09:57:38,418 - INFO - Preparing to unpack .../227-libdecor-0-0_0.1.0-3build1_amd64.deb ...
+2025-04-09 09:57:38,423 - INFO - Unpacking libdecor-0-0:amd64 (0.1.0-3build1) ...
+2025-04-09 09:57:38,613 - INFO - Selecting previously unselected package libwayland-server0:amd64.
+2025-04-09 09:57:38,615 - INFO - 
+2025-04-09 09:57:38,625 - INFO - Preparing to unpack .../228-libwayland-server0_1.20.0-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:57:38,700 - INFO - 
+2025-04-09 09:57:38,708 - INFO - Unpacking libwayland-server0:amd64 (1.20.0-1ubuntu0.1) ...
+2025-04-09 09:57:38,708 - INFO - 
+2025-04-09 09:57:38,909 - INFO - Selecting previously unselected package libgbm1:amd64.
+2025-04-09 09:57:38,917 - INFO - Preparing to unpack .../229-libgbm1_23.2.1-1ubuntu3.1~22.04.3_amd64.deb ...
+2025-04-09 09:57:39,038 - INFO - Unpacking libgbm1:amd64 (23.2.1-1ubuntu3.1~22.04.3) ...
+2025-04-09 09:57:39,211 - INFO - Selecting previously unselected package libwayland-cursor0:amd64.
+2025-04-09 09:57:39,215 - INFO - Preparing to unpack .../230-libwayland-cursor0_1.20.0-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:57:39,370 - INFO - Unpacking libwayland-cursor0:amd64 (1.20.0-1ubuntu0.1) ...
+2025-04-09 09:57:39,370 - INFO - 
+2025-04-09 09:57:39,525 - INFO - Selecting previously unselected package libwayland-egl1:amd64.
+2025-04-09 09:57:39,604 - INFO - Preparing to unpack .../231-libwayland-egl1_1.20.0-1ubuntu0.1_amd64.deb ...
+2025-04-09 09:57:39,607 - INFO - Unpacking libwayland-egl1:amd64 (1.20.0-1ubuntu0.1) ...
+2025-04-09 09:57:39,721 - INFO - Selecting previously unselected package libxcursor1:amd64.
+2025-04-09 09:57:39,728 - INFO - Preparing to unpack .../232-libxcursor1_1%3a1.2.0-2build4_amd64.deb ...
+2025-04-09 09:57:39,729 - INFO - 
+2025-04-09 09:57:39,804 - INFO - Unpacking libxcursor1:amd64 (1:1.2.0-2build4) ...
+2025-04-09 09:57:40,002 - INFO - Selecting previously unselected package libxinerama1:amd64.
+2025-04-09 09:57:40,012 - INFO - Preparing to unpack .../233-libxinerama1_2%3a1.1.4-3_amd64.deb ...
+2025-04-09 09:57:40,014 - INFO - Unpacking libxinerama1:amd64 (2:1.1.4-3) ...
+2025-04-09 09:57:40,311 - INFO - Selecting previously unselected package libxkbcommon0:amd64.
+2025-04-09 09:57:40,400 - INFO - Preparing to unpack .../234-libxkbcommon0_1.4.0-1_amd64.deb ...
+2025-04-09 09:57:40,408 - INFO - Unpacking libxkbcommon0:amd64 (1.4.0-1) ...
+2025-04-09 09:57:40,721 - INFO - Selecting previously unselected package libxrandr2:amd64.
+2025-04-09 09:57:40,804 - INFO - Preparing to unpack .../235-libxrandr2_2%3a1.5.2-1build1_amd64.deb ...
+2025-04-09 09:57:40,806 - INFO - Unpacking libxrandr2:amd64 (2:1.5.2-1build1) ...
+2025-04-09 09:57:41,015 - INFO - Selecting previously unselected package libxss1:amd64.
+Preparing to unpack .../236-libxss1_1%3a1.2.3-1build2_amd64.deb ...
+2025-04-09 09:57:41,016 - INFO - 
+2025-04-09 09:57:41,040 - INFO - Unpacking libxss1:amd64 (1:1.2.3-1build2) ...
+2025-04-09 09:57:41,213 - INFO - Selecting previously unselected package libsdl2-2.0-0:amd64.
+2025-04-09 09:57:41,222 - INFO - Preparing to unpack .../237-libsdl2-2.0-0_2.0.20+dfsg-2ubuntu1.22.04.1_amd64.deb ...
+2025-04-09 09:57:41,300 - INFO - Unpacking libsdl2-2.0-0:amd64 (2.0.20+dfsg-2ubuntu1.22.04.1) ...
+2025-04-09 09:57:41,508 - INFO - Selecting previously unselected package libxcb-shape0:amd64.
+2025-04-09 09:57:41,517 - INFO - Preparing to unpack .../238-libxcb-shape0_1.14-3ubuntu3_amd64.deb ...
+2025-04-09 09:57:41,518 - INFO - 
+2025-04-09 09:57:41,521 - INFO - Unpacking libxcb-shape0:amd64 (1.14-3ubuntu3) ...
+2025-04-09 09:57:41,522 - INFO - 
+2025-04-09 09:57:41,732 - INFO - Selecting previously unselected package libxv1:amd64.
+2025-04-09 09:57:41,801 - INFO - Preparing to unpack .../239-libxv1_2%3a1.0.11-1build2_amd64.deb ...
+2025-04-09 09:57:41,812 - INFO - Unpacking libxv1:amd64 (2:1.0.11-1build2) ...
+2025-04-09 09:57:42,007 - INFO - Selecting previously unselected package libavdevice58:amd64.
+2025-04-09 09:57:42,024 - INFO - Preparing to unpack .../240-libavdevice58_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+Unpacking libavdevice58:amd64 (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:42,199 - INFO - Selecting previously unselected package ffmpeg.
+2025-04-09 09:57:42,204 - INFO - Preparing to unpack .../241-ffmpeg_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb ...
+2025-04-09 09:57:42,206 - INFO - Unpacking ffmpeg (7:4.4.2-0ubuntu0.22.04.1) ...
+2025-04-09 09:57:42,458 - INFO - Selecting previously unselected package fonts-noto-mono.
+2025-04-09 09:57:42,466 - INFO - Preparing to unpack .../242-fonts-noto-mono_20201225-1build1_all.deb ...
+2025-04-09 09:57:42,501 - INFO - Unpacking fonts-noto-mono (20201225-1build1) ...
+2025-04-09 09:57:42,836 - INFO - Selecting previously unselected package fonts-texgyre.
+2025-04-09 09:57:42,900 - INFO - Preparing to unpack .../243-fonts-texgyre_20180621-3.1_all.deb ...
+2025-04-09 09:57:42,922 - INFO - Unpacking fonts-texgyre (20180621-3.1) ...

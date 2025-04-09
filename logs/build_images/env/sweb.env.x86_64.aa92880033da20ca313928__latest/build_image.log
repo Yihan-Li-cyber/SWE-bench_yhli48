@@ -1,4 +1,4 @@
-2025-04-08 12:47:10,277 - INFO - Building image sweb.env.x86_64.aa92880033da20ca313928:latest
+2025-04-09 05:44:39,128 - INFO - Building image sweb.env.x86_64.aa92880033da20ca313928:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-08 12:47:10,277 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-09 05:44:39,128 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,29 +21,30 @@ conda create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -
 conda activate testbed
 python -m pip install cython numpy==1.19.2 setuptools scipy==1.5.2
 
-2025-04-08 12:47:10,278 - INFO - Building docker image sweb.env.x86_64.aa92880033da20ca313928:latest in logs/build_images/env/sweb.env.x86_64.aa92880033da20ca313928__latest with platform linux/x86_64
-2025-04-08 12:47:10,286 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-08 12:47:10,286 - INFO - 
-2025-04-08 12:47:10,286 - INFO - ---> c4b0e62ddf41
-2025-04-08 12:47:10,286 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-08 12:47:10,286 - INFO - 
-2025-04-08 12:47:10,369 - INFO - ---> Using cache
-2025-04-08 12:47:10,370 - INFO - ---> 58aec473294b
-2025-04-08 12:47:10,370 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-08 12:47:10,370 - INFO - 
-2025-04-08 12:47:10,372 - INFO - ---> Using cache
-2025-04-08 12:47:10,372 - INFO - ---> f91873338c54
-2025-04-08 12:47:10,372 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-08 12:47:10,372 - INFO - 
-2025-04-08 12:47:10,374 - INFO - ---> Using cache
-2025-04-08 12:47:10,374 - INFO - ---> df5eea23055d
-2025-04-08 12:47:10,374 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-08 12:47:10,374 - INFO - 
-2025-04-08 12:47:10,478 - INFO - ---> Running in fe99bd62371e
-2025-04-08 12:47:11,729 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-09 05:44:39,130 - INFO - Building docker image sweb.env.x86_64.aa92880033da20ca313928:latest in logs/build_images/env/sweb.env.x86_64.aa92880033da20ca313928__latest with platform linux/x86_64
+2025-04-09 05:44:39,209 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-09 05:44:39,209 - INFO - 
+2025-04-09 05:44:39,209 - INFO - ---> ab83453f8920
+2025-04-09 05:44:39,209 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-09 05:44:39,209 - INFO - 
+2025-04-09 05:44:39,314 - INFO - ---> 401474825698
+2025-04-09 05:44:39,314 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-09 05:44:39,314 - INFO - 
+2025-04-09 05:44:39,419 - INFO - ---> Running in ce7d6ac98971
+2025-04-09 05:44:41,915 - INFO - ---> Removed intermediate container ce7d6ac98971
+2025-04-09 05:44:41,915 - INFO - ---> 34345315ab66
+2025-04-09 05:44:41,915 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-09 05:44:41,915 - INFO - 
+2025-04-09 05:44:42,022 - INFO - ---> Running in 31bbcef213b2
+2025-04-09 05:44:44,215 - INFO - ---> Removed intermediate container 31bbcef213b2
+2025-04-09 05:44:44,215 - INFO - ---> b2b40039861e
+2025-04-09 05:44:44,216 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-09 05:44:44,216 - INFO - 
+2025-04-09 05:44:44,307 - INFO - ---> Running in 3e22c2789322
+2025-04-09 05:44:45,631 - INFO - + source /opt/miniconda3/bin/activate
 ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
-2025-04-08 12:47:11,730 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-09 05:44:45,631 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
 +++ export _CE_M=
 +++ _CE_M=
@@ -51,26 +52,26 @@ python -m pip install cython numpy==1.19.2 setuptools scipy==1.5.2
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-2025-04-08 12:47:11,731 - INFO - +++ '[' -z '' ']'
++++ '[' -z '' ']'
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-08 12:47:11,732 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-08 12:47:11,759 - INFO - ++++ dirname /opt/miniconda3/bin
-+++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-09 05:44:45,705 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-09 05:44:45,706 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-09 05:44:45,708 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-++ conda activate
+2025-04-09 05:44:45,708 - INFO - ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
 ++ '[' -n '' ']'
 ++ local ask_conda
-+++ PS1=
+2025-04-09 05:44:45,708 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-+++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-08 12:47:12,471 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-09 05:44:45,709 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-09 05:44:46,524 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -97,36 +98,36 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ CONDA_PREFIX=/opt/miniconda3
 +++ export CONDA_SHLVL=1
 +++ CONDA_SHLVL=1
-+++ export CONDA_DEFAULT_ENV=base
+2025-04-09 05:44:46,524 - INFO - +++ export CONDA_DEFAULT_ENV=base
 +++ CONDA_DEFAULT_ENV=base
 +++ export 'CONDA_PROMPT_MODIFIER=(base) '
-+++ CONDA_PROMPT_MODIFIER='(base) '
-+++ export CONDA_EXE=/opt/miniconda3/bin/conda
-+++ CONDA_EXE=/opt/miniconda3/bin/conda
-+++ export _CE_M=
-+++ _CE_M=
-+++ export _CE_CONDA=
+2025-04-09 05:44:46,524 - INFO - +++ CONDA_PROMPT_MODIFIER='(base) '
+2025-04-09 05:44:46,524 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-09 05:44:46,524 - INFO - +++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-09 05:44:46,524 - INFO - +++ export _CE_M=
+2025-04-09 05:44:46,525 - INFO - +++ _CE_M=
+2025-04-09 05:44:46,525 - INFO - +++ export _CE_CONDA=
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
-++ '[' -n '' ']'
-++ '[' -n '' ']'
-++ hash -r
-+ conda create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -y
+2025-04-09 05:44:46,525 - INFO - ++ '[' -n '' ']'
+2025-04-09 05:44:46,525 - INFO - ++ '[' -n '' ']'
+2025-04-09 05:44:46,525 - INFO - ++ hash -r
+2025-04-09 05:44:46,526 - INFO - + conda create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -y
 + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -y
-2025-04-08 12:47:12,471 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -y
-2025-04-08 12:47:16,485 - INFO - Channels:
+2025-04-09 05:44:46,527 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.6 numpy scipy cython pytest pandas matplotlib -y
+2025-04-09 05:44:50,621 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
 Collecting package metadata (repodata.json): ...working...
-2025-04-08 12:52:13,976 - INFO - done
-Solving environment: ...working...
-2025-04-08 13:07:39,581 - INFO - done
-2025-04-08 13:07:39,974 - INFO - ## Package Plan ##
+2025-04-09 05:49:40,309 - INFO - done
+2025-04-09 05:49:40,309 - INFO - Solving environment: ...working...
+2025-04-09 06:05:10,414 - INFO - done
+2025-04-09 06:05:10,895 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -297,14 +298,14 @@ The following NEW packages will be INSTALLED:
   zipp               pkgs/main/noarch::zipp-3.6.0-pyhd3eb1b0_0 
   zlib               pkgs/main/linux-64::zlib-1.2.13-h5eee18b_1 
   zstd               pkgs/main/linux-64::zstd-1.5.6-hc292b87_0
-2025-04-08 13:08:58,886 - INFO - Downloading and Extracting Packages: ...working... done
+2025-04-09 06:06:49,301 - INFO - Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-08 13:09:04,564 - INFO - done
-Verifying transaction: ...working...
-2025-04-08 13:09:26,668 - INFO - done
-2025-04-08 13:09:26,675 - INFO - Executing transaction: ...working...
-2025-04-08 13:09:53,382 - INFO - done
-2025-04-08 13:09:53,765 - INFO - #
+2025-04-09 06:06:54,502 - INFO - done
+2025-04-09 06:06:54,504 - INFO - Verifying transaction: ...working...
+2025-04-09 06:07:16,005 - INFO - done
+2025-04-09 06:07:16,015 - INFO - Executing transaction: ...working...
+2025-04-09 06:07:47,404 - INFO - done
+2025-04-09 06:07:47,823 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -312,16 +313,16 @@ Verifying transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-08 13:09:55,294 - INFO - + conda activate testbed
+2025-04-09 06:07:50,112 - INFO - + conda activate testbed
 + local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-08 13:09:55,295 - INFO - ++ PS1='(base) '
+2025-04-09 06:07:50,113 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-08 13:09:55,296 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-08 13:09:56,066 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-09 06:07:50,114 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-09 06:07:51,101 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -354,7 +355,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ CONDA_DEFAULT_ENV=testbed
 ++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
 ++ CONDA_PROMPT_MODIFIER='(testbed) '
-++ export CONDA_PREFIX_1=/opt/miniconda3
+2025-04-09 06:07:51,101 - INFO - ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
 ++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -362,30 +363,30 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ _CE_M=
 ++ export _CE_CONDA=
 ++ _CE_CONDA=
-2025-04-08 13:09:56,066 - INFO - ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-09 06:07:51,101 - INFO - ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 + __conda_hashr
-+ '[' -n '' ']'
+2025-04-09 06:07:51,101 - INFO - + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-2025-04-08 13:09:56,067 - INFO - + python -m pip install cython numpy==1.19.2 setuptools scipy==1.5.2
-2025-04-08 13:09:58,474 - INFO - Requirement already satisfied: cython in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (0.29.24)
-2025-04-08 13:09:58,476 - INFO - Requirement already satisfied: numpy==1.19.2 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (1.19.2)
-2025-04-08 13:09:58,476 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (58.0.4)
-2025-04-08 13:09:58,478 - INFO - Requirement already satisfied: scipy==1.5.2 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (1.5.2)
-2025-04-08 13:09:59,372 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
-2025-04-08 13:11:41,677 - INFO - ---> Removed intermediate container fe99bd62371e
-2025-04-08 13:11:41,677 - INFO - ---> 90672081090a
-2025-04-08 13:11:41,677 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-08 13:11:41,677 - INFO - 
-2025-04-08 13:11:42,388 - INFO - ---> Running in a18b6ae4035e
-2025-04-08 13:11:42,486 - INFO - ---> Removed intermediate container a18b6ae4035e
-2025-04-08 13:11:42,486 - INFO - ---> 64b432efa4f3
-2025-04-08 13:11:42,487 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-08 13:11:42,487 - INFO - 
-2025-04-08 13:11:42,578 - INFO - ---> Running in 53ed36825961
-2025-04-08 13:11:43,369 - INFO - ---> Removed intermediate container 53ed36825961
-2025-04-08 13:11:43,370 - INFO - ---> d49ec1ee9e82
-2025-04-08 13:11:43,370 - INFO - Successfully built d49ec1ee9e82
-2025-04-08 13:11:43,374 - INFO - Successfully tagged sweb.env.x86_64.aa92880033da20ca313928:latest
-2025-04-08 13:11:43,374 - INFO - Image built successfully!
+2025-04-09 06:07:51,101 - INFO - + python -m pip install cython numpy==1.19.2 setuptools scipy==1.5.2
+2025-04-09 06:07:54,107 - INFO - Requirement already satisfied: cython in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (0.29.24)
+2025-04-09 06:07:54,109 - INFO - Requirement already satisfied: numpy==1.19.2 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (1.19.2)
+2025-04-09 06:07:54,112 - INFO - Requirement already satisfied: setuptools in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (58.0.4)
+2025-04-09 06:07:54,113 - INFO - Requirement already satisfied: scipy==1.5.2 in /opt/miniconda3/envs/testbed/lib/python3.6/site-packages (1.5.2)
+2025-04-09 06:07:55,099 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+2025-04-09 06:09:53,716 - INFO - ---> Removed intermediate container 3e22c2789322
+2025-04-09 06:09:53,717 - INFO - ---> bac3ba1f7bf5
+2025-04-09 06:09:53,717 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-09 06:09:53,717 - INFO - 
+2025-04-09 06:09:53,932 - INFO - ---> Running in c4ecf3f59368
+2025-04-09 06:09:54,016 - INFO - ---> Removed intermediate container c4ecf3f59368
+2025-04-09 06:09:54,017 - INFO - ---> c788b51c79ae
+2025-04-09 06:09:54,017 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-09 06:09:54,017 - INFO - 
+2025-04-09 06:09:54,094 - INFO - ---> Running in 64cbdd64f435
+2025-04-09 06:09:55,526 - INFO - ---> Removed intermediate container 64cbdd64f435
+2025-04-09 06:09:55,526 - INFO - ---> c31b5885c423
+2025-04-09 06:09:55,527 - INFO - Successfully built c31b5885c423
+2025-04-09 06:09:55,530 - INFO - Successfully tagged sweb.env.x86_64.aa92880033da20ca313928:latest
+2025-04-09 06:09:55,530 - INFO - Image built successfully!

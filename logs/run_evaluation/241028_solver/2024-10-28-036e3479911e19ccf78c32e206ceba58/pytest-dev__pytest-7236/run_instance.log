@@ -1,40 +1,62 @@
-2025-04-08 11:44:41,858 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest/json
+2025-04-09 08:02:52,146 - INFO - Environment image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest found for pytest-dev__pytest-7236
+Building instance image sweb.eval.x86_64.pytest-dev__pytest-7236:latest for pytest-dev__pytest-7236
+2025-04-09 08:03:46,807 - INFO - Creating container for pytest-dev__pytest-7236...
+2025-04-09 08:03:46,991 - INFO - Container for pytest-dev__pytest-7236 created: a99d237b70ca76fe4387788924e9309e1fe4cd9003cf487e2b6663dff7acbdd3
+2025-04-09 08:03:48,071 - INFO - Container for pytest-dev__pytest-7236 started: a99d237b70ca76fe4387788924e9309e1fe4cd9003cf487e2b6663dff7acbdd3
+2025-04-09 08:03:48,071 - INFO - Intermediate patch for pytest-dev__pytest-7236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7236/patch.diff, now applying to container...
+2025-04-09 08:03:49,022 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 08:03:49,225 - INFO - >>>>> Applied Patch:
+patching file src/_pytest/unittest.py
+patching file test_repro.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest/json: Not Found ("No such image: sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image pytest-dev__pytest-7236: Environment image sweb.env.x86_64.5d1fda9d55d65d8a4e5bdb:latest not found for pytest-dev__pytest-7236
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7236/run_instance.log) for more information.
-
-2025-04-08 11:44:41,858 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7236:latest...
-2025-04-08 11:44:41,861 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7236:latest not found, removing has no effect.
+2025-04-09 08:03:49,843 - INFO - Git diff before:
+diff --git a/src/_pytest/unittest.py b/src/_pytest/unittest.py
+index 773f545af..6da9f40ab 100644
+--- a/src/_pytest/unittest.py
++++ b/src/_pytest/unittest.py
+@@ -221,8 +221,12 @@ class TestCaseFunction(Function):
+             # TestCase instance interacts with the results object, so better to only do it
+             # when absolutely needed
+             if self.config.getoption("usepdb"):
+-                self._explicit_tearDown = self._testcase.tearDown
+-                setattr(self._testcase, "tearDown", lambda *args: None)
++                # Don't store tearDown for skipped tests
++                method_skip = getattr(self.obj, "__unittest_skip__", False)
++                class_skip = getattr(self._testcase.__class__, "__unittest_skip__", False)
++                if not (method_skip or class_skip):
++                    self._explicit_tearDown = self._testcase.tearDown
++                    setattr(self._testcase, "tearDown", lambda *args: None)
+ 
+             # we need to update the actual bound method with self.obj, because
+             # wrap_pytest_function_for_tracing replaces self.obj by a wrapper
+2025-04-09 08:03:49,843 - INFO - Eval script for pytest-dev__pytest-7236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7236/eval.sh; copying to container...
+2025-04-09 08:04:37,939 - INFO - Test runtime: 47.39 seconds
+2025-04-09 08:04:37,939 - INFO - Test output for pytest-dev__pytest-7236 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pytest-dev__pytest-7236/test_output.txt
+2025-04-09 08:04:38,140 - INFO - Git diff after:
+diff --git a/src/_pytest/unittest.py b/src/_pytest/unittest.py
+index 773f545af..6da9f40ab 100644
+--- a/src/_pytest/unittest.py
++++ b/src/_pytest/unittest.py
+@@ -221,8 +221,12 @@ class TestCaseFunction(Function):
+             # TestCase instance interacts with the results object, so better to only do it
+             # when absolutely needed
+             if self.config.getoption("usepdb"):
+-                self._explicit_tearDown = self._testcase.tearDown
+-                setattr(self._testcase, "tearDown", lambda *args: None)
++                # Don't store tearDown for skipped tests
++                method_skip = getattr(self.obj, "__unittest_skip__", False)
++                class_skip = getattr(self._testcase.__class__, "__unittest_skip__", False)
++                if not (method_skip or class_skip):
++                    self._explicit_tearDown = self._testcase.tearDown
++                    setattr(self._testcase, "tearDown", lambda *args: None)
+ 
+             # we need to update the actual bound method with self.obj, because
+             # wrap_pytest_function_for_tracing replaces self.obj by a wrapper
+2025-04-09 08:04:38,140 - INFO - Grading answer for pytest-dev__pytest-7236...
+2025-04-09 08:04:38,141 - INFO - report: {'pytest-dev__pytest-7236': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pytest-dev__pytest-7236: resolved: False
+2025-04-09 08:04:38,142 - INFO - Attempting to stop container sweb.eval.pytest-dev__pytest-7236.241028_solver...
+2025-04-09 08:04:53,825 - INFO - Attempting to remove container sweb.eval.pytest-dev__pytest-7236.241028_solver...
+2025-04-09 08:04:53,942 - INFO - Container sweb.eval.pytest-dev__pytest-7236.241028_solver removed.
+2025-04-09 08:04:53,942 - INFO - Attempting to remove image sweb.eval.x86_64.pytest-dev__pytest-7236:latest...
+2025-04-09 08:04:54,231 - INFO - Image sweb.eval.x86_64.pytest-dev__pytest-7236:latest removed.

@@ -1,40 +1,43 @@
-2025-04-08 11:33:34,734 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.1f92e6d7cef88badc4f744:latest/json
+2025-04-09 07:34:16,093 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-2317
+Building instance image sweb.eval.x86_64.psf__requests-2317:latest for psf__requests-2317
+2025-04-09 07:34:44,988 - INFO - Creating container for psf__requests-2317...
+2025-04-09 07:34:45,295 - INFO - Container for psf__requests-2317 created: b1306746e76449c809c9ff8de0bde18275980a6091b4e170d3c2482e095919aa
+2025-04-09 07:34:46,527 - INFO - Container for psf__requests-2317 started: b1306746e76449c809c9ff8de0bde18275980a6091b4e170d3c2482e095919aa
+2025-04-09 07:34:46,528 - INFO - Intermediate patch for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/patch.diff, now applying to container...
+2025-04-09 07:34:47,707 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 07:34:47,993 - INFO - >>>>> Applied Patch:
+patching file requests/sessions.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.1f92e6d7cef88badc4f744:latest/json: Not Found ("No such image: sweb.env.x86_64.1f92e6d7cef88badc4f744:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image psf__requests-2317: Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest not found for psf__requests-2317
+2025-04-09 07:34:48,307 - INFO - Git diff before:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index d701ff2e..4a5aa4bf 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -425,8 +425,11 @@ class Session(SessionRedirectMixin):
+             If Tuple, ('cert', 'key') pair.
+         """
+ 
+-        method = builtin_str(method)
+-
++        # Convert bytes method to str
++        if isinstance(method, bytes):
++            method = method.decode('latin1')
++        else:
++            method = builtin_str(method)
+         # Create the Request.
+         req = Request(
+             method = method.upper(),
+2025-04-09 07:34:48,307 - INFO - Eval script for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/eval.sh; copying to container...
+2025-04-09 08:04:49,335 - INFO - Test runtime: 1_800.22 seconds
+2025-04-09 08:04:49,336 - INFO - Test output for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/test_output.txt
+2025-04-09 08:04:49,337 - INFO - Traceback (most recent call last):
+  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 178, in run_instance
+    raise EvaluationError(
+EvaluationError: Evaluation error for psf__requests-2317: Test timed out after 1800 seconds.
 Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/run_instance.log) for more information.
 
-2025-04-08 11:33:34,740 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-2317:latest...
-2025-04-08 11:33:34,772 - INFO - Image sweb.eval.x86_64.psf__requests-2317:latest not found, removing has no effect.
+2025-04-09 08:04:49,337 - INFO - Attempting to stop container sweb.eval.psf__requests-2317.241028_solver...
+2025-04-09 08:05:05,329 - INFO - Attempting to remove container sweb.eval.psf__requests-2317.241028_solver...
+2025-04-09 08:05:05,425 - INFO - Container sweb.eval.psf__requests-2317.241028_solver removed.
+2025-04-09 08:05:05,425 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-2317:latest...
+2025-04-09 08:05:05,624 - INFO - Image sweb.eval.x86_64.psf__requests-2317:latest removed.

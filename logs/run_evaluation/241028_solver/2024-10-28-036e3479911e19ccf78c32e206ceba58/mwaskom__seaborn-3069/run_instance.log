@@ -1,40 +1,148 @@
-2025-04-08 11:33:34,693 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest/json
+2025-04-09 09:49:41,931 - INFO - Environment image sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest found for mwaskom__seaborn-3069
+Building instance image sweb.eval.x86_64.mwaskom__seaborn-3069:latest for mwaskom__seaborn-3069
+2025-04-09 09:50:52,722 - INFO - Creating container for mwaskom__seaborn-3069...
+2025-04-09 09:50:52,828 - INFO - Container for mwaskom__seaborn-3069 created: 390fcc7e3e9d675279149a8cfb3ea42f7e3b2fbac17a670671cf815f4589bc3c
+2025-04-09 09:50:54,027 - INFO - Container for mwaskom__seaborn-3069 started: 390fcc7e3e9d675279149a8cfb3ea42f7e3b2fbac17a670671cf815f4589bc3c
+2025-04-09 09:50:54,027 - INFO - Intermediate patch for mwaskom__seaborn-3069 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/mwaskom__seaborn-3069/patch.diff, now applying to container...
+2025-04-09 09:50:55,123 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 09:50:55,336 - INFO - >>>>> Applied Patch:
+patching file seaborn/_core/scales.py
+patching file tests/_core/test_scales.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest/json: Not Found ("No such image: sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image mwaskom__seaborn-3069: Environment image sweb.env.x86_64.a0efca7a0fe6719dbf65c2:latest not found for mwaskom__seaborn-3069
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/mwaskom__seaborn-3069/run_instance.log) for more information.
-
-2025-04-08 11:33:34,693 - INFO - Attempting to remove image sweb.eval.x86_64.mwaskom__seaborn-3069:latest...
-2025-04-08 11:33:34,711 - INFO - Image sweb.eval.x86_64.mwaskom__seaborn-3069:latest not found, removing has no effect.
+2025-04-09 09:50:55,921 - INFO - Git diff before:
+diff --git a/seaborn/_core/scales.py b/seaborn/_core/scales.py
+index bbd71ec1..9cea5d0e 100644
+--- a/seaborn/_core/scales.py
++++ b/seaborn/_core/scales.py
+@@ -177,19 +177,23 @@ class Nominal(Scale):
+             name = None  # To work around mpl<3.4 compat issues
+ 
+             def set_default_locators_and_formatters(self, axis):
+-                ...
+-                # axis.set_major_locator(major_locator)
+-                # if minor_locator is not None:
+-                #     axis.set_minor_locator(minor_locator)
+-                # axis.set_major_formatter(major_formatter)
++                # Disable grid for nominal scales
++                if isinstance(axis, mpl.axis.XAxis):
++                    axis.axes.xaxis.grid(False)
++                else:
++                    axis.axes.yaxis.grid(False)
++
++                # Set limits with 0.5 padding
++                n = len(units_seed)
++                if isinstance(axis, mpl.axis.XAxis):
++                    axis.axes.set_xlim(-.5, n - .5, auto=None)
++                else:
++                    # Invert y-axis for nominal scales
++                    axis.axes.set_ylim(n - .5, -.5, auto=None)
+ 
+         mpl_scale = CatScale(data.name)
+         if axis is None:
+             axis = PseudoAxis(mpl_scale)
+-
+-            # TODO Currently just used in non-Coordinate contexts, but should
+-            # we use this to (A) set the padding we want for categorial plots
+-            # and (B) allow the values parameter for a Coordinate to set xlim/ylim
+             axis.set_view_interval(0, len(units_seed) - 1)
+ 
+         new._matplotlib_scale = mpl_scale
+diff --git a/tests/_core/test_scales.py b/tests/_core/test_scales.py
+index 1bceed92..47941a5a 100644
+--- a/tests/_core/test_scales.py
++++ b/tests/_core/test_scales.py
+@@ -382,6 +382,20 @@ class TestNominal:
+         f = ax.yaxis.get_major_formatter()
+         assert f.format_ticks([0, 1, 2]) == ["1.0", "4.0", "-1.5"]
+ 
++    def test_nominal_axis_properties(self, x, y):
++
++        # Test x-axis properties
++        ax = mpl.figure.Figure().subplots()
++        s = Nominal()._setup(x, Coordinate(), ax.xaxis)
++        assert not ax.xaxis.get_gridlines()
++        assert ax.get_xlim() == (-.5, 2.5)  # 3 unique values in x
++
++        # Test y-axis properties
++        ax = mpl.figure.Figure().subplots()
++        s = Nominal()._setup(y, Coordinate(), ax.yaxis)
++        assert not ax.yaxis.get_gridlines()
++        assert ax.get_ylim() == (2.5, -.5)  # 3 unique values in y, inverted
++
+     def test_color_defaults(self, x):
+ 
+         s = Nominal()._setup(x, Color())
+2025-04-09 09:50:55,922 - INFO - Eval script for mwaskom__seaborn-3069 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/mwaskom__seaborn-3069/eval.sh; copying to container...
+2025-04-09 09:55:05,305 - INFO - Test runtime: 248.58 seconds
+2025-04-09 09:55:05,306 - INFO - Test output for mwaskom__seaborn-3069 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/mwaskom__seaborn-3069/test_output.txt
+2025-04-09 09:55:05,529 - INFO - Git diff after:
+diff --git a/seaborn/_core/scales.py b/seaborn/_core/scales.py
+index bbd71ec1..9cea5d0e 100644
+--- a/seaborn/_core/scales.py
++++ b/seaborn/_core/scales.py
+@@ -177,19 +177,23 @@ class Nominal(Scale):
+             name = None  # To work around mpl<3.4 compat issues
+ 
+             def set_default_locators_and_formatters(self, axis):
+-                ...
+-                # axis.set_major_locator(major_locator)
+-                # if minor_locator is not None:
+-                #     axis.set_minor_locator(minor_locator)
+-                # axis.set_major_formatter(major_formatter)
++                # Disable grid for nominal scales
++                if isinstance(axis, mpl.axis.XAxis):
++                    axis.axes.xaxis.grid(False)
++                else:
++                    axis.axes.yaxis.grid(False)
++
++                # Set limits with 0.5 padding
++                n = len(units_seed)
++                if isinstance(axis, mpl.axis.XAxis):
++                    axis.axes.set_xlim(-.5, n - .5, auto=None)
++                else:
++                    # Invert y-axis for nominal scales
++                    axis.axes.set_ylim(n - .5, -.5, auto=None)
+ 
+         mpl_scale = CatScale(data.name)
+         if axis is None:
+             axis = PseudoAxis(mpl_scale)
+-
+-            # TODO Currently just used in non-Coordinate contexts, but should
+-            # we use this to (A) set the padding we want for categorial plots
+-            # and (B) allow the values parameter for a Coordinate to set xlim/ylim
+             axis.set_view_interval(0, len(units_seed) - 1)
+ 
+         new._matplotlib_scale = mpl_scale
+diff --git a/tests/_core/test_scales.py b/tests/_core/test_scales.py
+index 1bceed92..47941a5a 100644
+--- a/tests/_core/test_scales.py
++++ b/tests/_core/test_scales.py
+@@ -382,6 +382,20 @@ class TestNominal:
+         f = ax.yaxis.get_major_formatter()
+         assert f.format_ticks([0, 1, 2]) == ["1.0", "4.0", "-1.5"]
+ 
++    def test_nominal_axis_properties(self, x, y):
++
++        # Test x-axis properties
++        ax = mpl.figure.Figure().subplots()
++        s = Nominal()._setup(x, Coordinate(), ax.xaxis)
++        assert not ax.xaxis.get_gridlines()
++        assert ax.get_xlim() == (-.5, 2.5)  # 3 unique values in x
++
++        # Test y-axis properties
++        ax = mpl.figure.Figure().subplots()
++        s = Nominal()._setup(y, Coordinate(), ax.yaxis)
++        assert not ax.yaxis.get_gridlines()
++        assert ax.get_ylim() == (2.5, -.5)  # 3 unique values in y, inverted
++
+     def test_color_defaults(self, x):
+ 
+         s = Nominal()._setup(x, Color())
+2025-04-09 09:55:05,529 - INFO - Grading answer for mwaskom__seaborn-3069...
+2025-04-09 09:55:05,601 - INFO - report: {'mwaskom__seaborn-3069': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for mwaskom__seaborn-3069: resolved: False
+2025-04-09 09:55:05,651 - INFO - Attempting to stop container sweb.eval.mwaskom__seaborn-3069.241028_solver...
+2025-04-09 09:55:25,207 - INFO - Attempting to remove container sweb.eval.mwaskom__seaborn-3069.241028_solver...
+2025-04-09 09:55:25,304 - INFO - Container sweb.eval.mwaskom__seaborn-3069.241028_solver removed.
+2025-04-09 09:55:25,304 - INFO - Attempting to remove image sweb.eval.x86_64.mwaskom__seaborn-3069:latest...
+2025-04-09 09:55:26,422 - INFO - Image sweb.eval.x86_64.mwaskom__seaborn-3069:latest removed.

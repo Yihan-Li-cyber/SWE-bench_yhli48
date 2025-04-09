@@ -1,40 +1,52 @@
-2025-04-08 11:33:34,588 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.efa6065ed5bf204410fd53:latest/json
+2025-04-09 07:26:25,685 - INFO - Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest found for matplotlib__matplotlib-25332
+Building instance image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest for matplotlib__matplotlib-25332
+2025-04-09 07:48:42,128 - INFO - Creating container for matplotlib__matplotlib-25332...
+2025-04-09 07:48:42,312 - INFO - Container for matplotlib__matplotlib-25332 created: ea6295767d9861f5c71478b084b76c00d99f4b2c52dbd2b90113c1a6daa61a23
+2025-04-09 07:48:43,494 - INFO - Container for matplotlib__matplotlib-25332 started: ea6295767d9861f5c71478b084b76c00d99f4b2c52dbd2b90113c1a6daa61a23
+2025-04-09 07:48:43,495 - INFO - Intermediate patch for matplotlib__matplotlib-25332 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-25332/patch.diff, now applying to container...
+2025-04-09 07:48:44,408 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 07:48:44,698 - INFO - >>>>> Applied Patch:
+patching file lib/matplotlib/figure.py
+patching file test_pickle_align.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.efa6065ed5bf204410fd53:latest/json: Not Found ("No such image: sweb.env.x86_64.efa6065ed5bf204410fd53:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image matplotlib__matplotlib-25332: Environment image sweb.env.x86_64.efa6065ed5bf204410fd53:latest not found for matplotlib__matplotlib-25332
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-25332/run_instance.log) for more information.
-
-2025-04-08 11:33:34,591 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest...
-2025-04-08 11:33:34,604 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest not found, removing has no effect.
+2025-04-09 07:48:51,408 - INFO - Git diff before:
+diff --git a/lib/matplotlib/figure.py b/lib/matplotlib/figure.py
+index b4c38368bf..61cbd9873b 100644
+--- a/lib/matplotlib/figure.py
++++ b/lib/matplotlib/figure.py
+@@ -3159,6 +3159,9 @@ None}, default: None
+     def __getstate__(self):
+         state = super().__getstate__()
+ 
++        # Clear alignment groups before pickling since they contain unpickleable weak refs
++        state['_align_label_groups'] = {"x": cbook.Grouper(), "y": cbook.Grouper()}
++
+         # The canvas cannot currently be pickled, but this has the benefit
+         # of meaning that a figure can be detached from one canvas, and
+         # re-attached to another.
+2025-04-09 07:48:51,409 - INFO - Eval script for matplotlib__matplotlib-25332 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-25332/eval.sh; copying to container...
+2025-04-09 07:56:58,720 - INFO - Test runtime: 486.79 seconds
+2025-04-09 07:56:58,721 - INFO - Test output for matplotlib__matplotlib-25332 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-25332/test_output.txt
+2025-04-09 07:56:59,022 - INFO - Git diff after:
+diff --git a/lib/matplotlib/figure.py b/lib/matplotlib/figure.py
+index b4c38368bf..61cbd9873b 100644
+--- a/lib/matplotlib/figure.py
++++ b/lib/matplotlib/figure.py
+@@ -3159,6 +3159,9 @@ None}, default: None
+     def __getstate__(self):
+         state = super().__getstate__()
+ 
++        # Clear alignment groups before pickling since they contain unpickleable weak refs
++        state['_align_label_groups'] = {"x": cbook.Grouper(), "y": cbook.Grouper()}
++
+         # The canvas cannot currently be pickled, but this has the benefit
+         # of meaning that a figure can be detached from one canvas, and
+         # re-attached to another.
+2025-04-09 07:56:59,022 - INFO - Grading answer for matplotlib__matplotlib-25332...
+2025-04-09 07:56:59,023 - INFO - report: {'matplotlib__matplotlib-25332': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-25332: resolved: False
+2025-04-09 07:56:59,024 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-25332.241028_solver...
+2025-04-09 07:57:16,015 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-25332.241028_solver...
+2025-04-09 07:57:16,114 - INFO - Container sweb.eval.matplotlib__matplotlib-25332.241028_solver removed.
+2025-04-09 07:57:16,114 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest...
+2025-04-09 07:57:30,832 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-25332:latest removed.

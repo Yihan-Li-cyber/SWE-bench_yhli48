@@ -1,14 +1,14 @@
-2025-04-08 15:48:59,726 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24627
+2025-04-09 07:23:45,941 - INFO - Environment image sweb.env.x86_64.31244378a92e3bcce809ac:latest found for matplotlib__matplotlib-24627
 Building instance image sweb.eval.x86_64.matplotlib__matplotlib-24627:latest for matplotlib__matplotlib-24627
-2025-04-08 16:22:49,542 - INFO - Creating container for matplotlib__matplotlib-24627...
-2025-04-08 16:22:49,730 - INFO - Container for matplotlib__matplotlib-24627 created: 044bb1fb55f521e59faf8382eb618e7e630d20002e66b032b90554e1c4fe6dc5
-2025-04-08 16:22:50,930 - INFO - Container for matplotlib__matplotlib-24627 started: 044bb1fb55f521e59faf8382eb618e7e630d20002e66b032b90554e1c4fe6dc5
-2025-04-08 16:22:50,931 - INFO - Intermediate patch for matplotlib__matplotlib-24627 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-24627/patch.diff, now applying to container...
-2025-04-08 16:22:52,035 - INFO - Failed to apply patch to container, trying again...
-2025-04-08 16:22:52,338 - INFO - >>>>> Applied Patch:
+2025-04-09 07:43:23,795 - INFO - Creating container for matplotlib__matplotlib-24627...
+2025-04-09 07:43:23,993 - INFO - Container for matplotlib__matplotlib-24627 created: e411f2187a3bf9131f2b8cf1125befb8239d586bafeffb8d11385f62fd87a548
+2025-04-09 07:43:25,113 - INFO - Container for matplotlib__matplotlib-24627 started: e411f2187a3bf9131f2b8cf1125befb8239d586bafeffb8d11385f62fd87a548
+2025-04-09 07:43:25,114 - INFO - Intermediate patch for matplotlib__matplotlib-24627 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-24627/patch.diff, now applying to container...
+2025-04-09 07:43:26,294 - INFO - Failed to apply patch to container, trying again...
+2025-04-09 07:43:26,502 - INFO - >>>>> Applied Patch:
 patching file lib/matplotlib/axes/_base.py
 
-2025-04-08 16:22:59,637 - INFO - Git diff before:
+2025-04-09 07:43:33,417 - INFO - Git diff before:
 diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
 index 90b0bf117e..2f36bae671 100644
 --- a/lib/matplotlib/axes/_base.py
@@ -26,4 +26,32 @@ index 90b0bf117e..2f36bae671 100644
          self._children = []
          self._mouseover_set = _OrderedSet()
          self.child_axes = []
-2025-04-08 16:22:59,637 - INFO - Eval script for matplotlib__matplotlib-24627 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-24627/eval.sh; copying to container...
+2025-04-09 07:43:33,417 - INFO - Eval script for matplotlib__matplotlib-24627 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-24627/eval.sh; copying to container...
+2025-04-09 08:00:37,024 - INFO - Test runtime: 1_022.93 seconds
+2025-04-09 08:00:37,025 - INFO - Test output for matplotlib__matplotlib-24627 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/matplotlib__matplotlib-24627/test_output.txt
+2025-04-09 08:00:37,431 - INFO - Git diff after:
+diff --git a/lib/matplotlib/axes/_base.py b/lib/matplotlib/axes/_base.py
+index 90b0bf117e..2f36bae671 100644
+--- a/lib/matplotlib/axes/_base.py
++++ b/lib/matplotlib/axes/_base.py
+@@ -1308,6 +1308,12 @@ class _AxesBase(martist.Artist):
+         self._get_patches_for_fill = _process_plot_var_args(self, 'fill')
+ 
+         self._gridOn = mpl.rcParams['axes.grid']
++        # Deparent any existing artists
++        for artist in list(self._children):
++            if hasattr(artist, 'axes'):
++                artist.axes = None
++            if hasattr(artist, 'figure'):
++                artist.figure = None
+         self._children = []
+         self._mouseover_set = _OrderedSet()
+         self.child_axes = []
+2025-04-09 08:00:37,431 - INFO - Grading answer for matplotlib__matplotlib-24627...
+2025-04-09 08:00:37,517 - INFO - report: {'matplotlib__matplotlib-24627': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for matplotlib__matplotlib-24627: resolved: False
+2025-04-09 08:00:37,517 - INFO - Attempting to stop container sweb.eval.matplotlib__matplotlib-24627.241028_solver...
+2025-04-09 08:00:54,829 - INFO - Attempting to remove container sweb.eval.matplotlib__matplotlib-24627.241028_solver...
+2025-04-09 08:00:55,038 - INFO - Container sweb.eval.matplotlib__matplotlib-24627.241028_solver removed.
+2025-04-09 08:00:55,038 - INFO - Attempting to remove image sweb.eval.x86_64.matplotlib__matplotlib-24627:latest...
+2025-04-09 08:01:06,181 - INFO - Image sweb.eval.x86_64.matplotlib__matplotlib-24627:latest removed.
