@@ -1,0 +1,49 @@
+2025-04-10 17:18:11,480 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18763
+Building instance image sweb.eval.x86_64.sympy__sympy-18763:latest for sympy__sympy-18763
+2025-04-10 17:20:07,476 - INFO - Creating container for sympy__sympy-18763...
+2025-04-10 17:20:07,587 - INFO - Container for sympy__sympy-18763 created: 6dd50bba4f28376bc60844bbe98b6ec7ddce15c76bd74b53886e036cf6a2ad35
+2025-04-10 17:20:08,682 - INFO - Container for sympy__sympy-18763 started: 6dd50bba4f28376bc60844bbe98b6ec7ddce15c76bd74b53886e036cf6a2ad35
+2025-04-10 17:20:08,682 - INFO - Intermediate patch for sympy__sympy-18763 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18763/patch.diff, now applying to container...
+2025-04-10 17:20:09,875 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:20:10,085 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/latex.py
+
+2025-04-10 17:20:12,984 - INFO - Git diff before:
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 8743723ea0..969072f47f 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -698,7 +698,7 @@ def _print_Derivative(self, expr):
+ 
+     def _print_Subs(self, subs):
+         expr, old, new = subs.args
+-        latex_expr = self._print(expr)
++        latex_expr = self.parenthesize(expr, PRECEDENCE["Mul"], strict=True)
+         latex_old = (self._print(e) for e in old)
+         latex_new = (self._print(e) for e in new)
+         latex_subs = r'\\ '.join(
+2025-04-10 17:20:12,984 - INFO - Eval script for sympy__sympy-18763 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18763/eval.sh; copying to container...
+2025-04-10 17:21:01,887 - INFO - Test runtime: 48.10 seconds
+2025-04-10 17:21:01,887 - INFO - Test output for sympy__sympy-18763 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18763/test_output.txt
+2025-04-10 17:21:02,080 - INFO - Git diff after:
+diff --git a/sympy/printing/latex.py b/sympy/printing/latex.py
+index 8743723ea0..969072f47f 100644
+--- a/sympy/printing/latex.py
++++ b/sympy/printing/latex.py
+@@ -698,7 +698,7 @@ def _print_Derivative(self, expr):
+ 
+     def _print_Subs(self, subs):
+         expr, old, new = subs.args
+-        latex_expr = self._print(expr)
++        latex_expr = self.parenthesize(expr, PRECEDENCE["Mul"], strict=True)
+         latex_old = (self._print(e) for e in old)
+         latex_new = (self._print(e) for e in new)
+         latex_subs = r'\\ '.join(
+2025-04-10 17:21:02,081 - INFO - Grading answer for sympy__sympy-18763...
+2025-04-10 17:21:02,081 - INFO - report: {'sympy__sympy-18763': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-18763: resolved: False
+2025-04-10 17:21:02,081 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18763.241028_solver...
+2025-04-10 17:21:19,590 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18763.241028_solver...
+2025-04-10 17:21:19,695 - INFO - Container sweb.eval.sympy__sympy-18763.241028_solver removed.
+2025-04-10 17:21:19,695 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-18763:latest...
+2025-04-10 17:21:21,382 - INFO - Image sweb.eval.x86_64.sympy__sympy-18763:latest removed.

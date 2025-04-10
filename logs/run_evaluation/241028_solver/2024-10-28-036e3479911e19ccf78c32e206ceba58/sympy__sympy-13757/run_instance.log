@@ -1,0 +1,86 @@
+2025-04-10 16:52:19,616 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13757
+Building instance image sweb.eval.x86_64.sympy__sympy-13757:latest for sympy__sympy-13757
+2025-04-10 16:54:05,597 - INFO - Creating container for sympy__sympy-13757...
+2025-04-10 16:54:05,705 - INFO - Container for sympy__sympy-13757 created: b01290caa6732e3a12b36bf7e76af31ae0499666002db5bba8f67f575e366c0a
+2025-04-10 16:54:07,301 - INFO - Container for sympy__sympy-13757 started: b01290caa6732e3a12b36bf7e76af31ae0499666002db5bba8f67f575e366c0a
+2025-04-10 16:54:07,301 - INFO - Intermediate patch for sympy__sympy-13757 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13757/patch.diff, now applying to container...
+2025-04-10 16:54:08,497 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:54:08,783 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/polytools.py
+patching file test_poly_mul.py
+
+2025-04-10 16:54:11,091 - INFO - Git diff before:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index d5ac051f63..6485c8198a 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -106,6 +106,7 @@ class Poly(Expr):
+ 
+     is_commutative = True
+     is_Poly = True
++    _op_priority = 20.0  # This makes Poly higher priority than Expr
+ 
+     def __new__(cls, rep, *gens, **args):
+         """Create a new polynomial instance out of something useful. """
+@@ -4049,13 +4050,12 @@ def __mul__(f, g):
+ 
+     @_sympifyit('g', NotImplemented)
+     def __rmul__(f, g):
+-        if not g.is_Poly:
+-            try:
++        try:
++            if not g.is_Poly:
+                 g = f.__class__(g, *f.gens)
+-            except PolynomialError:
+-                return g*f.as_expr()
+-
+-        return g.mul(f)
++            return g.mul(f)
++        except PolynomialError:
++            return g*f.as_expr()
+ 
+     @_sympifyit('n', NotImplemented)
+     def __pow__(f, n):
+2025-04-10 16:54:11,091 - INFO - Eval script for sympy__sympy-13757 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13757/eval.sh; copying to container...
+2025-04-10 16:55:23,487 - INFO - Test runtime: 71.49 seconds
+2025-04-10 16:55:23,488 - INFO - Test output for sympy__sympy-13757 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13757/test_output.txt
+2025-04-10 16:55:23,905 - INFO - Git diff after:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index d5ac051f63..6485c8198a 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -106,6 +106,7 @@ class Poly(Expr):
+ 
+     is_commutative = True
+     is_Poly = True
++    _op_priority = 20.0  # This makes Poly higher priority than Expr
+ 
+     def __new__(cls, rep, *gens, **args):
+         """Create a new polynomial instance out of something useful. """
+@@ -4049,13 +4050,12 @@ def __mul__(f, g):
+ 
+     @_sympifyit('g', NotImplemented)
+     def __rmul__(f, g):
+-        if not g.is_Poly:
+-            try:
++        try:
++            if not g.is_Poly:
+                 g = f.__class__(g, *f.gens)
+-            except PolynomialError:
+-                return g*f.as_expr()
+-
+-        return g.mul(f)
++            return g.mul(f)
++        except PolynomialError:
++            return g*f.as_expr()
+ 
+     @_sympifyit('n', NotImplemented)
+     def __pow__(f, n):
+2025-04-10 16:55:23,905 - INFO - Grading answer for sympy__sympy-13757...
+2025-04-10 16:55:23,905 - INFO - report: {'sympy__sympy-13757': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13757: resolved: False
+2025-04-10 16:55:23,905 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13757.241028_solver...
+2025-04-10 16:55:41,100 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13757.241028_solver...
+2025-04-10 16:55:41,304 - INFO - Container sweb.eval.sympy__sympy-13757.241028_solver removed.
+2025-04-10 16:55:41,304 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13757:latest...
+2025-04-10 16:55:42,195 - INFO - Image sweb.eval.x86_64.sympy__sympy-13757:latest removed.

@@ -1,0 +1,100 @@
+2025-04-10 17:13:18,078 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18211
+Building instance image sweb.eval.x86_64.sympy__sympy-18211:latest for sympy__sympy-18211
+2025-04-10 17:15:13,828 - INFO - Creating container for sympy__sympy-18211...
+2025-04-10 17:15:13,893 - INFO - Container for sympy__sympy-18211 created: 7bef2a8de0b0f64992c6535d466e7259c80d8051306f0bdf62495726f414b629
+2025-04-10 17:15:15,174 - INFO - Container for sympy__sympy-18211 started: 7bef2a8de0b0f64992c6535d466e7259c80d8051306f0bdf62495726f414b629
+2025-04-10 17:15:15,175 - INFO - Intermediate patch for sympy__sympy-18211 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18211/patch.diff, now applying to container...
+2025-04-10 17:15:16,187 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:15:16,483 - INFO - >>>>> Applied Patch:
+patching file sympy/core/relational.py
+patching file sympy/solvers/tests/test_solveset.py
+
+2025-04-10 17:15:19,290 - INFO - Git diff before:
+diff --git a/sympy/core/relational.py b/sympy/core/relational.py
+index f581bfa3c4..2cf5445dc1 100644
+--- a/sympy/core/relational.py
++++ b/sympy/core/relational.py
+@@ -389,10 +389,16 @@ def __nonzero__(self):
+     def _eval_as_set(self):
+         # self is univariate and periodicity(self, x) in (0, None)
+         from sympy.solvers.inequalities import solve_univariate_inequality
++        from sympy.sets import ConditionSet
++        from sympy.sets.sets import S
+         syms = self.free_symbols
+         assert len(syms) == 1
+         x = syms.pop()
+-        return solve_univariate_inequality(self, x, relational=False)
++        try:
++            return solve_univariate_inequality(self, x, relational=False)
++        except NotImplementedError:
++            # For equations that can't be solved, return a ConditionSet
++            return ConditionSet(x, self, S.Reals)
+ 
+     @property
+     def binary_symbols(self):
+diff --git a/sympy/solvers/tests/test_solveset.py b/sympy/solvers/tests/test_solveset.py
+index af25d6b35d..c4d6b1421b 100644
+--- a/sympy/solvers/tests/test_solveset.py
++++ b/sympy/solvers/tests/test_solveset.py
+@@ -307,6 +307,12 @@ def test_errorinverses():
+     assert solveset_real(erfcinv(x) - 2, x) == FiniteSet(erfc(2))
+ 
+ 
++def test_transcendental_equation_as_set():
++    eq = Eq(n*cos(n) - 3*sin(n), 0)
++    result = eq.as_set()
++    expected = ConditionSet(n, eq, S.Reals)
++    assert result == expected
++
+ def test_solve_polynomial():
+     assert solveset_real(3*x - 2, x) == FiniteSet(Rational(2, 3))
+2025-04-10 17:15:19,291 - INFO - Eval script for sympy__sympy-18211 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18211/eval.sh; copying to container...
+2025-04-10 17:16:38,473 - INFO - Test runtime: 77.89 seconds
+2025-04-10 17:16:38,473 - INFO - Test output for sympy__sympy-18211 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18211/test_output.txt
+2025-04-10 17:16:38,695 - INFO - Git diff after:
+diff --git a/sympy/core/relational.py b/sympy/core/relational.py
+index f581bfa3c4..2cf5445dc1 100644
+--- a/sympy/core/relational.py
++++ b/sympy/core/relational.py
+@@ -389,10 +389,16 @@ def __nonzero__(self):
+     def _eval_as_set(self):
+         # self is univariate and periodicity(self, x) in (0, None)
+         from sympy.solvers.inequalities import solve_univariate_inequality
++        from sympy.sets import ConditionSet
++        from sympy.sets.sets import S
+         syms = self.free_symbols
+         assert len(syms) == 1
+         x = syms.pop()
+-        return solve_univariate_inequality(self, x, relational=False)
++        try:
++            return solve_univariate_inequality(self, x, relational=False)
++        except NotImplementedError:
++            # For equations that can't be solved, return a ConditionSet
++            return ConditionSet(x, self, S.Reals)
+ 
+     @property
+     def binary_symbols(self):
+diff --git a/sympy/solvers/tests/test_solveset.py b/sympy/solvers/tests/test_solveset.py
+index af25d6b35d..c4d6b1421b 100644
+--- a/sympy/solvers/tests/test_solveset.py
++++ b/sympy/solvers/tests/test_solveset.py
+@@ -307,6 +307,12 @@ def test_errorinverses():
+     assert solveset_real(erfcinv(x) - 2, x) == FiniteSet(erfc(2))
+ 
+ 
++def test_transcendental_equation_as_set():
++    eq = Eq(n*cos(n) - 3*sin(n), 0)
++    result = eq.as_set()
++    expected = ConditionSet(n, eq, S.Reals)
++    assert result == expected
++
+ def test_solve_polynomial():
+     assert solveset_real(3*x - 2, x) == FiniteSet(Rational(2, 3))
+2025-04-10 17:16:38,695 - INFO - Grading answer for sympy__sympy-18211...
+2025-04-10 17:16:38,695 - INFO - report: {'sympy__sympy-18211': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-18211: resolved: False
+2025-04-10 17:16:38,695 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18211.241028_solver...
+2025-04-10 17:17:11,392 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18211.241028_solver...
+2025-04-10 17:17:11,582 - INFO - Container sweb.eval.sympy__sympy-18211.241028_solver removed.
+2025-04-10 17:17:11,583 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-18211:latest...
+2025-04-10 17:17:12,288 - INFO - Image sweb.eval.x86_64.sympy__sympy-18211:latest removed.

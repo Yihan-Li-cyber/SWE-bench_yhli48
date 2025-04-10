@@ -1,0 +1,49 @@
+2025-04-10 16:59:51,501 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15349
+Building instance image sweb.eval.x86_64.sympy__sympy-15349:latest for sympy__sympy-15349
+2025-04-10 17:02:10,182 - INFO - Creating container for sympy__sympy-15349...
+2025-04-10 17:02:10,283 - INFO - Container for sympy__sympy-15349 created: 2290965aea49b3bb005f1eef475887baa5488b20b2e7c874ed5d6c15ecc82f53
+2025-04-10 17:02:14,193 - INFO - Container for sympy__sympy-15349 started: 2290965aea49b3bb005f1eef475887baa5488b20b2e7c874ed5d6c15ecc82f53
+2025-04-10 17:02:14,194 - INFO - Intermediate patch for sympy__sympy-15349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15349/patch.diff, now applying to container...
+2025-04-10 17:02:15,302 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:02:15,594 - INFO - >>>>> Applied Patch:
+patching file sympy/algebras/quaternion.py
+
+2025-04-10 17:02:17,993 - INFO - Git diff before:
+diff --git a/sympy/algebras/quaternion.py b/sympy/algebras/quaternion.py
+index b84e7cb95a..7eae8d73d0 100644
+--- a/sympy/algebras/quaternion.py
++++ b/sympy/algebras/quaternion.py
+@@ -529,7 +529,7 @@ def to_rotation_matrix(self, v=None):
+ 
+         m10 = 2*s*(q.b*q.c + q.d*q.a)
+         m11 = 1 - 2*s*(q.b**2 + q.d**2)
+-        m12 = 2*s*(q.c*q.d + q.b*q.a)
++        m12 = 2*s*(q.c*q.d - q.b*q.a)
+ 
+         m20 = 2*s*(q.b*q.d - q.c*q.a)
+         m21 = 2*s*(q.c*q.d + q.b*q.a)
+2025-04-10 17:02:17,993 - INFO - Eval script for sympy__sympy-15349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15349/eval.sh; copying to container...
+2025-04-10 17:02:50,001 - INFO - Test runtime: 31.20 seconds
+2025-04-10 17:02:50,001 - INFO - Test output for sympy__sympy-15349 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15349/test_output.txt
+2025-04-10 17:02:50,394 - INFO - Git diff after:
+diff --git a/sympy/algebras/quaternion.py b/sympy/algebras/quaternion.py
+index b84e7cb95a..7eae8d73d0 100644
+--- a/sympy/algebras/quaternion.py
++++ b/sympy/algebras/quaternion.py
+@@ -529,7 +529,7 @@ def to_rotation_matrix(self, v=None):
+ 
+         m10 = 2*s*(q.b*q.c + q.d*q.a)
+         m11 = 1 - 2*s*(q.b**2 + q.d**2)
+-        m12 = 2*s*(q.c*q.d + q.b*q.a)
++        m12 = 2*s*(q.c*q.d - q.b*q.a)
+ 
+         m20 = 2*s*(q.b*q.d - q.c*q.a)
+         m21 = 2*s*(q.c*q.d + q.b*q.a)
+2025-04-10 17:02:50,394 - INFO - Grading answer for sympy__sympy-15349...
+2025-04-10 17:02:50,395 - INFO - report: {'sympy__sympy-15349': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-15349: resolved: False
+2025-04-10 17:02:50,395 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15349.241028_solver...
+2025-04-10 17:03:07,001 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15349.241028_solver...
+2025-04-10 17:03:07,283 - INFO - Container sweb.eval.sympy__sympy-15349.241028_solver removed.
+2025-04-10 17:03:07,283 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-15349:latest...
+2025-04-10 17:03:08,082 - INFO - Image sweb.eval.x86_64.sympy__sympy-15349:latest removed.

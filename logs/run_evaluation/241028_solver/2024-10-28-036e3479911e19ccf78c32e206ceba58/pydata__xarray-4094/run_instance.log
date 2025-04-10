@@ -1,40 +1,114 @@
-2025-04-09 07:56:50,742 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json
+2025-04-10 13:28:50,875 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-4094
+Building instance image sweb.eval.x86_64.pydata__xarray-4094:latest for pydata__xarray-4094
+2025-04-10 13:29:34,168 - INFO - Creating container for pydata__xarray-4094...
+2025-04-10 13:29:34,195 - INFO - Container for pydata__xarray-4094 created: c98a5b0407d434a79c8ea3c65c3f7d78ceb5a40283061d5cbaed1fe33e5b33cd
+2025-04-10 13:29:35,588 - INFO - Container for pydata__xarray-4094 started: c98a5b0407d434a79c8ea3c65c3f7d78ceb5a40283061d5cbaed1fe33e5b33cd
+2025-04-10 13:29:35,588 - INFO - Intermediate patch for pydata__xarray-4094 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4094/patch.diff, now applying to container...
+2025-04-10 13:29:36,680 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 13:29:36,987 - INFO - >>>>> Applied Patch:
+patching file xarray/core/dataarray.py
+patching file xarray/tests/test_dataarray.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json: Not Found ("No such image: sweb.env.x86_64.502d8fc6ebccd881244091:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image pydata__xarray-4094: Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest not found for pydata__xarray-4094
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4094/run_instance.log) for more information.
-
-2025-04-09 07:56:50,743 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4094:latest...
-2025-04-09 07:56:50,745 - INFO - Image sweb.eval.x86_64.pydata__xarray-4094:latest not found, removing has no effect.
+2025-04-10 13:29:37,574 - INFO - Git diff before:
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index b0df8749..e473c10e 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,7 +1961,16 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            # Select the variable and drop any coordinates that are all NaN
++            var_data = self.sel({variable_dim: k}).squeeze()
++            # Drop any dimensions that only exist due to stacking
++            coords_to_drop = [
++                coord for coord in var_data.coords 
++                if coord != variable_dim and var_data.coords[coord].isnull().all()
++            ]
++            if coords_to_drop:
++                var_data = var_data.drop(coords_to_drop)
++            data_dict[k] = var_data
+ 
+         # unstacked dataset
+         return Dataset(data_dict)
+diff --git a/xarray/tests/test_dataarray.py b/xarray/tests/test_dataarray.py
+index d942667a..c6bcf7ad 100644
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -2134,6 +2134,18 @@ class TestDataArray:
+         with pytest.raises(ValueError, match="'x' is not a stacked coordinate"):
+             data.to_unstacked_dataset("x", 0)
+ 
++    def test_to_unstacked_dataset_single_dim(self):
++        # Test unstacking with single-dimension variables
++        arr = xr.DataArray(
++            np.arange(3),
++            coords=[("x", [0, 1, 2])],
++        )
++        data = xr.Dataset({"a": arr, "b": arr})
++        stacked = data.to_stacked_array('y', sample_dims=['x'])
++        unstacked = stacked.to_unstacked_dataset('y')
++        assert_identical(data, unstacked)
++
++
+     def test_transpose(self):
+         da = DataArray(
+             np.random.randn(3, 4, 5),
+2025-04-10 13:29:37,575 - INFO - Eval script for pydata__xarray-4094 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4094/eval.sh; copying to container...
+2025-04-10 13:31:31,004 - INFO - Test runtime: 112.62 seconds
+2025-04-10 13:31:31,005 - INFO - Test output for pydata__xarray-4094 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4094/test_output.txt
+2025-04-10 13:31:31,284 - INFO - Git diff after:
+diff --git a/xarray/core/dataarray.py b/xarray/core/dataarray.py
+index b0df8749..e473c10e 100644
+--- a/xarray/core/dataarray.py
++++ b/xarray/core/dataarray.py
+@@ -1961,7 +1961,16 @@ class DataArray(AbstractArray, DataWithCoords):
+         # pull variables out of datarray
+         data_dict = {}
+         for k in variables:
+-            data_dict[k] = self.sel({variable_dim: k}).squeeze(drop=True)
++            # Select the variable and drop any coordinates that are all NaN
++            var_data = self.sel({variable_dim: k}).squeeze()
++            # Drop any dimensions that only exist due to stacking
++            coords_to_drop = [
++                coord for coord in var_data.coords 
++                if coord != variable_dim and var_data.coords[coord].isnull().all()
++            ]
++            if coords_to_drop:
++                var_data = var_data.drop(coords_to_drop)
++            data_dict[k] = var_data
+ 
+         # unstacked dataset
+         return Dataset(data_dict)
+diff --git a/xarray/tests/test_dataarray.py b/xarray/tests/test_dataarray.py
+index d942667a..c6bcf7ad 100644
+--- a/xarray/tests/test_dataarray.py
++++ b/xarray/tests/test_dataarray.py
+@@ -2134,6 +2134,18 @@ class TestDataArray:
+         with pytest.raises(ValueError, match="'x' is not a stacked coordinate"):
+             data.to_unstacked_dataset("x", 0)
+ 
++    def test_to_unstacked_dataset_single_dim(self):
++        # Test unstacking with single-dimension variables
++        arr = xr.DataArray(
++            np.arange(3),
++            coords=[("x", [0, 1, 2])],
++        )
++        data = xr.Dataset({"a": arr, "b": arr})
++        stacked = data.to_stacked_array('y', sample_dims=['x'])
++        unstacked = stacked.to_unstacked_dataset('y')
++        assert_identical(data, unstacked)
++
++
+     def test_transpose(self):
+         da = DataArray(
+             np.random.randn(3, 4, 5),
+2025-04-10 13:31:31,284 - INFO - Grading answer for pydata__xarray-4094...
+2025-04-10 13:31:31,285 - INFO - report: {'pydata__xarray-4094': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-4094: resolved: False
+2025-04-10 13:31:31,285 - INFO - Attempting to stop container sweb.eval.pydata__xarray-4094.241028_solver...
+2025-04-10 13:31:47,390 - INFO - Attempting to remove container sweb.eval.pydata__xarray-4094.241028_solver...
+2025-04-10 13:31:47,492 - INFO - Container sweb.eval.pydata__xarray-4094.241028_solver removed.
+2025-04-10 13:31:47,492 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4094:latest...
+2025-04-10 13:31:48,412 - INFO - Image sweb.eval.x86_64.pydata__xarray-4094:latest removed.

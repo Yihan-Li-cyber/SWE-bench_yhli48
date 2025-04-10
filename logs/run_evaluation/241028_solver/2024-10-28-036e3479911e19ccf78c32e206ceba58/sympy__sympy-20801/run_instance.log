@@ -1,0 +1,187 @@
+2025-04-10 17:29:42,679 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-20801
+Building instance image sweb.eval.x86_64.sympy__sympy-20801:latest for sympy__sympy-20801
+2025-04-10 17:31:46,274 - INFO - Creating container for sympy__sympy-20801...
+2025-04-10 17:31:46,383 - INFO - Container for sympy__sympy-20801 created: 06e1bda6f1a13c94687b6d4000c348667c7b6bf2dfa091844694b4e5578bb642
+2025-04-10 17:31:48,293 - INFO - Container for sympy__sympy-20801 started: 06e1bda6f1a13c94687b6d4000c348667c7b6bf2dfa091844694b4e5578bb642
+2025-04-10 17:31:48,293 - INFO - Intermediate patch for sympy__sympy-20801 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-20801/patch.diff, now applying to container...
+2025-04-10 17:31:50,069 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:31:50,388 - INFO - >>>>> Applied Patch:
+patching file sympy/core/numbers.py
+patching file sympy/core/sympify.py
+patching file sympy/logic/boolalg.py
+
+2025-04-10 17:31:53,490 - INFO - Git diff before:
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 79f6a7d165..8e9b76e764 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1383,13 +1383,13 @@ def __int__(self):
+     def __eq__(self, other):
+         from sympy.logic.boolalg import Boolean
+         try:
++            if isinstance(other, Boolean):
++                return False
+             other = _sympify(other)
+         except SympifyError:
+             return NotImplemented
+         if not self:
+             return not other
+-        if isinstance(other, Boolean):
+-            return False
+         if other.is_NumberSymbol:
+             if other.is_irrational:
+                 return False
+diff --git a/sympy/core/sympify.py b/sympy/core/sympify.py
+index c73b2a263e..7b21afe075 100644
+--- a/sympy/core/sympify.py
++++ b/sympy/core/sympify.py
+@@ -509,6 +509,10 @@ def _sympify(a):
+     see: sympify
+ 
+     """
++    from sympy.core.numbers import Float
++    from sympy.logic.boolalg import BooleanAtom
++    if isinstance(a, (Float, BooleanAtom)):
++        return a
+     return sympify(a, strict=True)
+ 
+ 
+diff --git a/sympy/logic/boolalg.py b/sympy/logic/boolalg.py
+index fbcba1f8d4..6b249b2d74 100644
+--- a/sympy/logic/boolalg.py
++++ b/sympy/logic/boolalg.py
+@@ -229,6 +229,13 @@ def __lt__(self, other):
+     __ge__ = __lt__
+     # \\\
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ class BooleanTrue(BooleanAtom, metaclass=Singleton):
+     """
+@@ -346,6 +353,13 @@ def as_set(self):
+         """
+         return S.UniversalSet
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ class BooleanFalse(BooleanAtom, metaclass=Singleton):
+     """
+@@ -413,6 +427,13 @@ def as_set(self):
+         """
+         return S.EmptySet
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ true = BooleanTrue()
+ false = BooleanFalse()
+2025-04-10 17:31:53,491 - INFO - Eval script for sympy__sympy-20801 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-20801/eval.sh; copying to container...
+2025-04-10 17:32:47,385 - INFO - Test runtime: 52.50 seconds
+2025-04-10 17:32:47,385 - INFO - Test output for sympy__sympy-20801 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-20801/test_output.txt
+2025-04-10 17:32:47,984 - INFO - Git diff after:
+diff --git a/sympy/core/numbers.py b/sympy/core/numbers.py
+index 79f6a7d165..8e9b76e764 100644
+--- a/sympy/core/numbers.py
++++ b/sympy/core/numbers.py
+@@ -1383,13 +1383,13 @@ def __int__(self):
+     def __eq__(self, other):
+         from sympy.logic.boolalg import Boolean
+         try:
++            if isinstance(other, Boolean):
++                return False
+             other = _sympify(other)
+         except SympifyError:
+             return NotImplemented
+         if not self:
+             return not other
+-        if isinstance(other, Boolean):
+-            return False
+         if other.is_NumberSymbol:
+             if other.is_irrational:
+                 return False
+diff --git a/sympy/core/sympify.py b/sympy/core/sympify.py
+index c73b2a263e..7b21afe075 100644
+--- a/sympy/core/sympify.py
++++ b/sympy/core/sympify.py
+@@ -509,6 +509,10 @@ def _sympify(a):
+     see: sympify
+ 
+     """
++    from sympy.core.numbers import Float
++    from sympy.logic.boolalg import BooleanAtom
++    if isinstance(a, (Float, BooleanAtom)):
++        return a
+     return sympify(a, strict=True)
+ 
+ 
+diff --git a/sympy/logic/boolalg.py b/sympy/logic/boolalg.py
+index fbcba1f8d4..6b249b2d74 100644
+--- a/sympy/logic/boolalg.py
++++ b/sympy/logic/boolalg.py
+@@ -229,6 +229,13 @@ def __lt__(self, other):
+     __ge__ = __lt__
+     # \\\
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ class BooleanTrue(BooleanAtom, metaclass=Singleton):
+     """
+@@ -346,6 +353,13 @@ def as_set(self):
+         """
+         return S.UniversalSet
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ class BooleanFalse(BooleanAtom, metaclass=Singleton):
+     """
+@@ -413,6 +427,13 @@ def as_set(self):
+         """
+         return S.EmptySet
+ 
++    def __eq__(self, other):
++        from sympy.core.numbers import Float
++        if isinstance(other, Float):
++            return False
++        return super().__eq__(other)
++
++
+ 
+ true = BooleanTrue()
+ false = BooleanFalse()
+2025-04-10 17:32:47,985 - INFO - Grading answer for sympy__sympy-20801...
+2025-04-10 17:32:47,985 - INFO - report: {'sympy__sympy-20801': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-20801: resolved: False
+2025-04-10 17:32:47,985 - INFO - Attempting to stop container sweb.eval.sympy__sympy-20801.241028_solver...
+2025-04-10 17:33:33,892 - INFO - Attempting to remove container sweb.eval.sympy__sympy-20801.241028_solver...
+2025-04-10 17:33:34,585 - INFO - Container sweb.eval.sympy__sympy-20801.241028_solver removed.
+2025-04-10 17:33:34,585 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-20801:latest...
+2025-04-10 17:33:35,301 - INFO - Image sweb.eval.x86_64.sympy__sympy-20801:latest removed.

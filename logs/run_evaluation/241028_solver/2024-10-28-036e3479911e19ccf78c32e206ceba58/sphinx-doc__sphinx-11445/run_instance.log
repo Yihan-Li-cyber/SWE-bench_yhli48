@@ -1,0 +1,77 @@
+2025-04-10 16:04:32,005 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-11445
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-11445:latest for sphinx-doc__sphinx-11445
+2025-04-10 16:06:40,415 - INFO - Creating container for sphinx-doc__sphinx-11445...
+2025-04-10 16:06:40,607 - INFO - Container for sphinx-doc__sphinx-11445 created: db5344c398c074e623681173f388953f34605c0f9eda92c26a17af91b1edf96d
+2025-04-10 16:06:41,610 - INFO - Container for sphinx-doc__sphinx-11445 started: db5344c398c074e623681173f388953f34605c0f9eda92c26a17af91b1edf96d
+2025-04-10 16:06:41,611 - INFO - Intermediate patch for sphinx-doc__sphinx-11445 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-11445/patch.diff, now applying to container...
+2025-04-10 16:06:42,717 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:06:43,006 - INFO - >>>>> Applied Patch:
+patching file sphinx/util/rst.py
+
+2025-04-10 16:06:44,715 - INFO - Git diff before:
+diff --git a/sphinx/util/rst.py b/sphinx/util/rst.py
+index 7a1538325..f1b5d1dfe 100644
+--- a/sphinx/util/rst.py
++++ b/sphinx/util/rst.py
+@@ -82,6 +82,9 @@ def prepend_prolog(content: StringList, prolog: str) -> None:
+         for line in content:
+             if docinfo_re.match(line):
+                 pos += 1
++            elif line.startswith(':') and ':' in line:
++                # Insert prolog before domain directive headings
++                break
+             else:
+                 break
+ 
+diff --git a/tox.ini b/tox.ini
+index 512aa5f74..84c8093a3 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -24,7 +24,7 @@ setenv =
+     PYTHONWARNINGS = error
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:docs]
+ basepython = python3
+2025-04-10 16:06:44,715 - INFO - Eval script for sphinx-doc__sphinx-11445 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-11445/eval.sh; copying to container...
+2025-04-10 16:07:10,214 - INFO - Test runtime: 24.70 seconds
+2025-04-10 16:07:10,215 - INFO - Test output for sphinx-doc__sphinx-11445 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-11445/test_output.txt
+2025-04-10 16:07:10,804 - INFO - Git diff after:
+diff --git a/sphinx/util/rst.py b/sphinx/util/rst.py
+index 7a1538325..f1b5d1dfe 100644
+--- a/sphinx/util/rst.py
++++ b/sphinx/util/rst.py
+@@ -82,6 +82,9 @@ def prepend_prolog(content: StringList, prolog: str) -> None:
+         for line in content:
+             if docinfo_re.match(line):
+                 pos += 1
++            elif line.startswith(':') and ':' in line:
++                # Insert prolog before domain directive headings
++                break
+             else:
+                 break
+ 
+diff --git a/tox.ini b/tox.ini
+index 512aa5f74..84c8093a3 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -24,7 +24,7 @@ setenv =
+     PYTHONWARNINGS = error
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:docs]
+ basepython = python3
+2025-04-10 16:07:10,804 - INFO - Grading answer for sphinx-doc__sphinx-11445...
+2025-04-10 16:07:10,805 - INFO - report: {'sphinx-doc__sphinx-11445': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-11445: resolved: False
+2025-04-10 16:07:10,805 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-11445.241028_solver...
+2025-04-10 16:07:26,817 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-11445.241028_solver...
+2025-04-10 16:07:26,908 - INFO - Container sweb.eval.sphinx-doc__sphinx-11445.241028_solver removed.
+2025-04-10 16:07:26,908 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-11445:latest...
+2025-04-10 16:07:28,826 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-11445:latest removed.

@@ -1,0 +1,139 @@
+2025-04-10 17:30:41,578 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-21379
+Building instance image sweb.eval.x86_64.sympy__sympy-21379:latest for sympy__sympy-21379
+2025-04-10 17:32:38,273 - INFO - Creating container for sympy__sympy-21379...
+2025-04-10 17:32:38,385 - INFO - Container for sympy__sympy-21379 created: 3d7be78f876897a2f624a19b861ebb9d30713ebc2b342ad2311455fd37687b9d
+2025-04-10 17:32:39,590 - INFO - Container for sympy__sympy-21379 started: 3d7be78f876897a2f624a19b861ebb9d30713ebc2b342ad2311455fd37687b9d
+2025-04-10 17:32:39,590 - INFO - Intermediate patch for sympy__sympy-21379 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-21379/patch.diff, now applying to container...
+2025-04-10 17:32:40,872 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:32:41,167 - INFO - >>>>> Applied Patch:
+patching file sympy/functions/elementary/piecewise.py
+patching file sympy/polys/polyutils.py
+patching file test_piecewise_subs.py
+
+2025-04-10 17:32:43,676 - INFO - Git diff before:
+diff --git a/sympy/functions/elementary/piecewise.py b/sympy/functions/elementary/piecewise.py
+index 91bfceafaa..49918a305a 100644
+--- a/sympy/functions/elementary/piecewise.py
++++ b/sympy/functions/elementary/piecewise.py
+@@ -138,7 +138,9 @@ def __new__(cls, *args, **options):
+             r = None
+ 
+         if r is None:
+-            return Basic.__new__(cls, *newargs, **options)
++            obj = Basic.__new__(cls, *newargs, **options)
++            obj._has_polynomial = False
++            return obj
+         else:
+             return r
+ 
+diff --git a/sympy/polys/polyutils.py b/sympy/polys/polyutils.py
+index f51f80098d..5ef497e96a 100644
+--- a/sympy/polys/polyutils.py
++++ b/sympy/polys/polyutils.py
+@@ -1,7 +1,7 @@
+ """Useful utilities for higher level polynomial classes. """
+ 
+ 
+-from sympy.core import (S, Add, Mul, Pow, Eq, Expr,
++from sympy.core import (S, Add, Mul, Pow, Eq, Expr, Function,
+     expand_mul, expand_multinomial)
+ from sympy.core.exprtools import decompose_power, decompose_power_rat
+ from sympy.polys.polyerrors import PolynomialError, GeneratorsError
+@@ -193,6 +193,14 @@ def _parallel_dict_from_expr_if_gens(exprs, opt):
+             expr = expr.lhs - expr.rhs
+ 
+         for term in Add.make_args(expr):
++            # Treat expressions containing Piecewise as atomic when they appear in transcendental functions
++            if any(isinstance(arg, Function) and str(arg).endswith(('sinh', 'cosh', 'tanh')) for arg in expr.atoms(Function)):
++                if term.has(Piecewise):
++                    if (0,)*k in poly:
++                        poly[(0,)*k] += term
++                    else:
++                        poly[(0,)*k] = term
++                    continue
+             coeff, monom = [], [0]*k
+ 
+             for factor in Mul.make_args(term):
+@@ -347,6 +355,13 @@ def _dict_from_expr(expr, opt):
+     if expr.is_commutative is False:
+         raise PolynomialError('non-commutative expressions are not supported')
+ 
++    # Early detection of Piecewise in hyperbolic functions
++    atoms = expr.atoms(Function)
++    if any(str(f).endswith(('sinh', 'cosh', 'tanh')) for f in atoms):
++        if any(a.has(Piecewise) for f in atoms for a in f.args):
++            # Skip polynomial conversion entirely for these cases
++            return {(0,)*len(opt.gens): expr}, opt.gens
++
+     def _is_expandable_pow(expr):
+         return (expr.is_Pow and expr.exp.is_positive and expr.exp.is_Integer
+                 and expr.base.is_Add)
+2025-04-10 17:32:43,677 - INFO - Eval script for sympy__sympy-21379 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-21379/eval.sh; copying to container...
+2025-04-10 17:35:59,386 - INFO - Test runtime: 194.71 seconds
+2025-04-10 17:35:59,387 - INFO - Test output for sympy__sympy-21379 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-21379/test_output.txt
+2025-04-10 17:36:00,184 - INFO - Git diff after:
+diff --git a/sympy/functions/elementary/piecewise.py b/sympy/functions/elementary/piecewise.py
+index 91bfceafaa..49918a305a 100644
+--- a/sympy/functions/elementary/piecewise.py
++++ b/sympy/functions/elementary/piecewise.py
+@@ -138,7 +138,9 @@ def __new__(cls, *args, **options):
+             r = None
+ 
+         if r is None:
+-            return Basic.__new__(cls, *newargs, **options)
++            obj = Basic.__new__(cls, *newargs, **options)
++            obj._has_polynomial = False
++            return obj
+         else:
+             return r
+ 
+diff --git a/sympy/polys/polyutils.py b/sympy/polys/polyutils.py
+index f51f80098d..5ef497e96a 100644
+--- a/sympy/polys/polyutils.py
++++ b/sympy/polys/polyutils.py
+@@ -1,7 +1,7 @@
+ """Useful utilities for higher level polynomial classes. """
+ 
+ 
+-from sympy.core import (S, Add, Mul, Pow, Eq, Expr,
++from sympy.core import (S, Add, Mul, Pow, Eq, Expr, Function,
+     expand_mul, expand_multinomial)
+ from sympy.core.exprtools import decompose_power, decompose_power_rat
+ from sympy.polys.polyerrors import PolynomialError, GeneratorsError
+@@ -193,6 +193,14 @@ def _parallel_dict_from_expr_if_gens(exprs, opt):
+             expr = expr.lhs - expr.rhs
+ 
+         for term in Add.make_args(expr):
++            # Treat expressions containing Piecewise as atomic when they appear in transcendental functions
++            if any(isinstance(arg, Function) and str(arg).endswith(('sinh', 'cosh', 'tanh')) for arg in expr.atoms(Function)):
++                if term.has(Piecewise):
++                    if (0,)*k in poly:
++                        poly[(0,)*k] += term
++                    else:
++                        poly[(0,)*k] = term
++                    continue
+             coeff, monom = [], [0]*k
+ 
+             for factor in Mul.make_args(term):
+@@ -347,6 +355,13 @@ def _dict_from_expr(expr, opt):
+     if expr.is_commutative is False:
+         raise PolynomialError('non-commutative expressions are not supported')
+ 
++    # Early detection of Piecewise in hyperbolic functions
++    atoms = expr.atoms(Function)
++    if any(str(f).endswith(('sinh', 'cosh', 'tanh')) for f in atoms):
++        if any(a.has(Piecewise) for f in atoms for a in f.args):
++            # Skip polynomial conversion entirely for these cases
++            return {(0,)*len(opt.gens): expr}, opt.gens
++
+     def _is_expandable_pow(expr):
+         return (expr.is_Pow and expr.exp.is_positive and expr.exp.is_Integer
+                 and expr.base.is_Add)
+2025-04-10 17:36:00,184 - INFO - Grading answer for sympy__sympy-21379...
+2025-04-10 17:36:00,185 - INFO - report: {'sympy__sympy-21379': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-21379: resolved: False
+2025-04-10 17:36:00,185 - INFO - Attempting to stop container sweb.eval.sympy__sympy-21379.241028_solver...
+2025-04-10 17:36:17,089 - INFO - Attempting to remove container sweb.eval.sympy__sympy-21379.241028_solver...
+2025-04-10 17:36:17,290 - INFO - Container sweb.eval.sympy__sympy-21379.241028_solver removed.
+2025-04-10 17:36:17,290 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-21379:latest...
+2025-04-10 17:36:18,176 - INFO - Image sweb.eval.x86_64.sympy__sympy-21379:latest removed.

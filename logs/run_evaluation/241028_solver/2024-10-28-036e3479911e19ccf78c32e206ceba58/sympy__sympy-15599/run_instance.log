@@ -1,0 +1,59 @@
+2025-04-10 17:00:17,487 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15599
+Building instance image sweb.eval.x86_64.sympy__sympy-15599:latest for sympy__sympy-15599
+2025-04-10 17:02:25,405 - INFO - Creating container for sympy__sympy-15599...
+2025-04-10 17:02:25,591 - INFO - Container for sympy__sympy-15599 created: 8f27a1d1641d109042dd4664ba6b726f9a8efd95d16d469f181734ccfa23297b
+2025-04-10 17:02:27,184 - INFO - Container for sympy__sympy-15599 started: 8f27a1d1641d109042dd4664ba6b726f9a8efd95d16d469f181734ccfa23297b
+2025-04-10 17:02:27,185 - INFO - Intermediate patch for sympy__sympy-15599 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15599/patch.diff, now applying to container...
+2025-04-10 17:02:28,292 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:02:28,683 - INFO - >>>>> Applied Patch:
+patching file sympy/core/mod.py
+
+2025-04-10 17:02:30,879 - INFO - Git diff before:
+diff --git a/sympy/core/mod.py b/sympy/core/mod.py
+index eae25630cc..4b8b35d91d 100644
+--- a/sympy/core/mod.py
++++ b/sympy/core/mod.py
+@@ -123,9 +123,10 @@ def doit(p, q):
+             for arg in p.args:
+                 both_l[isinstance(arg, cls)].append(arg)
+ 
+-            if mod_l and all(inner.args[1] == q for inner in mod_l):
+-                # finding distributive term
+-                non_mod_l = [cls(x, q) for x in non_mod_l]
++            was = non_mod_l[:]
++            non_mod_l = [cls(x, q) for x in non_mod_l]
++            changed = was != non_mod_l
++            if changed or mod_l and all(inner.args[1] == q for inner in mod_l):
+                 mod = []
+                 non_mod = []
+                 for j in non_mod_l:
+2025-04-10 17:02:30,880 - INFO - Eval script for sympy__sympy-15599 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15599/eval.sh; copying to container...
+2025-04-10 17:03:39,190 - INFO - Test runtime: 67.49 seconds
+2025-04-10 17:03:39,191 - INFO - Test output for sympy__sympy-15599 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15599/test_output.txt
+2025-04-10 17:03:39,795 - INFO - Git diff after:
+diff --git a/sympy/core/mod.py b/sympy/core/mod.py
+index eae25630cc..4b8b35d91d 100644
+--- a/sympy/core/mod.py
++++ b/sympy/core/mod.py
+@@ -123,9 +123,10 @@ def doit(p, q):
+             for arg in p.args:
+                 both_l[isinstance(arg, cls)].append(arg)
+ 
+-            if mod_l and all(inner.args[1] == q for inner in mod_l):
+-                # finding distributive term
+-                non_mod_l = [cls(x, q) for x in non_mod_l]
++            was = non_mod_l[:]
++            non_mod_l = [cls(x, q) for x in non_mod_l]
++            changed = was != non_mod_l
++            if changed or mod_l and all(inner.args[1] == q for inner in mod_l):
+                 mod = []
+                 non_mod = []
+                 for j in non_mod_l:
+2025-04-10 17:03:39,795 - INFO - Grading answer for sympy__sympy-15599...
+2025-04-10 17:03:39,795 - INFO - report: {'sympy__sympy-15599': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-15599: resolved: False
+2025-04-10 17:03:39,795 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15599.241028_solver...
+2025-04-10 17:03:56,786 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15599.241028_solver...
+2025-04-10 17:03:56,978 - INFO - Container sweb.eval.sympy__sympy-15599.241028_solver removed.
+2025-04-10 17:03:56,978 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-15599:latest...
+2025-04-10 17:03:57,997 - INFO - Image sweb.eval.x86_64.sympy__sympy-15599:latest removed.

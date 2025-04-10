@@ -1,0 +1,47 @@
+2025-04-10 17:39:32,578 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-23534
+Building instance image sweb.eval.x86_64.sympy__sympy-23534:latest for sympy__sympy-23534
+2025-04-10 17:42:03,382 - INFO - Creating container for sympy__sympy-23534...
+2025-04-10 17:42:03,675 - INFO - Container for sympy__sympy-23534 created: 5369a1635389af3332af1f4e9973af828f584546a8656b4ebd1b6f852b22e1f3
+2025-04-10 17:42:06,290 - INFO - Container for sympy__sympy-23534 started: 5369a1635389af3332af1f4e9973af828f584546a8656b4ebd1b6f852b22e1f3
+2025-04-10 17:42:06,290 - INFO - Intermediate patch for sympy__sympy-23534 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23534/patch.diff, now applying to container...
+2025-04-10 17:42:08,183 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:42:08,674 - INFO - >>>>> Applied Patch:
+patching file sympy/core/symbol.py
+
+2025-04-10 17:42:11,492 - INFO - Git diff before:
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..2aca8bab27 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -791,7 +791,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+2025-04-10 17:42:11,493 - INFO - Eval script for sympy__sympy-23534 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23534/eval.sh; copying to container...
+2025-04-10 17:42:38,094 - INFO - Test runtime: 25.40 seconds
+2025-04-10 17:42:38,095 - INFO - Test output for sympy__sympy-23534 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23534/test_output.txt
+2025-04-10 17:42:38,374 - INFO - Git diff after:
+diff --git a/sympy/core/symbol.py b/sympy/core/symbol.py
+index f4a555c13f..2aca8bab27 100644
+--- a/sympy/core/symbol.py
++++ b/sympy/core/symbol.py
+@@ -791,7 +791,7 @@ def literal(s):
+         return tuple(result)
+     else:
+         for name in names:
+-            result.append(symbols(name, **args))
++            result.append(symbols(name, cls=cls, **args))
+ 
+         return type(names)(result)
+2025-04-10 17:42:38,374 - INFO - Grading answer for sympy__sympy-23534...
+2025-04-10 17:42:38,374 - INFO - report: {'sympy__sympy-23534': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-23534: resolved: False
+2025-04-10 17:42:38,374 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23534.241028_solver...
+2025-04-10 17:43:23,974 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23534.241028_solver...
+2025-04-10 17:43:24,075 - INFO - Container sweb.eval.sympy__sympy-23534.241028_solver removed.
+2025-04-10 17:43:24,075 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-23534:latest...
+2025-04-10 17:43:42,499 - INFO - Image sweb.eval.x86_64.sympy__sympy-23534:latest removed.

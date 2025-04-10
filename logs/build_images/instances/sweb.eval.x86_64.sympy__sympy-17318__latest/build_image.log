@@ -1,4 +1,4 @@
-2025-04-04 13:59:47,151 - INFO - Building image sweb.eval.x86_64.sympy__sympy-17318:latest
+2025-04-10 17:07:19,192 - INFO - Building image sweb.eval.x86_64.sympy__sympy-17318:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.env.x86_64.c795f4b88616b8462021ed:latest
 
@@ -9,7 +9,7 @@ RUN /bin/bash /root/setup_repo.sh
 WORKDIR /testbed/
 
 Adding (1) setup scripts to image build repo
-2025-04-04 13:59:47,151 - INFO - [SETUP SCRIPT] setup_repo.sh:
+2025-04-10 17:07:19,192 - INFO - [SETUP SCRIPT] setup_repo.sh:
 #!/bin/bash
 set -euxo pipefail
 git clone -o origin https://github.com/sympy/sympy.git /testbed
@@ -22,59 +22,145 @@ conda activate testbed
 echo "Current environment: $CONDA_DEFAULT_ENV"
 python -m pip install -e .
 
-2025-04-04 13:59:47,152 - INFO - Building docker image sweb.eval.x86_64.sympy__sympy-17318:latest in logs/build_images/instances/sweb.eval.x86_64.sympy__sympy-17318__latest with platform linux/x86_64
-2025-04-04 13:59:47,159 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.c795f4b88616b8462021ed:latest
-2025-04-04 13:59:47,159 - INFO - 
-2025-04-04 13:59:47,159 - INFO - ---> 7bcf3ee27aad
-2025-04-04 13:59:47,160 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
-2025-04-04 13:59:47,160 - INFO - 
-2025-04-04 13:59:47,294 - INFO - ---> 574181d1db70
-2025-04-04 13:59:47,294 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
-2025-04-04 13:59:47,295 - INFO - 
-2025-04-04 13:59:47,322 - INFO - ---> Running in 958c3822caf2
-2025-04-04 13:59:48,358 - INFO - ---> Removed intermediate container 958c3822caf2
-2025-04-04 13:59:48,358 - INFO - ---> a2db00212c6f
-2025-04-04 13:59:48,358 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
-2025-04-04 13:59:48,358 - INFO - 
-2025-04-04 13:59:48,394 - INFO - ---> Running in 1e5458f13303
-2025-04-04 13:59:48,987 - INFO - + git clone -o origin https://github.com/sympy/sympy.git /testbed
-Cloning into '/testbed'...
-2025-04-04 14:00:10,353 - INFO - + chmod -R 777 /testbed
-2025-04-04 14:00:10,404 - INFO - + cd /testbed
-2025-04-04 14:00:10,405 - INFO - + git reset --hard d4e0231b08147337745dcf601e62de7eefe2fb2d
-2025-04-04 14:00:11,135 - INFO - HEAD is now at d4e0231b08 Merge pull request #17297 from sylee957/fix_block_collapse_blockdiagmatrix
-2025-04-04 14:00:11,161 - INFO - + git remote remove origin
-2025-04-04 14:00:11,163 - INFO - + source /opt/miniconda3/bin/activate
-2025-04-04 14:00:11,163 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
-++ . /opt/miniconda3/etc/profile.d/conda.sh
-2025-04-04 14:00:11,164 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
-+++ CONDA_EXE=/opt/miniconda3/bin/conda
-+++ export _CE_M=
-+++ _CE_M=
-+++ export _CE_CONDA=
-+++ _CE_CONDA=
-+++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+++ '[' -z '' ']'
-+++ export CONDA_SHLVL=0
-+++ CONDA_SHLVL=0
+2025-04-10 17:07:19,193 - INFO - Building docker image sweb.eval.x86_64.sympy__sympy-17318:latest in logs/build_images/instances/sweb.eval.x86_64.sympy__sympy-17318__latest with platform linux/x86_64
+2025-04-10 17:07:19,201 - INFO - Step 1/5 : FROM --platform=linux/x86_64 sweb.env.x86_64.c795f4b88616b8462021ed:latest
+2025-04-10 17:07:19,202 - INFO - 
+2025-04-10 17:07:19,202 - INFO - ---> 952ac8f89eed
+2025-04-10 17:07:19,202 - INFO - Step 2/5 : COPY ./setup_repo.sh /root/
+2025-04-10 17:07:19,202 - INFO - 
+2025-04-10 17:07:19,377 - INFO - ---> 4b57bc6fc909
+2025-04-10 17:07:19,377 - INFO - Step 3/5 : RUN sed -i -e 's/\r$//' /root/setup_repo.sh
+2025-04-10 17:07:19,378 - INFO - 
+2025-04-10 17:07:19,401 - INFO - ---> Running in a75b2861f3b9
+2025-04-10 17:07:21,086 - INFO - ---> Removed intermediate container a75b2861f3b9
+2025-04-10 17:07:21,086 - INFO - ---> 871714d15e77
+2025-04-10 17:07:21,087 - INFO - Step 4/5 : RUN /bin/bash /root/setup_repo.sh
+2025-04-10 17:07:21,087 - INFO - 
+2025-04-10 17:07:21,178 - INFO - ---> Running in c22ea85a93bc
+2025-04-10 17:07:22,292 - INFO - + git clone -o origin https://github.com/sympy/sympy.git /testbed
+2025-04-10 17:07:22,295 - INFO - Cloning into '/testbed'...
+2025-04-10 17:08:43,787 - INFO - Updating files:  61% (1241/2033)
+2025-04-10 17:08:43,791 - INFO - Updating files:  62% (1261/2033)
+2025-04-10 17:08:43,794 - INFO - Updating files:  63% (1281/2033)
+2025-04-10 17:08:43,798 - INFO - Updating files:  64% (1302/2033)
+2025-04-10 17:08:43,881 - INFO - Updating files:  65% (1322/2033)
+2025-04-10 17:08:43,884 - INFO - Updating files:  66% (1342/2033)
+2025-04-10 17:08:43,889 - INFO - Updating files:  67% (1363/2033)
+2025-04-10 17:08:43,895 - INFO - Updating files:  68% (1383/2033)
+2025-04-10 17:08:43,974 - INFO - Updating files:  69% (1403/2033)
+2025-04-10 17:08:43,981 - INFO - Updating files:  70% (1424/2033)
+2025-04-10 17:08:43,989 - INFO - Updating files:  71% (1444/2033)
+2025-04-10 17:08:43,992 - INFO - Updating files:  72% (1464/2033)
+2025-04-10 17:08:43,998 - INFO - Updating files:  73% (1485/2033)
+2025-04-10 17:08:44,080 - INFO - Updating files:  74% (1505/2033)
+2025-04-10 17:08:44,085 - INFO - Updating files:  75% (1525/2033)
+2025-04-10 17:08:44,090 - INFO - Updating files:  76% (1546/2033)
+2025-04-10 17:08:44,098 - INFO - Updating files:  77% (1566/2033)
+2025-04-10 17:08:44,178 - INFO - Updating files:  78% (1586/2033)
+2025-04-10 17:08:44,184 - INFO - Updating files:  79% (1607/2033)
+2025-04-10 17:08:44,289 - INFO - Updating files:  80% (1627/2033)
+2025-04-10 17:08:44,377 - INFO - Updating files:  81% (1647/2033)
+2025-04-10 17:08:44,386 - INFO - Updating files:  82% (1668/2033)
+2025-04-10 17:08:44,475 - INFO - Updating files:  83% (1688/2033)
+2025-04-10 17:08:44,480 - INFO - Updating files:  84% (1708/2033)
+2025-04-10 17:08:44,484 - INFO - Updating files:  85% (1729/2033)
+2025-04-10 17:08:44,490 - INFO - Updating files:  86% (1749/2033)
+2025-04-10 17:08:44,495 - INFO - Updating files:  87% (1769/2033)
+2025-04-10 17:08:44,588 - INFO - Updating files:  88% (1790/2033)
+2025-04-10 17:08:44,695 - INFO - Updating files:  89% (1810/2033)
+2025-04-10 17:08:44,782 - INFO - Updating files:  90% (1830/2033)
+2025-04-10 17:08:44,787 - INFO - Updating files:  90% (1843/2033)
+2025-04-10 17:08:44,877 - INFO - Updating files:  91% (1851/2033)
+2025-04-10 17:08:44,880 - INFO - Updating files:  92% (1871/2033)
+2025-04-10 17:08:44,884 - INFO - Updating files:  93% (1891/2033)
+2025-04-10 17:08:44,887 - INFO - Updating files:  94% (1912/2033)
+2025-04-10 17:08:44,894 - INFO - Updating files:  95% (1932/2033)
+2025-04-10 17:08:44,898 - INFO - Updating files:  96% (1952/2033)
+2025-04-10 17:08:44,997 - INFO - Updating files:  97% (1973/2033)
+2025-04-10 17:08:45,189 - INFO - Updating files:  98% (1993/2033)
+2025-04-10 17:08:45,378 - INFO - Updating files:  99% (2013/2033)
+2025-04-10 17:08:45,382 - INFO - Updating files: 100% (2033/2033)
+2025-04-10 17:08:45,383 - INFO - Updating files: 100% (2033/2033), done.
+2025-04-10 17:08:45,490 - INFO - + chmod -R 777 /testbed
+2025-04-10 17:08:45,788 - INFO - + cd /testbed
++ git reset --hard d4e0231b08147337745dcf601e62de7eefe2fb2d
+2025-04-10 17:08:46,887 - INFO - Updating files:  59% (1362/2281)
+2025-04-10 17:08:46,982 - INFO - Updating files:  60% (1369/2281)
+2025-04-10 17:08:47,196 - INFO - Updating files:  61% (1392/2281)
+2025-04-10 17:08:47,282 - INFO - Updating files:  62% (1415/2281)
+2025-04-10 17:08:47,285 - INFO - Updating files:  63% (1438/2281)
+2025-04-10 17:08:47,291 - INFO - Updating files:  64% (1460/2281)
+2025-04-10 17:08:47,296 - INFO - Updating files:  65% (1483/2281)
+2025-04-10 17:08:47,377 - INFO - Updating files:  66% (1506/2281)
+2025-04-10 17:08:47,387 - INFO - Updating files:  67% (1529/2281)
+2025-04-10 17:08:47,393 - INFO - Updating files:  68% (1552/2281)
+2025-04-10 17:08:47,398 - INFO - Updating files:  69% (1574/2281)
+2025-04-10 17:08:47,574 - INFO - Updating files:  70% (1597/2281)
+2025-04-10 17:08:47,781 - INFO - Updating files:  71% (1620/2281)
+2025-04-10 17:08:47,786 - INFO - Updating files:  72% (1643/2281)
+2025-04-10 17:08:47,791 - INFO - Updating files:  73% (1666/2281)
+2025-04-10 17:08:47,797 - INFO - Updating files:  74% (1688/2281)
+2025-04-10 17:08:47,879 - INFO - Updating files:  75% (1711/2281)
+2025-04-10 17:08:47,880 - INFO - Updating files:  75% (1717/2281)
+2025-04-10 17:08:47,886 - INFO - Updating files:  76% (1734/2281)
+2025-04-10 17:08:47,890 - INFO - Updating files:  77% (1757/2281)
+2025-04-10 17:08:47,895 - INFO - Updating files:  78% (1780/2281)
+2025-04-10 17:08:47,977 - INFO - Updating files:  79% (1802/2281)
+2025-04-10 17:08:47,982 - INFO - Updating files:  80% (1825/2281)
+2025-04-10 17:08:47,990 - INFO - Updating files:  81% (1848/2281)
+2025-04-10 17:08:47,994 - INFO - Updating files:  82% (1871/2281)
+2025-04-10 17:08:48,080 - INFO - Updating files:  83% (1894/2281)
+2025-04-10 17:08:48,090 - INFO - Updating files:  84% (1917/2281)
+2025-04-10 17:08:48,098 - INFO - Updating files:  85% (1939/2281)
+2025-04-10 17:08:48,183 - INFO - Updating files:  86% (1962/2281)
+2025-04-10 17:08:48,192 - INFO - Updating files:  87% (1985/2281)
+2025-04-10 17:08:48,277 - INFO - Updating files:  88% (2008/2281)
+2025-04-10 17:08:48,289 - INFO - Updating files:  89% (2031/2281)
+2025-04-10 17:08:48,299 - INFO - Updating files:  90% (2053/2281)
+2025-04-10 17:08:48,383 - INFO - Updating files:  91% (2076/2281)
+2025-04-10 17:08:48,393 - INFO - Updating files:  92% (2099/2281)
+2025-04-10 17:08:48,491 - INFO - Updating files:  93% (2122/2281)
+2025-04-10 17:08:48,576 - INFO - Updating files:  94% (2145/2281)
+2025-04-10 17:08:48,581 - INFO - Updating files:  95% (2167/2281)
+2025-04-10 17:08:48,585 - INFO - Updating files:  96% (2190/2281)
+2025-04-10 17:08:48,591 - INFO - Updating files:  97% (2213/2281)
+2025-04-10 17:08:48,675 - INFO - Updating files:  98% (2236/2281)
+2025-04-10 17:08:48,681 - INFO - Updating files:  99% (2259/2281)
+2025-04-10 17:08:48,688 - INFO - Updating files: 100% (2281/2281)
+2025-04-10 17:08:48,688 - INFO - Updating files: 100% (2281/2281), done.
+2025-04-10 17:08:48,696 - INFO - HEAD is now at d4e0231b08 Merge pull request #17297 from sylee957/fix_block_collapse_blockdiagmatrix
+2025-04-10 17:08:48,785 - INFO - + git remote remove origin
+2025-04-10 17:08:48,794 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-10 17:08:48,795 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-10 17:08:48,795 - INFO - ++ . /opt/miniconda3/etc/profile.d/conda.sh
+2025-04-10 17:08:48,796 - INFO - +++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-10 17:08:48,796 - INFO - +++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-10 17:08:48,796 - INFO - +++ export _CE_M=
+2025-04-10 17:08:48,797 - INFO - +++ _CE_M=
+2025-04-10 17:08:48,797 - INFO - +++ export _CE_CONDA=
+2025-04-10 17:08:48,797 - INFO - +++ _CE_CONDA=
+2025-04-10 17:08:48,797 - INFO - +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-10 17:08:48,798 - INFO - +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-10 17:08:48,798 - INFO - +++ '[' -z '' ']'
+2025-04-10 17:08:48,798 - INFO - +++ export CONDA_SHLVL=0
+2025-04-10 17:08:48,880 - INFO - +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-04 14:00:11,165 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-04 14:00:11,167 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-04 14:00:11,172 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
++++++ dirname /opt/miniconda3/bin/conda
+2025-04-10 17:08:48,889 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-10 17:08:48,890 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-++ conda activate
+2025-04-10 17:08:48,890 - INFO - ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
 ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-04 14:00:11,172 - INFO - +++ PS1=
+2025-04-10 17:08:48,891 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-04 14:00:11,177 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-04 14:00:11,403 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-10 17:08:48,891 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-10 17:08:50,478 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -125,8 +211,8 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 + local ask_conda
 ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-04 14:00:11,404 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-04 14:00:11,631 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-10 17:08:50,479 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-10 17:08:51,488 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -136,8 +222,8 @@ export CONDA_PREFIX_1='\''/opt/miniconda3'\''
 export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
-export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-+ eval 'PS1='\''(testbed) '\''
+2025-04-10 17:08:51,488 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+2025-04-10 17:08:51,488 - INFO - + eval 'PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -147,51 +233,51 @@ export CONDA_PREFIX_1='\''/opt/miniconda3'\''
 export CONDA_EXE='\''/opt/miniconda3/bin/conda'\''
 export _CE_M='\'''\''
 export _CE_CONDA='\'''\''
-export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
-++ PS1='(testbed) '
-++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
-2025-04-04 14:00:11,632 - INFO - ++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
-++ export CONDA_SHLVL=2
-++ CONDA_SHLVL=2
-++ export CONDA_DEFAULT_ENV=testbed
-++ CONDA_DEFAULT_ENV=testbed
-++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
-++ CONDA_PROMPT_MODIFIER='(testbed) '
-++ export CONDA_PREFIX_1=/opt/miniconda3
-++ CONDA_PREFIX_1=/opt/miniconda3
-++ export CONDA_EXE=/opt/miniconda3/bin/conda
-++ CONDA_EXE=/opt/miniconda3/bin/conda
-++ export _CE_M=
-++ _CE_M=
-++ export _CE_CONDA=
-2025-04-04 14:00:11,632 - INFO - ++ _CE_CONDA=
-++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
-+ __conda_hashr
-+ '[' -n '' ']'
-+ '[' -n '' ']'
-+ hash -r
-2025-04-04 14:00:11,632 - INFO - + echo 'Current environment: testbed'
-+ python -m pip install -e .
-2025-04-04 14:00:11,633 - INFO - Current environment: testbed
-2025-04-04 14:00:12,266 - INFO - Obtaining file:///testbed
+2025-04-10 17:08:51,489 - INFO - export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
+2025-04-10 17:08:51,489 - INFO - ++ PS1='(testbed) '
+2025-04-10 17:08:51,489 - INFO - ++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-10 17:08:51,490 - INFO - ++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-10 17:08:51,490 - INFO - ++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
+2025-04-10 17:08:51,490 - INFO - ++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+2025-04-10 17:08:51,491 - INFO - ++ export CONDA_SHLVL=2
+2025-04-10 17:08:51,491 - INFO - ++ CONDA_SHLVL=2
+2025-04-10 17:08:51,491 - INFO - ++ export CONDA_DEFAULT_ENV=testbed
+2025-04-10 17:08:51,491 - INFO - ++ CONDA_DEFAULT_ENV=testbed
+2025-04-10 17:08:51,492 - INFO - ++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+2025-04-10 17:08:51,492 - INFO - ++ CONDA_PROMPT_MODIFIER='(testbed) '
+2025-04-10 17:08:51,492 - INFO - ++ export CONDA_PREFIX_1=/opt/miniconda3
+2025-04-10 17:08:51,493 - INFO - ++ CONDA_PREFIX_1=/opt/miniconda3
+2025-04-10 17:08:51,493 - INFO - ++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-10 17:08:51,493 - INFO - ++ CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-10 17:08:51,494 - INFO - ++ export _CE_M=
+2025-04-10 17:08:51,494 - INFO - ++ _CE_M=
+2025-04-10 17:08:51,494 - INFO - ++ export _CE_CONDA=
+2025-04-10 17:08:51,495 - INFO - ++ _CE_CONDA=
+2025-04-10 17:08:51,495 - INFO - ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-10 17:08:51,495 - INFO - ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
+2025-04-10 17:08:51,496 - INFO - + __conda_hashr
+2025-04-10 17:08:51,496 - INFO - + '[' -n '' ']'
+2025-04-10 17:08:51,496 - INFO - + '[' -n '' ']'
+2025-04-10 17:08:51,497 - INFO - + hash -r
+2025-04-10 17:08:51,497 - INFO - + echo 'Current environment: testbed'
+2025-04-10 17:08:51,497 - INFO - Current environment: testbed
+2025-04-10 17:08:51,498 - INFO - + python -m pip install -e .
+2025-04-10 17:08:54,274 - INFO - Obtaining file:///testbed
   Preparing metadata (setup.py): started
-2025-04-04 14:00:12,832 - INFO - Preparing metadata (setup.py): finished with status 'done'
-2025-04-04 14:00:12,858 - INFO - Requirement already satisfied: mpmath>=0.19 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from sympy==1.5.dev0) (1.3.0)
-2025-04-04 14:00:12,880 - INFO - Installing collected packages: sympy
-2025-04-04 14:00:12,880 - INFO - DEPRECATION: Legacy editable install of sympy==1.5.dev0 from file:///testbed (setup.py develop) is deprecated. pip 25.1 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457
-2025-04-04 14:00:12,886 - INFO - Running setup.py develop for sympy
-2025-04-04 14:00:13,550 - INFO - Successfully installed sympy
-2025-04-04 14:00:13,551 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-04 14:00:17,845 - INFO - ---> Removed intermediate container 1e5458f13303
-2025-04-04 14:00:17,845 - INFO - ---> d99a956d9cf3
-2025-04-04 14:00:17,846 - INFO - Step 5/5 : WORKDIR /testbed/
-2025-04-04 14:00:17,846 - INFO - 
-2025-04-04 14:00:17,931 - INFO - ---> Running in 48aa7e711345
-2025-04-04 14:00:18,014 - INFO - ---> Removed intermediate container 48aa7e711345
-2025-04-04 14:00:18,015 - INFO - ---> 1f8ca271a535
-2025-04-04 14:00:18,015 - INFO - Successfully built 1f8ca271a535
-2025-04-04 14:00:18,063 - INFO - Successfully tagged sweb.eval.x86_64.sympy__sympy-17318:latest
-2025-04-04 14:00:18,063 - INFO - Image built successfully!
+2025-04-10 17:08:55,884 - INFO - Preparing metadata (setup.py): finished with status 'done'
+2025-04-10 17:08:55,894 - INFO - Requirement already satisfied: mpmath>=0.19 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from sympy==1.5.dev0) (1.3.0)
+2025-04-10 17:08:55,991 - INFO - Installing collected packages: sympy
+2025-04-10 17:08:55,993 - INFO - DEPRECATION: Legacy editable install of sympy==1.5.dev0 from file:///testbed (setup.py develop) is deprecated. pip 25.1 will enforce this behaviour change. A possible replacement is to add a pyproject.toml or enable --use-pep517, and use setuptools >= 64. If the resulting installation is not behaving as expected, try using --config-settings editable_mode=compat. Please consult the setuptools documentation for more information. Discussion can be found at https://github.com/pypa/pip/issues/11457
+2025-04-10 17:08:55,994 - INFO - Running setup.py develop for sympy
+2025-04-10 17:08:58,287 - INFO - Successfully installed sympy
+2025-04-10 17:08:58,289 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-10 17:09:11,197 - INFO - ---> Removed intermediate container c22ea85a93bc
+2025-04-10 17:09:11,197 - INFO - ---> 1ad14e6d2884
+2025-04-10 17:09:11,197 - INFO - Step 5/5 : WORKDIR /testbed/
+2025-04-10 17:09:11,197 - INFO - 
+2025-04-10 17:09:11,397 - INFO - ---> Running in f111a53a820a
+2025-04-10 17:09:11,781 - INFO - ---> Removed intermediate container f111a53a820a
+2025-04-10 17:09:11,781 - INFO - ---> 123af4583530
+2025-04-10 17:09:11,782 - INFO - Successfully built 123af4583530
+2025-04-10 17:09:11,785 - INFO - Successfully tagged sweb.eval.x86_64.sympy__sympy-17318:latest
+2025-04-10 17:09:11,785 - INFO - Image built successfully!

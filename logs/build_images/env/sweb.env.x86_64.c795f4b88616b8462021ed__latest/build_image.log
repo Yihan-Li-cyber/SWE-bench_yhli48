@@ -1,4 +1,4 @@
-2025-04-09 05:54:19,805 - INFO - Building image sweb.env.x86_64.c795f4b88616b8462021ed:latest
+2025-04-10 09:19:33,894 - INFO - Building image sweb.env.x86_64.c795f4b88616b8462021ed:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-09 05:54:19,805 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-10 09:19:33,895 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,28 +21,28 @@ conda create -n testbed python=3.9 mpmath flake8 -y
 conda activate testbed
 python -m pip install mpmath==1.3.0 flake8-comprehensions
 
-2025-04-09 05:54:19,806 - INFO - Building docker image sweb.env.x86_64.c795f4b88616b8462021ed:latest in logs/build_images/env/sweb.env.x86_64.c795f4b88616b8462021ed__latest with platform linux/x86_64
-2025-04-09 05:54:19,817 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-09 05:54:19,817 - INFO - 
-2025-04-09 05:54:19,817 - INFO - ---> ab83453f8920
-2025-04-09 05:54:19,817 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-09 05:54:19,817 - INFO - 
-2025-04-09 05:54:20,001 - INFO - ---> 101fa55d1e17
-2025-04-09 05:54:20,001 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-09 05:54:20,001 - INFO - 
-2025-04-09 05:54:20,102 - INFO - ---> Running in b9e91e2e96e8
-2025-04-09 05:54:22,706 - INFO - ---> Removed intermediate container b9e91e2e96e8
-2025-04-09 05:54:22,706 - INFO - ---> 9be829827674
-2025-04-09 05:54:22,706 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-09 05:54:22,707 - INFO - 
-2025-04-09 05:54:22,817 - INFO - ---> Running in 26ed106126fb
-2025-04-09 05:54:24,914 - INFO - ---> Removed intermediate container 26ed106126fb
-2025-04-09 05:54:24,914 - INFO - ---> d088aed3ea07
-2025-04-09 05:54:24,914 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-09 05:54:24,914 - INFO - 
-2025-04-09 05:54:25,015 - INFO - ---> Running in 91040e4863d9
-2025-04-09 05:54:26,201 - INFO - + source /opt/miniconda3/bin/activate
-2025-04-09 05:54:26,201 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
+2025-04-10 09:19:33,895 - INFO - Building docker image sweb.env.x86_64.c795f4b88616b8462021ed:latest in logs/build_images/env/sweb.env.x86_64.c795f4b88616b8462021ed__latest with platform linux/x86_64
+2025-04-10 09:19:33,976 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-10 09:19:33,977 - INFO - 
+2025-04-10 09:19:33,977 - INFO - ---> bdb5f47110ee
+2025-04-10 09:19:33,977 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-10 09:19:33,977 - INFO - 
+2025-04-10 09:19:34,174 - INFO - ---> d783ec41b828
+2025-04-10 09:19:34,174 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-10 09:19:34,175 - INFO - 
+2025-04-10 09:19:34,191 - INFO - ---> Running in 0fb0958c3f04
+2025-04-10 09:19:37,677 - INFO - ---> Removed intermediate container 0fb0958c3f04
+2025-04-10 09:19:37,677 - INFO - ---> 36b04477ee26
+2025-04-10 09:19:37,677 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-10 09:19:37,677 - INFO - 
+2025-04-10 09:19:37,694 - INFO - ---> Running in 2e92773a2fd6
+2025-04-10 09:19:41,383 - INFO - ---> Removed intermediate container 2e92773a2fd6
+2025-04-10 09:19:41,384 - INFO - ---> ed60bd248e67
+2025-04-10 09:19:41,385 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-10 09:19:41,385 - INFO - 
+2025-04-10 09:19:41,482 - INFO - ---> Running in 4e7aab74075d
+2025-04-10 09:19:42,291 - INFO - + source /opt/miniconda3/bin/activate
+++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -56,22 +56,22 @@ python -m pip install mpmath==1.3.0 flake8-comprehensions
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-2025-04-09 05:54:26,202 - INFO - +++++ dirname /opt/miniconda3/bin/conda
-2025-04-09 05:54:26,204 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-09 05:54:26,206 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-10 09:19:42,292 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-10 09:19:42,293 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-10 09:19:42,294 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
-+++ '[' -z '' ']'
+2025-04-10 09:19:42,294 - INFO - +++ '[' -z '' ']'
 +++ PS1=
 ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
-2025-04-09 05:54:26,206 - INFO - ++ '[' -n '' ']'
+++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-09 05:54:26,206 - INFO - +++ PS1=
+2025-04-10 09:19:42,294 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-09 05:54:26,207 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-09 05:54:26,925 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-10 09:19:42,295 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-10 09:19:42,985 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -94,7 +94,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ PS1='(base) '
 +++ export PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ PATH=/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-+++ export CONDA_PREFIX=/opt/miniconda3
+2025-04-10 09:19:42,985 - INFO - +++ export CONDA_PREFIX=/opt/miniconda3
 +++ CONDA_PREFIX=/opt/miniconda3
 +++ export CONDA_SHLVL=1
 +++ CONDA_SHLVL=1
@@ -115,20 +115,19 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ '[' -n '' ']'
 ++ hash -r
 + conda create -n testbed python=3.9 mpmath flake8 -y
-+ local cmd=create
+2025-04-10 09:19:42,985 - INFO - + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.9 mpmath flake8 -y
-2025-04-09 05:54:26,926 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 mpmath flake8 -y
-2025-04-09 05:54:31,906 - INFO - Channels:
+2025-04-10 09:19:42,986 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 mpmath flake8 -y
+2025-04-10 09:19:46,680 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
-Collecting package metadata (repodata.json):
-2025-04-09 05:54:31,906 - INFO - ...working...
-2025-04-09 05:59:20,921 - INFO - done
-Solving environment: ...working...
-2025-04-09 05:59:37,207 - INFO - done
-2025-04-09 05:59:56,314 - INFO - ## Package Plan ##
+Collecting package metadata (repodata.json): ...working...
+2025-04-10 09:24:20,985 - INFO - done
+2025-04-10 09:24:20,991 - INFO - Solving environment: ...working...
+2025-04-10 09:24:34,774 - INFO - done
+2025-04-10 09:24:52,682 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -195,12 +194,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-09 05:59:57,920 - INFO - done
-Verifying transaction: ...working...
-2025-04-09 06:00:08,615 - INFO - done
-2025-04-09 06:00:08,617 - INFO - Executing transaction: ...working...
-2025-04-09 06:00:35,004 - INFO - done
-2025-04-09 06:00:35,216 - INFO - #
+2025-04-10 09:24:54,078 - INFO - done
+2025-04-10 09:24:54,078 - INFO - Verifying transaction: ...working...
+2025-04-10 09:25:01,186 - INFO - done
+2025-04-10 09:25:01,190 - INFO - Executing transaction: ...working...
+2025-04-10 09:25:11,598 - INFO - done
+2025-04-10 09:25:11,781 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -208,16 +207,16 @@ Verifying transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-09 06:00:36,125 - INFO - + conda activate testbed
-+ local cmd=activate
+2025-04-10 09:25:12,900 - INFO - + conda activate testbed
+2025-04-10 09:25:12,901 - INFO - + local cmd=activate
 + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-09 06:00:36,126 - INFO - ++ PS1='(base) '
+2025-04-10 09:25:12,903 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-09 06:00:36,126 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-09 06:00:36,900 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-10 09:25:12,903 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-10 09:25:13,585 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -252,7 +251,7 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ CONDA_PROMPT_MODIFIER='(testbed) '
 ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
-++ export CONDA_EXE=/opt/miniconda3/bin/conda
+2025-04-10 09:25:13,586 - INFO - ++ export CONDA_EXE=/opt/miniconda3/bin/conda
 ++ CONDA_EXE=/opt/miniconda3/bin/conda
 ++ export _CE_M=
 ++ _CE_M=
@@ -264,30 +263,30 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 + '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-2025-04-09 06:00:36,900 - INFO - + python -m pip install mpmath==1.3.0 flake8-comprehensions
-2025-04-09 06:00:39,200 - INFO - Requirement already satisfied: mpmath==1.3.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (1.3.0)
-2025-04-09 06:00:39,305 - INFO - Collecting flake8-comprehensions
-2025-04-09 06:00:39,395 - INFO - Downloading flake8_comprehensions-3.16.0-py3-none-any.whl.metadata (12 kB)
-Requirement already satisfied: flake8!=3.2,>=3 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8-comprehensions) (7.1.1)
-2025-04-09 06:00:39,397 - INFO - Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (0.7.0)
-2025-04-09 06:00:39,398 - INFO - Requirement already satisfied: pycodestyle<2.13.0,>=2.12.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (2.12.1)
-2025-04-09 06:00:39,399 - INFO - Requirement already satisfied: pyflakes<3.3.0,>=3.2.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (3.2.0)
-2025-04-09 06:00:39,407 - INFO - Downloading flake8_comprehensions-3.16.0-py3-none-any.whl (8.2 kB)
-2025-04-09 06:00:39,506 - INFO - Installing collected packages: flake8-comprehensions
-2025-04-09 06:00:39,525 - INFO - Successfully installed flake8-comprehensions-3.16.0
-2025-04-09 06:00:39,525 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-09 06:01:43,218 - INFO - ---> Removed intermediate container 91040e4863d9
-2025-04-09 06:01:43,219 - INFO - ---> 0e4736052754
-2025-04-09 06:01:43,219 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-09 06:01:43,219 - INFO - 
-2025-04-09 06:01:44,414 - INFO - ---> Running in 28d953881391
-2025-04-09 06:01:45,041 - INFO - ---> Removed intermediate container 28d953881391
-2025-04-09 06:01:45,041 - INFO - ---> 58b9c7fc3c9a
-2025-04-09 06:01:45,041 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-09 06:01:45,041 - INFO - 
-2025-04-09 06:01:45,217 - INFO - ---> Running in ead00897a052
-2025-04-09 06:01:48,547 - INFO - ---> Removed intermediate container ead00897a052
-2025-04-09 06:01:48,547 - INFO - ---> c70b30d5baf9
-2025-04-09 06:01:48,548 - INFO - Successfully built c70b30d5baf9
-2025-04-09 06:01:48,586 - INFO - Successfully tagged sweb.env.x86_64.c795f4b88616b8462021ed:latest
-2025-04-09 06:01:48,586 - INFO - Image built successfully!
+2025-04-10 09:25:13,586 - INFO - + python -m pip install mpmath==1.3.0 flake8-comprehensions
+2025-04-10 09:25:15,975 - INFO - Requirement already satisfied: mpmath==1.3.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (1.3.0)
+2025-04-10 09:25:16,092 - INFO - Collecting flake8-comprehensions
+2025-04-10 09:25:16,180 - INFO - Downloading flake8_comprehensions-3.16.0-py3-none-any.whl.metadata (12 kB)
+2025-04-10 09:25:16,191 - INFO - Requirement already satisfied: flake8!=3.2,>=3 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8-comprehensions) (7.1.1)
+2025-04-10 09:25:16,194 - INFO - Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (0.7.0)
+2025-04-10 09:25:16,195 - INFO - Requirement already satisfied: pycodestyle<2.13.0,>=2.12.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (2.12.1)
+2025-04-10 09:25:16,195 - INFO - Requirement already satisfied: pyflakes<3.3.0,>=3.2.0 in /opt/miniconda3/envs/testbed/lib/python3.9/site-packages (from flake8!=3.2,>=3->flake8-comprehensions) (3.2.0)
+2025-04-10 09:25:16,276 - INFO - Downloading flake8_comprehensions-3.16.0-py3-none-any.whl (8.2 kB)
+2025-04-10 09:25:16,298 - INFO - Installing collected packages: flake8-comprehensions
+2025-04-10 09:25:16,390 - INFO - Successfully installed flake8-comprehensions-3.16.0
+2025-04-10 09:25:16,390 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-10 09:26:01,278 - INFO - ---> Removed intermediate container 4e7aab74075d
+2025-04-10 09:26:01,278 - INFO - ---> c636cd46e894
+2025-04-10 09:26:01,278 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-10 09:26:01,278 - INFO - 
+2025-04-10 09:26:01,496 - INFO - ---> Running in 136f21ca0302
+2025-04-10 09:26:01,702 - INFO - ---> Removed intermediate container 136f21ca0302
+2025-04-10 09:26:01,703 - INFO - ---> 8cb2854b42f0
+2025-04-10 09:26:01,703 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-10 09:26:01,703 - INFO - 
+2025-04-10 09:26:01,794 - INFO - ---> Running in 6693a1a51bea
+2025-04-10 09:26:03,594 - INFO - ---> Removed intermediate container 6693a1a51bea
+2025-04-10 09:26:03,594 - INFO - ---> 952ac8f89eed
+2025-04-10 09:26:03,594 - INFO - Successfully built 952ac8f89eed
+2025-04-10 09:26:03,596 - INFO - Successfully tagged sweb.env.x86_64.c795f4b88616b8462021ed:latest
+2025-04-10 09:26:03,597 - INFO - Image built successfully!

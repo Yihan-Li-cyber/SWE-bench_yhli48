@@ -1,0 +1,204 @@
+2025-04-10 17:17:12,292 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-18698
+Building instance image sweb.eval.x86_64.sympy__sympy-18698:latest for sympy__sympy-18698
+2025-04-10 17:18:51,870 - INFO - Creating container for sympy__sympy-18698...
+2025-04-10 17:18:51,991 - INFO - Container for sympy__sympy-18698 created: 4b3a8b37574b4a33cd288c91e0f55248f8146d3812e454eb4f64caa916803124
+2025-04-10 17:18:53,985 - INFO - Container for sympy__sympy-18698 started: 4b3a8b37574b4a33cd288c91e0f55248f8146d3812e454eb4f64caa916803124
+2025-04-10 17:18:53,985 - INFO - Intermediate patch for sympy__sympy-18698 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18698/patch.diff, now applying to container...
+2025-04-10 17:18:55,985 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:18:56,576 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/polytools.py
+patching file sympy/polys/sqfreetools.py
+
+2025-04-10 17:18:59,478 - INFO - Git diff before:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index c9e77a901f..6bc2fc5c83 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -5875,19 +5875,31 @@ def sqf_part(f, *gens, **args):
+ 
+ 
+ def _sorted_factors(factors, method):
+-    """Sort a list of ``(expr, exp)`` pairs. """
+-    if method == 'sqf':
+-        def key(obj):
+-            poly, exp = obj
+-            rep = poly.rep.rep
+-            return (exp, len(rep), len(poly.gens), rep)
+-    else:
+-        def key(obj):
+-            poly, exp = obj
+-            rep = poly.rep.rep
+-            return (len(rep), len(poly.gens), exp, rep)
++    """Sort and combine factors with the same multiplicity."""
++    if not factors:
++        return factors
++
++    # Group factors by multiplicity
++    by_mult = {}
++    for f, k in factors:
++        if k not in by_mult:
++            by_mult[k] = []
++        by_mult[k].append(f)
++
++    # Combine and sort factors
++    result = []
++    for k in sorted(by_mult.keys()):
++        fs = by_mult[k]
++        if len(fs) > 1:
++            # Multiple factors with same multiplicity - multiply them
++            f = fs[0]
++            for g in fs[1:]:
++                f = f * g
++            result.append((f, k))
++        else:
++            result.append((fs[0], k))
+ 
+-    return sorted(factors, key=key)
++    return result
+ 
+ 
+ def _factors_product(factors):
+diff --git a/sympy/polys/sqfreetools.py b/sympy/polys/sqfreetools.py
+index 1783a7744a..958be98d74 100644
+--- a/sympy/polys/sqfreetools.py
++++ b/sympy/polys/sqfreetools.py
+@@ -312,8 +312,8 @@ def dup_sqf_list(f, K, all=False):
+     if dup_degree(f) <= 0:
+         return coeff, []
+ 
++    # First get the square-free decomposition
+     result, i = [], 1
+-
+     h = dup_diff(f, 1, K)
+     g, p, q = dup_inner_gcd(f, h, K)
+ 
+@@ -332,7 +332,26 @@ def dup_sqf_list(f, K, all=False):
+ 
+         i += 1
+ 
+-    return coeff, result
++    # Group factors by multiplicity
++    factors_by_mult = {}
++    for factor, mult in result:
++        if mult not in factors_by_mult:
++            factors_by_mult[mult] = []
++        factors_by_mult[mult].append(factor)
++
++    # Process each multiplicity group
++    combined_result = []
++    for mult, factors in sorted(factors_by_mult.items()):
++        if len(factors) > 1:
++            # Multiple factors with same multiplicity - combine them
++            product = factors[0]
++            for f in factors[1:]:
++                product = dup_mul(product, f, K)
++            combined_result.append((product, mult))
++        else:
++            combined_result.append((factors[0], mult))
++
++    return coeff, combined_result
+ 
+ 
+ def dup_sqf_list_include(f, K, all=False):
+2025-04-10 17:18:59,478 - INFO - Eval script for sympy__sympy-18698 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18698/eval.sh; copying to container...
+2025-04-10 17:20:40,490 - INFO - Test runtime: 99.80 seconds
+2025-04-10 17:20:40,491 - INFO - Test output for sympy__sympy-18698 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-18698/test_output.txt
+2025-04-10 17:20:40,695 - INFO - Git diff after:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index c9e77a901f..6bc2fc5c83 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -5875,19 +5875,31 @@ def sqf_part(f, *gens, **args):
+ 
+ 
+ def _sorted_factors(factors, method):
+-    """Sort a list of ``(expr, exp)`` pairs. """
+-    if method == 'sqf':
+-        def key(obj):
+-            poly, exp = obj
+-            rep = poly.rep.rep
+-            return (exp, len(rep), len(poly.gens), rep)
+-    else:
+-        def key(obj):
+-            poly, exp = obj
+-            rep = poly.rep.rep
+-            return (len(rep), len(poly.gens), exp, rep)
++    """Sort and combine factors with the same multiplicity."""
++    if not factors:
++        return factors
++
++    # Group factors by multiplicity
++    by_mult = {}
++    for f, k in factors:
++        if k not in by_mult:
++            by_mult[k] = []
++        by_mult[k].append(f)
++
++    # Combine and sort factors
++    result = []
++    for k in sorted(by_mult.keys()):
++        fs = by_mult[k]
++        if len(fs) > 1:
++            # Multiple factors with same multiplicity - multiply them
++            f = fs[0]
++            for g in fs[1:]:
++                f = f * g
++            result.append((f, k))
++        else:
++            result.append((fs[0], k))
+ 
+-    return sorted(factors, key=key)
++    return result
+ 
+ 
+ def _factors_product(factors):
+diff --git a/sympy/polys/sqfreetools.py b/sympy/polys/sqfreetools.py
+index 1783a7744a..958be98d74 100644
+--- a/sympy/polys/sqfreetools.py
++++ b/sympy/polys/sqfreetools.py
+@@ -312,8 +312,8 @@ def dup_sqf_list(f, K, all=False):
+     if dup_degree(f) <= 0:
+         return coeff, []
+ 
++    # First get the square-free decomposition
+     result, i = [], 1
+-
+     h = dup_diff(f, 1, K)
+     g, p, q = dup_inner_gcd(f, h, K)
+ 
+@@ -332,7 +332,26 @@ def dup_sqf_list(f, K, all=False):
+ 
+         i += 1
+ 
+-    return coeff, result
++    # Group factors by multiplicity
++    factors_by_mult = {}
++    for factor, mult in result:
++        if mult not in factors_by_mult:
++            factors_by_mult[mult] = []
++        factors_by_mult[mult].append(factor)
++
++    # Process each multiplicity group
++    combined_result = []
++    for mult, factors in sorted(factors_by_mult.items()):
++        if len(factors) > 1:
++            # Multiple factors with same multiplicity - combine them
++            product = factors[0]
++            for f in factors[1:]:
++                product = dup_mul(product, f, K)
++            combined_result.append((product, mult))
++        else:
++            combined_result.append((factors[0], mult))
++
++    return coeff, combined_result
+ 
+ 
+ def dup_sqf_list_include(f, K, all=False):
+2025-04-10 17:20:40,696 - INFO - Grading answer for sympy__sympy-18698...
+2025-04-10 17:20:40,696 - INFO - report: {'sympy__sympy-18698': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-18698: resolved: False
+2025-04-10 17:20:40,696 - INFO - Attempting to stop container sweb.eval.sympy__sympy-18698.241028_solver...
+2025-04-10 17:21:19,397 - INFO - Attempting to remove container sweb.eval.sympy__sympy-18698.241028_solver...
+2025-04-10 17:21:19,497 - INFO - Container sweb.eval.sympy__sympy-18698.241028_solver removed.
+2025-04-10 17:21:19,497 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-18698:latest...
+2025-04-10 17:21:21,372 - INFO - Image sweb.eval.x86_64.sympy__sympy-18698:latest removed.

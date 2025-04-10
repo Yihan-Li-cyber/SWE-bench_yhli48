@@ -1,14 +1,14 @@
-2025-04-09 07:34:16,093 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-2317
+2025-04-10 10:54:59,702 - INFO - Environment image sweb.env.x86_64.1f92e6d7cef88badc4f744:latest found for psf__requests-2317
 Building instance image sweb.eval.x86_64.psf__requests-2317:latest for psf__requests-2317
-2025-04-09 07:34:44,988 - INFO - Creating container for psf__requests-2317...
-2025-04-09 07:34:45,295 - INFO - Container for psf__requests-2317 created: b1306746e76449c809c9ff8de0bde18275980a6091b4e170d3c2482e095919aa
-2025-04-09 07:34:46,527 - INFO - Container for psf__requests-2317 started: b1306746e76449c809c9ff8de0bde18275980a6091b4e170d3c2482e095919aa
-2025-04-09 07:34:46,528 - INFO - Intermediate patch for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/patch.diff, now applying to container...
-2025-04-09 07:34:47,707 - INFO - Failed to apply patch to container, trying again...
-2025-04-09 07:34:47,993 - INFO - >>>>> Applied Patch:
+2025-04-10 10:55:15,798 - INFO - Creating container for psf__requests-2317...
+2025-04-10 10:55:15,917 - INFO - Container for psf__requests-2317 created: 6b64a9871197b6b2e7f5150f7ec56cefe884056bfefa2eadba6e0e3fbc5a9554
+2025-04-10 10:55:16,910 - INFO - Container for psf__requests-2317 started: 6b64a9871197b6b2e7f5150f7ec56cefe884056bfefa2eadba6e0e3fbc5a9554
+2025-04-10 10:55:16,910 - INFO - Intermediate patch for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/patch.diff, now applying to container...
+2025-04-10 10:55:17,694 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 10:55:17,893 - INFO - >>>>> Applied Patch:
 patching file requests/sessions.py
 
-2025-04-09 07:34:48,307 - INFO - Git diff before:
+2025-04-10 10:55:18,114 - INFO - Git diff before:
 diff --git a/requests/sessions.py b/requests/sessions.py
 index d701ff2e..4a5aa4bf 100644
 --- a/requests/sessions.py
@@ -27,17 +27,33 @@ index d701ff2e..4a5aa4bf 100644
          # Create the Request.
          req = Request(
              method = method.upper(),
-2025-04-09 07:34:48,307 - INFO - Eval script for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/eval.sh; copying to container...
-2025-04-09 08:04:49,335 - INFO - Test runtime: 1_800.22 seconds
-2025-04-09 08:04:49,336 - INFO - Test output for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/test_output.txt
-2025-04-09 08:04:49,337 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 178, in run_instance
-    raise EvaluationError(
-EvaluationError: Evaluation error for psf__requests-2317: Test timed out after 1800 seconds.
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/run_instance.log) for more information.
-
-2025-04-09 08:04:49,337 - INFO - Attempting to stop container sweb.eval.psf__requests-2317.241028_solver...
-2025-04-09 08:05:05,329 - INFO - Attempting to remove container sweb.eval.psf__requests-2317.241028_solver...
-2025-04-09 08:05:05,425 - INFO - Container sweb.eval.psf__requests-2317.241028_solver removed.
-2025-04-09 08:05:05,425 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-2317:latest...
-2025-04-09 08:05:05,624 - INFO - Image sweb.eval.x86_64.psf__requests-2317:latest removed.
+2025-04-10 10:55:18,114 - INFO - Eval script for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/eval.sh; copying to container...
+2025-04-10 11:04:56,793 - INFO - Test runtime: 578.20 seconds
+2025-04-10 11:04:56,794 - INFO - Test output for psf__requests-2317 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/psf__requests-2317/test_output.txt
+2025-04-10 11:04:56,914 - INFO - Git diff after:
+diff --git a/requests/sessions.py b/requests/sessions.py
+index d701ff2e..4a5aa4bf 100644
+--- a/requests/sessions.py
++++ b/requests/sessions.py
+@@ -425,8 +425,11 @@ class Session(SessionRedirectMixin):
+             If Tuple, ('cert', 'key') pair.
+         """
+ 
+-        method = builtin_str(method)
+-
++        # Convert bytes method to str
++        if isinstance(method, bytes):
++            method = method.decode('latin1')
++        else:
++            method = builtin_str(method)
+         # Create the Request.
+         req = Request(
+             method = method.upper(),
+2025-04-10 11:04:56,914 - INFO - Grading answer for psf__requests-2317...
+2025-04-10 11:04:56,915 - INFO - report: {'psf__requests-2317': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for psf__requests-2317: resolved: False
+2025-04-10 11:04:56,915 - INFO - Attempting to stop container sweb.eval.psf__requests-2317.241028_solver...
+2025-04-10 11:05:12,595 - INFO - Attempting to remove container sweb.eval.psf__requests-2317.241028_solver...
+2025-04-10 11:05:12,613 - INFO - Container sweb.eval.psf__requests-2317.241028_solver removed.
+2025-04-10 11:05:12,613 - INFO - Attempting to remove image sweb.eval.x86_64.psf__requests-2317:latest...
+2025-04-10 11:05:12,702 - INFO - Image sweb.eval.x86_64.psf__requests-2317:latest removed.

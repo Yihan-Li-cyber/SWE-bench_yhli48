@@ -1,0 +1,83 @@
+2025-04-10 16:54:08,698 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13974
+Building instance image sweb.eval.x86_64.sympy__sympy-13974:latest for sympy__sympy-13974
+2025-04-10 16:56:32,103 - INFO - Creating container for sympy__sympy-13974...
+2025-04-10 16:56:32,301 - INFO - Container for sympy__sympy-13974 created: 81ac05d4e4bcda994d812685795e60ecc332f18b46a47f07ad5c0ae7bc7c7a43
+2025-04-10 16:56:33,999 - INFO - Container for sympy__sympy-13974 started: 81ac05d4e4bcda994d812685795e60ecc332f18b46a47f07ad5c0ae7bc7c7a43
+2025-04-10 16:56:34,000 - INFO - Intermediate patch for sympy__sympy-13974 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13974/patch.diff, now applying to container...
+2025-04-10 16:56:35,688 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:56:35,998 - INFO - >>>>> Applied Patch:
+patching file sympy/physics/quantum/tensorproduct.py
+
+2025-04-10 16:56:38,682 - INFO - Git diff before:
+diff --git a/sympy/physics/quantum/tensorproduct.py b/sympy/physics/quantum/tensorproduct.py
+index 9dd10d219e..147982a2e0 100644
+--- a/sympy/physics/quantum/tensorproduct.py
++++ b/sympy/physics/quantum/tensorproduct.py
+@@ -2,7 +2,7 @@
+ 
+ from __future__ import print_function, division
+ 
+-from sympy import Expr, Add, Mul, Matrix, Pow, sympify
++from sympy import Expr, Add, Mul, Matrix, Pow, sympify, S
+ from sympy.core.compatibility import range
+ from sympy.core.trace import Tr
+ from sympy.printing.pretty.stringpict import prettyForm
+@@ -143,6 +143,16 @@ def flatten(cls, args):
+     def _eval_adjoint(self):
+         return TensorProduct(*[Dagger(i) for i in self.args])
+ 
++    def _eval_power(self, exp):
++        if not exp.is_Integer or exp < 0:
++            return None
++        if exp == 0:
++            return S.One
++        if exp == 1:
++            return self
++        # For higher powers, raise each component to that power
++        return TensorProduct(*[arg**exp for arg in self.args])
++
+     def _eval_rewrite(self, pattern, rule, **hints):
+         sargs = self.args
+         terms = [t._eval_rewrite(pattern, rule, **hints) for t in sargs]
+2025-04-10 16:56:38,682 - INFO - Eval script for sympy__sympy-13974 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13974/eval.sh; copying to container...
+2025-04-10 16:57:06,283 - INFO - Test runtime: 26.59 seconds
+2025-04-10 16:57:06,283 - INFO - Test output for sympy__sympy-13974 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13974/test_output.txt
+2025-04-10 16:57:06,586 - INFO - Git diff after:
+diff --git a/sympy/physics/quantum/tensorproduct.py b/sympy/physics/quantum/tensorproduct.py
+index 9dd10d219e..147982a2e0 100644
+--- a/sympy/physics/quantum/tensorproduct.py
++++ b/sympy/physics/quantum/tensorproduct.py
+@@ -2,7 +2,7 @@
+ 
+ from __future__ import print_function, division
+ 
+-from sympy import Expr, Add, Mul, Matrix, Pow, sympify
++from sympy import Expr, Add, Mul, Matrix, Pow, sympify, S
+ from sympy.core.compatibility import range
+ from sympy.core.trace import Tr
+ from sympy.printing.pretty.stringpict import prettyForm
+@@ -143,6 +143,16 @@ def flatten(cls, args):
+     def _eval_adjoint(self):
+         return TensorProduct(*[Dagger(i) for i in self.args])
+ 
++    def _eval_power(self, exp):
++        if not exp.is_Integer or exp < 0:
++            return None
++        if exp == 0:
++            return S.One
++        if exp == 1:
++            return self
++        # For higher powers, raise each component to that power
++        return TensorProduct(*[arg**exp for arg in self.args])
++
+     def _eval_rewrite(self, pattern, rule, **hints):
+         sargs = self.args
+         terms = [t._eval_rewrite(pattern, rule, **hints) for t in sargs]
+2025-04-10 16:57:06,586 - INFO - Grading answer for sympy__sympy-13974...
+2025-04-10 16:57:06,587 - INFO - report: {'sympy__sympy-13974': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13974: resolved: False
+2025-04-10 16:57:06,587 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13974.241028_solver...
+2025-04-10 16:57:52,486 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13974.241028_solver...
+2025-04-10 16:57:52,585 - INFO - Container sweb.eval.sympy__sympy-13974.241028_solver removed.
+2025-04-10 16:57:52,586 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13974:latest...
+2025-04-10 16:58:04,990 - INFO - Image sweb.eval.x86_64.sympy__sympy-13974:latest removed.

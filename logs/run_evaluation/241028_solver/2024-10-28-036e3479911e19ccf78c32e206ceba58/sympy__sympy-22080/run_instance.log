@@ -1,0 +1,51 @@
+2025-04-10 17:35:01,086 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-22080
+Building instance image sweb.eval.x86_64.sympy__sympy-22080:latest for sympy__sympy-22080
+2025-04-10 17:36:52,389 - INFO - Creating container for sympy__sympy-22080...
+2025-04-10 17:36:52,577 - INFO - Container for sympy__sympy-22080 created: ebe9dd9d67f858f887b6ab761daed1dcf661677d5fc6d462c7aeeb006118ef0f
+2025-04-10 17:36:54,280 - INFO - Container for sympy__sympy-22080 started: ebe9dd9d67f858f887b6ab761daed1dcf661677d5fc6d462c7aeeb006118ef0f
+2025-04-10 17:36:54,281 - INFO - Intermediate patch for sympy__sympy-22080 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-22080/patch.diff, now applying to container...
+2025-04-10 17:36:56,184 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:36:56,684 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/pycode.py
+
+2025-04-10 17:37:00,173 - INFO - Git diff before:
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index b669a2c783..52943abfc7 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -234,8 +234,7 @@ def _print_ComplexInfinity(self, expr):
+ 
+     def _print_Mod(self, expr):
+         PREC = precedence(expr)
+-        return ('{} % {}'.format(*map(lambda x: self.parenthesize(x, PREC), expr.args)))
+-
++        return '({} % {})'.format(*map(lambda x: self.parenthesize(x, PREC), expr.args))
+     def _print_Piecewise(self, expr):
+         result = []
+         i = 0
+2025-04-10 17:37:00,174 - INFO - Eval script for sympy__sympy-22080 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-22080/eval.sh; copying to container...
+2025-04-10 17:38:21,373 - INFO - Test runtime: 79.00 seconds
+2025-04-10 17:38:21,374 - INFO - Test output for sympy__sympy-22080 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-22080/test_output.txt
+2025-04-10 17:38:21,675 - INFO - Git diff after:
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index b669a2c783..52943abfc7 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -234,8 +234,7 @@ def _print_ComplexInfinity(self, expr):
+ 
+     def _print_Mod(self, expr):
+         PREC = precedence(expr)
+-        return ('{} % {}'.format(*map(lambda x: self.parenthesize(x, PREC), expr.args)))
+-
++        return '({} % {})'.format(*map(lambda x: self.parenthesize(x, PREC), expr.args))
+     def _print_Piecewise(self, expr):
+         result = []
+         i = 0
+2025-04-10 17:38:21,675 - INFO - Grading answer for sympy__sympy-22080...
+2025-04-10 17:38:21,676 - INFO - report: {'sympy__sympy-22080': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-22080: resolved: False
+2025-04-10 17:38:21,676 - INFO - Attempting to stop container sweb.eval.sympy__sympy-22080.241028_solver...
+2025-04-10 17:39:07,782 - INFO - Attempting to remove container sweb.eval.sympy__sympy-22080.241028_solver...
+2025-04-10 17:39:07,893 - INFO - Container sweb.eval.sympy__sympy-22080.241028_solver removed.
+2025-04-10 17:39:07,893 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-22080:latest...
+2025-04-10 17:39:32,570 - INFO - Image sweb.eval.x86_64.sympy__sympy-22080:latest removed.

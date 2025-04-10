@@ -1,0 +1,115 @@
+2025-04-10 15:56:32,911 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-10449
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest for sphinx-doc__sphinx-10449
+2025-04-10 16:00:01,723 - INFO - Creating container for sphinx-doc__sphinx-10449...
+2025-04-10 16:00:02,119 - INFO - Container for sphinx-doc__sphinx-10449 created: 6b4dee234f44378a609209e25a9d10a4baece07ac5710dca15932a22661268ac
+2025-04-10 16:00:05,407 - INFO - Container for sphinx-doc__sphinx-10449 started: 6b4dee234f44378a609209e25a9d10a4baece07ac5710dca15932a22661268ac
+2025-04-10 16:00:05,408 - INFO - Intermediate patch for sphinx-doc__sphinx-10449 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-10449/patch.diff, now applying to container...
+2025-04-10 16:00:07,407 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:00:07,731 - INFO - >>>>> Applied Patch:
+patching file sphinx/ext/autodoc/__init__.py
+patching file tests/roots/test-ext-autodoc/target/typehints.py
+patching file tests/test_ext_autodoc_typehints.py
+
+2025-04-10 16:00:10,016 - INFO - Git diff before:
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index e16ab8ce5..46f3e924d 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1577,8 +1577,10 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type:
+ 
+         if self.config.autodoc_typehints_format == "short":
+             kwargs.setdefault('unqualified_typehints', True)
++        if self.config.autodoc_typehints in ('description', 'none'):
++            kwargs.setdefault('show_return_annotation', False)
+ 
+-        sig = super().format_signature()
++        sig = super().format_signature(**kwargs)
+         sigs = []
+ 
+         overloads = self.get_overloaded_signatures()
+diff --git a/tests/roots/test-ext-autodoc/target/typehints.py b/tests/roots/test-ext-autodoc/target/typehints.py
+index 6b0d6142c..533f51f9c 100644
+--- a/tests/roots/test-ext-autodoc/target/typehints.py
++++ b/tests/roots/test-ext-autodoc/target/typehints.py
+@@ -99,3 +99,11 @@ class _ClassWithDocumentedInit:
+ 
+         :param x: Some integer
+         """
++
++
++class Class:
++    """A class for testing return type hints."""
++
++    def __init__(self, width: int, height: int) -> None:
++        self.width = width
++        self.height = height
+diff --git a/tox.ini b/tox.ini
+index 105a02597..90ada0821 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -29,7 +29,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2025-04-10 16:00:10,017 - INFO - Eval script for sphinx-doc__sphinx-10449 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-10449/eval.sh; copying to container...
+2025-04-10 16:00:54,002 - INFO - Test runtime: 42.89 seconds
+2025-04-10 16:00:54,003 - INFO - Test output for sphinx-doc__sphinx-10449 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-10449/test_output.txt
+2025-04-10 16:00:54,407 - INFO - Git diff after:
+diff --git a/sphinx/ext/autodoc/__init__.py b/sphinx/ext/autodoc/__init__.py
+index e16ab8ce5..46f3e924d 100644
+--- a/sphinx/ext/autodoc/__init__.py
++++ b/sphinx/ext/autodoc/__init__.py
+@@ -1577,8 +1577,10 @@ class ClassDocumenter(DocstringSignatureMixin, ModuleLevelDocumenter):  # type:
+ 
+         if self.config.autodoc_typehints_format == "short":
+             kwargs.setdefault('unqualified_typehints', True)
++        if self.config.autodoc_typehints in ('description', 'none'):
++            kwargs.setdefault('show_return_annotation', False)
+ 
+-        sig = super().format_signature()
++        sig = super().format_signature(**kwargs)
+         sigs = []
+ 
+         overloads = self.get_overloaded_signatures()
+diff --git a/tests/roots/test-ext-autodoc/target/typehints.py b/tests/roots/test-ext-autodoc/target/typehints.py
+index 6b0d6142c..533f51f9c 100644
+--- a/tests/roots/test-ext-autodoc/target/typehints.py
++++ b/tests/roots/test-ext-autodoc/target/typehints.py
+@@ -99,3 +99,11 @@ class _ClassWithDocumentedInit:
+ 
+         :param x: Some integer
+         """
++
++
++class Class:
++    """A class for testing return type hints."""
++
++    def __init__(self, width: int, height: int) -> None:
++        self.width = width
++        self.height = height
+diff --git a/tox.ini b/tox.ini
+index 105a02597..90ada0821 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -29,7 +29,7 @@ setenv =
+     PYTHONWARNINGS = all
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -X warn_default_encoding -m pytest --durations 25 {posargs}
++    python -X dev -X warn_default_encoding -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:du-latest]
+ commands =
+2025-04-10 16:00:54,407 - INFO - Grading answer for sphinx-doc__sphinx-10449...
+2025-04-10 16:00:54,408 - INFO - report: {'sphinx-doc__sphinx-10449': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-10449: resolved: False
+2025-04-10 16:00:54,409 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-10449.241028_solver...
+2025-04-10 16:01:10,702 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-10449.241028_solver...
+2025-04-10 16:01:10,811 - INFO - Container sweb.eval.sphinx-doc__sphinx-10449.241028_solver removed.
+2025-04-10 16:01:10,811 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest...
+2025-04-10 16:01:12,211 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-10449:latest removed.

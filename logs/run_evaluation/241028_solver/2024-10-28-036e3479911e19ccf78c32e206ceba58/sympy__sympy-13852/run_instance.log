@@ -1,0 +1,91 @@
+2025-04-10 16:54:00,100 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13852
+Building instance image sweb.eval.x86_64.sympy__sympy-13852:latest for sympy__sympy-13852
+2025-04-10 16:55:54,489 - INFO - Creating container for sympy__sympy-13852...
+2025-04-10 16:55:54,683 - INFO - Container for sympy__sympy-13852 created: 5799c990424fbbe1367b848bcc68e2b3b4c61b7f8c26eb95c166ff3a88868f96
+2025-04-10 16:55:56,685 - INFO - Container for sympy__sympy-13852 started: 5799c990424fbbe1367b848bcc68e2b3b4c61b7f8c26eb95c166ff3a88868f96
+2025-04-10 16:55:56,685 - INFO - Intermediate patch for sympy__sympy-13852 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13852/patch.diff, now applying to container...
+2025-04-10 16:55:58,288 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:55:58,588 - INFO - >>>>> Applied Patch:
+patching file sympy/functions/special/zeta_functions.py
+
+2025-04-10 16:56:01,296 - INFO - Git diff before:
+diff --git a/sympy/functions/special/zeta_functions.py b/sympy/functions/special/zeta_functions.py
+index b8e2b66195..b5108dd6cd 100644
+--- a/sympy/functions/special/zeta_functions.py
++++ b/sympy/functions/special/zeta_functions.py
+@@ -271,12 +271,15 @@ class polylog(Function):
+ 
+     @classmethod
+     def eval(cls, s, z):
++        from sympy import log, pi, Rational
+         if z == 1:
+             return zeta(s)
+         elif z == -1:
+             return -dirichlet_eta(s)
+         elif z == 0:
+             return 0
++        elif s == 2 and z == Rational(1, 2):
++            return -log(2)**2/2 + pi**2/12
+ 
+     def fdiff(self, argindex=1):
+         s, z = self.args
+@@ -288,10 +291,11 @@ def _eval_rewrite_as_lerchphi(self, s, z):
+         return z*lerchphi(z, s, 1)
+ 
+     def _eval_expand_func(self, **hints):
+-        from sympy import log, expand_mul, Dummy, exp_polar, I
++        from sympy import log, expand_mul, Dummy
++        from collections.abc import Iterable
+         s, z = self.args
+         if s == 1:
+-            return -log(1 + exp_polar(-I*pi)*z)
++            return -log(1 - z)
+         if s.is_Integer and s <= 0:
+             u = Dummy('u')
+             start = u/(1 - u)
+2025-04-10 16:56:01,297 - INFO - Eval script for sympy__sympy-13852 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13852/eval.sh; copying to container...
+2025-04-10 16:56:26,798 - INFO - Test runtime: 24.30 seconds
+2025-04-10 16:56:26,799 - INFO - Test output for sympy__sympy-13852 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13852/test_output.txt
+2025-04-10 16:56:27,191 - INFO - Git diff after:
+diff --git a/sympy/functions/special/zeta_functions.py b/sympy/functions/special/zeta_functions.py
+index b8e2b66195..b5108dd6cd 100644
+--- a/sympy/functions/special/zeta_functions.py
++++ b/sympy/functions/special/zeta_functions.py
+@@ -271,12 +271,15 @@ class polylog(Function):
+ 
+     @classmethod
+     def eval(cls, s, z):
++        from sympy import log, pi, Rational
+         if z == 1:
+             return zeta(s)
+         elif z == -1:
+             return -dirichlet_eta(s)
+         elif z == 0:
+             return 0
++        elif s == 2 and z == Rational(1, 2):
++            return -log(2)**2/2 + pi**2/12
+ 
+     def fdiff(self, argindex=1):
+         s, z = self.args
+@@ -288,10 +291,11 @@ def _eval_rewrite_as_lerchphi(self, s, z):
+         return z*lerchphi(z, s, 1)
+ 
+     def _eval_expand_func(self, **hints):
+-        from sympy import log, expand_mul, Dummy, exp_polar, I
++        from sympy import log, expand_mul, Dummy
++        from collections.abc import Iterable
+         s, z = self.args
+         if s == 1:
+-            return -log(1 + exp_polar(-I*pi)*z)
++            return -log(1 - z)
+         if s.is_Integer and s <= 0:
+             u = Dummy('u')
+             start = u/(1 - u)
+2025-04-10 16:56:27,192 - INFO - Grading answer for sympy__sympy-13852...
+2025-04-10 16:56:27,192 - INFO - report: {'sympy__sympy-13852': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13852: resolved: False
+2025-04-10 16:56:27,192 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13852.241028_solver...
+2025-04-10 16:56:43,504 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13852.241028_solver...
+2025-04-10 16:56:43,689 - INFO - Container sweb.eval.sympy__sympy-13852.241028_solver removed.
+2025-04-10 16:56:43,689 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13852:latest...
+2025-04-10 16:56:44,406 - INFO - Image sweb.eval.x86_64.sympy__sympy-13852:latest removed.

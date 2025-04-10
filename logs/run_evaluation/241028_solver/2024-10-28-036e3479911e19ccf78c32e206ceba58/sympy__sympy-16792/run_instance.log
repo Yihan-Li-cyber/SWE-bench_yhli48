@@ -1,0 +1,118 @@
+2025-04-10 17:04:38,296 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-16792
+Building instance image sweb.eval.x86_64.sympy__sympy-16792:latest for sympy__sympy-16792
+2025-04-10 17:06:36,288 - INFO - Creating container for sympy__sympy-16792...
+2025-04-10 17:06:36,389 - INFO - Container for sympy__sympy-16792 created: 4c21099b30f8775cf4813fd28894ce00154045db2ac47d9d8d33ce19d03fb0bf
+2025-04-10 17:06:37,980 - INFO - Container for sympy__sympy-16792 started: 4c21099b30f8775cf4813fd28894ce00154045db2ac47d9d8d33ce19d03fb0bf
+2025-04-10 17:06:37,980 - INFO - Intermediate patch for sympy__sympy-16792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-16792/patch.diff, now applying to container...
+2025-04-10 17:06:39,286 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:06:39,797 - INFO - >>>>> Applied Patch:
+patching file sympy/utilities/codegen.py
+patching file sympy/utilities/tests/test_autowrap.py
+
+2025-04-10 17:06:42,187 - INFO - Git diff before:
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd7..6bf519fd5d 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -700,6 +700,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+             array_symbols[array.base.label] = array
+         for array in expressions.atoms(MatrixSymbol) | local_expressions.atoms(MatrixSymbol):
+             array_symbols[array] = array
++        # Ensure all MatrixSymbol arguments are treated as arrays even if not in expression
++        if argument_sequence:
++            for arg in argument_sequence:
++                if isinstance(arg, MatrixSymbol):
++                    array_symbols[arg] = arg
+ 
+         for symbol in sorted(symbols, key=str):
+             if symbol in array_symbols:
+@@ -708,6 +713,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+                 for dim in array.shape:
+                     dims.append((S.Zero, dim - 1))
+                 metadata = {'dimensions': dims}
++            elif isinstance(symbol, MatrixSymbol):  # Handle MatrixSymbol args not in expression
++                dims = []
++                for dim in symbol.shape:
++                    dims.append((S.Zero, dim - 1))
++                metadata = {'dimensions': dims}
+             else:
+                 metadata = {}
+ 
+diff --git a/sympy/utilities/tests/test_autowrap.py b/sympy/utilities/tests/test_autowrap.py
+index 47fe933dc1..a0c26ba2cb 100644
+--- a/sympy/utilities/tests/test_autowrap.py
++++ b/sympy/utilities/tests/test_autowrap.py
+@@ -223,6 +223,14 @@ def test_autowrap_dummy():
+     assert f.args == "x, y, z"
+     assert f.returns == "z"
+ 
++def test_autowrap_matrix_arg_no_use():
++    from sympy import MatrixSymbol
++    import numpy as np
++    x = MatrixSymbol('x', 2, 1)
++    expr = 1.0
++    f = autowrap(expr, args=(x,), backend='cython')
++    assert f(np.array([[1.0], [2.0]])) == 1.0
++
+ 
+ def test_autowrap_args():
+     x, y, z = symbols('x y z')
+2025-04-10 17:06:42,187 - INFO - Eval script for sympy__sympy-16792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-16792/eval.sh; copying to container...
+2025-04-10 17:07:18,590 - INFO - Test runtime: 35.51 seconds
+2025-04-10 17:07:18,591 - INFO - Test output for sympy__sympy-16792 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-16792/test_output.txt
+2025-04-10 17:07:18,897 - INFO - Git diff after:
+diff --git a/sympy/utilities/codegen.py b/sympy/utilities/codegen.py
+index f0befb2bd7..6bf519fd5d 100644
+--- a/sympy/utilities/codegen.py
++++ b/sympy/utilities/codegen.py
+@@ -700,6 +700,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+             array_symbols[array.base.label] = array
+         for array in expressions.atoms(MatrixSymbol) | local_expressions.atoms(MatrixSymbol):
+             array_symbols[array] = array
++        # Ensure all MatrixSymbol arguments are treated as arrays even if not in expression
++        if argument_sequence:
++            for arg in argument_sequence:
++                if isinstance(arg, MatrixSymbol):
++                    array_symbols[arg] = arg
+ 
+         for symbol in sorted(symbols, key=str):
+             if symbol in array_symbols:
+@@ -708,6 +713,11 @@ def routine(self, name, expr, argument_sequence=None, global_vars=None):
+                 for dim in array.shape:
+                     dims.append((S.Zero, dim - 1))
+                 metadata = {'dimensions': dims}
++            elif isinstance(symbol, MatrixSymbol):  # Handle MatrixSymbol args not in expression
++                dims = []
++                for dim in symbol.shape:
++                    dims.append((S.Zero, dim - 1))
++                metadata = {'dimensions': dims}
+             else:
+                 metadata = {}
+ 
+diff --git a/sympy/utilities/tests/test_autowrap.py b/sympy/utilities/tests/test_autowrap.py
+index 47fe933dc1..a0c26ba2cb 100644
+--- a/sympy/utilities/tests/test_autowrap.py
++++ b/sympy/utilities/tests/test_autowrap.py
+@@ -223,6 +223,14 @@ def test_autowrap_dummy():
+     assert f.args == "x, y, z"
+     assert f.returns == "z"
+ 
++def test_autowrap_matrix_arg_no_use():
++    from sympy import MatrixSymbol
++    import numpy as np
++    x = MatrixSymbol('x', 2, 1)
++    expr = 1.0
++    f = autowrap(expr, args=(x,), backend='cython')
++    assert f(np.array([[1.0], [2.0]])) == 1.0
++
+ 
+ def test_autowrap_args():
+     x, y, z = symbols('x y z')
+2025-04-10 17:07:18,897 - INFO - Grading answer for sympy__sympy-16792...
+2025-04-10 17:07:18,897 - INFO - report: {'sympy__sympy-16792': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-16792: resolved: False
+2025-04-10 17:07:18,897 - INFO - Attempting to stop container sweb.eval.sympy__sympy-16792.241028_solver...
+2025-04-10 17:07:35,198 - INFO - Attempting to remove container sweb.eval.sympy__sympy-16792.241028_solver...
+2025-04-10 17:07:35,293 - INFO - Container sweb.eval.sympy__sympy-16792.241028_solver removed.
+2025-04-10 17:07:35,293 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-16792:latest...
+2025-04-10 17:07:36,087 - INFO - Image sweb.eval.x86_64.sympy__sympy-16792:latest removed.

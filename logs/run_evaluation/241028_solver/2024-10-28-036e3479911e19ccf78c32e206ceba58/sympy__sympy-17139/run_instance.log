@@ -1,0 +1,63 @@
+2025-04-10 17:07:12,588 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-17139
+Building instance image sweb.eval.x86_64.sympy__sympy-17139:latest for sympy__sympy-17139
+2025-04-10 17:09:22,284 - INFO - Creating container for sympy__sympy-17139...
+2025-04-10 17:09:22,385 - INFO - Container for sympy__sympy-17139 created: 810564bd555d6946e43dfa70ba5ee8f1b169096fb105c2a18f3ecb3b0455aa93
+2025-04-10 17:09:24,089 - INFO - Container for sympy__sympy-17139 started: 810564bd555d6946e43dfa70ba5ee8f1b169096fb105c2a18f3ecb3b0455aa93
+2025-04-10 17:09:24,089 - INFO - Intermediate patch for sympy__sympy-17139 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17139/patch.diff, now applying to container...
+2025-04-10 17:09:26,383 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:09:26,678 - INFO - >>>>> Applied Patch:
+patching file sympy/simplify/fu.py
+
+2025-04-10 17:09:28,994 - INFO - Git diff before:
+diff --git a/sympy/simplify/fu.py b/sympy/simplify/fu.py
+index ad1130ef96..1cfce2de39 100644
+--- a/sympy/simplify/fu.py
++++ b/sympy/simplify/fu.py
+@@ -501,9 +501,12 @@ def _f(rv):
+         if not (rv.is_Pow and rv.base.func == f):
+             return rv
+ 
+-        if (rv.exp < 0) == True:
+-            return rv
+-        if (rv.exp > max) == True:
++        if rv.exp.is_real:
++            if (rv.exp < 0) == True:
++                return rv
++            if (rv.exp > max) == True:
++                return rv
++        else:
+             return rv
+         if rv.exp == 2:
+             return h(g(rv.base.args[0])**2)
+2025-04-10 17:09:28,995 - INFO - Eval script for sympy__sympy-17139 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17139/eval.sh; copying to container...
+2025-04-10 17:25:58,183 - INFO - Test runtime: 987.99 seconds
+2025-04-10 17:25:58,183 - INFO - Test output for sympy__sympy-17139 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17139/test_output.txt
+2025-04-10 17:25:58,571 - INFO - Git diff after:
+diff --git a/sympy/simplify/fu.py b/sympy/simplify/fu.py
+index ad1130ef96..1cfce2de39 100644
+--- a/sympy/simplify/fu.py
++++ b/sympy/simplify/fu.py
+@@ -501,9 +501,12 @@ def _f(rv):
+         if not (rv.is_Pow and rv.base.func == f):
+             return rv
+ 
+-        if (rv.exp < 0) == True:
+-            return rv
+-        if (rv.exp > max) == True:
++        if rv.exp.is_real:
++            if (rv.exp < 0) == True:
++                return rv
++            if (rv.exp > max) == True:
++                return rv
++        else:
+             return rv
+         if rv.exp == 2:
+             return h(g(rv.base.args[0])**2)
+2025-04-10 17:25:58,571 - INFO - Grading answer for sympy__sympy-17139...
+2025-04-10 17:25:58,571 - INFO - report: {'sympy__sympy-17139': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-17139: resolved: False
+2025-04-10 17:25:58,572 - INFO - Attempting to stop container sweb.eval.sympy__sympy-17139.241028_solver...
+2025-04-10 17:26:14,670 - INFO - Attempting to remove container sweb.eval.sympy__sympy-17139.241028_solver...
+2025-04-10 17:26:14,775 - INFO - Container sweb.eval.sympy__sympy-17139.241028_solver removed.
+2025-04-10 17:26:14,775 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-17139:latest...
+2025-04-10 17:26:16,180 - INFO - Image sweb.eval.x86_64.sympy__sympy-17139:latest removed.

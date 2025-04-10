@@ -1,2 +1,54 @@
-2025-04-08 11:46:52,469 - INFO - Environment image sweb.env.x86_64.3a59860bcd0dab8bbfb2ff:latest found for scikit-learn__scikit-learn-25973
+2025-04-10 15:51:44,118 - INFO - Environment image sweb.env.x86_64.3a59860bcd0dab8bbfb2ff:latest found for scikit-learn__scikit-learn-25973
 Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-25973:latest for scikit-learn__scikit-learn-25973
+2025-04-10 16:39:53,695 - INFO - Creating container for scikit-learn__scikit-learn-25973...
+2025-04-10 16:39:53,806 - INFO - Container for scikit-learn__scikit-learn-25973 created: 32ea44e86b22f68d60116c430b951c8631ceeebc441f409141d92de8c2dc0216
+2025-04-10 16:39:56,203 - INFO - Container for scikit-learn__scikit-learn-25973 started: 32ea44e86b22f68d60116c430b951c8631ceeebc441f409141d92de8c2dc0216
+2025-04-10 16:39:56,204 - INFO - Intermediate patch for scikit-learn__scikit-learn-25973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-25973/patch.diff, now applying to container...
+2025-04-10 16:39:58,398 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:39:58,904 - INFO - >>>>> Applied Patch:
+patching file sklearn/feature_selection/_sequential.py
+patching file test_sequential.py
+
+2025-04-10 16:40:01,205 - INFO - Git diff before:
+diff --git a/sklearn/feature_selection/_sequential.py b/sklearn/feature_selection/_sequential.py
+index e983c55de..0c332330c 100644
+--- a/sklearn/feature_selection/_sequential.py
++++ b/sklearn/feature_selection/_sequential.py
+@@ -261,6 +261,10 @@ class SequentialFeatureSelector(SelectorMixin, MetaEstimatorMixin, BaseEstimator
+ 
+         cloned_estimator = clone(self.estimator)
+ 
++        # Convert cv to a list if it's an iterator to prevent exhaustion during feature selection
++        if hasattr(self.cv, '__iter__') and not isinstance(self.cv, (int, np.integer)):
++            self.cv = list(self.cv)
++
+         # the current mask corresponds to the set of features:
+         # - that we have already *selected* if we do forward selection
+         # - that we have already *excluded* if we do backward selection
+2025-04-10 16:40:01,206 - INFO - Eval script for scikit-learn__scikit-learn-25973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-25973/eval.sh; copying to container...
+2025-04-10 16:41:36,186 - INFO - Test runtime: 93.19 seconds
+2025-04-10 16:41:36,187 - INFO - Test output for scikit-learn__scikit-learn-25973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-25973/test_output.txt
+2025-04-10 16:41:36,407 - INFO - Git diff after:
+diff --git a/sklearn/feature_selection/_sequential.py b/sklearn/feature_selection/_sequential.py
+index e983c55de..0c332330c 100644
+--- a/sklearn/feature_selection/_sequential.py
++++ b/sklearn/feature_selection/_sequential.py
+@@ -261,6 +261,10 @@ class SequentialFeatureSelector(SelectorMixin, MetaEstimatorMixin, BaseEstimator
+ 
+         cloned_estimator = clone(self.estimator)
+ 
++        # Convert cv to a list if it's an iterator to prevent exhaustion during feature selection
++        if hasattr(self.cv, '__iter__') and not isinstance(self.cv, (int, np.integer)):
++            self.cv = list(self.cv)
++
+         # the current mask corresponds to the set of features:
+         # - that we have already *selected* if we do forward selection
+         # - that we have already *excluded* if we do backward selection
+2025-04-10 16:41:36,407 - INFO - Grading answer for scikit-learn__scikit-learn-25973...
+2025-04-10 16:41:36,409 - INFO - report: {'scikit-learn__scikit-learn-25973': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-25973: resolved: False
+2025-04-10 16:41:36,409 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-25973.241028_solver...
+2025-04-10 16:41:52,993 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-25973.241028_solver...
+2025-04-10 16:41:53,094 - INFO - Container sweb.eval.scikit-learn__scikit-learn-25973.241028_solver removed.
+2025-04-10 16:41:53,094 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-25973:latest...
+2025-04-10 16:41:54,001 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-25973:latest removed.

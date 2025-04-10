@@ -1,2 +1,133 @@
-2025-04-09 08:31:44,434 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13124
+2025-04-10 11:26:26,122 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-13124
 Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-13124:latest for scikit-learn__scikit-learn-13124
+2025-04-10 11:47:37,798 - INFO - Creating container for scikit-learn__scikit-learn-13124...
+2025-04-10 11:47:37,894 - INFO - Container for scikit-learn__scikit-learn-13124 created: f9ebbaa05265d9967792d830c5402ed42460b48e20694b665482a871bd315c03
+2025-04-10 11:47:38,517 - INFO - Container for scikit-learn__scikit-learn-13124 started: f9ebbaa05265d9967792d830c5402ed42460b48e20694b665482a871bd315c03
+2025-04-10 11:47:38,518 - INFO - Intermediate patch for scikit-learn__scikit-learn-13124 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-13124/patch.diff, now applying to container...
+2025-04-10 11:47:39,016 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 11:47:39,197 - INFO - >>>>> Applied Patch:
+patching file sklearn/model_selection/_split.py
+
+2025-04-10 11:47:40,592 - INFO - Git diff before:
+diff --git a/sklearn/model_selection/_split.py b/sklearn/model_selection/_split.py
+index 24394f869..4e668e0c9 100644
+--- a/sklearn/model_selection/_split.py
++++ b/sklearn/model_selection/_split.py
+@@ -645,29 +645,29 @@ class StratifiedKFold(_BaseKFold):
+                            " be less than n_splits=%d."
+                            % (min_groups, self.n_splits)), Warning)
+ 
+-        # pre-assign each sample to a test fold index using individual KFold
+-        # splitting strategies for each class so as to respect the balance of
+-        # classes
+-        # NOTE: Passing the data corresponding to ith class say X[y==class_i]
+-        # will break when the data is not 100% stratifiable for all classes.
+-        # So we pass np.zeroes(max(c, n_splits)) as data to the KFold
+-        per_cls_cvs = [
+-            KFold(self.n_splits, shuffle=self.shuffle,
+-                  random_state=rng).split(np.zeros(max(count, self.n_splits)))
+-            for count in y_counts]
+-
++        # Initialize test_folds
+         test_folds = np.zeros(n_samples, dtype=np.int)
+-        for test_fold_indices, per_cls_splits in enumerate(zip(*per_cls_cvs)):
+-            for cls, (_, test_split) in zip(unique_y, per_cls_splits):
+-                cls_test_folds = test_folds[y == cls]
+-                # the test split can be too big because we used
+-                # KFold(...).split(X[:max(c, n_splits)]) when data is not 100%
+-                # stratifiable for all the classes
+-                # (we use a warning instead of raising an exception)
+-                # If this is the case, let's trim it:
+-                test_split = test_split[test_split < len(cls_test_folds)]
+-                cls_test_folds[test_split] = test_fold_indices
+-                test_folds[y == cls] = cls_test_folds
++        
++        # For each class, get the indices and assign them to folds
++        for cls_idx, cls in enumerate(unique_y):
++            cls_mask = y == cls
++            cls_indices = np.where(cls_mask)[0]
++            n_cls_samples = len(cls_indices)
++
++            # Shuffle indices if requested
++            if self.shuffle:
++                check_random_state(rng).shuffle(cls_indices)
++
++            # Split indices into folds using the same proportions as KFold
++            fold_sizes = np.full(self.n_splits, n_cls_samples // self.n_splits, dtype=np.int)
++            fold_sizes[:n_cls_samples % self.n_splits] += 1
++            current = 0
++            
++            # Assign samples from this class to test folds
++            for fold_idx, fold_size in enumerate(fold_sizes):
++                start, stop = current, current + fold_size
++                test_folds[cls_indices[start:stop]] = fold_idx
++                current = stop
+ 
+         return test_folds
+2025-04-10 11:47:40,592 - INFO - Eval script for scikit-learn__scikit-learn-13124 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-13124/eval.sh; copying to container...
+2025-04-10 11:48:11,814 - INFO - Test runtime: 30.68 seconds
+2025-04-10 11:48:11,814 - INFO - Test output for scikit-learn__scikit-learn-13124 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-13124/test_output.txt
+2025-04-10 11:48:11,992 - INFO - Git diff after:
+diff --git a/sklearn/model_selection/_split.py b/sklearn/model_selection/_split.py
+index 24394f869..4e668e0c9 100644
+--- a/sklearn/model_selection/_split.py
++++ b/sklearn/model_selection/_split.py
+@@ -645,29 +645,29 @@ class StratifiedKFold(_BaseKFold):
+                            " be less than n_splits=%d."
+                            % (min_groups, self.n_splits)), Warning)
+ 
+-        # pre-assign each sample to a test fold index using individual KFold
+-        # splitting strategies for each class so as to respect the balance of
+-        # classes
+-        # NOTE: Passing the data corresponding to ith class say X[y==class_i]
+-        # will break when the data is not 100% stratifiable for all classes.
+-        # So we pass np.zeroes(max(c, n_splits)) as data to the KFold
+-        per_cls_cvs = [
+-            KFold(self.n_splits, shuffle=self.shuffle,
+-                  random_state=rng).split(np.zeros(max(count, self.n_splits)))
+-            for count in y_counts]
+-
++        # Initialize test_folds
+         test_folds = np.zeros(n_samples, dtype=np.int)
+-        for test_fold_indices, per_cls_splits in enumerate(zip(*per_cls_cvs)):
+-            for cls, (_, test_split) in zip(unique_y, per_cls_splits):
+-                cls_test_folds = test_folds[y == cls]
+-                # the test split can be too big because we used
+-                # KFold(...).split(X[:max(c, n_splits)]) when data is not 100%
+-                # stratifiable for all the classes
+-                # (we use a warning instead of raising an exception)
+-                # If this is the case, let's trim it:
+-                test_split = test_split[test_split < len(cls_test_folds)]
+-                cls_test_folds[test_split] = test_fold_indices
+-                test_folds[y == cls] = cls_test_folds
++        
++        # For each class, get the indices and assign them to folds
++        for cls_idx, cls in enumerate(unique_y):
++            cls_mask = y == cls
++            cls_indices = np.where(cls_mask)[0]
++            n_cls_samples = len(cls_indices)
++
++            # Shuffle indices if requested
++            if self.shuffle:
++                check_random_state(rng).shuffle(cls_indices)
++
++            # Split indices into folds using the same proportions as KFold
++            fold_sizes = np.full(self.n_splits, n_cls_samples // self.n_splits, dtype=np.int)
++            fold_sizes[:n_cls_samples % self.n_splits] += 1
++            current = 0
++            
++            # Assign samples from this class to test folds
++            for fold_idx, fold_size in enumerate(fold_sizes):
++                start, stop = current, current + fold_size
++                test_folds[cls_indices[start:stop]] = fold_idx
++                current = stop
+ 
+         return test_folds
+2025-04-10 11:48:11,992 - INFO - Grading answer for scikit-learn__scikit-learn-13124...
+2025-04-10 11:48:11,992 - INFO - report: {'scikit-learn__scikit-learn-13124': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-13124: resolved: False
+2025-04-10 11:48:11,992 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-13124.241028_solver...
+2025-04-10 11:48:27,589 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-13124.241028_solver...
+2025-04-10 11:48:27,604 - INFO - Container sweb.eval.scikit-learn__scikit-learn-13124.241028_solver removed.
+2025-04-10 11:48:27,604 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-13124:latest...
+2025-04-10 11:48:28,196 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-13124:latest removed.

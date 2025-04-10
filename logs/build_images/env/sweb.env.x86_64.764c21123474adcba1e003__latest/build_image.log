@@ -1,4 +1,4 @@
-2025-04-09 07:14:01,055 - INFO - Building image sweb.env.x86_64.764c21123474adcba1e003:latest
+2025-04-10 09:19:33,678 - INFO - Building image sweb.env.x86_64.764c21123474adcba1e003:latest
 Using dockerfile:
 FROM --platform=linux/x86_64 sweb.base.x86_64:latest
 
@@ -13,7 +13,7 @@ WORKDIR /testbed/
 RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
 
 Adding (1) setup scripts to image build repo
-2025-04-09 07:14:01,055 - INFO - [SETUP SCRIPT] setup_env.sh:
+2025-04-10 09:19:33,678 - INFO - [SETUP SCRIPT] setup_env.sh:
 #!/bin/bash
 set -euxo pipefail
 source /opt/miniconda3/bin/activate
@@ -21,27 +21,28 @@ conda create -n testbed python=3.9  -y
 conda activate testbed
 python -m pip install tox==4.16.0 tox-current-env==0.0.11 Jinja2==3.0.3
 
-2025-04-09 07:14:01,056 - INFO - Building docker image sweb.env.x86_64.764c21123474adcba1e003:latest in logs/build_images/env/sweb.env.x86_64.764c21123474adcba1e003__latest with platform linux/x86_64
-2025-04-09 07:14:01,064 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
-2025-04-09 07:14:01,064 - INFO - 
-2025-04-09 07:14:01,064 - INFO - ---> ab83453f8920
-2025-04-09 07:14:01,064 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
-2025-04-09 07:14:01,064 - INFO - 
-2025-04-09 07:14:01,068 - INFO - ---> Using cache
-2025-04-09 07:14:01,068 - INFO - ---> 6abf982d1b83
-2025-04-09 07:14:01,068 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
-2025-04-09 07:14:01,068 - INFO - 
-2025-04-09 07:14:01,084 - INFO - ---> Using cache
-2025-04-09 07:14:01,085 - INFO - ---> 635c5ce4bf2e
-2025-04-09 07:14:01,085 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
-2025-04-09 07:14:01,085 - INFO - 
-2025-04-09 07:14:01,086 - INFO - ---> Using cache
-2025-04-09 07:14:01,086 - INFO - ---> b558db1f816a
-2025-04-09 07:14:01,086 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
-2025-04-09 07:14:01,086 - INFO - 
-2025-04-09 07:14:01,170 - INFO - ---> Running in 707ba694547a
-2025-04-09 07:14:02,564 - INFO - + source /opt/miniconda3/bin/activate
-++ _CONDA_ROOT=/opt/miniconda3
+2025-04-10 09:19:33,678 - INFO - Building docker image sweb.env.x86_64.764c21123474adcba1e003:latest in logs/build_images/env/sweb.env.x86_64.764c21123474adcba1e003__latest with platform linux/x86_64
+2025-04-10 09:19:33,690 - INFO - Step 1/7 : FROM --platform=linux/x86_64 sweb.base.x86_64:latest
+2025-04-10 09:19:33,690 - INFO - 
+2025-04-10 09:19:33,690 - INFO - ---> bdb5f47110ee
+2025-04-10 09:19:33,690 - INFO - Step 2/7 : COPY ./setup_env.sh /root/
+2025-04-10 09:19:33,690 - INFO - 
+2025-04-10 09:19:33,874 - INFO - ---> 1aea0d7b867f
+2025-04-10 09:19:33,874 - INFO - Step 3/7 : RUN sed -i -e 's/\r$//' /root/setup_env.sh
+2025-04-10 09:19:33,874 - INFO - 
+2025-04-10 09:19:33,974 - INFO - ---> Running in 8638dfcff787
+2025-04-10 09:19:36,878 - INFO - ---> Removed intermediate container 8638dfcff787
+2025-04-10 09:19:36,878 - INFO - ---> 6880c5e0bd0a
+2025-04-10 09:19:36,878 - INFO - Step 4/7 : RUN chmod +x /root/setup_env.sh
+2025-04-10 09:19:36,878 - INFO - 
+2025-04-10 09:19:36,892 - INFO - ---> Running in 5b4fa7a0b911
+2025-04-10 09:19:39,475 - INFO - ---> Removed intermediate container 5b4fa7a0b911
+2025-04-10 09:19:39,475 - INFO - ---> f2710d6a7ddf
+2025-04-10 09:19:39,475 - INFO - Step 5/7 : RUN /bin/bash -c "source ~/.bashrc && /root/setup_env.sh"
+2025-04-10 09:19:39,475 - INFO - 
+2025-04-10 09:19:39,489 - INFO - ---> Running in bdfc74b51663
+2025-04-10 09:19:41,295 - INFO - + source /opt/miniconda3/bin/activate
+2025-04-10 09:19:41,296 - INFO - ++ _CONDA_ROOT=/opt/miniconda3
 ++ . /opt/miniconda3/etc/profile.d/conda.sh
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
@@ -55,22 +56,22 @@ python -m pip install tox==4.16.0 tox-current-env==0.0.11 Jinja2==3.0.3
 +++ export CONDA_SHLVL=0
 +++ CONDA_SHLVL=0
 +++ '[' -n '' ']'
-+++++ dirname /opt/miniconda3/bin/conda
-2025-04-09 07:14:02,566 - INFO - ++++ dirname /opt/miniconda3/bin
-2025-04-09 07:14:02,568 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+2025-04-10 09:19:41,370 - INFO - +++++ dirname /opt/miniconda3/bin/conda
+2025-04-10 09:19:41,370 - INFO - ++++ dirname /opt/miniconda3/bin
+2025-04-10 09:19:41,370 - INFO - +++ PATH=/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 +++ export PATH
 +++ '[' -z '' ']'
 +++ PS1=
-2025-04-09 07:14:02,568 - INFO - ++ conda activate
+2025-04-10 09:19:41,370 - INFO - ++ conda activate
 ++ local cmd=activate
 ++ case "$cmd" in
 ++ __conda_activate activate
 ++ '[' -n '' ']'
 ++ local ask_conda
-2025-04-09 07:14:02,569 - INFO - +++ PS1=
+2025-04-10 09:19:41,370 - INFO - +++ PS1=
 +++ __conda_exe shell.posix activate
-2025-04-09 07:14:02,569 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
-2025-04-09 07:14:03,476 - INFO - ++ ask_conda='PS1='\''(base) '\''
+2025-04-10 09:19:41,370 - INFO - +++ /opt/miniconda3/bin/conda shell.posix activate
+2025-04-10 09:19:42,092 - INFO - ++ ask_conda='PS1='\''(base) '\''
 export PATH='\''/opt/miniconda3/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3'\''
 export CONDA_SHLVL='\''1'\''
@@ -103,30 +104,31 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 +++ CONDA_PROMPT_MODIFIER='(base) '
 +++ export CONDA_EXE=/opt/miniconda3/bin/conda
 +++ CONDA_EXE=/opt/miniconda3/bin/conda
-+++ export _CE_M=
+2025-04-10 09:19:42,093 - INFO - +++ export _CE_M=
 +++ _CE_M=
 +++ export _CE_CONDA=
 +++ _CE_CONDA=
 +++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 +++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ __conda_hashr
-2025-04-09 07:14:03,476 - INFO - ++ '[' -n '' ']'
+2025-04-10 09:19:42,093 - INFO - ++ '[' -n '' ']'
 ++ '[' -n '' ']'
 ++ hash -r
-+ conda create -n testbed python=3.9 -y
+2025-04-10 09:19:42,093 - INFO - + conda create -n testbed python=3.9 -y
 + local cmd=create
 + case "$cmd" in
 + __conda_exe create -n testbed python=3.9 -y
-2025-04-09 07:14:03,476 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
-2025-04-09 07:14:07,864 - INFO - Channels:
+2025-04-10 09:19:42,093 - INFO - + /opt/miniconda3/bin/conda create -n testbed python=3.9 -y
+2025-04-10 09:19:45,603 - INFO - Channels:
  - defaults
  - conda-forge
 Platform: linux-64
 Collecting package metadata (repodata.json): ...working...
-2025-04-09 07:19:09,489 - INFO - done
-Solving environment: ...working...
-2025-04-09 07:19:18,784 - INFO - done
-2025-04-09 07:19:37,978 - INFO - ## Package Plan ##
+2025-04-10 09:24:15,787 - INFO - done
+2025-04-10 09:24:15,791 - INFO - Solving environment:
+2025-04-10 09:24:15,791 - INFO - ...working...
+2025-04-10 09:24:24,390 - INFO - done
+2025-04-10 09:24:41,600 - INFO - ## Package Plan ##
 
   environment location: /opt/miniconda3/envs/testbed
 
@@ -181,12 +183,12 @@ The following NEW packages will be INSTALLED:
 
 Downloading and Extracting Packages: ...working... done
 Preparing transaction: ...working...
-2025-04-09 07:19:39,489 - INFO - done
-Verifying transaction: ...working...
-2025-04-09 07:19:47,676 - INFO - done
-2025-04-09 07:19:47,677 - INFO - Executing transaction: ...working...
-2025-04-09 07:20:01,274 - INFO - done
-2025-04-09 07:20:01,778 - INFO - #
+2025-04-10 09:24:43,178 - INFO - done
+2025-04-10 09:24:43,178 - INFO - Verifying transaction: ...working...
+2025-04-10 09:24:50,788 - INFO - done
+2025-04-10 09:24:50,791 - INFO - Executing transaction: ...working...
+2025-04-10 09:24:59,198 - INFO - done
+2025-04-10 09:24:59,500 - INFO - #
 # To activate this environment, use
 #
 #     $ conda activate testbed
@@ -194,16 +196,16 @@ Verifying transaction: ...working...
 # To deactivate an active environment, use
 #
 #     $ conda deactivate
-2025-04-09 07:20:02,876 - INFO - + conda activate testbed
-+ local cmd=activate
-+ case "$cmd" in
+2025-04-10 09:25:01,188 - INFO - + conda activate testbed
+2025-04-10 09:25:01,188 - INFO - + local cmd=activate
+2025-04-10 09:25:01,189 - INFO - + case "$cmd" in
 + __conda_activate activate testbed
 + '[' -n '' ']'
 + local ask_conda
-2025-04-09 07:20:02,877 - INFO - ++ PS1='(base) '
+2025-04-10 09:25:01,190 - INFO - ++ PS1='(base) '
 ++ __conda_exe shell.posix activate testbed
-2025-04-09 07:20:02,877 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
-2025-04-09 07:20:03,796 - INFO - + ask_conda='PS1='\''(testbed) '\''
+2025-04-10 09:25:01,190 - INFO - ++ /opt/miniconda3/bin/conda shell.posix activate testbed
+2025-04-10 09:25:02,279 - INFO - + ask_conda='PS1='\''(testbed) '\''
 export PATH='\''/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'\''
 export CONDA_PREFIX='\''/opt/miniconda3/envs/testbed'\''
 export CONDA_SHLVL='\''2'\''
@@ -229,12 +231,12 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ export PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ++ PATH=/opt/miniconda3/envs/testbed/bin:/opt/miniconda3/condabin:/opt/miniconda3/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ++ export CONDA_PREFIX=/opt/miniconda3/envs/testbed
-2025-04-09 07:20:03,796 - INFO - ++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
+++ CONDA_PREFIX=/opt/miniconda3/envs/testbed
 ++ export CONDA_SHLVL=2
 ++ CONDA_SHLVL=2
 ++ export CONDA_DEFAULT_ENV=testbed
-2025-04-09 07:20:03,871 - INFO - ++ CONDA_DEFAULT_ENV=testbed
-++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
+++ CONDA_DEFAULT_ENV=testbed
+2025-04-10 09:25:02,280 - INFO - ++ export 'CONDA_PROMPT_MODIFIER=(testbed) '
 ++ CONDA_PROMPT_MODIFIER='(testbed) '
 ++ export CONDA_PREFIX_1=/opt/miniconda3
 ++ CONDA_PREFIX_1=/opt/miniconda3
@@ -247,72 +249,72 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 ++ export CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 ++ CONDA_PYTHON_EXE=/opt/miniconda3/bin/python
 + __conda_hashr
-2025-04-09 07:20:03,872 - INFO - + '[' -n '' ']'
++ '[' -n '' ']'
 + '[' -n '' ']'
 + hash -r
-+ python -m pip install tox==4.16.0 tox-current-env==0.0.11 Jinja2==3.0.3
-2025-04-09 07:20:06,479 - INFO - Collecting tox==4.16.0
-2025-04-09 07:20:06,502 - INFO - Downloading tox-4.16.0-py3-none-any.whl.metadata (5.0 kB)
-2025-04-09 07:20:06,790 - INFO - Collecting tox-current-env==0.0.11
-2025-04-09 07:20:06,797 - INFO - Downloading tox_current_env-0.0.11-py3-none-any.whl.metadata (14 kB)
-2025-04-09 07:20:06,975 - INFO - Collecting Jinja2==3.0.3
-2025-04-09 07:20:07,017 - INFO - Downloading Jinja2-3.0.3-py3-none-any.whl.metadata (3.5 kB)
-2025-04-09 07:20:07,078 - INFO - Collecting cachetools>=5.3.3 (from tox==4.16.0)
-2025-04-09 07:20:07,084 - INFO - Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
-2025-04-09 07:20:07,172 - INFO - Collecting chardet>=5.2 (from tox==4.16.0)
-2025-04-09 07:20:07,177 - INFO - Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
-2025-04-09 07:20:07,278 - INFO - Collecting colorama>=0.4.6 (from tox==4.16.0)
-2025-04-09 07:20:07,284 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
-2025-04-09 07:20:07,483 - INFO - Collecting filelock>=3.15.4 (from tox==4.16.0)
-2025-04-09 07:20:07,489 - INFO - Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
-2025-04-09 07:20:07,680 - INFO - Collecting packaging>=24.1 (from tox==4.16.0)
-2025-04-09 07:20:07,685 - INFO - Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
-2025-04-09 07:20:07,778 - INFO - Collecting platformdirs>=4.2.2 (from tox==4.16.0)
-2025-04-09 07:20:07,783 - INFO - Downloading platformdirs-4.3.7-py3-none-any.whl.metadata (11 kB)
-2025-04-09 07:20:07,892 - INFO - Collecting pluggy>=1.5 (from tox==4.16.0)
-  Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
-2025-04-09 07:20:08,007 - INFO - Collecting pyproject-api>=1.7.1 (from tox==4.16.0)
-2025-04-09 07:20:08,012 - INFO - Downloading pyproject_api-1.9.0-py3-none-any.whl.metadata (2.7 kB)
-2025-04-09 07:20:08,172 - INFO - Collecting tomli>=2.0.1 (from tox==4.16.0)
-2025-04-09 07:20:08,178 - INFO - Downloading tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
-2025-04-09 07:20:08,480 - INFO - Collecting virtualenv>=20.26.3 (from tox==4.16.0)
-2025-04-09 07:20:08,489 - INFO - Downloading virtualenv-20.30.0-py3-none-any.whl.metadata (4.5 kB)
-2025-04-09 07:20:08,990 - INFO - Collecting MarkupSafe>=2.0 (from Jinja2==3.0.3)
-2025-04-09 07:20:08,996 - INFO - Downloading MarkupSafe-3.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
-2025-04-09 07:20:09,294 - INFO - Collecting distlib<1,>=0.3.7 (from virtualenv>=20.26.3->tox==4.16.0)
-2025-04-09 07:20:09,373 - INFO - Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
-2025-04-09 07:20:09,481 - INFO - Downloading tox-4.16.0-py3-none-any.whl (156 kB)
-2025-04-09 07:20:09,620 - INFO - Downloading tox_current_env-0.0.11-py3-none-any.whl (12 kB)
-2025-04-09 07:20:09,684 - INFO - Downloading Jinja2-3.0.3-py3-none-any.whl (133 kB)
-2025-04-09 07:20:09,776 - INFO - Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
-2025-04-09 07:20:09,787 - INFO - Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
-2025-04-09 07:20:09,799 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
-2025-04-09 07:20:09,874 - INFO - Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
-2025-04-09 07:20:09,921 - INFO - Downloading MarkupSafe-3.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
-2025-04-09 07:20:09,932 - INFO - Downloading packaging-24.2-py3-none-any.whl (65 kB)
-2025-04-09 07:20:10,014 - INFO - Downloading platformdirs-4.3.7-py3-none-any.whl (18 kB)
-2025-04-09 07:20:10,024 - INFO - Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
-2025-04-09 07:20:10,070 - INFO - Downloading pyproject_api-1.9.0-py3-none-any.whl (13 kB)
-2025-04-09 07:20:10,080 - INFO - Downloading tomli-2.2.1-py3-none-any.whl (14 kB)
-2025-04-09 07:20:10,091 - INFO - Downloading virtualenv-20.30.0-py3-none-any.whl (4.3 MB)
-2025-04-09 07:20:10,365 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 15.2 MB/s eta 0:00:00
-2025-04-09 07:20:10,366 - INFO - 
-2025-04-09 07:20:10,373 - INFO - Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
-2025-04-09 07:20:10,876 - INFO - Installing collected packages: distlib, tomli, pluggy, platformdirs, packaging, MarkupSafe, filelock, colorama, chardet, cachetools, virtualenv, pyproject-api, Jinja2, tox, tox-current-env
-2025-04-09 07:20:16,223 - INFO - Successfully installed Jinja2-3.0.3 MarkupSafe-3.0.2 cachetools-5.5.2 chardet-5.2.0 colorama-0.4.6 distlib-0.3.9 filelock-3.18.0 packaging-24.2 platformdirs-4.3.7 pluggy-1.5.0 pyproject-api-1.9.0 tomli-2.2.1 tox-4.16.0 tox-current-env-0.0.11 virtualenv-20.30.0
-2025-04-09 07:20:16,224 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
-2025-04-09 07:21:10,193 - INFO - ---> Removed intermediate container 707ba694547a
-2025-04-09 07:21:10,194 - INFO - ---> 51f1f5b03256
-2025-04-09 07:21:10,194 - INFO - Step 6/7 : WORKDIR /testbed/
-2025-04-09 07:21:10,194 - INFO - 
-2025-04-09 07:21:10,783 - INFO - ---> Running in cf679a1b4e8d
-2025-04-09 07:21:10,892 - INFO - ---> Removed intermediate container cf679a1b4e8d
-2025-04-09 07:21:10,892 - INFO - ---> 5ffaef5bd067
-2025-04-09 07:21:10,893 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
-2025-04-09 07:21:10,893 - INFO - 
-2025-04-09 07:21:11,082 - INFO - ---> Running in d60a2daebcd9
-2025-04-09 07:21:12,981 - INFO - ---> Removed intermediate container d60a2daebcd9
-2025-04-09 07:21:12,982 - INFO - ---> 31d422172687
-2025-04-09 07:21:12,982 - INFO - Successfully built 31d422172687
-2025-04-09 07:21:13,044 - INFO - Successfully tagged sweb.env.x86_64.764c21123474adcba1e003:latest
-2025-04-09 07:21:13,044 - INFO - Image built successfully!
+2025-04-10 09:25:02,280 - INFO - + python -m pip install tox==4.16.0 tox-current-env==0.0.11 Jinja2==3.0.3
+2025-04-10 09:25:04,695 - INFO - Collecting tox==4.16.0
+2025-04-10 09:25:04,776 - INFO - Downloading tox-4.16.0-py3-none-any.whl.metadata (5.0 kB)
+2025-04-10 09:25:04,984 - INFO - Collecting tox-current-env==0.0.11
+2025-04-10 09:25:04,988 - INFO - Downloading tox_current_env-0.0.11-py3-none-any.whl.metadata (14 kB)
+2025-04-10 09:25:05,085 - INFO - Collecting Jinja2==3.0.3
+2025-04-10 09:25:05,089 - INFO - Downloading Jinja2-3.0.3-py3-none-any.whl.metadata (3.5 kB)
+2025-04-10 09:25:05,190 - INFO - Collecting cachetools>=5.3.3 (from tox==4.16.0)
+2025-04-10 09:25:05,195 - INFO - Downloading cachetools-5.5.2-py3-none-any.whl.metadata (5.4 kB)
+2025-04-10 09:25:05,283 - INFO - Collecting chardet>=5.2 (from tox==4.16.0)
+2025-04-10 09:25:05,288 - INFO - Downloading chardet-5.2.0-py3-none-any.whl.metadata (3.4 kB)
+2025-04-10 09:25:05,313 - INFO - Collecting colorama>=0.4.6 (from tox==4.16.0)
+2025-04-10 09:25:05,317 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl.metadata (17 kB)
+2025-04-10 09:25:05,476 - INFO - Collecting filelock>=3.15.4 (from tox==4.16.0)
+2025-04-10 09:25:05,481 - INFO - Downloading filelock-3.18.0-py3-none-any.whl.metadata (2.9 kB)
+2025-04-10 09:25:05,583 - INFO - Collecting packaging>=24.1 (from tox==4.16.0)
+2025-04-10 09:25:05,588 - INFO - Downloading packaging-24.2-py3-none-any.whl.metadata (3.2 kB)
+2025-04-10 09:25:05,685 - INFO - Collecting platformdirs>=4.2.2 (from tox==4.16.0)
+2025-04-10 09:25:05,689 - INFO - Downloading platformdirs-4.3.7-py3-none-any.whl.metadata (11 kB)
+2025-04-10 09:25:05,788 - INFO - Collecting pluggy>=1.5 (from tox==4.16.0)
+2025-04-10 09:25:05,792 - INFO - Downloading pluggy-1.5.0-py3-none-any.whl.metadata (4.8 kB)
+2025-04-10 09:25:05,886 - INFO - Collecting pyproject-api>=1.7.1 (from tox==4.16.0)
+2025-04-10 09:25:05,890 - INFO - Downloading pyproject_api-1.9.0-py3-none-any.whl.metadata (2.7 kB)
+2025-04-10 09:25:05,994 - INFO - Collecting tomli>=2.0.1 (from tox==4.16.0)
+2025-04-10 09:25:05,998 - INFO - Downloading tomli-2.2.1-py3-none-any.whl.metadata (10 kB)
+2025-04-10 09:25:06,388 - INFO - Collecting virtualenv>=20.26.3 (from tox==4.16.0)
+2025-04-10 09:25:06,392 - INFO - Downloading virtualenv-20.30.0-py3-none-any.whl.metadata (4.5 kB)
+2025-04-10 09:25:06,797 - INFO - Collecting MarkupSafe>=2.0 (from Jinja2==3.0.3)
+2025-04-10 09:25:06,876 - INFO - Downloading MarkupSafe-3.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.0 kB)
+2025-04-10 09:25:06,993 - INFO - Collecting distlib<1,>=0.3.7 (from virtualenv>=20.26.3->tox==4.16.0)
+2025-04-10 09:25:06,997 - INFO - Downloading distlib-0.3.9-py2.py3-none-any.whl.metadata (5.2 kB)
+2025-04-10 09:25:07,097 - INFO - Downloading tox-4.16.0-py3-none-any.whl (156 kB)
+2025-04-10 09:25:07,187 - INFO - Downloading tox_current_env-0.0.11-py3-none-any.whl (12 kB)
+2025-04-10 09:25:07,197 - INFO - Downloading Jinja2-3.0.3-py3-none-any.whl (133 kB)
+2025-04-10 09:25:07,285 - INFO - Downloading cachetools-5.5.2-py3-none-any.whl (10 kB)
+2025-04-10 09:25:07,293 - INFO - Downloading chardet-5.2.0-py3-none-any.whl (199 kB)
+2025-04-10 09:25:07,392 - INFO - Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+2025-04-10 09:25:07,400 - INFO - Downloading filelock-3.18.0-py3-none-any.whl (16 kB)
+2025-04-10 09:25:07,484 - INFO - Downloading MarkupSafe-3.0.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
+2025-04-10 09:25:07,491 - INFO - Downloading packaging-24.2-py3-none-any.whl (65 kB)
+2025-04-10 09:25:07,576 - INFO - Downloading platformdirs-4.3.7-py3-none-any.whl (18 kB)
+2025-04-10 09:25:07,590 - INFO - Downloading pluggy-1.5.0-py3-none-any.whl (20 kB)
+2025-04-10 09:25:07,599 - INFO - Downloading pyproject_api-1.9.0-py3-none-any.whl (13 kB)
+2025-04-10 09:25:07,607 - INFO - Downloading tomli-2.2.1-py3-none-any.whl (14 kB)
+2025-04-10 09:25:07,613 - INFO - Downloading virtualenv-20.30.0-py3-none-any.whl (4.3 MB)
+2025-04-10 09:25:07,802 - INFO - ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.3/4.3 MB 25.6 MB/s eta 0:00:00
+2025-04-10 09:25:07,802 - INFO - 
+2025-04-10 09:25:07,876 - INFO - Downloading distlib-0.3.9-py2.py3-none-any.whl (468 kB)
+2025-04-10 09:25:08,192 - INFO - Installing collected packages: distlib, tomli, pluggy, platformdirs, packaging, MarkupSafe, filelock, colorama, chardet, cachetools, virtualenv, pyproject-api, Jinja2, tox, tox-current-env
+2025-04-10 09:25:12,379 - INFO - Successfully installed Jinja2-3.0.3 MarkupSafe-3.0.2 cachetools-5.5.2 chardet-5.2.0 colorama-0.4.6 distlib-0.3.9 filelock-3.18.0 packaging-24.2 platformdirs-4.3.7 pluggy-1.5.0 pyproject-api-1.9.0 tomli-2.2.1 tox-4.16.0 tox-current-env-0.0.11 virtualenv-20.30.0
+2025-04-10 09:25:12,380 - INFO - WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+2025-04-10 09:25:59,191 - INFO - ---> Removed intermediate container bdfc74b51663
+2025-04-10 09:25:59,191 - INFO - ---> 12ed4e165ebf
+2025-04-10 09:25:59,191 - INFO - Step 6/7 : WORKDIR /testbed/
+2025-04-10 09:25:59,192 - INFO - 
+2025-04-10 09:25:59,387 - INFO - ---> Running in 26cb7d520d0d
+2025-04-10 09:25:59,573 - INFO - ---> Removed intermediate container 26cb7d520d0d
+2025-04-10 09:25:59,573 - INFO - ---> a096027b0e15
+2025-04-10 09:25:59,574 - INFO - Step 7/7 : RUN echo "source /opt/miniconda3/etc/profile.d/conda.sh && conda activate testbed" > /root/.bashrc
+2025-04-10 09:25:59,574 - INFO - 
+2025-04-10 09:25:59,595 - INFO - ---> Running in 36f9b158fefe
+2025-04-10 09:26:01,784 - INFO - ---> Removed intermediate container 36f9b158fefe
+2025-04-10 09:26:01,784 - INFO - ---> dbe7b5f39ce0
+2025-04-10 09:26:01,785 - INFO - Successfully built dbe7b5f39ce0
+2025-04-10 09:26:01,789 - INFO - Successfully tagged sweb.env.x86_64.764c21123474adcba1e003:latest
+2025-04-10 09:26:01,794 - INFO - Image built successfully!

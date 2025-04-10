@@ -1,40 +1,51 @@
-2025-04-09 07:56:50,734 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json
+2025-04-10 13:27:30,946 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-4075
+Building instance image sweb.eval.x86_64.pydata__xarray-4075:latest for pydata__xarray-4075
+2025-04-10 13:29:41,179 - INFO - Creating container for pydata__xarray-4075...
+2025-04-10 13:29:41,373 - INFO - Container for pydata__xarray-4075 created: a3465efae18883002322c972119133b9b6ad94895c50e911d9c185d870b46f5e
+2025-04-10 13:29:42,694 - INFO - Container for pydata__xarray-4075 started: a3465efae18883002322c972119133b9b6ad94895c50e911d9c185d870b46f5e
+2025-04-10 13:29:42,694 - INFO - Intermediate patch for pydata__xarray-4075 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4075/patch.diff, now applying to container...
+2025-04-10 13:29:43,478 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 13:29:43,681 - INFO - >>>>> Applied Patch:
+patching file xarray/core/weighted.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json: Not Found ("No such image: sweb.env.x86_64.502d8fc6ebccd881244091:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image pydata__xarray-4075: Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest not found for pydata__xarray-4075
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4075/run_instance.log) for more information.
-
-2025-04-09 07:56:50,734 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4075:latest...
-2025-04-09 07:56:50,737 - INFO - Image sweb.eval.x86_64.pydata__xarray-4075:latest not found, removing has no effect.
+2025-04-10 13:29:44,190 - INFO - Git diff before:
+diff --git a/xarray/core/weighted.py b/xarray/core/weighted.py
+index 996d2e4c..5cd3408e 100644
+--- a/xarray/core/weighted.py
++++ b/xarray/core/weighted.py
+@@ -107,7 +107,8 @@ class Weighted:
+             )
+ 
+         self.obj = obj
+-        self.weights = weights
++        # Convert boolean weights to float to ensure proper arithmetic
++        self.weights = weights if weights.dtype.kind != 'b' else weights.astype(float)
+ 
+     @staticmethod
+     def _reduce(
+2025-04-10 13:29:44,190 - INFO - Eval script for pydata__xarray-4075 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4075/eval.sh; copying to container...
+2025-04-10 13:31:01,779 - INFO - Test runtime: 76.89 seconds
+2025-04-10 13:31:01,780 - INFO - Test output for pydata__xarray-4075 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4075/test_output.txt
+2025-04-10 13:31:02,091 - INFO - Git diff after:
+diff --git a/xarray/core/weighted.py b/xarray/core/weighted.py
+index 996d2e4c..5cd3408e 100644
+--- a/xarray/core/weighted.py
++++ b/xarray/core/weighted.py
+@@ -107,7 +107,8 @@ class Weighted:
+             )
+ 
+         self.obj = obj
+-        self.weights = weights
++        # Convert boolean weights to float to ensure proper arithmetic
++        self.weights = weights if weights.dtype.kind != 'b' else weights.astype(float)
+ 
+     @staticmethod
+     def _reduce(
+2025-04-10 13:31:02,092 - INFO - Grading answer for pydata__xarray-4075...
+2025-04-10 13:31:02,093 - INFO - report: {'pydata__xarray-4075': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-4075: resolved: False
+2025-04-10 13:31:02,093 - INFO - Attempting to stop container sweb.eval.pydata__xarray-4075.241028_solver...
+2025-04-10 13:31:19,082 - INFO - Attempting to remove container sweb.eval.pydata__xarray-4075.241028_solver...
+2025-04-10 13:31:19,190 - INFO - Container sweb.eval.pydata__xarray-4075.241028_solver removed.
+2025-04-10 13:31:19,190 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4075:latest...
+2025-04-10 13:31:19,396 - INFO - Image sweb.eval.x86_64.pydata__xarray-4075:latest removed.

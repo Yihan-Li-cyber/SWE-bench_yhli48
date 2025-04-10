@@ -1,0 +1,63 @@
+2025-04-10 16:48:09,709 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13031
+Building instance image sweb.eval.x86_64.sympy__sympy-13031:latest for sympy__sympy-13031
+2025-04-10 16:49:30,689 - INFO - Creating container for sympy__sympy-13031...
+2025-04-10 16:49:30,797 - INFO - Container for sympy__sympy-13031 created: 45f24dbe725fef70dca4f301af63b698b695a1821b5f6d65ef8da8f9d408036a
+2025-04-10 16:49:32,405 - INFO - Container for sympy__sympy-13031 started: 45f24dbe725fef70dca4f301af63b698b695a1821b5f6d65ef8da8f9d408036a
+2025-04-10 16:49:32,405 - INFO - Intermediate patch for sympy__sympy-13031 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13031/patch.diff, now applying to container...
+2025-04-10 16:49:33,893 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:49:34,206 - INFO - >>>>> Applied Patch:
+patching file sympy/matrices/common.py
+
+2025-04-10 16:49:36,198 - INFO - Git diff before:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 7ef51bc847..4d87a55d46 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -475,10 +475,11 @@ def row_join(self, other):
+         row
+         col_join
+         """
+-        # A null matrix can always be stacked (see  #10770)
+-        if self.cols == 0 and self.rows != other.rows:
+-            return self._new(other.rows, 0, []).row_join(other)
+-
++        # Handle empty matrices while preserving their column counts
++        if self.rows == 0:
++            return self._new(other.rows, self.cols + other.cols, [])
++        if other.rows == 0:
++            return self._new(self.rows, self.cols + other.cols, list(self))
+         if self.rows != other.rows:
+             raise ShapeError(
+                 "`self` and `rhs` must have the same number of rows.")
+2025-04-10 16:49:36,198 - INFO - Eval script for sympy__sympy-13031 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13031/eval.sh; copying to container...
+2025-04-10 16:50:04,888 - INFO - Test runtime: 27.59 seconds
+2025-04-10 16:50:04,889 - INFO - Test output for sympy__sympy-13031 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13031/test_output.txt
+2025-04-10 16:50:05,589 - INFO - Git diff after:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 7ef51bc847..4d87a55d46 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -475,10 +475,11 @@ def row_join(self, other):
+         row
+         col_join
+         """
+-        # A null matrix can always be stacked (see  #10770)
+-        if self.cols == 0 and self.rows != other.rows:
+-            return self._new(other.rows, 0, []).row_join(other)
+-
++        # Handle empty matrices while preserving their column counts
++        if self.rows == 0:
++            return self._new(other.rows, self.cols + other.cols, [])
++        if other.rows == 0:
++            return self._new(self.rows, self.cols + other.cols, list(self))
+         if self.rows != other.rows:
+             raise ShapeError(
+                 "`self` and `rhs` must have the same number of rows.")
+2025-04-10 16:50:05,589 - INFO - Grading answer for sympy__sympy-13031...
+2025-04-10 16:50:05,590 - INFO - report: {'sympy__sympy-13031': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13031: resolved: False
+2025-04-10 16:50:05,590 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13031.241028_solver...
+2025-04-10 16:50:22,500 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13031.241028_solver...
+2025-04-10 16:50:22,696 - INFO - Container sweb.eval.sympy__sympy-13031.241028_solver removed.
+2025-04-10 16:50:22,696 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13031:latest...
+2025-04-10 16:50:24,302 - INFO - Image sweb.eval.x86_64.sympy__sympy-13031:latest removed.

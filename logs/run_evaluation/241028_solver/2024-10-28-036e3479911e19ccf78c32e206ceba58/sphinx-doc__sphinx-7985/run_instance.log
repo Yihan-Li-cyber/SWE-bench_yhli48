@@ -1,0 +1,265 @@
+2025-04-10 16:18:45,829 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-7985
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-7985:latest for sphinx-doc__sphinx-7985
+2025-04-10 16:20:42,410 - INFO - Creating container for sphinx-doc__sphinx-7985...
+2025-04-10 16:20:42,513 - INFO - Container for sphinx-doc__sphinx-7985 created: 413000e020b046bd604d93ad0a854cc2036bf86aa4577c3376a8c2fbc842d0de
+2025-04-10 16:20:43,821 - INFO - Container for sphinx-doc__sphinx-7985 started: 413000e020b046bd604d93ad0a854cc2036bf86aa4577c3376a8c2fbc842d0de
+2025-04-10 16:20:43,821 - INFO - Intermediate patch for sphinx-doc__sphinx-7985 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-7985/patch.diff, now applying to container...
+2025-04-10 16:20:45,015 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:20:45,314 - INFO - >>>>> Applied Patch:
+patching file sphinx/builders/linkcheck.py
+patching file tests/roots/test-linkcheck/index.rst
+patching file tests/roots/test-linkcheck/local_links.txt
+
+2025-04-10 16:20:47,206 - INFO - Git diff before:
+diff --git a/setup.py b/setup.py
+index a404f1fa5..2c6848797 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/builders/linkcheck.py b/sphinx/builders/linkcheck.py
+index dd5317087..6b954802b 100644
+--- a/sphinx/builders/linkcheck.py
++++ b/sphinx/builders/linkcheck.py
+@@ -20,6 +20,7 @@ from urllib.parse import unquote, urlparse
+ 
+ from docutils import nodes
+ from docutils.nodes import Node
++from sphinx import addnodes
+ from requests.exceptions import HTTPError
+ 
+ from sphinx.application import Sphinx
+@@ -213,7 +214,14 @@ class CheckExternalLinksBuilder(Builder):
+             if len(uri) == 0 or uri.startswith(('#', 'mailto:', 'ftp:')):
+                 return 'unchecked', '', 0
+             elif not uri.startswith(('http:', 'https:')):
+-                return 'local', '', 0
++                # Check if the local reference exists in the environment
++                std = self.env.get_domain('std')
++                if uri in std.data['labels'] or uri in std.data['anonlabels']:
++                    return 'local', '', 0
++                elif uri in self.env.all_docs:
++                    return 'local', '', 0
++                else:
++                    return 'broken', 'undefined label', 0
+             elif uri in self.good:
+                 return 'working', 'old', 0
+             elif uri in self.broken:
+@@ -243,8 +251,11 @@ class CheckExternalLinksBuilder(Builder):
+             uri, docname, lineno = self.wqueue.get()
+             if uri is None:
+                 break
+-            status, info, code = check()
+-            self.rqueue.put((uri, docname, lineno, status, info, code))
++            if uri in self.env.all_docs:
++                self.write_entry('local', docname, self.env.doc2path(docname), lineno, uri)
++            else:
++                status, info, code = check()
++                self.rqueue.put((uri, docname, lineno, status, info, code))
+ 
+     def process_result(self, result: Tuple[str, str, int, str, str, int]) -> None:
+         uri, docname, lineno, status, info, code = result
+@@ -271,6 +282,7 @@ class CheckExternalLinksBuilder(Builder):
+             logger.info(darkgray('-local-   ') + uri)
+             self.write_entry('local', docname, filename, lineno, uri)
+             self.write_linkstat(linkstat)
++            return
+         elif status == 'working':
+             logger.info(darkgreen('ok        ') + uri + info)
+             self.write_linkstat(linkstat)
+@@ -321,6 +333,21 @@ class CheckExternalLinksBuilder(Builder):
+             self.wqueue.put((uri, docname, lineno), False)
+             n += 1
+ 
++        # pending reference nodes (internal references)
++        for refnode in doctree.traverse(addnodes.pending_xref):
++            if refnode['reftype'] in ('doc', 'ref'):
++                uri = refnode['reftarget']
++                lineno = get_node_line(refnode)
++                # Check if the target exists before queueing
++                std = self.env.get_domain('std')
++                if (uri in std.data['labels'] or 
++                    uri in std.data['anonlabels'] or 
++                    uri in self.env.all_docs):
++                    self.write_entry('local', docname, self.env.doc2path(docname), lineno, uri)
++                else:
++                    self.write_entry('broken', docname, self.env.doc2path(docname), lineno, uri)
++                n += 1
++
+         # image nodes
+         for imgnode in doctree.traverse(nodes.image):
+             uri = imgnode['candidates'].get('?')
+diff --git a/tox.ini b/tox.ini
+index bddd822a6..34baee205 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -27,7 +27,7 @@ extras =
+ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+ commands=
+-    pytest --durations 25 {posargs}
++    pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:20:47,206 - INFO - Eval script for sphinx-doc__sphinx-7985 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-7985/eval.sh; copying to container...
+2025-04-10 16:21:13,418 - INFO - Test runtime: 25.49 seconds
+2025-04-10 16:21:13,418 - INFO - Test output for sphinx-doc__sphinx-7985 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-7985/test_output.txt
+2025-04-10 16:21:13,821 - INFO - Git diff after:
+diff --git a/setup.py b/setup.py
+index a404f1fa5..2c6848797 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/builders/linkcheck.py b/sphinx/builders/linkcheck.py
+index dd5317087..6b954802b 100644
+--- a/sphinx/builders/linkcheck.py
++++ b/sphinx/builders/linkcheck.py
+@@ -20,6 +20,7 @@ from urllib.parse import unquote, urlparse
+ 
+ from docutils import nodes
+ from docutils.nodes import Node
++from sphinx import addnodes
+ from requests.exceptions import HTTPError
+ 
+ from sphinx.application import Sphinx
+@@ -213,7 +214,14 @@ class CheckExternalLinksBuilder(Builder):
+             if len(uri) == 0 or uri.startswith(('#', 'mailto:', 'ftp:')):
+                 return 'unchecked', '', 0
+             elif not uri.startswith(('http:', 'https:')):
+-                return 'local', '', 0
++                # Check if the local reference exists in the environment
++                std = self.env.get_domain('std')
++                if uri in std.data['labels'] or uri in std.data['anonlabels']:
++                    return 'local', '', 0
++                elif uri in self.env.all_docs:
++                    return 'local', '', 0
++                else:
++                    return 'broken', 'undefined label', 0
+             elif uri in self.good:
+                 return 'working', 'old', 0
+             elif uri in self.broken:
+@@ -243,8 +251,11 @@ class CheckExternalLinksBuilder(Builder):
+             uri, docname, lineno = self.wqueue.get()
+             if uri is None:
+                 break
+-            status, info, code = check()
+-            self.rqueue.put((uri, docname, lineno, status, info, code))
++            if uri in self.env.all_docs:
++                self.write_entry('local', docname, self.env.doc2path(docname), lineno, uri)
++            else:
++                status, info, code = check()
++                self.rqueue.put((uri, docname, lineno, status, info, code))
+ 
+     def process_result(self, result: Tuple[str, str, int, str, str, int]) -> None:
+         uri, docname, lineno, status, info, code = result
+@@ -271,6 +282,7 @@ class CheckExternalLinksBuilder(Builder):
+             logger.info(darkgray('-local-   ') + uri)
+             self.write_entry('local', docname, filename, lineno, uri)
+             self.write_linkstat(linkstat)
++            return
+         elif status == 'working':
+             logger.info(darkgreen('ok        ') + uri + info)
+             self.write_linkstat(linkstat)
+@@ -321,6 +333,21 @@ class CheckExternalLinksBuilder(Builder):
+             self.wqueue.put((uri, docname, lineno), False)
+             n += 1
+ 
++        # pending reference nodes (internal references)
++        for refnode in doctree.traverse(addnodes.pending_xref):
++            if refnode['reftype'] in ('doc', 'ref'):
++                uri = refnode['reftarget']
++                lineno = get_node_line(refnode)
++                # Check if the target exists before queueing
++                std = self.env.get_domain('std')
++                if (uri in std.data['labels'] or 
++                    uri in std.data['anonlabels'] or 
++                    uri in self.env.all_docs):
++                    self.write_entry('local', docname, self.env.doc2path(docname), lineno, uri)
++                else:
++                    self.write_entry('broken', docname, self.env.doc2path(docname), lineno, uri)
++                n += 1
++
+         # image nodes
+         for imgnode in doctree.traverse(nodes.image):
+             uri = imgnode['candidates'].get('?')
+diff --git a/tox.ini b/tox.ini
+index bddd822a6..34baee205 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -27,7 +27,7 @@ extras =
+ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+ commands=
+-    pytest --durations 25 {posargs}
++    pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:21:13,822 - INFO - Grading answer for sphinx-doc__sphinx-7985...
+2025-04-10 16:21:13,822 - INFO - report: {'sphinx-doc__sphinx-7985': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-7985: resolved: False
+2025-04-10 16:21:13,823 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-7985.241028_solver...
+2025-04-10 16:21:30,011 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-7985.241028_solver...
+2025-04-10 16:21:30,107 - INFO - Container sweb.eval.sphinx-doc__sphinx-7985.241028_solver removed.
+2025-04-10 16:21:30,107 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-7985:latest...
+2025-04-10 16:21:31,807 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-7985:latest removed.

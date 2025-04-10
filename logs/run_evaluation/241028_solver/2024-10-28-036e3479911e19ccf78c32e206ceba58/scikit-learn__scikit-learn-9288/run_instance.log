@@ -1,0 +1,65 @@
+2025-04-10 15:51:44,640 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-9288
+Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-9288:latest for scikit-learn__scikit-learn-9288
+2025-04-10 16:25:17,030 - INFO - Creating container for scikit-learn__scikit-learn-9288...
+2025-04-10 16:25:17,118 - INFO - Container for scikit-learn__scikit-learn-9288 created: 5fa7661c7ca8ec857ef15872ea661a66aa05ea68710b36129982ec150b829102
+2025-04-10 16:25:18,302 - INFO - Container for scikit-learn__scikit-learn-9288 started: 5fa7661c7ca8ec857ef15872ea661a66aa05ea68710b36129982ec150b829102
+2025-04-10 16:25:18,303 - INFO - Intermediate patch for scikit-learn__scikit-learn-9288 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-9288/patch.diff, now applying to container...
+2025-04-10 16:25:19,215 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:25:19,413 - INFO - >>>>> Applied Patch:
+patching file sklearn/cluster/k_means_.py
+
+2025-04-10 16:25:20,921 - INFO - Git diff before:
+diff --git a/sklearn/cluster/k_means_.py b/sklearn/cluster/k_means_.py
+index b7fbdf7da..1d0b7b0dc 100644
+--- a/sklearn/cluster/k_means_.py
++++ b/sklearn/cluster/k_means_.py
+@@ -363,13 +363,14 @@ def k_means(X, n_clusters, sample_weight=None, init='k-means++',
+     if effective_n_jobs(n_jobs) == 1:
+         # For a single thread, less memory is needed if we just store one set
+         # of the best results (as opposed to one set per run per thread).
+-        for it in range(n_init):
++        seeds = random_state.randint(np.iinfo(np.int32).max, size=n_init)
++        for seed in seeds:
+             # run a k-means once
+             labels, inertia, centers, n_iter_ = kmeans_single(
+                 X, sample_weight, n_clusters, max_iter=max_iter, init=init,
+                 verbose=verbose, precompute_distances=precompute_distances,
+                 tol=tol, x_squared_norms=x_squared_norms,
+-                random_state=random_state)
++                random_state=seed)
+             # determine if these results are the best so far
+             if best_inertia is None or inertia < best_inertia:
+                 best_labels = labels.copy()
+2025-04-10 16:25:20,921 - INFO - Eval script for scikit-learn__scikit-learn-9288 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-9288/eval.sh; copying to container...
+2025-04-10 16:27:45,222 - INFO - Test runtime: 143.70 seconds
+2025-04-10 16:27:45,222 - INFO - Test output for scikit-learn__scikit-learn-9288 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-9288/test_output.txt
+2025-04-10 16:27:45,522 - INFO - Git diff after:
+diff --git a/sklearn/cluster/k_means_.py b/sklearn/cluster/k_means_.py
+index b7fbdf7da..1d0b7b0dc 100644
+--- a/sklearn/cluster/k_means_.py
++++ b/sklearn/cluster/k_means_.py
+@@ -363,13 +363,14 @@ def k_means(X, n_clusters, sample_weight=None, init='k-means++',
+     if effective_n_jobs(n_jobs) == 1:
+         # For a single thread, less memory is needed if we just store one set
+         # of the best results (as opposed to one set per run per thread).
+-        for it in range(n_init):
++        seeds = random_state.randint(np.iinfo(np.int32).max, size=n_init)
++        for seed in seeds:
+             # run a k-means once
+             labels, inertia, centers, n_iter_ = kmeans_single(
+                 X, sample_weight, n_clusters, max_iter=max_iter, init=init,
+                 verbose=verbose, precompute_distances=precompute_distances,
+                 tol=tol, x_squared_norms=x_squared_norms,
+-                random_state=random_state)
++                random_state=seed)
+             # determine if these results are the best so far
+             if best_inertia is None or inertia < best_inertia:
+                 best_labels = labels.copy()
+2025-04-10 16:27:45,598 - INFO - Grading answer for scikit-learn__scikit-learn-9288...
+2025-04-10 16:27:45,598 - INFO - report: {'scikit-learn__scikit-learn-9288': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-9288: resolved: False
+2025-04-10 16:27:45,598 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-9288.241028_solver...
+2025-04-10 16:28:01,613 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-9288.241028_solver...
+2025-04-10 16:28:01,702 - INFO - Container sweb.eval.scikit-learn__scikit-learn-9288.241028_solver removed.
+2025-04-10 16:28:01,702 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-9288:latest...
+2025-04-10 16:28:02,498 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-9288:latest removed.

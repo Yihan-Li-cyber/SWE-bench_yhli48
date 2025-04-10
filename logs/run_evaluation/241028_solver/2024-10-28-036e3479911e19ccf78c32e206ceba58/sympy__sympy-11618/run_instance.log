@@ -1,0 +1,55 @@
+2025-04-10 16:45:06,389 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-11618
+Building instance image sweb.eval.x86_64.sympy__sympy-11618:latest for sympy__sympy-11618
+2025-04-10 16:47:15,801 - INFO - Creating container for sympy__sympy-11618...
+2025-04-10 16:47:16,001 - INFO - Container for sympy__sympy-11618 created: a35866f88fb444420c111b76b9fc0ae838f8647d2fae5ea9538d7f6e71439bf6
+2025-04-10 16:47:17,691 - INFO - Container for sympy__sympy-11618 started: a35866f88fb444420c111b76b9fc0ae838f8647d2fae5ea9538d7f6e71439bf6
+2025-04-10 16:47:17,692 - INFO - Intermediate patch for sympy__sympy-11618 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-11618/patch.diff, now applying to container...
+2025-04-10 16:47:19,302 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:47:19,987 - INFO - >>>>> Applied Patch:
+patching file sympy/geometry/point.py
+
+2025-04-10 16:47:21,807 - INFO - Git diff before:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 593048464b..a18b652c1b 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -266,8 +266,9 @@ def distance(self, p):
+         sqrt(x**2 + y**2)
+ 
+         """
+-        return sqrt(sum([(a - b)**2 for a, b in zip(
+-            self.args, p.args if isinstance(p, Point) else p)]))
++        from itertools import zip_longest
++        return sqrt(sum([(a - b)**2 for a, b in zip_longest(
++            self.args, p.args if isinstance(p, Point) else p, fillvalue=0)]))
+ 
+     def taxicab_distance(self, p):
+         """The Taxicab Distance from self to point p.
+2025-04-10 16:47:21,807 - INFO - Eval script for sympy__sympy-11618 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-11618/eval.sh; copying to container...
+2025-04-10 16:47:48,385 - INFO - Test runtime: 25.60 seconds
+2025-04-10 16:47:48,386 - INFO - Test output for sympy__sympy-11618 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-11618/test_output.txt
+2025-04-10 16:47:48,687 - INFO - Git diff after:
+diff --git a/sympy/geometry/point.py b/sympy/geometry/point.py
+index 593048464b..a18b652c1b 100644
+--- a/sympy/geometry/point.py
++++ b/sympy/geometry/point.py
+@@ -266,8 +266,9 @@ def distance(self, p):
+         sqrt(x**2 + y**2)
+ 
+         """
+-        return sqrt(sum([(a - b)**2 for a, b in zip(
+-            self.args, p.args if isinstance(p, Point) else p)]))
++        from itertools import zip_longest
++        return sqrt(sum([(a - b)**2 for a, b in zip_longest(
++            self.args, p.args if isinstance(p, Point) else p, fillvalue=0)]))
+ 
+     def taxicab_distance(self, p):
+         """The Taxicab Distance from self to point p.
+2025-04-10 16:47:48,687 - INFO - Grading answer for sympy__sympy-11618...
+2025-04-10 16:47:48,688 - INFO - report: {'sympy__sympy-11618': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-11618: resolved: False
+2025-04-10 16:47:48,688 - INFO - Attempting to stop container sweb.eval.sympy__sympy-11618.241028_solver...
+2025-04-10 16:48:04,485 - INFO - Attempting to remove container sweb.eval.sympy__sympy-11618.241028_solver...
+2025-04-10 16:48:04,593 - INFO - Container sweb.eval.sympy__sympy-11618.241028_solver removed.
+2025-04-10 16:48:04,593 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-11618:latest...
+2025-04-10 16:48:05,011 - INFO - Image sweb.eval.x86_64.sympy__sympy-11618:latest removed.

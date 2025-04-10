@@ -1,0 +1,49 @@
+2025-04-10 16:50:24,382 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13647
+Building instance image sweb.eval.x86_64.sympy__sympy-13647:latest for sympy__sympy-13647
+2025-04-10 16:52:17,097 - INFO - Creating container for sympy__sympy-13647...
+2025-04-10 16:52:17,307 - INFO - Container for sympy__sympy-13647 created: ee74ff5d4796b02376ec674bafe1fac8001a04b46e12f719ce22843ecdc1d3e9
+2025-04-10 16:52:18,783 - INFO - Container for sympy__sympy-13647 started: ee74ff5d4796b02376ec674bafe1fac8001a04b46e12f719ce22843ecdc1d3e9
+2025-04-10 16:52:18,783 - INFO - Intermediate patch for sympy__sympy-13647 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13647/patch.diff, now applying to container...
+2025-04-10 16:52:19,994 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:52:20,297 - INFO - >>>>> Applied Patch:
+patching file sympy/matrices/common.py
+
+2025-04-10 16:52:22,592 - INFO - Git diff before:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 056d9bc497..4aa75e4d77 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -86,7 +86,7 @@ def entry(i, j):
+                 return self[i, j]
+             elif pos <= j < pos + other.cols:
+                 return other[i, j - pos]
+-            return self[i, j - pos - other.cols]
++            return self[i, j - other.cols]
+ 
+         return self._new(self.rows, self.cols + other.cols,
+                          lambda i, j: entry(i, j))
+2025-04-10 16:52:22,593 - INFO - Eval script for sympy__sympy-13647 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13647/eval.sh; copying to container...
+2025-04-10 16:53:40,794 - INFO - Test runtime: 77.10 seconds
+2025-04-10 16:53:40,795 - INFO - Test output for sympy__sympy-13647 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13647/test_output.txt
+2025-04-10 16:53:40,993 - INFO - Git diff after:
+diff --git a/sympy/matrices/common.py b/sympy/matrices/common.py
+index 056d9bc497..4aa75e4d77 100644
+--- a/sympy/matrices/common.py
++++ b/sympy/matrices/common.py
+@@ -86,7 +86,7 @@ def entry(i, j):
+                 return self[i, j]
+             elif pos <= j < pos + other.cols:
+                 return other[i, j - pos]
+-            return self[i, j - pos - other.cols]
++            return self[i, j - other.cols]
+ 
+         return self._new(self.rows, self.cols + other.cols,
+                          lambda i, j: entry(i, j))
+2025-04-10 16:53:40,993 - INFO - Grading answer for sympy__sympy-13647...
+2025-04-10 16:53:40,993 - INFO - report: {'sympy__sympy-13647': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13647: resolved: False
+2025-04-10 16:53:40,994 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13647.241028_solver...
+2025-04-10 16:53:57,484 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13647.241028_solver...
+2025-04-10 16:53:57,588 - INFO - Container sweb.eval.sympy__sympy-13647.241028_solver removed.
+2025-04-10 16:53:57,589 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13647:latest...
+2025-04-10 16:54:00,093 - INFO - Image sweb.eval.x86_64.sympy__sympy-13647:latest removed.

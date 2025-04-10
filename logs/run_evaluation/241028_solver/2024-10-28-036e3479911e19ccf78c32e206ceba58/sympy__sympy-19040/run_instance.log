@@ -1,0 +1,134 @@
+2025-04-10 17:18:27,589 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-19040
+Building instance image sweb.eval.x86_64.sympy__sympy-19040:latest for sympy__sympy-19040
+2025-04-10 17:20:59,596 - INFO - Creating container for sympy__sympy-19040...
+2025-04-10 17:20:59,686 - INFO - Container for sympy__sympy-19040 created: e327871edf083222e7d7c67b188ef48ba1dda46b61218e7e3c9c493cb5d699b1
+2025-04-10 17:21:19,887 - INFO - Container for sympy__sympy-19040 started: e327871edf083222e7d7c67b188ef48ba1dda46b61218e7e3c9c493cb5d699b1
+2025-04-10 17:21:19,887 - INFO - Intermediate patch for sympy__sympy-19040 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-19040/patch.diff, now applying to container...
+2025-04-10 17:21:21,177 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:21:21,380 - INFO - >>>>> Applied Patch:
+patching file sympy/polys/polytools.py
+patching file sympy/polys/tests/test_factortools.py
+
+2025-04-10 17:21:23,986 - INFO - Git diff before:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index 68b69d1a24..0b0ec04e13 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -6347,6 +6347,9 @@ def _try_factor(expr):
+         return f.xreplace(partials)
+ 
+     try:
++        if 'extension' in args and args['extension'] and not args.get('domain'):
++            from sympy.polys.domains import QQ
++            args['domain'] = QQ.algebraic_field(*args['extension'])
+         return _generic_factor(f, gens, args, method='factor')
+     except PolynomialError as msg:
+         if not f.is_commutative:
+diff --git a/sympy/polys/tests/test_factortools.py b/sympy/polys/tests/test_factortools.py
+index 7bcd935756..6433b3e578 100644
+--- a/sympy/polys/tests/test_factortools.py
++++ b/sympy/polys/tests/test_factortools.py
+@@ -681,3 +681,36 @@ def test_dmp_irreducible_p():
+     R, x, y = ring("x,y", ZZ)
+     assert R.dmp_irreducible_p(x**2 + x + 1) is True
+     assert R.dmp_irreducible_p(x**2 + 2*x + 1) is False
++
++def test_factor_with_extension():
++    from sympy import factor, expand
++    from sympy.abc import x, y
++
++    # Expand the expression (x-1)*(y-1)
++    z = expand((x - 1)*(y - 1))
++
++    # Factor without extension
++    factors_no_extension = factor(z)
++    assert factors_no_extension == (x - 1)*(y - 1)
++
++    # Factor with extension
++    factors_with_extension = factor(z, extension=[I])
++    assert factors_with_extension == (x - 1)*(y - 1)
++
++import unittest
++
++class TestFactorWithExtension(unittest.TestCase):
++    def test_factor_with_extension(self):
++        from sympy import factor, expand
++        from sympy.abc import x, y
++
++        # Expand the expression (x-1)*(y-1)
++        z = expand((x - 1)*(y - 1))
++
++        # Factor without extension
++        factors_no_extension = factor(z)
++        self.assertEqual(factors_no_extension, (x - 1)*(y - 1))
++
++        # Factor with extension
++        factors_with_extension = factor(z, extension=[I])
++        self.assertEqual(factors_with_extension, (x - 1)*(y - 1))
+2025-04-10 17:21:23,987 - INFO - Eval script for sympy__sympy-19040 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-19040/eval.sh; copying to container...
+2025-04-10 17:23:27,584 - INFO - Test runtime: 122.70 seconds
+2025-04-10 17:23:27,585 - INFO - Test output for sympy__sympy-19040 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-19040/test_output.txt
+2025-04-10 17:23:27,891 - INFO - Git diff after:
+diff --git a/sympy/polys/polytools.py b/sympy/polys/polytools.py
+index 68b69d1a24..0b0ec04e13 100644
+--- a/sympy/polys/polytools.py
++++ b/sympy/polys/polytools.py
+@@ -6347,6 +6347,9 @@ def _try_factor(expr):
+         return f.xreplace(partials)
+ 
+     try:
++        if 'extension' in args and args['extension'] and not args.get('domain'):
++            from sympy.polys.domains import QQ
++            args['domain'] = QQ.algebraic_field(*args['extension'])
+         return _generic_factor(f, gens, args, method='factor')
+     except PolynomialError as msg:
+         if not f.is_commutative:
+diff --git a/sympy/polys/tests/test_factortools.py b/sympy/polys/tests/test_factortools.py
+index 7bcd935756..6433b3e578 100644
+--- a/sympy/polys/tests/test_factortools.py
++++ b/sympy/polys/tests/test_factortools.py
+@@ -681,3 +681,36 @@ def test_dmp_irreducible_p():
+     R, x, y = ring("x,y", ZZ)
+     assert R.dmp_irreducible_p(x**2 + x + 1) is True
+     assert R.dmp_irreducible_p(x**2 + 2*x + 1) is False
++
++def test_factor_with_extension():
++    from sympy import factor, expand
++    from sympy.abc import x, y
++
++    # Expand the expression (x-1)*(y-1)
++    z = expand((x - 1)*(y - 1))
++
++    # Factor without extension
++    factors_no_extension = factor(z)
++    assert factors_no_extension == (x - 1)*(y - 1)
++
++    # Factor with extension
++    factors_with_extension = factor(z, extension=[I])
++    assert factors_with_extension == (x - 1)*(y - 1)
++
++import unittest
++
++class TestFactorWithExtension(unittest.TestCase):
++    def test_factor_with_extension(self):
++        from sympy import factor, expand
++        from sympy.abc import x, y
++
++        # Expand the expression (x-1)*(y-1)
++        z = expand((x - 1)*(y - 1))
++
++        # Factor without extension
++        factors_no_extension = factor(z)
++        self.assertEqual(factors_no_extension, (x - 1)*(y - 1))
++
++        # Factor with extension
++        factors_with_extension = factor(z, extension=[I])
++        self.assertEqual(factors_with_extension, (x - 1)*(y - 1))
+2025-04-10 17:23:27,891 - INFO - Grading answer for sympy__sympy-19040...
+2025-04-10 17:23:27,892 - INFO - report: {'sympy__sympy-19040': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-19040: resolved: False
+2025-04-10 17:23:27,892 - INFO - Attempting to stop container sweb.eval.sympy__sympy-19040.241028_solver...
+2025-04-10 17:23:43,977 - INFO - Attempting to remove container sweb.eval.sympy__sympy-19040.241028_solver...
+2025-04-10 17:23:44,086 - INFO - Container sweb.eval.sympy__sympy-19040.241028_solver removed.
+2025-04-10 17:23:44,087 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-19040:latest...
+2025-04-10 17:23:44,780 - INFO - Image sweb.eval.x86_64.sympy__sympy-19040:latest removed.

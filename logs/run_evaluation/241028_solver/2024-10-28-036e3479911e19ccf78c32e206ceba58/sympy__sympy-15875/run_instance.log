@@ -1,0 +1,99 @@
+2025-04-10 17:00:55,987 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-15875
+Building instance image sweb.eval.x86_64.sympy__sympy-15875:latest for sympy__sympy-15875
+2025-04-10 17:02:40,310 - INFO - Creating container for sympy__sympy-15875...
+2025-04-10 17:02:40,402 - INFO - Container for sympy__sympy-15875 created: 05540a3a48b40c09f35aa93506254267056495b42473dcf0bf5ff1ee9ff8714d
+2025-04-10 17:02:41,798 - INFO - Container for sympy__sympy-15875 started: 05540a3a48b40c09f35aa93506254267056495b42473dcf0bf5ff1ee9ff8714d
+2025-04-10 17:02:41,798 - INFO - Intermediate patch for sympy__sympy-15875 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15875/patch.diff, now applying to container...
+2025-04-10 17:02:42,951 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:02:43,283 - INFO - >>>>> Applied Patch:
+patching file sympy/core/add.py
+
+2025-04-10 17:02:45,591 - INFO - Git diff before:
+diff --git a/sympy/core/add.py b/sympy/core/add.py
+index 83a5f2aedc..c479ed7886 100644
+--- a/sympy/core/add.py
++++ b/sympy/core/add.py
+@@ -534,36 +534,47 @@ def _eval_is_zero(self):
+             # issue 10528: there is no way to know if a nc symbol
+             # is zero or not
+             return
+-        nz = []
+-        z = 0
+-        im_or_z = False
+-        im = False
++
++        # Try to get real and imaginary parts directly
++        try:
++            re, im = self.as_real_imag()
++            if re.is_zero is None or im.is_zero is None:
++                return None
++            return re.is_zero and im.is_zero
++        except:
++            pass
++
++        # Fallback to term-by-term analysis if as_real_imag fails
++        real_part = []
++        imag_part = []
+         for a in self.args:
+-            if a.is_real:
+-                if a.is_zero:
+-                    z += 1
+-                elif a.is_zero is False:
+-                    nz.append(a)
+-                else:
++            if a.is_zero:
++                continue
++            elif a.is_real:
++                if a.is_zero is None:
+                     return
++                real_part.append(a)
+             elif a.is_imaginary:
+-                im = True
++                imag_part.append(a)
+             elif (S.ImaginaryUnit*a).is_real:
+-                im_or_z = True
++                imag_part.append(a)
+             else:
++                # If we can't determine the nature of any term, try expanding
++                expanded = a.expand()
++                if expanded != a:
++                    return expanded.is_zero
+                 return
+-        if z == len(self.args):
++
++        if not real_part and not imag_part:
+             return True
+-        if len(nz) == len(self.args):
++
++        real_sum = self.func(*real_part) if real_part else S.Zero
++        imag_sum = self.func(*imag_part) if imag_part else S.Zero
++
++        if real_sum.is_zero is None or imag_sum.is_zero is None:
+             return None
+-        b = self.func(*nz)
+-        if b.is_zero:
+-            if not im_or_z and not im:
+-                return True
+-            if im and not im_or_z:
+-                return False
+-        if b.is_zero is False:
+-            return False
++
++        return real_sum.is_zero and imag_sum.is_zero
+ 
+     def _eval_is_odd(self):
+         l = [f for f in self.args if not (f.is_even is True)]
+2025-04-10 17:02:45,591 - INFO - Eval script for sympy__sympy-15875 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15875/eval.sh; copying to container...
+2025-04-10 17:32:47,189 - INFO - Test runtime: 1_800.40 seconds
+2025-04-10 17:32:47,190 - INFO - Test output for sympy__sympy-15875 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15875/test_output.txt
+2025-04-10 17:32:47,190 - INFO - Traceback (most recent call last):
+  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 178, in run_instance
+    raise EvaluationError(
+EvaluationError: Evaluation error for sympy__sympy-15875: Test timed out after 1800 seconds.
+Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-15875/run_instance.log) for more information.
+
+2025-04-10 17:32:47,190 - INFO - Attempting to stop container sweb.eval.sympy__sympy-15875.241028_solver...
+2025-04-10 17:33:33,285 - INFO - Attempting to remove container sweb.eval.sympy__sympy-15875.241028_solver...
+2025-04-10 17:33:33,388 - INFO - Container sweb.eval.sympy__sympy-15875.241028_solver removed.
+2025-04-10 17:33:33,388 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-15875:latest...
+2025-04-10 17:33:34,676 - INFO - Image sweb.eval.x86_64.sympy__sympy-15875:latest removed.

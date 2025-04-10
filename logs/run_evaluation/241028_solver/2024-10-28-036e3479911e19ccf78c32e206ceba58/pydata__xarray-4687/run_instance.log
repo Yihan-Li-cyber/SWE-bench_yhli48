@@ -1,40 +1,121 @@
-2025-04-09 07:56:50,823 - INFO - Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 275, in _raise_for_status
-    response.raise_for_status()
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/requests/models.py", line 1024, in raise_for_status
-    raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 404 Client Error: Not Found for url: http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json
+2025-04-10 13:31:44,797 - INFO - Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest found for pydata__xarray-4687
+Building instance image sweb.eval.x86_64.pydata__xarray-4687:latest for pydata__xarray-4687
+2025-04-10 13:32:35,804 - INFO - Creating container for pydata__xarray-4687...
+2025-04-10 13:32:35,987 - INFO - Container for pydata__xarray-4687 created: 2693eb35ad2a53a8014e343e26c1c9a645896834e453adf44b5c829914cd6d47
+2025-04-10 13:32:37,386 - INFO - Container for pydata__xarray-4687 started: 2693eb35ad2a53a8014e343e26c1c9a645896834e453adf44b5c829914cd6d47
+2025-04-10 13:32:37,387 - INFO - Intermediate patch for pydata__xarray-4687 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4687/patch.diff, now applying to container...
+2025-04-10 13:32:38,212 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 13:32:38,501 - INFO - >>>>> Applied Patch:
+patching file doc/whats-new.rst
+patching file test_where.py
+patching file xarray/core/computation.py
 
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 435, in build_instance_image
-    client.images.get(env_image_name)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/models/images.py", line 333, in get
-    return self.prepare_model(self.client.api.inspect_image(name))
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/utils/decorators.py", line 19, in wrapped
-    return f(self, resource_id, *args, **kwargs)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/image.py", line 251, in inspect_image
-    return self._result(
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 281, in _result
-    self._raise_for_status(response)
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/api/client.py", line 277, in _raise_for_status
-    raise create_api_error_from_http_exception(e) from e
-  File "/root/SWE-bench_yhli48/venv/lib/python3.10/site-packages/docker/errors.py", line 39, in create_api_error_from_http_exception
-    raise cls(e, response=response, explanation=explanation) from e
-docker.errors.ImageNotFound: 404 Client Error for http+docker://localhost/v1.45/images/sweb.env.x86_64.502d8fc6ebccd881244091:latest/json: Not Found ("No such image: sweb.env.x86_64.502d8fc6ebccd881244091:latest")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/root/SWE-bench_yhli48/swebench/harness/run_evaluation.py", line 117, in run_instance
-    container = build_container(test_spec, client, run_id, logger, rm_image, force_rebuild)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 497, in build_container
-    build_instance_image(test_spec, client, logger, nocache)
-  File "/root/SWE-bench_yhli48/swebench/harness/docker_build.py", line 437, in build_instance_image
-    raise BuildImageError(
-swebench.harness.docker_build.BuildImageError: Error building image pydata__xarray-4687: Environment image sweb.env.x86_64.502d8fc6ebccd881244091:latest not found for pydata__xarray-4687
-Check (logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4687/run_instance.log) for more information.
-
-2025-04-09 07:56:50,823 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4687:latest...
-2025-04-09 07:56:50,827 - INFO - Image sweb.eval.x86_64.pydata__xarray-4687:latest not found, removing has no effect.
+2025-04-10 13:32:39,397 - INFO - Git diff before:
+diff --git a/doc/whats-new.rst b/doc/whats-new.rst
+index cb0e9b65..1d7dc7eb 100644
+--- a/doc/whats-new.rst
++++ b/doc/whats-new.rst
+@@ -27,6 +27,9 @@ New Features
+ - Enable the limit option for dask array in the following methods :py:meth:`DataArray.ffill`, :py:meth:`DataArray.bfill`, :py:meth:`Dataset.ffill` and :py:meth:`Dataset.bfill` (:issue:`6112`)
+   By `Joseph Nowak <https://github.com/josephnowak>`_.
+ 
++- Added ``keep_attrs`` parameter to :py:func:`where` to allow preserving attributes from input arrays.
++  By `Solver <https://github.com/solver>`_.
++
+ Breaking changes
+ ~~~~~~~~~~~~~~~~
+ - Rely on matplotlib's default datetime converters instead of pandas' (:issue:`6102`, :pull:`6109`).
+diff --git a/xarray/core/computation.py b/xarray/core/computation.py
+index 9fe93c88..388ab98d 100644
+--- a/xarray/core/computation.py
++++ b/xarray/core/computation.py
+@@ -1727,12 +1727,12 @@ def dot(*arrays, dims=None, **kwargs):
+     return result.transpose(*all_dims, missing_dims="ignore")
+ 
+ 
+-def where(cond, x, y):
++def where(cond, x, y, keep_attrs=None):
+     """Return elements from `x` or `y` depending on `cond`.
+ 
+     Performs xarray-like broadcasting across input arguments.
+ 
+-    All dimension coordinates on `x` and `y`  must be aligned with each
++    All dimension coordinates on `x` and `y` must be aligned with each
+     other and with `cond`.
+ 
+     Parameters
+@@ -1743,6 +1743,8 @@ def where(cond, x, y):
+         values to choose from where `cond` is True
+     y : scalar, array, Variable, DataArray or Dataset
+         values to choose from where `cond` is False
++    keep_attrs : bool, optional
++        If True, the attributes from `x` are preserved in the output.
+ 
+     Returns
+     -------
+@@ -1817,6 +1819,7 @@ def where(cond, x, y):
+         join="exact",
+         dataset_join="exact",
+         dask="allowed",
++        keep_attrs=keep_attrs,
+     )
+2025-04-10 13:32:39,397 - INFO - Eval script for pydata__xarray-4687 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4687/eval.sh; copying to container...
+2025-04-10 13:40:21,313 - INFO - Test runtime: 461.13 seconds
+2025-04-10 13:40:21,314 - INFO - Test output for pydata__xarray-4687 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/pydata__xarray-4687/test_output.txt
+2025-04-10 13:40:22,010 - INFO - Git diff after:
+diff --git a/doc/whats-new.rst b/doc/whats-new.rst
+index cb0e9b65..1d7dc7eb 100644
+--- a/doc/whats-new.rst
++++ b/doc/whats-new.rst
+@@ -27,6 +27,9 @@ New Features
+ - Enable the limit option for dask array in the following methods :py:meth:`DataArray.ffill`, :py:meth:`DataArray.bfill`, :py:meth:`Dataset.ffill` and :py:meth:`Dataset.bfill` (:issue:`6112`)
+   By `Joseph Nowak <https://github.com/josephnowak>`_.
+ 
++- Added ``keep_attrs`` parameter to :py:func:`where` to allow preserving attributes from input arrays.
++  By `Solver <https://github.com/solver>`_.
++
+ Breaking changes
+ ~~~~~~~~~~~~~~~~
+ - Rely on matplotlib's default datetime converters instead of pandas' (:issue:`6102`, :pull:`6109`).
+diff --git a/xarray/core/computation.py b/xarray/core/computation.py
+index 9fe93c88..388ab98d 100644
+--- a/xarray/core/computation.py
++++ b/xarray/core/computation.py
+@@ -1727,12 +1727,12 @@ def dot(*arrays, dims=None, **kwargs):
+     return result.transpose(*all_dims, missing_dims="ignore")
+ 
+ 
+-def where(cond, x, y):
++def where(cond, x, y, keep_attrs=None):
+     """Return elements from `x` or `y` depending on `cond`.
+ 
+     Performs xarray-like broadcasting across input arguments.
+ 
+-    All dimension coordinates on `x` and `y`  must be aligned with each
++    All dimension coordinates on `x` and `y` must be aligned with each
+     other and with `cond`.
+ 
+     Parameters
+@@ -1743,6 +1743,8 @@ def where(cond, x, y):
+         values to choose from where `cond` is True
+     y : scalar, array, Variable, DataArray or Dataset
+         values to choose from where `cond` is False
++    keep_attrs : bool, optional
++        If True, the attributes from `x` are preserved in the output.
+ 
+     Returns
+     -------
+@@ -1817,6 +1819,7 @@ def where(cond, x, y):
+         join="exact",
+         dataset_join="exact",
+         dask="allowed",
++        keep_attrs=keep_attrs,
+     )
+2025-04-10 13:40:22,010 - INFO - Grading answer for pydata__xarray-4687...
+2025-04-10 13:40:22,011 - INFO - report: {'pydata__xarray-4687': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for pydata__xarray-4687: resolved: False
+2025-04-10 13:40:22,012 - INFO - Attempting to stop container sweb.eval.pydata__xarray-4687.241028_solver...
+2025-04-10 13:40:38,708 - INFO - Attempting to remove container sweb.eval.pydata__xarray-4687.241028_solver...
+2025-04-10 13:40:39,211 - INFO - Container sweb.eval.pydata__xarray-4687.241028_solver removed.
+2025-04-10 13:40:39,211 - INFO - Attempting to remove image sweb.eval.x86_64.pydata__xarray-4687:latest...
+2025-04-10 13:40:39,410 - INFO - Image sweb.eval.x86_64.pydata__xarray-4687:latest removed.

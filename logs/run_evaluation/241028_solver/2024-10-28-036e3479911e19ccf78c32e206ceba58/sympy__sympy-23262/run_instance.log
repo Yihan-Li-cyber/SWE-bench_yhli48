@@ -1,0 +1,119 @@
+2025-04-10 17:36:46,588 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-23262
+Building instance image sweb.eval.x86_64.sympy__sympy-23262:latest for sympy__sympy-23262
+2025-04-10 17:39:12,798 - INFO - Creating container for sympy__sympy-23262...
+2025-04-10 17:39:12,884 - INFO - Container for sympy__sympy-23262 created: cef6c421b1187e09203136aca372f46bfa03a2a649eac3d6ed273919442be094
+2025-04-10 17:39:31,083 - INFO - Container for sympy__sympy-23262 started: cef6c421b1187e09203136aca372f46bfa03a2a649eac3d6ed273919442be094
+2025-04-10 17:39:31,083 - INFO - Intermediate patch for sympy__sympy-23262 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23262/patch.diff, now applying to container...
+2025-04-10 17:39:31,879 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:39:32,076 - INFO - >>>>> Applied Patch:
+patching file sympy/printing/pycode.py
+patching file sympy/printing/tests/test_pycode.py
+patching file sympy/utilities/lambdify.py
+
+2025-04-10 17:39:34,679 - INFO - Git diff before:
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index 1877c3f92a..1f9bbe11d9 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -553,6 +553,12 @@ def _print_Half(self, expr):
+     def _print_frac(self, expr):
+         return self._print_Mod(Mod(expr.args[0], 1))
+ 
++    def _print_tuple(self, expr):
++        if len(expr) == 1:
++            return "(%s,)" % self._print(expr[0])
++        else:
++            return "(%s)" % self.stringify(expr, ", ")
++
+     def _print_Symbol(self, expr):
+ 
+         name = super()._print_Symbol(expr)
+diff --git a/sympy/printing/tests/test_pycode.py b/sympy/printing/tests/test_pycode.py
+index f4937a90e0..0892f0f35c 100644
+--- a/sympy/printing/tests/test_pycode.py
++++ b/sympy/printing/tests/test_pycode.py
+@@ -58,6 +58,7 @@ def test_PythonCodePrinter():
+     assert prntr.doprint(KroneckerDelta(x,y)) == '(1 if x == y else 0)'
+ 
+     assert prntr.doprint((2,3)) == "(2, 3)"
++    assert prntr.doprint((2,)) == "(2,)"
+     assert prntr.doprint([2,3]) == "[2, 3]"
+ 
+     assert prntr.doprint(Min(x, y)) == "min(x, y)"
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index da67263b19..2b0d9573d5 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -958,10 +958,12 @@ def _recursive_to_string(doprint, arg):
+         if isinstance(arg, list):
+             left, right = "[]"
+         elif isinstance(arg, tuple):
++            if len(arg) == 1:
++                return "(" + _recursive_to_string(doprint, arg[0]) + ",)"
+             left, right = "()"
+         else:
+             raise NotImplementedError("unhandled type: %s, %s" % (type(arg), arg))
+-        return left +', '.join(_recursive_to_string(doprint, e) for e in arg) + right
++        return left + ', '.join(_recursive_to_string(doprint, e) for e in arg) + right
+     elif isinstance(arg, str):
+         return arg
+     else:
+2025-04-10 17:39:34,679 - INFO - Eval script for sympy__sympy-23262 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23262/eval.sh; copying to container...
+2025-04-10 17:40:20,687 - INFO - Test runtime: 45.01 seconds
+2025-04-10 17:40:20,688 - INFO - Test output for sympy__sympy-23262 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-23262/test_output.txt
+2025-04-10 17:40:21,181 - INFO - Git diff after:
+diff --git a/sympy/printing/pycode.py b/sympy/printing/pycode.py
+index 1877c3f92a..1f9bbe11d9 100644
+--- a/sympy/printing/pycode.py
++++ b/sympy/printing/pycode.py
+@@ -553,6 +553,12 @@ def _print_Half(self, expr):
+     def _print_frac(self, expr):
+         return self._print_Mod(Mod(expr.args[0], 1))
+ 
++    def _print_tuple(self, expr):
++        if len(expr) == 1:
++            return "(%s,)" % self._print(expr[0])
++        else:
++            return "(%s)" % self.stringify(expr, ", ")
++
+     def _print_Symbol(self, expr):
+ 
+         name = super()._print_Symbol(expr)
+diff --git a/sympy/printing/tests/test_pycode.py b/sympy/printing/tests/test_pycode.py
+index f4937a90e0..0892f0f35c 100644
+--- a/sympy/printing/tests/test_pycode.py
++++ b/sympy/printing/tests/test_pycode.py
+@@ -58,6 +58,7 @@ def test_PythonCodePrinter():
+     assert prntr.doprint(KroneckerDelta(x,y)) == '(1 if x == y else 0)'
+ 
+     assert prntr.doprint((2,3)) == "(2, 3)"
++    assert prntr.doprint((2,)) == "(2,)"
+     assert prntr.doprint([2,3]) == "[2, 3]"
+ 
+     assert prntr.doprint(Min(x, y)) == "min(x, y)"
+diff --git a/sympy/utilities/lambdify.py b/sympy/utilities/lambdify.py
+index da67263b19..2b0d9573d5 100644
+--- a/sympy/utilities/lambdify.py
++++ b/sympy/utilities/lambdify.py
+@@ -958,10 +958,12 @@ def _recursive_to_string(doprint, arg):
+         if isinstance(arg, list):
+             left, right = "[]"
+         elif isinstance(arg, tuple):
++            if len(arg) == 1:
++                return "(" + _recursive_to_string(doprint, arg[0]) + ",)"
+             left, right = "()"
+         else:
+             raise NotImplementedError("unhandled type: %s, %s" % (type(arg), arg))
+-        return left +', '.join(_recursive_to_string(doprint, e) for e in arg) + right
++        return left + ', '.join(_recursive_to_string(doprint, e) for e in arg) + right
+     elif isinstance(arg, str):
+         return arg
+     else:
+2025-04-10 17:40:21,181 - INFO - Grading answer for sympy__sympy-23262...
+2025-04-10 17:40:21,181 - INFO - report: {'sympy__sympy-23262': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-23262: resolved: False
+2025-04-10 17:40:21,182 - INFO - Attempting to stop container sweb.eval.sympy__sympy-23262.241028_solver...
+2025-04-10 17:40:37,977 - INFO - Attempting to remove container sweb.eval.sympy__sympy-23262.241028_solver...
+2025-04-10 17:40:38,178 - INFO - Container sweb.eval.sympy__sympy-23262.241028_solver removed.
+2025-04-10 17:40:38,178 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-23262:latest...
+2025-04-10 17:40:39,086 - INFO - Image sweb.eval.x86_64.sympy__sympy-23262:latest removed.

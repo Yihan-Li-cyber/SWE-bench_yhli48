@@ -1,2 +1,115 @@
-2025-04-09 08:31:10,533 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-12973
+2025-04-10 11:05:12,707 - INFO - Environment image sweb.env.x86_64.aa92880033da20ca313928:latest found for scikit-learn__scikit-learn-12973
 Building instance image sweb.eval.x86_64.scikit-learn__scikit-learn-12973:latest for scikit-learn__scikit-learn-12973
+2025-04-10 11:25:42,314 - INFO - Creating container for scikit-learn__scikit-learn-12973...
+2025-04-10 11:25:42,410 - INFO - Container for scikit-learn__scikit-learn-12973 created: 0db4b1e7a67d825d64c33cc21fc66d4511692e2f5f96604aaa127e40925f588a
+2025-04-10 11:25:43,211 - INFO - Container for scikit-learn__scikit-learn-12973 started: 0db4b1e7a67d825d64c33cc21fc66d4511692e2f5f96604aaa127e40925f588a
+2025-04-10 11:25:43,212 - INFO - Intermediate patch for scikit-learn__scikit-learn-12973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-12973/patch.diff, now applying to container...
+2025-04-10 11:25:43,903 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 11:25:44,098 - INFO - >>>>> Applied Patch:
+patching file sklearn/linear_model/least_angle.py
+
+2025-04-10 11:25:45,496 - INFO - Git diff before:
+diff --git a/sklearn/linear_model/least_angle.py b/sklearn/linear_model/least_angle.py
+index 03b34a0dc..7f7f1ac8a 100644
+--- a/sklearn/linear_model/least_angle.py
++++ b/sklearn/linear_model/least_angle.py
+@@ -1479,7 +1479,7 @@ class LassoLarsIC(LassoLars):
+         self.eps = eps
+         self.fit_path = True
+ 
+-    def fit(self, X, y, copy_X=True):
++    def fit(self, X, y, copy_X=None):
+         """Fit the model using X, y as training data.
+ 
+         Parameters
+@@ -1490,24 +1490,29 @@ class LassoLarsIC(LassoLars):
+         y : array-like, shape (n_samples,)
+             target values. Will be cast to X's dtype if necessary
+ 
+-        copy_X : boolean, optional, default True
++        copy_X : boolean, optional, default None
+             If ``True``, X will be copied; else, it may be overwritten.
++            If None, defaults to the value passed in the constructor.
+ 
+         Returns
+         -------
+         self : object
+             returns an instance of self.
+         """
+-        X, y = check_X_y(X, y, y_numeric=True)
++        # Use initialization value if copy_X is None
++        effective_copy_X = self.copy_X if copy_X is None else copy_X
++
++        X, y = check_X_y(X, y, y_numeric=True, copy=effective_copy_X)
+ 
+         X, y, Xmean, ymean, Xstd = LinearModel._preprocess_data(
+-            X, y, self.fit_intercept, self.normalize, self.copy_X)
++            X, y, self.fit_intercept, self.normalize, copy=effective_copy_X,
++            check_input=False)  # Already validated above
+         max_iter = self.max_iter
+ 
+         Gram = self.precompute
+ 
+         alphas_, active_, coef_path_, self.n_iter_ = lars_path(
+-            X, y, Gram=Gram, copy_X=copy_X, copy_Gram=True, alpha_min=0.0,
++            X, y, Gram=Gram, copy_X=effective_copy_X, copy_Gram=True, alpha_min=0.0,
+             method='lasso', verbose=self.verbose, max_iter=max_iter,
+             eps=self.eps, return_n_iter=True, positive=self.positive)
+2025-04-10 11:25:45,496 - INFO - Eval script for scikit-learn__scikit-learn-12973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-12973/eval.sh; copying to container...
+2025-04-10 11:26:09,719 - INFO - Test runtime: 23.89 seconds
+2025-04-10 11:26:09,719 - INFO - Test output for scikit-learn__scikit-learn-12973 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/scikit-learn__scikit-learn-12973/test_output.txt
+2025-04-10 11:26:09,898 - INFO - Git diff after:
+diff --git a/sklearn/linear_model/least_angle.py b/sklearn/linear_model/least_angle.py
+index 03b34a0dc..7f7f1ac8a 100644
+--- a/sklearn/linear_model/least_angle.py
++++ b/sklearn/linear_model/least_angle.py
+@@ -1479,7 +1479,7 @@ class LassoLarsIC(LassoLars):
+         self.eps = eps
+         self.fit_path = True
+ 
+-    def fit(self, X, y, copy_X=True):
++    def fit(self, X, y, copy_X=None):
+         """Fit the model using X, y as training data.
+ 
+         Parameters
+@@ -1490,24 +1490,29 @@ class LassoLarsIC(LassoLars):
+         y : array-like, shape (n_samples,)
+             target values. Will be cast to X's dtype if necessary
+ 
+-        copy_X : boolean, optional, default True
++        copy_X : boolean, optional, default None
+             If ``True``, X will be copied; else, it may be overwritten.
++            If None, defaults to the value passed in the constructor.
+ 
+         Returns
+         -------
+         self : object
+             returns an instance of self.
+         """
+-        X, y = check_X_y(X, y, y_numeric=True)
++        # Use initialization value if copy_X is None
++        effective_copy_X = self.copy_X if copy_X is None else copy_X
++
++        X, y = check_X_y(X, y, y_numeric=True, copy=effective_copy_X)
+ 
+         X, y, Xmean, ymean, Xstd = LinearModel._preprocess_data(
+-            X, y, self.fit_intercept, self.normalize, self.copy_X)
++            X, y, self.fit_intercept, self.normalize, copy=effective_copy_X,
++            check_input=False)  # Already validated above
+         max_iter = self.max_iter
+ 
+         Gram = self.precompute
+ 
+         alphas_, active_, coef_path_, self.n_iter_ = lars_path(
+-            X, y, Gram=Gram, copy_X=copy_X, copy_Gram=True, alpha_min=0.0,
++            X, y, Gram=Gram, copy_X=effective_copy_X, copy_Gram=True, alpha_min=0.0,
+             method='lasso', verbose=self.verbose, max_iter=max_iter,
+             eps=self.eps, return_n_iter=True, positive=self.positive)
+2025-04-10 11:26:09,898 - INFO - Grading answer for scikit-learn__scikit-learn-12973...
+2025-04-10 11:26:09,898 - INFO - report: {'scikit-learn__scikit-learn-12973': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for scikit-learn__scikit-learn-12973: resolved: False
+2025-04-10 11:26:09,898 - INFO - Attempting to stop container sweb.eval.scikit-learn__scikit-learn-12973.241028_solver...
+2025-04-10 11:26:25,593 - INFO - Attempting to remove container sweb.eval.scikit-learn__scikit-learn-12973.241028_solver...
+2025-04-10 11:26:25,609 - INFO - Container sweb.eval.scikit-learn__scikit-learn-12973.241028_solver removed.
+2025-04-10 11:26:25,609 - INFO - Attempting to remove image sweb.eval.x86_64.scikit-learn__scikit-learn-12973:latest...
+2025-04-10 11:26:26,117 - INFO - Image sweb.eval.x86_64.scikit-learn__scikit-learn-12973:latest removed.

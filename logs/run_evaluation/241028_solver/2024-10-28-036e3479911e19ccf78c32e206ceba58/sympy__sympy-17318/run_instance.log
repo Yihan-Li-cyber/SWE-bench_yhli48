@@ -1,0 +1,109 @@
+2025-04-10 17:07:19,188 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-17318
+Building instance image sweb.eval.x86_64.sympy__sympy-17318:latest for sympy__sympy-17318
+2025-04-10 17:09:11,786 - INFO - Creating container for sympy__sympy-17318...
+2025-04-10 17:09:11,887 - INFO - Container for sympy__sympy-17318 created: 4e322c3e5d2181433e4281e089bc166b1bf95a247486fc0e69e91b6aefb8e36b
+2025-04-10 17:09:13,591 - INFO - Container for sympy__sympy-17318 started: 4e322c3e5d2181433e4281e089bc166b1bf95a247486fc0e69e91b6aefb8e36b
+2025-04-10 17:09:13,592 - INFO - Intermediate patch for sympy__sympy-17318 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17318/patch.diff, now applying to container...
+2025-04-10 17:09:15,390 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 17:09:15,781 - INFO - >>>>> Applied Patch:
+patching file sympy/simplify/radsimp.py
+patching file sympy/simplify/sqrtdenest.py
+patching file test_sqrtdenest_fix.py
+
+2025-04-10 17:09:18,482 - INFO - Git diff before:
+diff --git a/sympy/simplify/radsimp.py b/sympy/simplify/radsimp.py
+index 216ae26204..6c05dbf932 100644
+--- a/sympy/simplify/radsimp.py
++++ b/sympy/simplify/radsimp.py
+@@ -1076,6 +1076,8 @@ def split_surds(expr):
+     args = sorted(expr.args, key=default_sort_key)
+     coeff_muls = [x.as_coeff_Mul() for x in args]
+     surds = [x[1]**2 for x in coeff_muls if x[1].is_Pow]
++    if not surds:
++        return S.One, S.Zero, expr
+     surds.sort(key=default_sort_key)
+     g, b1, b2 = _split_gcd(*surds)
+     g2 = g
+@@ -1113,6 +1115,8 @@ def _split_gcd(*a):
+     >>> _split_gcd(55, 35, 22, 14, 77, 10)
+     (5, [55, 35, 10], [22, 14, 77])
+     """
++    if not a:
++        return S.One, [], []
+     g = a[0]
+     b1 = [g]
+     b2 = []
+diff --git a/sympy/simplify/sqrtdenest.py b/sympy/simplify/sqrtdenest.py
+index f0b7653ea8..c93eb2d910 100644
+--- a/sympy/simplify/sqrtdenest.py
++++ b/sympy/simplify/sqrtdenest.py
+@@ -157,9 +157,12 @@ def _sqrt_match(p):
+     elif p.is_Add:
+         pargs = sorted(p.args, key=default_sort_key)
+         if all((x**2).is_Rational for x in pargs):
+-            r, b, a = split_surds(p)
+-            res = a, b, r
+-            return list(res)
++            try:
++                r, b, a = split_surds(p)
++                res = a, b, r
++                return list(res)
++            except IndexError:
++                return []
+         # to make the process canonical, the argument is included in the tuple
+         # so when the max is selected, it will be the largest arg having a
+         # given depth
+2025-04-10 17:09:18,483 - INFO - Eval script for sympy__sympy-17318 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17318/eval.sh; copying to container...
+2025-04-10 17:11:20,586 - INFO - Test runtime: 120.89 seconds
+2025-04-10 17:11:20,586 - INFO - Test output for sympy__sympy-17318 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-17318/test_output.txt
+2025-04-10 17:11:20,791 - INFO - Git diff after:
+diff --git a/sympy/simplify/radsimp.py b/sympy/simplify/radsimp.py
+index 216ae26204..6c05dbf932 100644
+--- a/sympy/simplify/radsimp.py
++++ b/sympy/simplify/radsimp.py
+@@ -1076,6 +1076,8 @@ def split_surds(expr):
+     args = sorted(expr.args, key=default_sort_key)
+     coeff_muls = [x.as_coeff_Mul() for x in args]
+     surds = [x[1]**2 for x in coeff_muls if x[1].is_Pow]
++    if not surds:
++        return S.One, S.Zero, expr
+     surds.sort(key=default_sort_key)
+     g, b1, b2 = _split_gcd(*surds)
+     g2 = g
+@@ -1113,6 +1115,8 @@ def _split_gcd(*a):
+     >>> _split_gcd(55, 35, 22, 14, 77, 10)
+     (5, [55, 35, 10], [22, 14, 77])
+     """
++    if not a:
++        return S.One, [], []
+     g = a[0]
+     b1 = [g]
+     b2 = []
+diff --git a/sympy/simplify/sqrtdenest.py b/sympy/simplify/sqrtdenest.py
+index f0b7653ea8..c93eb2d910 100644
+--- a/sympy/simplify/sqrtdenest.py
++++ b/sympy/simplify/sqrtdenest.py
+@@ -157,9 +157,12 @@ def _sqrt_match(p):
+     elif p.is_Add:
+         pargs = sorted(p.args, key=default_sort_key)
+         if all((x**2).is_Rational for x in pargs):
+-            r, b, a = split_surds(p)
+-            res = a, b, r
+-            return list(res)
++            try:
++                r, b, a = split_surds(p)
++                res = a, b, r
++                return list(res)
++            except IndexError:
++                return []
+         # to make the process canonical, the argument is included in the tuple
+         # so when the max is selected, it will be the largest arg having a
+         # given depth
+2025-04-10 17:11:20,791 - INFO - Grading answer for sympy__sympy-17318...
+2025-04-10 17:11:20,791 - INFO - report: {'sympy__sympy-17318': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-17318: resolved: False
+2025-04-10 17:11:20,792 - INFO - Attempting to stop container sweb.eval.sympy__sympy-17318.241028_solver...
+2025-04-10 17:11:36,589 - INFO - Attempting to remove container sweb.eval.sympy__sympy-17318.241028_solver...
+2025-04-10 17:11:36,776 - INFO - Container sweb.eval.sympy__sympy-17318.241028_solver removed.
+2025-04-10 17:11:36,776 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-17318:latest...
+2025-04-10 17:11:38,004 - INFO - Image sweb.eval.x86_64.sympy__sympy-17318:latest removed.

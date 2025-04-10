@@ -375,11 +375,11 @@ export CONDA_PYTHON_EXE='\''/opt/miniconda3/bin/python'\'''
 running install
 running bdist_egg
 running egg_info
-writing top-level names to Django.egg-info/top_level.txt
-writing entry points to Django.egg-info/entry_points.txt
 writing dependency_links to Django.egg-info/dependency_links.txt
-writing Django.egg-info/PKG-INFO
+writing top-level names to Django.egg-info/top_level.txt
 writing requirements to Django.egg-info/requires.txt
+writing Django.egg-info/PKG-INFO
+writing entry points to Django.egg-info/entry_points.txt
 reading manifest file 'Django.egg-info/SOURCES.txt'
 reading manifest template 'MANIFEST.in'
 warning: no previously-included files matching '__pycache__' found anywhere in distribution
@@ -22334,6 +22334,152 @@ directory: startapp creates the correct directory with unicode characters ... ok
 test_no_suggestions (admin_scripts.tests.DjangoAdminSuggestions) ... ok
 test_suggestions (admin_scripts.tests.DjangoAdminSuggestions) ... ok
 test_pks_parsing (admin_scripts.tests.Dumpdata)
-Regression for #20509 ... 
+Regression for #20509 ... FAIL
+test_program_name_in_help (admin_scripts.tests.MainModule) ... ok
+test_runs_django_admin (admin_scripts.tests.MainModule) ... ok
+test_builtin_command (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail with an error when no default settings provided ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands fail if settings file (from argument) doesn't exist ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands work if settings are provided in the environment ... FAIL
+test_builtin_with_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py builtin commands work with settings provided as argument ... FAIL
+test_custom_command (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can't execute user commands without settings ... ok
+test_custom_command_output_color (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py output syntax color can be deactivated with the `--no-color` option ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can execute user commands if settings are provided in environment ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageAlternateSettings)
+alternate: manage.py can execute user commands if settings are provided as argument ... ok
+test_app_with_import (admin_scripts.tests.ManageCheck)
+manage.py check does not raise errors when an app imports a base ... FAIL
+test_broken_app (admin_scripts.tests.ManageCheck)
+manage.py check reports an ImportError if an app's models.py ... ok
+test_complex_app (admin_scripts.tests.ManageCheck)
+manage.py check does not raise an ImportError validating a ... FAIL
+test_nonexistent_app (admin_scripts.tests.ManageCheck)
+check reports an error on a nonexistent app in INSTALLED_APPS. ... ok
+test_output_format (admin_scripts.tests.ManageCheck)
+All errors/warnings should be sorted by level and by message. ... FAIL
+test_warning_does_not_halt (admin_scripts.tests.ManageCheck) ... FAIL
+test_builtin_command (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed when default settings are appropriate ... FAIL
+test_builtin_with_bad_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings file (from argument) doesn't exist ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings are provided in the environment ... FAIL
+test_builtin_with_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py builtin commands succeed if settings are provided as argument ... FAIL
+test_custom_command (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when default settings are appropriate ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when settings are provided in environment ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageDefaultSettings)
+default: manage.py can execute user commands when settings are provided as argument ... ok
+test_builtin_command (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed when default settings are appropriate ... FAIL
+test_builtin_with_bad_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings file (from argument) doesn't exist ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings are provided in the environment ... FAIL
+test_builtin_with_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py builtin commands succeed if settings are provided as argument ... FAIL
+test_custom_command (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when default settings are appropriate ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when settings are provided in environment ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageFullPathDefaultSettings)
+fulldefault: manage.py can execute user commands when settings are provided as argument ... ok
+test_builtin_command (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail with an error when no settings provided ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings file (from argument) doesn't exist ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings are provided in the environment ... ok
+test_builtin_with_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py builtin commands fail if settings are provided as argument ... ok
+test_custom_command (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands without appropriate settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands, even if settings are provided in environment ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageMinimalSettings)
+minimal: manage.py can't execute user commands, even if settings are provided as argument ... ok
+test_builtin_command (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail with an error when no settings provided ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands fail if settings file (from argument) doesn't exist ... ok
+test_builtin_with_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute builtin commands if settings are provided in the environment ... FAIL
+test_builtin_with_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py builtin commands succeed if settings are provided as argument ... FAIL
+test_custom_command (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can't execute user commands using default settings ... ok
+test_custom_command_with_environment (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute user commands if settings are provided in environment ... ok
+test_custom_command_with_settings (admin_scripts.tests.ManageMultipleSettings)
+multiple: manage.py can execute user commands if settings are provided as argument ... ok
+test_builtin_command (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail with an error when no settings provided ... ok
+test_builtin_with_bad_environment (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail if settings file (from environment) doesn't exist ... ok
+test_builtin_with_bad_settings (admin_scripts.tests.ManageNoSettings)
+no settings: manage.py builtin commands fail if settings file (from argument) doesn't exist ... ok
+test_no_database (admin_scripts.tests.ManageRunserver) ... ok
+test_readonly_database (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_addrport_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_ambiguous (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_custom_defaults (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_custom_defaults_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_hostname (admin_scripts.tests.ManageRunserver) ... ok
+test_runner_hostname_ipv6 (admin_scripts.tests.ManageRunserver) ... ok
+test_runserver_addrport (admin_scripts.tests.ManageRunserver) ... ok
+test_empty_allowed_hosts_error (admin_scripts.tests.ManageRunserverEmptyAllowedHosts) ... ok
+test_attribute_error (admin_scripts.tests.ManageSettingsWithSettingsErrors) ... ok
+test_help (admin_scripts.tests.ManageSettingsWithSettingsErrors) ... ok
+test_import_error (admin_scripts.tests.ManageSettingsWithSettingsErrors) ... ok
+test_key_error (admin_scripts.tests.ManageSettingsWithSettingsErrors) ... ok
+test_params_to_runserver (admin_scripts.tests.ManageTestserver) ... ok
+test_testserver_handle_params (admin_scripts.tests.ManageTestserver) ... ok
+test_importable_name (admin_scripts.tests.StartApp) ... ok
+test_invalid_name (admin_scripts.tests.StartApp)
+startapp validates that app name is a valid Python identifier. ... ok
+test_messages_concatenates_error_dict_values (test_exceptions.test_validation_error.TestValidationError) ... ok
+test_get_context_data_super (generic_views.test_base.GetContextDataTest) ... ok
+test_object_at_custom_name_in_context_data (generic_views.test_base.GetContextDataTest) ... ok
+test_object_in_get_context_data (generic_views.test_base.GetContextDataTest) ... ok
+test_template_mixin_without_template (generic_views.test_base.SingleObjectTemplateResponseMixinTest) ... ok
+test_overwrite_queryset (generic_views.test_base.UseMultipleObjectMixinTest) ... ok
+test_use_queryset_from_view (generic_views.test_base.UseMultipleObjectMixinTest) ... ok
+test_args_kwargs_request_on_self (generic_views.test_base.ViewTest) ... ok
+test_calling_more_than_once (generic_views.test_base.ViewTest) ... ok
+test_class_attributes (generic_views.test_base.ViewTest) ... ok
+test_direct_instantiation (generic_views.test_base.ViewTest) ... ok
+test_dispatch_decoration (generic_views.test_base.ViewTest) ... ok
+test_get_and_head (generic_views.test_base.ViewTest) ... ok
+test_get_and_post (generic_views.test_base.ViewTest) ... ok
+test_get_only (generic_views.test_base.ViewTest) ... ok
+test_head_no_get (generic_views.test_base.ViewTest) ... ok
+test_invalid_keyword_argument (generic_views.test_base.ViewTest) ... ok
+test_no_init_args (generic_views.test_base.ViewTest) ... ok
+test_no_init_kwargs (generic_views.test_base.ViewTest) ... ok
+test_options (generic_views.test_base.ViewTest) ... ok
+test_options_for_get_and_post_view (generic_views.test_base.ViewTest) ... ok
+test_options_for_get_view (generic_views.test_base.ViewTest) ... ok
+test_options_for_post_view (generic_views.test_base.ViewTest) ... ok
+test_pathological_http_method (generic_views.test_base.ViewTest) ... ok
+test_output_normal (test_runner.test_debug_sql.TestDebugSQL) ... ok
+test_output_verbose (test_runner.test_debug_sql.TestDebugSQL) ... 
 
 Timeout error: 1800 seconds exceeded.

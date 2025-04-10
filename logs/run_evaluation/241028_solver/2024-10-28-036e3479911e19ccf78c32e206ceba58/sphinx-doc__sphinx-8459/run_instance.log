@@ -1,0 +1,172 @@
+2025-04-10 16:26:52,100 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-8459
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-8459:latest for sphinx-doc__sphinx-8459
+2025-04-10 16:28:45,114 - INFO - Creating container for sphinx-doc__sphinx-8459...
+2025-04-10 16:28:45,214 - INFO - Container for sphinx-doc__sphinx-8459 created: 43957182542e4b44fed7f474aa5c7dd82aaba8c6c50c65a6afaf52397abe11ed
+2025-04-10 16:28:47,096 - INFO - Container for sphinx-doc__sphinx-8459 started: 43957182542e4b44fed7f474aa5c7dd82aaba8c6c50c65a6afaf52397abe11ed
+2025-04-10 16:28:47,097 - INFO - Intermediate patch for sphinx-doc__sphinx-8459 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-8459/patch.diff, now applying to container...
+2025-04-10 16:28:48,512 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:28:48,815 - INFO - >>>>> Applied Patch:
+patching file CHANGES
+patching file sphinx/ext/autodoc/typehints.py
+patching file tests/roots/test-ext-autodoc/target/typing_aliases.py
+patching file tests/test_ext_autodoc_typehints.py
+
+2025-04-10 16:28:50,597 - INFO - Git diff before:
+diff --git a/CHANGES b/CHANGES
+index 5ad0d36a5..23cebd529 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -45,6 +45,7 @@ Bugs fixed
+   and attributes
+ * #8443: autodoc: autodata directive can't create document for PEP-526 based
+   type annotated variables
++* Fixed autodoc_type_aliases not working when autodoc_typehints is set to "description"
+ * #8443: autodoc: autoattribute directive can't create document for PEP-526
+   based uninitalized variables
+ * #8419: html search: Do not load ``language_data.js`` in non-search pages
+diff --git a/setup.py b/setup.py
+index ca08a6d4a..21cb67b8f 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index 70cbc3ba1..e6451b52c 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -27,7 +27,7 @@ def record_typehints(app: Sphinx, objtype: str, name: str, obj: Any,
+         if callable(obj):
+             annotations = app.env.temp_data.setdefault('annotations', {})
+             annotation = annotations.setdefault(name, OrderedDict())
+-            sig = inspect.signature(obj)
++            sig = inspect.signature(obj, type_aliases=app.config.autodoc_type_aliases)
+             for param in sig.parameters.values():
+                 if param.annotation is not param.empty:
+                     annotation[param.name] = typing.stringify(param.annotation)
+diff --git a/tox.ini b/tox.ini
+index dbb705a3a..9f4fc3a32 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:28:50,598 - INFO - Eval script for sphinx-doc__sphinx-8459 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-8459/eval.sh; copying to container...
+2025-04-10 16:29:24,214 - INFO - Test runtime: 32.70 seconds
+2025-04-10 16:29:24,215 - INFO - Test output for sphinx-doc__sphinx-8459 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-8459/test_output.txt
+2025-04-10 16:29:24,508 - INFO - Git diff after:
+diff --git a/CHANGES b/CHANGES
+index 5ad0d36a5..23cebd529 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -45,6 +45,7 @@ Bugs fixed
+   and attributes
+ * #8443: autodoc: autodata directive can't create document for PEP-526 based
+   type annotated variables
++* Fixed autodoc_type_aliases not working when autodoc_typehints is set to "description"
+ * #8443: autodoc: autoattribute directive can't create document for PEP-526
+   based uninitalized variables
+ * #8419: html search: Do not load ``language_data.js`` in non-search pages
+diff --git a/setup.py b/setup.py
+index ca08a6d4a..21cb67b8f 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 5):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.12',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/ext/autodoc/typehints.py b/sphinx/ext/autodoc/typehints.py
+index 70cbc3ba1..e6451b52c 100644
+--- a/sphinx/ext/autodoc/typehints.py
++++ b/sphinx/ext/autodoc/typehints.py
+@@ -27,7 +27,7 @@ def record_typehints(app: Sphinx, objtype: str, name: str, obj: Any,
+         if callable(obj):
+             annotations = app.env.temp_data.setdefault('annotations', {})
+             annotation = annotations.setdefault(name, OrderedDict())
+-            sig = inspect.signature(obj)
++            sig = inspect.signature(obj, type_aliases=app.config.autodoc_type_aliases)
+             for param in sig.parameters.values():
+                 if param.annotation is not param.empty:
+                     annotation[param.name] = typing.stringify(param.annotation)
+diff --git a/tox.ini b/tox.ini
+index dbb705a3a..9f4fc3a32 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -28,7 +28,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:29:24,509 - INFO - Grading answer for sphinx-doc__sphinx-8459...
+2025-04-10 16:29:24,509 - INFO - report: {'sphinx-doc__sphinx-8459': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-8459: resolved: False
+2025-04-10 16:29:24,509 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-8459.241028_solver...
+2025-04-10 16:29:40,805 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-8459.241028_solver...
+2025-04-10 16:29:40,899 - INFO - Container sweb.eval.sphinx-doc__sphinx-8459.241028_solver removed.
+2025-04-10 16:29:40,899 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-8459:latest...
+2025-04-10 16:29:42,814 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-8459:latest removed.

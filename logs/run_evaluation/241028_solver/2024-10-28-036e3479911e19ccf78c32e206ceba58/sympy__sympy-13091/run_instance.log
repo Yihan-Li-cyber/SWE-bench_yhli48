@@ -1,0 +1,55 @@
+2025-04-10 16:48:15,306 - INFO - Environment image sweb.env.x86_64.c795f4b88616b8462021ed:latest found for sympy__sympy-13091
+Building instance image sweb.eval.x86_64.sympy__sympy-13091:latest for sympy__sympy-13091
+2025-04-10 16:51:29,898 - INFO - Creating container for sympy__sympy-13091...
+2025-04-10 16:51:30,203 - INFO - Container for sympy__sympy-13091 created: b1b7a3cb8559aaade1430bf36ba46f67bb7002d43645f7e5889dcd0379ec5817
+2025-04-10 16:51:31,890 - INFO - Container for sympy__sympy-13091 started: b1b7a3cb8559aaade1430bf36ba46f67bb7002d43645f7e5889dcd0379ec5817
+2025-04-10 16:51:31,890 - INFO - Intermediate patch for sympy__sympy-13091 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13091/patch.diff, now applying to container...
+2025-04-10 16:51:33,388 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:51:33,700 - INFO - >>>>> Applied Patch:
+patching file sympy/core/basic.py
+
+2025-04-10 16:51:35,686 - INFO - Git diff before:
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index db4e971848..25390f44f2 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -313,10 +313,10 @@ def __eq__(self, other):
+             try:
+                 other = _sympify(other)
+             except SympifyError:
+-                return False    # sympy != other
++                return NotImplemented    # sympy != other
+ 
+             if type(self) != type(other):
+-                return False
++                return NotImplemented
+ 
+         return self._hashable_content() == other._hashable_content()
+2025-04-10 16:51:35,686 - INFO - Eval script for sympy__sympy-13091 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13091/eval.sh; copying to container...
+2025-04-10 16:52:02,403 - INFO - Test runtime: 25.50 seconds
+2025-04-10 16:52:02,404 - INFO - Test output for sympy__sympy-13091 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sympy__sympy-13091/test_output.txt
+2025-04-10 16:52:02,700 - INFO - Git diff after:
+diff --git a/sympy/core/basic.py b/sympy/core/basic.py
+index db4e971848..25390f44f2 100644
+--- a/sympy/core/basic.py
++++ b/sympy/core/basic.py
+@@ -313,10 +313,10 @@ def __eq__(self, other):
+             try:
+                 other = _sympify(other)
+             except SympifyError:
+-                return False    # sympy != other
++                return NotImplemented    # sympy != other
+ 
+             if type(self) != type(other):
+-                return False
++                return NotImplemented
+ 
+         return self._hashable_content() == other._hashable_content()
+2025-04-10 16:52:02,700 - INFO - Grading answer for sympy__sympy-13091...
+2025-04-10 16:52:02,701 - INFO - report: {'sympy__sympy-13091': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sympy__sympy-13091: resolved: False
+2025-04-10 16:52:02,701 - INFO - Attempting to stop container sweb.eval.sympy__sympy-13091.241028_solver...
+2025-04-10 16:52:18,806 - INFO - Attempting to remove container sweb.eval.sympy__sympy-13091.241028_solver...
+2025-04-10 16:52:18,988 - INFO - Container sweb.eval.sympy__sympy-13091.241028_solver removed.
+2025-04-10 16:52:18,988 - INFO - Attempting to remove image sweb.eval.x86_64.sympy__sympy-13091:latest...
+2025-04-10 16:52:19,612 - INFO - Image sweb.eval.x86_64.sympy__sympy-13091:latest removed.

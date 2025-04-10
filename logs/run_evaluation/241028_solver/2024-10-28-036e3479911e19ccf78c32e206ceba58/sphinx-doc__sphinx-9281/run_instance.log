@@ -1,0 +1,160 @@
+2025-04-10 16:38:03,402 - INFO - Environment image sweb.env.x86_64.764c21123474adcba1e003:latest found for sphinx-doc__sphinx-9281
+Building instance image sweb.eval.x86_64.sphinx-doc__sphinx-9281:latest for sphinx-doc__sphinx-9281
+2025-04-10 16:39:55,100 - INFO - Creating container for sphinx-doc__sphinx-9281...
+2025-04-10 16:39:55,504 - INFO - Container for sphinx-doc__sphinx-9281 created: 66745c932605f6567f80823fe3bc5dece583677035b012cc3e4301b6492f1061
+2025-04-10 16:39:57,789 - INFO - Container for sphinx-doc__sphinx-9281 started: 66745c932605f6567f80823fe3bc5dece583677035b012cc3e4301b6492f1061
+2025-04-10 16:39:57,789 - INFO - Intermediate patch for sphinx-doc__sphinx-9281 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-9281/patch.diff, now applying to container...
+2025-04-10 16:39:59,502 - INFO - Failed to apply patch to container, trying again...
+2025-04-10 16:39:59,804 - INFO - >>>>> Applied Patch:
+patching file sphinx/ext/autodoc/preserve_defaults.py
+patching file tests/test_ext_autodoc_preserve_defaults_enum.py
+
+2025-04-10 16:40:02,594 - INFO - Git diff before:
+diff --git a/setup.py b/setup.py
+index 2538952e3..94e1d8b32 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 6):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.14,<0.18',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/ext/autodoc/preserve_defaults.py b/sphinx/ext/autodoc/preserve_defaults.py
+index 3d859fe8e..8e86061bb 100644
+--- a/sphinx/ext/autodoc/preserve_defaults.py
++++ b/sphinx/ext/autodoc/preserve_defaults.py
+@@ -27,9 +27,14 @@ class DefaultValue:
+         self.name = name
+ 
+     def __repr__(self) -> str:
++        # Handle enum values specially by removing the <> and value part
++        if self.name.startswith('<') and self.name.endswith('>'):
++            # Check if it looks like an enum value (e.g. "<MyEnum.ValueA: 10>")
++            parts = self.name[1:-1].split(':')  # Split on colon
++            if len(parts) == 2:  # Has the format we expect for an enum
++                return parts[0].strip()  # Return just the "MyEnum.ValueA" part
+         return self.name
+ 
+-
+ def get_function_def(obj: Any) -> ast.FunctionDef:
+     """Get FunctionDef object from living object.
+     This tries to parse original code for living object and returns
+diff --git a/tox.ini b/tox.ini
+index a363e187f..3b8bc12d0 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -27,7 +27,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils,ignore::DeprecationWarning:pip._vendor.packaging.version
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:40:02,595 - INFO - Eval script for sphinx-doc__sphinx-9281 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-9281/eval.sh; copying to container...
+2025-04-10 16:40:32,597 - INFO - Test runtime: 28.40 seconds
+2025-04-10 16:40:32,597 - INFO - Test output for sphinx-doc__sphinx-9281 written to logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58/sphinx-doc__sphinx-9281/test_output.txt
+2025-04-10 16:40:32,894 - INFO - Git diff after:
+diff --git a/setup.py b/setup.py
+index 2538952e3..94e1d8b32 100644
+--- a/setup.py
++++ b/setup.py
+@@ -15,22 +15,22 @@ if sys.version_info < (3, 6):
+     sys.exit(1)
+ 
+ install_requires = [
+-    'sphinxcontrib-applehelp',
+-    'sphinxcontrib-devhelp',
++    'sphinxcontrib-applehelp<=1.0.7',
++    'sphinxcontrib-devhelp<=1.0.5',
+     'sphinxcontrib-jsmath',
+-    'sphinxcontrib-htmlhelp',
+-    'sphinxcontrib-serializinghtml',
+-    'sphinxcontrib-qthelp',
+-    'Jinja2>=2.3',
++    'sphinxcontrib-htmlhelp<=2.0.4',
++    'sphinxcontrib-serializinghtml<=1.1.9',
++    'sphinxcontrib-qthelp<=1.0.6',
++    'Jinja2<3.0',
+     'Pygments>=2.0',
+     'docutils>=0.14,<0.18',
+     'snowballstemmer>=1.1',
+     'babel>=1.3',
+-    'alabaster>=0.7,<0.8',
++    'alabaster>=0.7,<0.7.12',
+     'imagesize',
+     'requests>=2.5.0',
+     'setuptools',
+-    'packaging',
++    'packaging', 'markupsafe<=2.0.1',
+ ]
+ 
+ extras_require = {
+diff --git a/sphinx/ext/autodoc/preserve_defaults.py b/sphinx/ext/autodoc/preserve_defaults.py
+index 3d859fe8e..8e86061bb 100644
+--- a/sphinx/ext/autodoc/preserve_defaults.py
++++ b/sphinx/ext/autodoc/preserve_defaults.py
+@@ -27,9 +27,14 @@ class DefaultValue:
+         self.name = name
+ 
+     def __repr__(self) -> str:
++        # Handle enum values specially by removing the <> and value part
++        if self.name.startswith('<') and self.name.endswith('>'):
++            # Check if it looks like an enum value (e.g. "<MyEnum.ValueA: 10>")
++            parts = self.name[1:-1].split(':')  # Split on colon
++            if len(parts) == 2:  # Has the format we expect for an enum
++                return parts[0].strip()  # Return just the "MyEnum.ValueA" part
+         return self.name
+ 
+-
+ def get_function_def(obj: Any) -> ast.FunctionDef:
+     """Get FunctionDef object from living object.
+     This tries to parse original code for living object and returns
+diff --git a/tox.ini b/tox.ini
+index a363e187f..3b8bc12d0 100644
+--- a/tox.ini
++++ b/tox.ini
+@@ -27,7 +27,7 @@ setenv =
+     PYTHONWARNINGS = all,ignore::ImportWarning:importlib._bootstrap_external,ignore::DeprecationWarning:site,ignore::DeprecationWarning:distutils,ignore::DeprecationWarning:pip._vendor.packaging.version
+     PYTEST_ADDOPTS = {env:PYTEST_ADDOPTS:} --color yes
+ commands=
+-    python -X dev -m pytest --durations 25 {posargs}
++    python -X dev -m pytest -rA --durations 25 {posargs}
+ 
+ [testenv:flake8]
+ basepython = python3
+2025-04-10 16:40:32,894 - INFO - Grading answer for sphinx-doc__sphinx-9281...
+2025-04-10 16:40:32,895 - INFO - report: {'sphinx-doc__sphinx-9281': {'patch_is_None': False, 'patch_exists': True, 'patch_successfully_applied': False, 'resolved': False}}
+Result for sphinx-doc__sphinx-9281: resolved: False
+2025-04-10 16:40:32,895 - INFO - Attempting to stop container sweb.eval.sphinx-doc__sphinx-9281.241028_solver...
+2025-04-10 16:40:49,498 - INFO - Attempting to remove container sweb.eval.sphinx-doc__sphinx-9281.241028_solver...
+2025-04-10 16:40:49,689 - INFO - Container sweb.eval.sphinx-doc__sphinx-9281.241028_solver removed.
+2025-04-10 16:40:49,690 - INFO - Attempting to remove image sweb.eval.x86_64.sphinx-doc__sphinx-9281:latest...
+2025-04-10 16:40:51,104 - INFO - Image sweb.eval.x86_64.sphinx-doc__sphinx-9281:latest removed.
