@@ -256,16 +256,16 @@ def make_eval_script_list(instance, specs, env_name, repo_directory, base_commit
     return eval_commands
 
 
-with open("swebench/case.json", 'r') as json_file:
+with open("/Users/maoqing/PycharmProjects/SWE-bench/swebench/case.json", 'r') as json_file:
     new_test_dict = json.load(json_file)
 
-with open('swebench/bench.json', 'r') as json_file:
+with open('/Users/maoqing/PycharmProjects/SWE-bench/swebench/bench.json', 'r') as json_file:
     new_bench_dict = json.load(json_file)
 
-with open('swebench/perfect_parser_test_instance_dict_verified.json', 'r') as json_file:
+with open('/Users/maoqing/PycharmProjects/SWE-bench/swebench/perfect_parser_test_instance_dict_verified.json', 'r') as json_file:
     instance_dict = json.load(json_file)
 
-with open('swebench/perfect_parser_test_instance_dict.json', 'r') as json_file:
+with open('/Users/maoqing/PycharmProjects/SWE-bench/swebench/perfect_parser_test_instance_dict.json', 'r') as json_file:
     instance_dict_lite = json.load(json_file)
 
 for key in instance_dict_lite:

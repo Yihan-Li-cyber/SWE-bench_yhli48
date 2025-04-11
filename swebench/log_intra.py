@@ -47,7 +47,7 @@ def find_dict_difference(dict1, dict2):
             print("There is a difference in " + f"test cases: {key}, gold: {dict_a[key]}, gen: {dict_b[key]}")
 
 
-dg = "logs/run_evaluation/1209_SampledTest-103_gold/gold"
+dg = "/Users/maoqing/PycharmProjects/SWE-bench/logs/run_evaluation/gold/gold"
 dict_g = dict()
 for repo in os.listdir(dg):
     if repo.startswith("."):
@@ -78,6 +78,7 @@ key_suspicious_set = set()
 key_suspicious_list = []
 # dm = "logs/run_evaluation/SampledTest-45_20240402_sweagent_claude3opus/claude-3-opus-20240229__swe-bench-lite-test__xml_sys-env_window100-detailed_cmd_format-full_history-1_demos__t-0.00__p-0.95__c-4.00__install-1/"
 
+'''
 file_list = [
     "logs/run_evaluation/1209_SampledTest-103_20231010_rag_claude2/20231010_rag_claude2",
     "logs/run_evaluation/1209_SampledTest-103_20231010_rag_gpt35/20231010_rag_gpt35",
@@ -179,6 +180,10 @@ file_list = [
     "logs/run_evaluation/1209_SampledTest-103_20241125_marscode-agent-dev/20241125_marscode-agent-dev",
     "logs/run_evaluation/1209_SampledTest-103_20241202_agentless-1.5_claude-3.5-sonnet-20241022/agentless",
     "logs/run_evaluation/1209_SampledTest-103_20241202_amazon-q-developer-agent-20241202-dev/aws",
+]
+'''
+file_list = [
+    "/Users/maoqing/PycharmProjects/SWE-bench/logs/run_evaluation/241028_solver/2024-10-28-036e3479911e19ccf78c32e206ceba58",
 ]
 
 for dm in file_list:
